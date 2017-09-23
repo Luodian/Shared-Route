@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/home_button"
+        android:title="call" />
+    <item
+        android:id="@+id/goods"
+        android:icon="@drawable/info_button"
+        android:title="message" />
+    <item
+        android:id="@+id/trolley"
+        android:icon="@drawable/trolley_button"
+        android:title="setting" />
+    <item
+        android:id="@+id/info"
+        android:icon="@drawable/info_button"
+        android:title="me"/>
+</menu>
