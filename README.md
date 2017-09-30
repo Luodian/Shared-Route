@@ -2,6 +2,8 @@
 
 New way to explore your campus life.
 
+###Discussion
+
 物品属性
 
 1. 种类
@@ -17,4 +19,9 @@ New way to explore your campus life.
 11. 接收人
 12. 接件时间
 13. 送达时间
+
+
+
+
+
 
