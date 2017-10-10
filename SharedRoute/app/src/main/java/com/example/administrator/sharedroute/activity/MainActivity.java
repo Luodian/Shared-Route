@@ -263,11 +263,14 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 			switch (item.getItemId()) {
 				case R.id.navigation_home:
+                    return true;
+				case R.id.navigation_publisNeeds:
 					return true;
-				case R.id.navigation_dashboard:
-					return true;
-				case R.id.navigation_notifications:
-					return true;
+				case R.id.navigation_searchNeeds:
+                    Intent srchNeeds_intent = new Intent();
+                    srchNeeds_intent.setClass(MainActivity.this,SearchNeedsActivity.class);
+                    MainActivity.this.startActivity(srchNeeds_intent);
+                    return true;
 			}
 			return false;
 		}

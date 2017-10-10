@@ -22,8 +22,13 @@
         <activity android:name=".activity.BandCard" />
         <activity android:name=".activity.MyOrder" />
         <activity android:name=".activity.MyRank" />
-        <activity android:name=".activity.ReleaseOrderDetail"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog"/>
+        <activity
+            android:name=".activity.ReleaseOrderDetail"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+        <activity
+            android:name=".activity.SearchNeedsActivity"
+            android:label="@string/title_activity_search_needs"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
