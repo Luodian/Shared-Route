@@ -2,6 +2,7 @@ package com.example.administrator.sharedroute.base;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -15,11 +16,11 @@ import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.widget.LinearLayout;
 
-import com.nineoldandroids.animation.Animator;
-import com.example.administrator.sharedroute.BaseAnimatorSet;
+import com.example.administrator.sharedroute.activity.MainActivity;
 import com.example.administrator.sharedroute.utils.StatusBarUtils;
+import com.nineoldandroids.animation.Animator;
 
-public abstract class BaseDialog<T extends BaseDialog<T>> extends Dialog {
+public abstract class BaseDialog<T extends BaseDialog<T>> extends Dialog{
     /** TAG(日志) */
     protected String TAG;
     /** context(上下文) */
@@ -192,6 +193,8 @@ public abstract class BaseDialog<T extends BaseDialog<T>> extends Dialog {
     @Override
     protected void onStop() {
         super.onStop();
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
         Log.d(TAG, "onStop");
     }
 

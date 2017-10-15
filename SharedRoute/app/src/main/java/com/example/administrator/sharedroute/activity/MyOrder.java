@@ -1,37 +1,35 @@
 package com.example.administrator.sharedroute.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.administrator.sharedroute.R;
-import com.example.administrator.sharedroute.adapter.MyPagerAdapter;
+import com.example.administrator.sharedroute.adapter.CardPagerAdapter;
+import com.example.administrator.sharedroute.adapter.ListViewAdapter;
+import com.example.administrator.sharedroute.entity.CardItem;
+import com.example.administrator.sharedroute.utils.ShadowTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyOrder extends AppCompatActivity {
 
-    private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private LayoutInflater mInflater;
-    private View view1, view2;//页卡视图
-    private List<View> mViewList = new ArrayList<>();//页卡视图集合
+    private CardView view1, view2, view3;//页卡视图
+    private List<CardView> mViewList = new ArrayList<>();//页卡视图集合
+    private List<CardItem> cardItems = new ArrayList<>();
+    private CardPagerAdapter mCardAdapter;
+    private ShadowTransformer mCardShadowTransformer;
     private String select;
-    private String [] receive_order_data = {"item1","item2","item3","item4","item5"
-            ,"item6","item7","item8","item9","item10"};
-    private String [] release_order_data = {"item1","item2","item3","item4","item5"
-            ,"item6","item7","item8","item9","item10"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,38 +45,53 @@ public class MyOrder extends AppCompatActivity {
         }
 
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mInflater = LayoutInflater.from(this);
 
-        view1 = mInflater.inflate(R.layout.activity_release_order, null);
-        view2 = mInflater.inflate(R.layout.activity_receive_order, null);
-        ArrayAdapter<String> ReleaseAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,release_order_data);
-        ListView ReleaseListView = (ListView)view1.findViewById(R.id.release_order);
-        ReleaseListView.setAdapter(ReleaseAdapter);
-        ArrayAdapter<String> ReceiveAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,receive_order_data);
-        ListView ReceiveListView = (ListView)view2.findViewById(R.id.receive_order);
-        ReceiveListView.setAdapter(ReceiveAdapter);
+        ListViewAdapter adapter = new ListViewAdapter(MyOrder.this,R.layout.carditem_layout,cardItems);
+        initData();
+
+        view1 = (CardView) mInflater.inflate(R.layout.adapter, null);
+        ListView listView1 = (ListView)view1.findViewById(R.id.list_view);
+        listView1.setAdapter(adapter);
+
+        view2 =(CardView) mInflater.inflate(R.layout.adapter, null);
+        ListView listView2 = (ListView)view2.findViewById(R.id.list_view);
+        listView2.setAdapter(adapter);
+
+        view3 = (CardView)mInflater.inflate(R.layout.adapter, null);
+        ListView listView3 = (ListView)view3.findViewById(R.id.list_view);
+        listView3.setAdapter(adapter);
 
         //添加页卡视图
         mViewList.add(view1);
         mViewList.add(view2);
+        mViewList.add(view3);
 
-        MyPagerAdapter mAdapter = new MyPagerAdapter(mViewList);
         //给ViewPager设置适配器
-        mViewPager.setAdapter(mAdapter);
-        //将TabLayout和ViewPager关联起来
-        mTabLayout.setupWithViewPager(mViewPager);
-        //给Tabs设置适配器
-        mTabLayout.setTabsFromPagerAdapter(mAdapter);
+        mCardAdapter = new CardPagerAdapter(mViewList);
+        mViewPager.setAdapter(mCardAdapter);
+        mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+        mViewPager.setPageTransformer(false, mCardShadowTransformer);
+        mViewPager.setOffscreenPageLimit(3);
 
-        Intent intent = getIntent();
-        select = intent.getStringExtra("select_order");
-        Log.d("MyOrder",select);
-        if(select.equals( "releaseOrder")){
-            mViewPager.setCurrentItem(0);
-        }else{
-            mViewPager.setCurrentItem(1);
-        }
+        view1.setOnClickListener(new ViewPager.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                mViewPager.setCurrentItem(0);
+            }
+        });
+        view2.setOnClickListener(new ViewPager.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                mViewPager.setCurrentItem(1);
+            }
+        });
+        view3.setOnClickListener(new ViewPager.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                mViewPager.setCurrentItem(2);
+            }
+        });
 
     }
 
@@ -90,6 +103,21 @@ public class MyOrder extends AppCompatActivity {
                 return true;
         }
         return true;
+    }
+
+    public void initData(){
+        CardItem item1 = new CardItem("快递名称:", R.mipmap.ic_express);
+        cardItems.add(item1);
+        CardItem item2 = new CardItem("发布时间:", R.mipmap.ic_get_time);
+        cardItems.add(item2);
+        CardItem item3 = new CardItem("类型:", R.mipmap.ic_type);
+        cardItems.add(item3);
+        CardItem item4 = new CardItem("取货码:", R.mipmap.ic_code);
+        cardItems.add(item4);
+        CardItem item5 = new CardItem("金额:", R.mipmap.ic_money);
+        cardItems.add(item5);
+        CardItem item6 = new CardItem("状态:", R.mipmap.ic_status);
+        cardItems.add(item6);
     }
 
 }

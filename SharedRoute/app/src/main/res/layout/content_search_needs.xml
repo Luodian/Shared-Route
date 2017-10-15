@@ -12,8 +12,8 @@
         android:layout_height="113dp"
         android:layout_gravity="center"
         android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardCornerRadius="3dp"
-        card_view:cardElevation="4dp"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="1dp"
         android:clickable="true">
 
         <LinearLayout
@@ -36,11 +36,11 @@
                 android:id="@+id/searchNeeds_item_kinds"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
                 android:layout_gravity="center"
-                android:textAlignment="center"
+                android:layout_weight="4"
+                android:background="#00000000"
                 android:text="书籍"
-                android:shadowColor="@color/transparent"
+                android:textAlignment="center"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -76,9 +76,9 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:textSize="12sp"
+                    android:text="今天12：30"
                     android:textAlignment="center"
-                    android:text="今天12：30"/>
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/searchNeeds_fetch_loc"
@@ -86,9 +86,9 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textSize="8sp"
+                    android:text="一区顺丰快递"
                     android:textAlignment="center"
-                    android:text="一区顺丰快递"/>
+                    android:textSize="8sp" />
 
                 <TextView
                     android:id="@+id/searchNeeds_send_time"
@@ -96,27 +96,30 @@
                     android:layout_height="0dp"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:textSize="12sp"
+                    android:text="今天12：30"
                     android:textAlignment="center"
-                    android:text="今天12：30"/>
+                    android:textSize="12sp" />
 
                 <TextView
-                    android:layout_width="match_parent"
                     android:id="@+id/searchNeeds_send_loc"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textSize="8sp"
+                    android:text="一区顺丰快递"
                     android:textAlignment="center"
-                    android:text="一区顺丰快递"/>
+                    android:textSize="8sp" />
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/trolley_icon"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:paddingRight="10dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/trolley"/>
+                android:src="@drawable/trolley" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

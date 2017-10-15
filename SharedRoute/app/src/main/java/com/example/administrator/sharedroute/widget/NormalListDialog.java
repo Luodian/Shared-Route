@@ -19,10 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.administrator.sharedroute.entity.DialogMenuItem;
-import com.example.administrator.sharedroute.listener.OnOperItemClickL;
-import com.example.administrator.sharedroute.utils.CornerUtils;
 import com.example.administrator.sharedroute.base.BaseDialog;
+import com.example.administrator.sharedroute.entity.DialogMenuItem;
+import com.example.administrator.sharedroute.utils.CornerUtils;
 
 import java.util.ArrayList;
 
@@ -98,12 +97,8 @@ public class NormalListDialog extends BaseDialog {
      * operation items(操作items)
      */
     private ArrayList<DialogMenuItem> contents = new ArrayList<>();
-    private OnOperItemClickL onOperItemClickL;
     private LayoutAnimationController lac;
 
-    public void setOnOperItemClickL(OnOperItemClickL onOperItemClickL) {
-        this.onOperItemClickL = onOperItemClickL;
-    }
 
     public NormalListDialog(Context context, ArrayList<DialogMenuItem> baseItems) {
         super(context);
@@ -199,9 +194,7 @@ public class NormalListDialog extends BaseDialog {
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (onOperItemClickL != null) {
-                    onOperItemClickL.onOperItemClick(parent, view, position, id);
-                }
+                dismiss();
             }
         });
 
