@@ -1,11 +1,8 @@
 package com.example.administrator.sharedroute.activity;
 
-import android.app.Service;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -14,31 +11,39 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.MyPagerAdapter;
-import com.example.administrator.sharedroute.entity.DialogMenuItem;
+import com.example.administrator.sharedroute.adapter.ReleaseOrderItemAdapter;
+import com.example.administrator.sharedroute.entity.ReleaseOrderItem;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
-import com.example.administrator.sharedroute.widget.NormalListDialog;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by ouyangshen on 2016/10/21.
@@ -53,26 +58,22 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	private LayoutInflater mInflater;
 	private View view1, view2;//页卡视图
 	private List<View> mViewList = new ArrayList<>();//页卡视图集合
-	private String [] receive_order_data = {"item1","item2","item3","item4","item5"
-			,"item6","item7","item8","item9","item10"};
-	private String [] release_order_data = {"item1","item2","item3","item4","item5"
-			,"item6","item7","item8","item9","item10"};
-	private ArrayList<DialogMenuItem> testItems = new ArrayList<>();
-	private String[] stringItems = {"收藏", "下载", "分享", "删除", "歌手", "专辑"};
 	public static String select = "releaseOrder";
-
+	private List<ReleaseOrderItem> itemList = new ArrayList<>();
+	private ReleaseOrderItemAdapter adapter;
+	private int mMenuId;
+	private BottomNavigationView navigation;
+	private SwipeRefreshLayout swipeRefresh;
+//    ReleaseOrderItem[] items = {new ReleaseOrderItem(R.drawable.yd_express,R.mipmap.ic_type_book,R.mipmap.ic_none_receive_status,"10月1日","书籍"),
+//                                new ReleaseOrderItem(R.drawable.yt_express,R.mipmap.ic_type_book,R.mipmap.ic_none_receive_status,"10月2日","衣服"),
+//                                new ReleaseOrderItem(R.drawable.zto_express,R.mipmap.ic_type_book,R.mipmap.ic_receive_status,"10月3日","电子"),
+//                                new ReleaseOrderItem(R.drawable.best_express,R.mipmap.ic_type_book,R.mipmap.ic_receive_status,"10月4日","生活"),
+//                                new ReleaseOrderItem(R.drawable.ems_express,R.mipmap.ic_type_book,R.mipmap.ic_none_receive_status,"10月5日","书籍")};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		testItems.add(new DialogMenuItem("收藏", R.mipmap.ic_delete));
-		testItems.add(new DialogMenuItem("下载", R.mipmap.ic_delete));
-		testItems.add(new DialogMenuItem("分享", R.mipmap.ic_delete));
-		testItems.add(new DialogMenuItem("删除", R.mipmap.ic_delete));
-		testItems.add(new DialogMenuItem("歌手", R.mipmap.ic_delete));
-		testItems.add(new DialogMenuItem("专辑", R.mipmap.ic_delete));
 
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -89,6 +90,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 			public boolean onNavigationItemSelected(MenuItem item){
 				switch (item.getItemId()){
 					case R.id.nav_shop:
+						select = "releaseOrder";
+						Intent intent1 = new Intent(MainActivity.this,TaskViewActivity.class);
+						intent1.putExtra("select_order",select);
+						startActivity(intent1);
 						return true;
 					case R.id.nav_release:
 						select = "releaseOrder";
@@ -130,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		LayoutParams params = (LayoutParams) mBanner.getLayoutParams();
 		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f/ 640f);
 		mBanner.setLayoutParams(params);
-
 		ArrayList<Integer> bannerArray = new ArrayList<Integer>();
 		bannerArray.add(Integer.valueOf(R.drawable.banner_1));
 		bannerArray.add(Integer.valueOf(R.drawable.banner_2));
@@ -141,21 +145,9 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		mBanner.setOnBannerListener(this);
         mBanner.start();
 
-		BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-		navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-//		ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1,data);
-//		ListView qujian = (ListView)findViewById(R.id.qujian);
-//		ListView daiqu  = (ListView)findViewById(R.id.daiqu);
-//		qujian.setAdapter(adapter);
-//		daiqu.setAdapter(adapter);
-//		fixListViewHeight(qujian);
-//		fixListViewHeight(daiqu);
-
 		mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
 		mTabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
 		mInflater = LayoutInflater.from(this);
-
 		view1 = mInflater.inflate(R.layout.activity_release_order, null);
 		view2 = mInflater.inflate(R.layout.activity_receive_order, null);
 		//添加页卡视图
@@ -178,50 +170,54 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		// 设置分割线的样式
 		mLinearLayout.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_vertical));
 
-		ArrayAdapter<String> ReleaseAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,release_order_data);
-		ListView ReleaseListView = (ListView)view1.findViewById(R.id.release_order);
-		ReleaseListView.setAdapter(ReleaseAdapter);
-		ArrayAdapter<String> ReceiveAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,receive_order_data);
-		ListView ReceiveListView = (ListView)view2.findViewById(R.id.receive_order);
-		ReceiveListView.setAdapter(ReceiveAdapter);
+		initItems();
+		RecyclerView releaseOrder = (RecyclerView)view1.findViewById(R.id.release_order);
+		GridLayoutManager layoutManager = new GridLayoutManager(this,1);
+		releaseOrder.setLayoutManager(layoutManager);
+		adapter = new ReleaseOrderItemAdapter(itemList);
+		releaseOrder.setAdapter(adapter);
 
-		ReleaseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+        navigation = (BottomNavigationView) findViewById(R.id.main_navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
+
+		swipeRefresh = (SwipeRefreshLayout)view1.findViewById(R.id.swipe_refresh);
+		swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+		swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				Vibrator vibrator=(Vibrator)getSystemService(Service.VIBRATOR_SERVICE);
-				vibrator.vibrate(new long[]{0,1000}, -1);
-				switch (position){
-					case 0:
-//						Intent intent = new Intent(MainActivity.this,ReleaseOrderDetail.class);
-//						startActivity(intent);
-//						Dialog dialog = new Dialog(MainActivity.this,R.style.dialog);
-//						View view3 = LayoutInflater.from(MainActivity.this).inflate(R.layout.activity_release_order_detail,null);
-//						dialog.setContentView(view3);
-//						//自定义宽高（高度一般不用调整，在xml调整好就可以了，这里我只调整了宽度）
-//						WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-//						params.width = 500;
-//						params.height = 500;
-//						dialog.getWindow().setAttributes(params);
-//						dialog.show();
-						final NormalListDialog dialog = new NormalListDialog(MainActivity.this, testItems);
-						dialog.title("请选择")//
-								.titleTextSize_SP(18)//
-								.titleBgColor(Color.parseColor("#409ED7"))//
-								.itemPressColor(Color.parseColor("#85D3EF"))//
-								.itemTextColor(Color.parseColor("#303030"))//
-								.itemTextSize(14)//
-								.cornerRadius(0)//
-								.widthScale(0.8f)//
-								.show(R.style.myDialogAnim);
-
-				}
-				Toast.makeText(MainActivity.this,Integer.toString(position),Toast.LENGTH_SHORT).show();
-				return true;
+			public void onRefresh() {
+				swipeRefresh.setRefreshing(false);
 			}
 		});
 
+//        sendRequestWithOkHttp();
+//        ReleaseListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(MainActivity.this,"长按订单可查看详细信息!",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//		ReleaseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+//			@Override
+//			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                BlurActivityDialog(release_order_data[position],"release");
+//				return true;
+//			}
+//		});
 
-
+//        ReceiveListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(MainActivity.this,"长按订单可查看详细信息!",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        ReceiveListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                BlurActivityDialog(release_order_data[position],"receive");
+//                return true;
+//            }
+//        });
 	}
 
 	@Override
@@ -261,12 +257,22 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
 		@Override
 		public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//			mMenuId = item.getItemId();
+//			for (int i = 0; i < navigation.getMenu().size(); i++) {
+//				MenuItem menuItem = navigation.getMenu().getItem(i);
+//				boolean isChecked = menuItem.getItemId() == item.getItemId();
+//				menuItem.setChecked(isChecked);
+//			}
 			switch (item.getItemId()) {
 				case R.id.navigation_home:
 					return true;
 				case R.id.navigation_dashboard:
+					JumpToActivity(PublishNeedsActivity.class);
+					finish();
 					return true;
 				case R.id.navigation_notifications:
+                    JumpToActivity(SearchNeedsActivity.class);
+					finish();
 					return true;
 			}
 			return false;
@@ -323,5 +329,182 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 				break;
 		}
 		return true;
+	}
+
+	@Override
+	public void onPause(){
+		super.onPause();
+		mDrawerLayout.closeDrawers();
+	}
+
+//	public void BlurActivityDialog(final String title, final String select){
+//        Vibrator vibrator=(Vibrator)getSystemService(Service.VIBRATOR_SERVICE);
+//        vibrator.vibrate(new long[]{0,1000}, -1);
+//		BlurBehind.getInstance().execute(MainActivity.this, new OnBlurCompleteListener() {
+//			@Override
+//			public void onBlurComplete() {
+//				Intent intent = new Intent(MainActivity.this, BlurredActivity.class);
+//				intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                intent.putExtra("title_name",title);
+//                intent.putExtra("select",select);
+//				startActivity(intent);
+//			}
+//		});
+//	}
+
+	private void initItems(){
+
+        for(int i = 0;i<2;i++){
+            ReleaseOrderItem item1 = new ReleaseOrderItem();
+            item1.setExpressimageId(R.drawable.yd_express);
+            item1.setDate("10月1日");
+            item1.setTpyeimageId(R.mipmap.ic_type_book);
+            item1.setType("书籍");
+            item1.setStatusimageId(R.mipmap.ic_none_receive_status);
+            itemList.add(item1);
+
+            ReleaseOrderItem item2 = new ReleaseOrderItem();
+            item2.setExpressimageId(R.drawable.yt_express);
+            item2.setDate("10月2日");
+            item2.setTpyeimageId(R.mipmap.ic_type_clothes);
+            item2.setType("衣服");
+            item2.setStatusimageId(R.mipmap.ic_none_receive_status);
+            itemList.add(item2);
+
+            ReleaseOrderItem item3 = new ReleaseOrderItem();
+            item3.setExpressimageId(R.drawable.zto_express);
+            item3.setDate("10月3日");
+            item3.setTpyeimageId(R.mipmap.ic_type_electri);
+            item3.setType("电子");
+            item3.setStatusimageId(R.mipmap.ic_receive_status);
+            itemList.add(item3);
+
+            ReleaseOrderItem item4 = new ReleaseOrderItem();
+            item4.setExpressimageId(R.drawable.best_express);
+            item4.setDate("10月4日");
+            item4.setTpyeimageId(R.mipmap.ic_type_life);
+            item4.setType("生活");
+            item4.setStatusimageId(R.mipmap.ic_receive_status);
+            itemList.add(item4);
+
+            ReleaseOrderItem item5 = new ReleaseOrderItem();
+            item5.setExpressimageId(R.drawable.ems_express);
+            item5.setDate("10月5日");
+            item5.setTpyeimageId(R.mipmap.ic_type_else);
+            item5.setType("其他");
+            item5.setStatusimageId(R.mipmap.ic_none_receive_status);
+            itemList.add(item5);
+        }
+	}
+
+	public void JumpToActivity(Class activity){
+        startActivity(new Intent(this,activity));
+        overridePendingTransition(0,0);
+    }
+
+//	private void sendRequestWithOkHttp(){
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				try{
+//					OkHttpClient client = new OkHttpClient();
+//					Request request = new Request.Builder()
+//									.url("http://192.168.43.49:8080/packageMessage/5/6/7/8/9")
+//									.build();
+//					Response response = client.newCall(request).execute();
+//					String responseData = "["+response.body().string()+"]";
+//					parseJSONwithJSONObject(responseData);
+//					httpPostJSON();
+//				}catch (Exception e){
+//					e.printStackTrace();
+//				}
+//			}
+//		}).start();
+//	}
+//
+//	private void parseJSONwithJSONObject(String jsonData) {
+//		try {
+//			JSONArray jsonArray = new JSONArray(jsonData);
+//			for(int i = 0;i<jsonArray.length();i++){
+//				JSONObject jsonObject = jsonArray.getJSONObject(i);
+//				Long id = jsonObject.getLong("id");
+//				String expressName = jsonObject.getString("expressName");
+//				String releaseDate = jsonObject.getString("releaseDate");
+//				String releaseType = jsonObject.getString("releaseType");
+//				String packageStatus = jsonObject.getString("packageStatus");
+//				Log.d("MainActivity",Long.toString(id));
+//				Log.d("MainActivity",expressName);
+//				Log.d("MainActivity",releaseDate);
+//				Log.d("MainActivity",releaseType);
+//				Log.d("MainActivity",packageStatus);
+//
+//			}
+//		}catch (Exception e){
+//			e.printStackTrace();
+//		}
+//	}
+
+//	public void httpPost(){
+//		//换成自己的ip就行
+//		String url = "http://192.168.43.49:8080/packageMessage";
+//		OkHttpClient client = new OkHttpClient();//创建okhttp实例
+//		FormBody body=new FormBody.Builder()
+//				.add("id","123")
+//				.add("expressName","23")
+//				.add("releaseDate","46")
+//				.add("releaseType","355")
+//				.add("packageStatus","566")
+//				.build();
+//		Request request=new Request.Builder().post(body).url(url).build();
+//		Call call = client.newCall(request);
+//		call.enqueue(new Callback() {
+//			//请求失败时调用
+//			@Override
+//			public void onFailure(Call call, IOException e) {
+//				Log.i("MainActivity", "onFailure: " + e);
+//			}
+//			//请求成功时调用
+//			@Override
+//			public void onResponse(Call call, Response response) throws IOException {
+//				if (response.isSuccessful()) {
+//					Log.i("MainActivity", "onResponse: " + response.body().string());
+//				}
+//			}
+//		});
+//	}
+
+	public void httpPostJSON(){
+		String json="{\n" +
+				"  \"id\" : 3,\n" +
+				"  \"expressName\" : \"45\",\n" +
+				"  \"releaseDate\" : \"366\",\n" +
+				"  \"releaseType\" : \"351\",\n" +
+				"  \"packageStatus\" : \"1234\"\n" +
+				"}";
+		MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+		//换成自己的ip就行
+		String url = "http://192.168.43.49:8080/packageMessage";
+		OkHttpClient client = new OkHttpClient();//创建okhttp实例
+		RequestBody body = RequestBody.create(JSON,json);
+		Request request = new Request.Builder()
+				.url(url)
+				.post(body)
+				.build();
+		Call call = client.newCall(request);
+		call.enqueue(new Callback() {
+			//请求失败时调用
+			@Override
+			public void onFailure(Call call, IOException e) {
+				Log.i("MainActivity", "onFailure: " + e);
+			}
+			//请求成功时调用
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				if (response.isSuccessful()) {
+					Log.i("MainActivity", "onResponse: " + response.body().string());
+				}
+			}
+		});
+
 	}
 }

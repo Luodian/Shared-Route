@@ -3,27 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clipChildren="false">
 
     <include layout="@layout/back_layout"/>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#1FBCD2"
-        app:tabIndicatorColor="#ff0000"
-        app:tabMode="fixed"
-        app:tabPaddingEnd="20dp"
-        app:tabPaddingStart="20dp"
-        app:tabSelectedTextColor="#FFFFFF"
-        app:tabTextColor="#000000"
-        app:tabTextAppearance="@style/TabLayoutTextStyle"/>
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="wrap_content"
+            android:layout_height="425dp"
+            android:gravity="center_horizontal"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingBottom="30dp"
+            android:paddingEnd="@dimen/card_padding"
+            android:paddingLeft="@dimen/card_padding"
+            android:paddingRight="@dimen/card_padding"
+            android:paddingStart="@dimen/card_padding" />
 
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    </LinearLayout>
 
 </LinearLayout>
