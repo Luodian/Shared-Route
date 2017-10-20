@@ -1,25 +1,19 @@
 # Shared-Route
 
+### Introduction
+
 New way to explore your campus life.
 
-###Discussion
+### Project Progress
 
-物品属性
+**10.13**
 
-1. 种类
-2. 用户姓名
-3. 电话号码
-4. 取件地址
-5. 取货码
-6. 送件地址
-7. 备注
-8. 接单状态（等待接单，已接单）
-9. 物品状态（在快递，在取件员手里，在用户手里）
-10. 金额
-11. 接收人
-12. 接件时间
-13. 送达时间
+完成了所有页面的跳转逻辑，动画等，下一步要修改各种recyclerview的框架为swipe refresh.
 
+**10.20**
+
+1. 完成了寻找需求页面到购物车的传值。
+2. 服务端的severlet完成，现在有一个本地服务器，基于这个本地服务器我们实现了网络登录的Demo，这里放出来demo，里面的Async框架和Post方法可供入门学习。
 
 
 
