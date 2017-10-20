@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.administrator.sharedroute">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/share_icon_with_background"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_app"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.MainActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.BandCard" />
+        <activity android:name=".activity.MyOrder" />
+        <activity android:name=".activity.MyRank" />
+        <activity android:name=".activity.BlurredActivity" />
+        <activity
+            android:name=".activity.SearchNeedsActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".activity.ConfirmFinishedActivity"/>
+        <activity android:name=".activity.ConfirmTaskActivity"/>
+        <activity android:name=".activity.TaskViewActivity"/>
+        <activity
+            android:name=".activity.PublishNeedsActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".activity.PayBillActivity"/>
+        <activity android:name=".activity.HistoryInfoActivity" />
+        <activity android:name=".activity.InfoSettingActivity" />
+    </application>
+
+</manifest>
