@@ -28,6 +28,7 @@ import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.MyPagerAdapter;
 import com.example.administrator.sharedroute.adapter.ReleaseOrderItemAdapter;
 import com.example.administrator.sharedroute.entity.ReleaseOrderItem;
+import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	private List<ReleaseOrderItem> itemList = new ArrayList<>();
 	private ReleaseOrderItemAdapter adapter;
 	private int mMenuId;
+	private OrderDao orderDao;
 	private BottomNavigationView navigation;
 	private SwipeRefreshLayout swipeRefresh;
 //    ReleaseOrderItem[] items = {new ReleaseOrderItem(R.drawable.yd_express,R.mipmap.ic_type_book,R.mipmap.ic_none_receive_status,"10月1日","书籍"),
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		orderDao = new OrderDao(this);
 
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -127,13 +131,13 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f/ 640f);
 		mBanner.setLayoutParams(params);
 		ArrayList<Integer> bannerArray = new ArrayList<>();
-    bannerArray.add(R.drawable.banner_1);
-    bannerArray.add(R.drawable.banner_2);
-    bannerArray.add(R.drawable.banner_3);
-    bannerArray.add(R.drawable.banner_4);
-    bannerArray.add(R.drawable.banner_5);
-    mBanner.setImage(bannerArray);
-		mBanner.setOnBannerListener(this);
+        bannerArray.add(R.drawable.banner_1);
+        bannerArray.add(R.drawable.banner_2);
+        bannerArray.add(R.drawable.banner_3);
+        bannerArray.add(R.drawable.banner_4);
+        bannerArray.add(R.drawable.banner_5);
+        mBanner.setImage(bannerArray);
+        mBanner.setOnBannerListener(this);
         mBanner.start();
 
 		mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
@@ -265,25 +269,25 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //		listView.setLayoutParams(params);
 //	}
 
-	public boolean onCreateOptionsMenu(Menu menu){
-		getMenuInflater().inflate(R.menu.toolbar,menu);
-		return true;
-	}
-
-	public boolean onMenuOpened(int featureId, Menu menu) {
-		if (menu != null) {
-			if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
-				try {
-					Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-					method.setAccessible(true);
-					method.invoke(menu, true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return super.onMenuOpened(featureId, menu);
-	}
+//	public boolean onCreateOptionsMenu(Menu menu){
+//		getMenuInflater().inflate(R.menu.toolbar,menu);
+//		return true;
+//	}
+//
+//	public boolean onMenuOpened(int featureId, Menu menu) {
+//		if (menu != null) {
+//			if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
+//				try {
+//					Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+//					method.setAccessible(true);
+//					method.invoke(menu, true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		return super.onMenuOpened(featureId, menu);
+//	}
 
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch (item.getItemId()){

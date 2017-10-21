@@ -20,6 +20,7 @@ import android.widget.ListView;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.TaskViewAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
+import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
@@ -42,6 +43,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
     private  Toolbar mToolbar;
     private AnimationAdapter mAnimAdapter ;
     private static final int INITIAL_DELAY_MILLIS = 100;
+    private OrderDao orderDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +54,8 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
         listView = (ListView) findViewById(R.id.shoppingtrolly_listview);
         mToolbar = (Toolbar) findViewById(R.id.toolbartaskview) ;
 
-        Intent intent = getIntent();
-        Bundle bundle =intent.getExtras();
-        listItemList = bundle.getParcelableArrayList("listItemList");
+        orderDao = new OrderDao(this);
+        listItemList = orderDao.getAcceptOrder();
 
         trollyAdapter  = new TaskViewAdapter(TaskViewActivity.this);
 
