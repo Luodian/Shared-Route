@@ -16,6 +16,10 @@ New way to explore your campus life.
 2. 服务端的severlet完成，现在有一个本地服务器，基于这个本地服务器我们实现了网络登录的Demo，这里放出来demo，里面的Async框架和Post方法可供入门学习。
 
 
+**10.21**
+
+- [ ] 计划将使用sqlite数据库作为本地缓存，将所有页面更改为读取数据库的形式。
 
 
+- [ ] ​
 

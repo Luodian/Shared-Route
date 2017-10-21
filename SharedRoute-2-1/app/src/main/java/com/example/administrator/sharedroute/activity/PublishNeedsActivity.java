@@ -47,6 +47,12 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     private DrawerLayout mDrawerLayout;
 
     @Override
+    public void onBackPressed() {
+        JumpToActivity(MainActivity.class);
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_needs);
@@ -325,7 +331,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String date = "" + year + "/" + (++monthOfYear) + "/" + dayOfMonth;
 
-        if (left == true) {
+        if (left) {
             leftDate = date;
         } else {
             rightDate = date;
@@ -358,7 +364,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         String minuteString = minute < 10 ? "0" + minute : "" + minute;
         String secondString = second < 10 ? "0" + second : "" + second;
         String time = "" + hourString + "h" + minuteString + "m" + secondString + "s";
-        if (left == true) {
+        if (left) {
             leftTime = time;
             ((TextView) findViewById(R.id.qujiantext)).setText(leftDate + "\n" + leftTime);
         } else {
