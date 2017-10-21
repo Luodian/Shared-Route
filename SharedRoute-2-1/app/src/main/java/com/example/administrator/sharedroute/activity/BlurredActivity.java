@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class BlurredActivity extends Activity {
 
 	public static ArrayList<DialogMenuItem> testItems = new ArrayList<>();
+	public static String fromActivity;
 
 //	private BaseAnimatorSet base_in;
 //	private BaseAnimatorSet base_out;
@@ -28,6 +29,11 @@ public class BlurredActivity extends Activity {
                 .withFilterColor(Color.parseColor("#7fffffff"))
                 .setBackground(this);
 
+		if(getIntent().getStringExtra("Activity").equals("Main")){
+			fromActivity = "Main";
+		}else{
+			fromActivity = "SearchNeeds";
+		}
 		if(getIntent().getStringExtra("select").equals("release")) {
 			testItems.add(new DialogMenuItem("快递名称:", R.mipmap.ic_express));
 			testItems.add(new DialogMenuItem("发布时间:", R.mipmap.ic_get_time));

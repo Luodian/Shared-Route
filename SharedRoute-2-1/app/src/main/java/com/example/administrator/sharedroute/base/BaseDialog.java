@@ -16,7 +16,9 @@ import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.widget.LinearLayout;
 
+import com.example.administrator.sharedroute.activity.BlurredActivity;
 import com.example.administrator.sharedroute.activity.MainActivity;
+import com.example.administrator.sharedroute.activity.SearchNeedsActivity;
 import com.example.administrator.sharedroute.utils.StatusBarUtils;
 import com.nineoldandroids.animation.Animator;
 
@@ -193,8 +195,13 @@ public abstract class BaseDialog<T extends BaseDialog<T>> extends Dialog{
     @Override
     protected void onStop() {
         super.onStop();
-        Intent intent = new Intent(context, MainActivity.class);
-        context.startActivity(intent);
+        if(BlurredActivity.fromActivity.equals("Main")) {
+            Intent intent = new Intent(context, MainActivity.class);
+            context.startActivity(intent);
+        }else{
+            Intent intent = new Intent(context, SearchNeedsActivity.class);
+            context.startActivity(intent);
+        }
         Log.d(TAG, "onStop");
     }
 
