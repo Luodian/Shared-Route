@@ -40,7 +40,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
     private BottomNavigationView navigation;
 
     private SimpleFragmentPagerAdapter mAdapter;
-    private List<Fragment> mFragments = new ArrayList<Fragment>();
+    private List<Fragment> mFragments = new ArrayList<>();
     private String tabTitles[] = new String[]{"一校区","二校区","三校区"};
 
     public static int goodsCount = 0;
@@ -84,7 +84,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
-            public boolean onNavigationItemSelected(MenuItem item){
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_shop:
                         select = "releaseOrder";
@@ -127,6 +127,12 @@ public class SearchNeedsActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        JumpToActivity(MainActivity.class);
+        finish();
     }
 
     @Override
@@ -205,11 +211,11 @@ public class SearchNeedsActivity extends AppCompatActivity {
         });
     }
 
-    class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
+    private class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragments;
 
-        public SimpleFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+        SimpleFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
             super(fm);
             this.fragments = fragments;
         }

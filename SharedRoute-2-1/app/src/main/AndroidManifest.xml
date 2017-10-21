@@ -36,6 +36,7 @@
         <activity android:name=".activity.PayBillActivity"/>
         <activity android:name=".activity.HistoryInfoActivity" />
         <activity android:name=".activity.InfoSettingActivity" />
+        <activity android:name=".activity.sendLocationActivity" />
     </application>
 
 </manifest>

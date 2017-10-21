@@ -51,16 +51,6 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
     private void initView() {
         listView = (ListView) findViewById(R.id.shoppingtrolly_listview);
         mToolbar = (Toolbar) findViewById(R.id.toolbartaskview) ;
-//        listItem item1 = new listItem("书籍","小件","今天 12：30","一区 顺风速运","今天 12：30","一区 正心楼 524",2.0,false);
-//        listItem item8 = new listItem("书籍","小件","今天 12：30","一区 顺风速运","今天 12：30","一区 正心楼 524",2.0,false);
-//        listItem item2 = new listItem("设备","小件","今天 18：30","一区 韵达快递","今天 12：30","一区 2公寓 5024",8.0,false);
-//        listItem item6 = new listItem("设备","小件","今天 18：30","一区 韵达快递","今天 12：30","一区 2公寓 5024",8.0,false);
-//        listItem item7 = new listItem("设备","小件","今天 18：30","一区 韵达快递","今天 12：30","一区 2公寓 5024",8.0,false);
-//        listItem item3 = new listItem("食物","小件","今天 15：30","一区 中通快递","今天 12：30","一区 18公寓 9001",5.0,false);
-//        listItem item4 = new listItem("食物","小件","今天 15：30","一区 中通快递","今天 12：30","一区 18公寓 9001",5.0,false);
-//        listItem item5 = new listItem("食物","小件","今天 15：30","一区 中通快递","今天 12：30","一区 18公寓 9001",5.0,false);
-//        listItem item9 = new listItem("食物","小件","今天 15：30","一区 中通快递","今天 12：30","一区 18公寓 9001",5.0,false);
-//        listItem item10 = new listItem("食物","小件","今天 15：30","一区 中通快递","今天 12：30","一区 18公寓 9001",5.0,false);
 
         Intent intent = getIntent();
         Bundle bundle =intent.getExtras();
@@ -68,20 +58,13 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
 
         trollyAdapter  = new TaskViewAdapter(TaskViewActivity.this);
 
-        for (listItem e : listItemList)
+        if (listItemList != null)
         {
-            trollyAdapter.add(e);
+            for (listItem e : listItemList) {
+                trollyAdapter.add(e);
+            }
         }
-//        trollyAdapter.add(item1);
-//        trollyAdapter.add(item2);
-//        trollyAdapter.add(item3);
-//        trollyAdapter.add(item4);
-//        trollyAdapter.add(item5);
-//        trollyAdapter.add(item6);
-//        trollyAdapter.add(item7);
-//        trollyAdapter.add(item8);
-//        trollyAdapter.add(item9);
-//        trollyAdapter.add(item10);
+
         SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(trollyAdapter, this));
         swingBottomInAnimationAdapter.setAbsListView(listView);
         assert swingBottomInAnimationAdapter.getViewAnimator() != null;
@@ -94,7 +77,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 listItemList = trollyAdapter.getItems();
-                ArrayList<Integer> deleteNumbers = new ArrayList<Integer>();
+                ArrayList<Integer> deleteNumbers = new ArrayList<>();
                 int count=0;
                 for (listItem e:listItemList) {
                     if (e.isCheckBoxElected()) deleteNumbers.add(count);
@@ -113,7 +96,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 listItemList = trollyAdapter.getItems();
-                ArrayList<listItem> listElected = new ArrayList<listItem>();
+                ArrayList<listItem> listElected = new ArrayList<>();
                 for (listItem e:listItemList) {
                     if (e.isCheckBoxElected()) listElected.add(e);
                 }
@@ -132,7 +115,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 listItemList = trollyAdapter.getItems();
-                if (lastCheckBoxStatus == false){
+                if (!lastCheckBoxStatus) {
                     for (listItem e:listItemList) {
                         e.setCheckBoxElected(true);
                         lastCheckBoxStatus=true;
@@ -150,7 +133,6 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
         });
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("任务栏");
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);

@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,9 +27,7 @@ import android.widget.RelativeLayout;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.SearchNeedsRcViewAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
-import com.example.administrator.sharedroute.listener.RecyclerItemClickListener;
-import com.example.administrator.sharedroute.utils.Utils;
-import com.example.administrator.sharedroute.widget.SelfDialog;
+import com.example.administrator.sharedroute.utils.EndLessOnScrollListener;
 
 import java.util.ArrayList;
 
@@ -63,9 +62,10 @@ public class PageFragment extends Fragment {
                 //这里执行加载数据的操作
                 Log.e("tag", "我是page"+(mTabPos+1));
             }
-            return;
-        };
+        }
     };
+
+    private SwipeRefreshLayout mRefreshLayout;
 
     public PageFragment(int serial){
         mSerial = serial;
@@ -75,7 +75,6 @@ public class PageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("tag","onCreate()方法执行");
-
     }
 
     public void sendMessage(){
@@ -91,6 +90,7 @@ public class PageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.e("tag","onCreateView()方法执行");
+
         View view = inflater.inflate(R.layout.campus1_search_needs, container, false);
 
         RecyclerView mrc = (RecyclerView) view.findViewById(R.id.searchNeeds_recycler_view);
@@ -102,33 +102,6 @@ public class PageFragment extends Fragment {
         mrc.setLayoutManager(llm);
         vibrator = (Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE);
 
-//        mrc.addOnItemTouchListener(new RecyclerItemClickListener(mrc,
-//                new RecyclerItemClickListener.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(View view, int position) {
-////                        final SelfDialog selfDialog;
-////                        selfDialog = new SelfDialog(getContext());
-////                        selfDialog.setTitle("任务详情");
-////                        selfDialog.setTaskNameInfo(myDataset.get(position).getExpressType());
-////                        selfDialog.setPriceInfoStr(myDataset.get(position).getPrice());
-////                        selfDialog.setPublisherNameInfoStr("Null");
-////                        selfDialog.setYesOnclickListener("确定", new SelfDialog.onYesOnclickListener() {
-////                            @Override
-////                            public void onYesClick() {
-////                                selfDialog.dismiss();
-////                            }
-////                        });
-////                        selfDialog.show();
-//                    }
-//                    @Override
-//                    public void onItemLongClick(View view, int position) {
-////                        System.out.println("onItemLongClick " + position);
-//                    }
-//                }));
-
-//
-//        // specify an adapter (see also next example)
-
         refreshCart();
         init_data();
         // 是否显示购物车商品数目
@@ -138,8 +111,6 @@ public class PageFragment extends Fragment {
         Log.d("Fragment 1", "onCreateView");
         //End pos
 
-//        mfab = (FloatingActionButton) view.findViewById(R.id.fab);
-//        isShowCartGoodsCount();
         // 添加数据源
         adapter = new SearchNeedsRcViewAdapter(myDataset);
         adapter.setCallBackListener(new SearchNeedsRcViewAdapter.CallBackListener() {
@@ -151,18 +122,38 @@ public class PageFragment extends Fragment {
         });
         mrc.setAdapter(adapter);
 
+        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.layout_swipe_refresh);
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            public void onRefresh() {
+                //我在List最前面加入一条数据
+
+//                //数据重新加载完成后，提示数据发生改变，并且设置现在不在刷新
+//                adapter.notifyDataSetChanged();
+                mRefreshLayout.setRefreshing(false);
+            }
+        });
+        mrc.addOnScrollListener(new EndLessOnScrollListener(llm) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                loadMoreData();
+            }
+        });
+
         //设置页和当前页一致时加载，防止预加载
         if (isFirst && mTabPos==mSerial) {
             isFirst = false;
             sendMessage();
         }
-//        adapter.setOnItemClickListener(new SearchNeedsRcViewAdapter.OnItemClickListener(){
-//            @Override
-//            public void onItemClick(View view , int position){
-//                Toast.makeText(getContext(),myDataset.get(position).getExpressType(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
         return view;
+    }
+
+    //每次上拉加载的时候，给RecyclerView的后面添加了10条数据数据
+    private void loadMoreData() {
+        for (int i = 0; i < 10; i++) {
+            listItem item1 = new listItem("书籍", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+            myDataset.add(item1);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void addGoodsToCart(ImageView goodsImg) {
