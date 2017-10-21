@@ -45,9 +45,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.example.administrator.sharedroute.R.layout.activity_receive_order;
-import static com.example.administrator.sharedroute.R.layout.activity_release_order;
-
 /**
  * Created by ouyangshen on 2016/10/21.
  */
@@ -151,9 +148,9 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
 		mTabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
 		mInflater = LayoutInflater.from(this);
-        view1 = mInflater.inflate(activity_release_order, null);
-        view2 = mInflater.inflate(activity_receive_order, null);
-        //添加页卡视图
+		view1 = mInflater.inflate(R.layout.activity_release_order, null);
+		view2 = mInflater.inflate(R.layout.activity_receive_order, null);
+		//添加页卡视图
 		mViewList.add(view1);
 		mViewList.add(view2);
 
