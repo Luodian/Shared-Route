@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.SearchNeedsRcViewAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
+import com.example.administrator.sharedroute.utils.EndLessOnScrollListener;
 
 import java.util.ArrayList;
 
@@ -74,7 +75,6 @@ public class PageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("tag","onCreate()方法执行");
-
     }
 
     public void sendMessage(){
@@ -132,6 +132,12 @@ public class PageFragment extends Fragment {
                 mRefreshLayout.setRefreshing(false);
             }
         });
+        mrc.addOnScrollListener(new EndLessOnScrollListener(llm) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                loadMoreData();
+            }
+        });
 
         //设置页和当前页一致时加载，防止预加载
         if (isFirst && mTabPos==mSerial) {
@@ -139,6 +145,15 @@ public class PageFragment extends Fragment {
             sendMessage();
         }
         return view;
+    }
+
+    //每次上拉加载的时候，给RecyclerView的后面添加了10条数据数据
+    private void loadMoreData() {
+        for (int i = 0; i < 10; i++) {
+            listItem item1 = new listItem("书籍", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+            myDataset.add(item1);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void addGoodsToCart(ImageView goodsImg) {
