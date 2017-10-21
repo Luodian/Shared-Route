@@ -53,10 +53,4 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <!-- 使用style方式定义activity切换动画 -->
-    <style name="activityAnim">
-        <item name="android:activityOpenEnterAnimation">@anim/slide_in_top</item>
-        <item name="android:activityOpenExitAnimation">@anim/slide_in_top</item>
-    </style>
-
 </resources>
