@@ -136,7 +136,7 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
         holder.sendTimeTextView.setText(mDataset.get(position).getOutTimeStamp());
         holder.fetchLocTextView.setText(mDataset.get(position).getInLocation());
         holder.sendLocTextView.setText(mDataset.get(position).getOutLocation());
-        holder.priceTextView.setText(mDataset.get(position).getPrice());
+        holder.priceTextView.setText(String.valueOf(mDataset.get(position).getPrice())+"元");
 
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             //说实话，这样监听不太好，每次滑动getView的时候都要重新new一个监听，但是必须获取ChechView所在的那个Item的position，所以只能卸载getView函数内部

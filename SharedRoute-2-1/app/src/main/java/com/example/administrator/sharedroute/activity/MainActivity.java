@@ -28,6 +28,7 @@ import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.MyPagerAdapter;
 import com.example.administrator.sharedroute.adapter.ReleaseOrderItemAdapter;
 import com.example.administrator.sharedroute.entity.ReleaseOrderItem;
+import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	private List<ReleaseOrderItem> itemList = new ArrayList<>();
 	private ReleaseOrderItemAdapter adapter;
 	private int mMenuId;
+	private OrderDao orderDao;
 	private BottomNavigationView navigation;
 	private SwipeRefreshLayout swipeRefresh;
 //    ReleaseOrderItem[] items = {new ReleaseOrderItem(R.drawable.yd_express,R.mipmap.ic_type_book,R.mipmap.ic_none_receive_status,"10月1日","书籍"),
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		orderDao = new OrderDao(this);
 
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);

@@ -53,7 +53,7 @@
             android:layout_gravity="center"
             android:background="@drawable/roundedcorner3"
             android:clickable="false"
-            android:text="返回主页"
+            android:text="确认"
             android:textColor="@color/black"
             android:textSize="20dp"/>
     <!--</FrameLayout>-->

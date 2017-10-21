@@ -42,7 +42,7 @@ public class ConfirmFinishedAdapter extends ArrayAdapter<listItem> {
         viewHolder.inLocation.setText(listItems.get(position).getInLocation());
         viewHolder.outTimeStamp.setText(listItems.get(position).getOutTimeStamp());
         viewHolder.outLocation.setText(listItems.get(position).getOutLocation());
-        viewHolder.price.setText(listItems.get(position).getPrice());
+        viewHolder.price.setText(String.valueOf(listItems.get(position).getPrice())+"元");
         return view;
     }
     final static class ViewHolder{//这是每个Item的tag信息
