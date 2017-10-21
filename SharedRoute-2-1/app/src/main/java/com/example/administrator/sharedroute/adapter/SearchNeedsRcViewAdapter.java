@@ -28,9 +28,7 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
         void onItemClick(View view , int position);
     }
     private OnItemClickListener mOnItemClickListener = null;
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mOnItemClickListener = listener;
-    }
+
     @Override
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
@@ -66,16 +64,6 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
             fetchLocTextView = (TextView) itemView.findViewById(R.id.searchNeeds_fetch_loc);
 
             mImageView = (ImageView) itemView.findViewById(R.id.trolley_icon);
-//            mImageView.setOnClickListener(
-//                    new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if (mImageView != null && mCallBackListener != null)
-//                                mCallBackListener.callBackImg(mImageView);
-//                                mImageView.setClickable(false);
-//                                mImageView.setImageResource(R.drawable.trolley_pressed);
-//                        }
-//                    });
         }
 
         public void updateUI(GoodsModel goods){
