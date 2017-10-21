@@ -45,9 +45,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-/**
- * Created by ouyangshen on 2016/10/21.
- */
 public class MainActivity extends AppCompatActivity implements BannerClickListener {
 
 	private BannerPager mBanner;
