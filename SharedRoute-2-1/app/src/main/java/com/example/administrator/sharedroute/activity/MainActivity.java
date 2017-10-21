@@ -127,13 +127,13 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f/ 640f);
 		mBanner.setLayoutParams(params);
 		ArrayList<Integer> bannerArray = new ArrayList<>();
-    bannerArray.add(R.drawable.banner_1);
-    bannerArray.add(R.drawable.banner_2);
-    bannerArray.add(R.drawable.banner_3);
-    bannerArray.add(R.drawable.banner_4);
-    bannerArray.add(R.drawable.banner_5);
-    mBanner.setImage(bannerArray);
-		mBanner.setOnBannerListener(this);
+        bannerArray.add(R.drawable.banner_1);
+        bannerArray.add(R.drawable.banner_2);
+        bannerArray.add(R.drawable.banner_3);
+        bannerArray.add(R.drawable.banner_4);
+        bannerArray.add(R.drawable.banner_5);
+        mBanner.setImage(bannerArray);
+        mBanner.setOnBannerListener(this);
         mBanner.start();
 
 		mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
@@ -265,25 +265,25 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //		listView.setLayoutParams(params);
 //	}
 
-	public boolean onCreateOptionsMenu(Menu menu){
-		getMenuInflater().inflate(R.menu.toolbar,menu);
-		return true;
-	}
-
-	public boolean onMenuOpened(int featureId, Menu menu) {
-		if (menu != null) {
-			if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
-				try {
-					Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-					method.setAccessible(true);
-					method.invoke(menu, true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return super.onMenuOpened(featureId, menu);
-	}
+//	public boolean onCreateOptionsMenu(Menu menu){
+//		getMenuInflater().inflate(R.menu.toolbar,menu);
+//		return true;
+//	}
+//
+//	public boolean onMenuOpened(int featureId, Menu menu) {
+//		if (menu != null) {
+//			if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
+//				try {
+//					Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+//					method.setAccessible(true);
+//					method.invoke(menu, true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		return super.onMenuOpened(featureId, menu);
+//	}
 
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch (item.getItemId()){

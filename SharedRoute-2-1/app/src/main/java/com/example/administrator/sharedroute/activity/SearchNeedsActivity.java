@@ -122,6 +122,10 @@ public class SearchNeedsActivity extends AppCompatActivity {
                         return true;
                     case R.id.nav_setting:
                         return true;
+                    case R.id.nav_login:
+                        Intent intent8 = new Intent(SearchNeedsActivity.this, LoginActivity.class);
+                        startActivity(intent8);
+                        return true;
                     default:
                 }
                 return true;
