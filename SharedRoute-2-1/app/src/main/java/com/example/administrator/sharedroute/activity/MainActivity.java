@@ -45,6 +45,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.example.administrator.sharedroute.R.layout.activity_receive_order;
+import static com.example.administrator.sharedroute.R.layout.activity_release_order;
+
 /**
  * Created by ouyangshen on 2016/10/21.
  */
@@ -136,21 +139,21 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f/ 640f);
 		mBanner.setLayoutParams(params);
 		ArrayList<Integer> bannerArray = new ArrayList<>();
-		bannerArray.add(Integer.valueOf(R.drawable.banner_1));
-		bannerArray.add(Integer.valueOf(R.drawable.banner_2));
-		bannerArray.add(Integer.valueOf(R.drawable.banner_3));
-		bannerArray.add(Integer.valueOf(R.drawable.banner_4));
-		bannerArray.add(Integer.valueOf(R.drawable.banner_5));
-		mBanner.setImage(bannerArray);
+        bannerArray.add(R.drawable.banner_1);
+        bannerArray.add(R.drawable.banner_2);
+        bannerArray.add(R.drawable.banner_3);
+        bannerArray.add(R.drawable.banner_4);
+        bannerArray.add(R.drawable.banner_5);
+        mBanner.setImage(bannerArray);
 		mBanner.setOnBannerListener(this);
         mBanner.start();
 
 		mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
 		mTabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
 		mInflater = LayoutInflater.from(this);
-		view1 = mInflater.inflate(R.layout.activity_release_order, null);
-		view2 = mInflater.inflate(R.layout.activity_receive_order, null);
-		//添加页卡视图
+        view1 = mInflater.inflate(activity_release_order, null);
+        view2 = mInflater.inflate(activity_receive_order, null);
+        //添加页卡视图
 		mViewList.add(view1);
 		mViewList.add(view2);
 
@@ -371,7 +374,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
 	public void JumpToActivity(Class activity){
         startActivity(new Intent(this,activity));
-        overridePendingTransition(0,0);
     }
 
 //	private void sendRequestWithOkHttp(){
