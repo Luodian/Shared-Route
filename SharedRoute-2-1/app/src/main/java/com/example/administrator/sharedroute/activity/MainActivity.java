@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		LayoutParams params = (LayoutParams) mBanner.getLayoutParams();
 		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f/ 640f);
 		mBanner.setLayoutParams(params);
-		ArrayList<Integer> bannerArray = new ArrayList<Integer>();
+		ArrayList<Integer> bannerArray = new ArrayList<>();
 		bannerArray.add(Integer.valueOf(R.drawable.banner_1));
 		bannerArray.add(Integer.valueOf(R.drawable.banner_2));
 		bannerArray.add(Integer.valueOf(R.drawable.banner_3));
@@ -190,34 +190,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 			}
 		});
 
-//        sendRequestWithOkHttp();
-//        ReleaseListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(MainActivity.this,"长按订单可查看详细信息!",Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//		ReleaseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
-//			@Override
-//			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                BlurActivityDialog(release_order_data[position],"release");
-//				return true;
-//			}
-//		});
-
-//        ReceiveListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(MainActivity.this,"长按订单可查看详细信息!",Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        ReceiveListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                BlurActivityDialog(release_order_data[position],"receive");
-//                return true;
-//            }
-//        });
 	}
 
 	@Override
