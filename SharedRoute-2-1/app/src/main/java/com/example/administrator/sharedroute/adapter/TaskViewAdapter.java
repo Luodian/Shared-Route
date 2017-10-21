@@ -58,7 +58,7 @@ public class TaskViewAdapter extends ArrayAdapter<listItem> {
         viewHolder.inLocation.setText(listItems.get(position).getInLocation());
         viewHolder.outTimeStamp.setText(listItems.get(position).getOutTimeStamp());
         viewHolder.outLocation.setText(listItems.get(position).getOutLocation());
-        viewHolder.price.setText(listItems.get(position).getPrice());
+        viewHolder.price.setText(String.valueOf(listItems.get(position).getPrice())+"元");
         viewHolder.checkBox.setChecked(listItems.get(position).isCheckBoxElected());
         viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {//说实话，这样监听不太好，每次滑动getView的时候都要重新new一个监听，但是必须获取ChechView所在的那个Item的position，所以只能卸载getView函数内部
             @Override

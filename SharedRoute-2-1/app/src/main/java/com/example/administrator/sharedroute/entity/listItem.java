@@ -9,13 +9,51 @@ import android.widget.LinearLayout;
  */
 
 public class listItem implements Parcelable{
+    private int taskID;
     private String expressType;
     private String expressSize;
+    private String publishTime;//发布时间
     private String inTimeStamp;//取件时间
     private String inLocation;//取件地点
     private String outLocation;//送件地点
     private String outTimeStamp;//送件时间
+    private String pickupCode;
+
+    public String getPickupCode() {
+        return pickupCode;
+    }
+
+    public void setPickupCode(String pickupCode) {
+        this.pickupCode = pickupCode;
+    }
+
     private double price;//价格
+    private int PorA;
+
+    public int getTaskID() {
+        return taskID;
+    }
+
+    public void setTaskID(int taskID) {
+        this.taskID = taskID;
+    }
+
+    public String getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(String publishTime) {
+        this.publishTime = publishTime;
+    }
+
+    public int getPorA() {
+        return PorA;
+    }
+
+    public void setPorA(int porA) {
+        PorA = porA;
+    }
+
     private boolean isCheckBoxElected;
     public LinearLayout item_bg;
 
@@ -110,8 +148,8 @@ public class listItem implements Parcelable{
         this.outLocation = outLocation;
     }
 
-    public String getPrice() {
-        return String.valueOf(price)+"元";
+    public double getPrice() {
+        return price;
     }
 
     public void setPrice(double price) {
