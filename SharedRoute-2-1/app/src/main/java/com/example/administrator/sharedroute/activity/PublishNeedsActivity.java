@@ -82,7 +82,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
-            public boolean onNavigationItemSelected(MenuItem item){
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_shop:
                         select = "releaseOrder";
@@ -349,7 +349,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 
     public void JumpToActivity(Class activity){
         startActivity(new Intent(this,activity));
-        overridePendingTransition(0,0);
     }
 
     @Override
@@ -365,7 +364,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String date = "" + year + "/" + (++monthOfYear) + "/" + dayOfMonth;
 
-        if (left == true) {
+        if (left) {
             leftDate = date;
         } else {
             rightDate = date;
@@ -398,7 +397,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         String minuteString = minute < 10 ? "0" + minute : "" + minute;
         String secondString = second < 10 ? "0" + second : "" + second;
         String time = "" + hourString + "h" + minuteString + "m" + secondString + "s";
-        if (left == true) {
+        if (left) {
             leftTime = time;
             ((TextView) findViewById(R.id.qujiantext)).setText(leftDate + "\n" + leftTime);
         } else {
