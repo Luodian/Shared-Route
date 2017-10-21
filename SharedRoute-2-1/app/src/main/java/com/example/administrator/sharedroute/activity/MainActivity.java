@@ -45,9 +45,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-/**
- * Created by ouyangshen on 2016/10/21.
- */
 public class MainActivity extends AppCompatActivity implements BannerClickListener {
 
 	private BannerPager mBanner;
@@ -136,12 +133,12 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f/ 640f);
 		mBanner.setLayoutParams(params);
 		ArrayList<Integer> bannerArray = new ArrayList<>();
-		bannerArray.add(Integer.valueOf(R.drawable.banner_1));
-		bannerArray.add(Integer.valueOf(R.drawable.banner_2));
-		bannerArray.add(Integer.valueOf(R.drawable.banner_3));
-		bannerArray.add(Integer.valueOf(R.drawable.banner_4));
-		bannerArray.add(Integer.valueOf(R.drawable.banner_5));
-		mBanner.setImage(bannerArray);
+        bannerArray.add(R.drawable.banner_1);
+        bannerArray.add(R.drawable.banner_2);
+        bannerArray.add(R.drawable.banner_3);
+        bannerArray.add(R.drawable.banner_4);
+        bannerArray.add(R.drawable.banner_5);
+        mBanner.setImage(bannerArray);
 		mBanner.setOnBannerListener(this);
         mBanner.start();
 
@@ -371,7 +368,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
 	public void JumpToActivity(Class activity){
         startActivity(new Intent(this,activity));
-        overridePendingTransition(0,0);
     }
 
 //	private void sendRequestWithOkHttp(){
