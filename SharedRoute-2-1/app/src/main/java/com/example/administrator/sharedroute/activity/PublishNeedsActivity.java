@@ -315,7 +315,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 
     public void JumpToActivity(Class activity){
         startActivity(new Intent(this,activity));
-        overridePendingTransition(0,0);
     }
 
     @Override
