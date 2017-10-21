@@ -43,8 +43,13 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     String leftTime;
     String rightDate;
     String rightTime;
+    private int requestCode;
     private BottomNavigationView navigation;
     private DrawerLayout mDrawerLayout;
+    private Button pickupLocationButton;
+    private TextView textViewName;
+    private TextView textViewPhoneNumber;
+    private Button sendLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +57,17 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         setContentView(R.layout.activity_publish_needs);
         final Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        /*
+         *显示返回的收件地点信息
+         */
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("发布需求");
+        pickupLocationButton = (Button)findViewById(R.id.pickupplace);
+        textViewName = (TextView)findViewById(R.id.nametext) ;
+        textViewPhoneNumber = (TextView)findViewById(R.id.phonetext) ;
+        sendLocation = (Button)findViewById(R.id.delieverplace);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -70,7 +82,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
-            public boolean onNavigationItemSelected(MenuItem item){
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_shop:
                         select = "releaseOrder";
@@ -117,13 +129,16 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         final TextView nameText = (TextView) findViewById(R.id.nametext);
         final TextView phoneText = (TextView) findViewById(R.id.phonetext);
         final Button pickupPlace = (Button) findViewById(R.id.pickupplace);
+
         pickupPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PublishNeedsActivity.this, HistoryInfoActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(PublishNeedsActivity.this, sendLocationActivity.class);
+                requestCode=1;
+                startActivityForResult(intent,requestCode);
             }
         });
+
         final Button delieverPlace = (Button) findViewById(R.id.delieverplace);
 
         final TextView qujiantext = (TextView) findViewById(R.id.qujiantext);
@@ -145,15 +160,16 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PublishNeedsActivity.this, HistoryInfoActivity.class);
-                startActivity(intent);
+                requestCode = 0;
+                startActivityForResult(intent,requestCode);
             }
         });
         delieverPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PublishNeedsActivity.this, HistoryInfoActivity.class);
-                startActivity(intent);
-                finish();
+                requestCode = 0;
+                startActivityForResult(intent,requestCode);
             }
         });
 
@@ -270,6 +286,30 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        switch (requestCode){
+            case 0:{
+                if (data == null) break;
+                String textName = data.getStringExtra("textName");
+                String textPhone = data.getStringExtra("textPhone");
+                String textDeliverPlace = data.getStringExtra("textDeliverPlace");
+                textViewName.setText(textName);
+                textViewPhoneNumber.setText(textPhone);
+                sendLocation.setText(textDeliverPlace);
+                break;
+            }
+            case 1:{
+                String pickupLocation = data.getStringExtra("pickupLocation");
+                pickupLocationButton.setText(pickupLocation);
+                break;
+            }
+            default:break;
+        }
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -309,7 +349,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 
     public void JumpToActivity(Class activity){
         startActivity(new Intent(this,activity));
-        overridePendingTransition(0,0);
     }
 
     @Override
@@ -325,7 +364,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String date = "" + year + "/" + (++monthOfYear) + "/" + dayOfMonth;
 
-        if (left == true) {
+        if (left) {
             leftDate = date;
         } else {
             rightDate = date;
@@ -358,7 +397,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         String minuteString = minute < 10 ? "0" + minute : "" + minute;
         String secondString = second < 10 ? "0" + second : "" + second;
         String time = "" + hourString + "h" + minuteString + "m" + secondString + "s";
-        if (left == true) {
+        if (left) {
             leftTime = time;
             ((TextView) findViewById(R.id.qujiantext)).setText(leftDate + "\n" + leftTime);
         } else {

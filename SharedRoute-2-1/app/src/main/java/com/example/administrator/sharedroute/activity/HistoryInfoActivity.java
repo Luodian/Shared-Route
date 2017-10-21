@@ -36,6 +36,8 @@ public class HistoryInfoActivity extends AppCompatActivity {
     private MyAdapter myAdapter;
     private List<HistoryInfo> listData= new ArrayList<>();
     private LayoutInflater inflater;
+    final static private int requestCode = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -184,11 +186,10 @@ public class HistoryInfoActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent1 = new Intent(HistoryInfoActivity.this,InfoSettingActivity.class);
                     Bundle bundle = new Bundle();
-                    //list 中的索引值
-                    bundle.putCharSequence("index",String.valueOf(listData.indexOf(item)));
-                    bundle.putCharSequence("nameInfo", item.getName());
-                    bundle.putCharSequence("phoneInfo", item.getPhone());
-                    bundle.putCharSequence("delieverplaceInfo", item.getDeliverPlace());
+                    bundle.putCharSequence("nameInfo", "");
+                    bundle.putCharSequence("phoneInfo", "");
+                    bundle.putCharSequence("delieverplaceInfo", "");
+                    bundle.putCharSequence("index","-1");
                     intent1.putExtras(bundle);
                     startActivity(intent1);
                     finish();
@@ -241,15 +242,12 @@ public class HistoryInfoActivity extends AppCompatActivity {
             helper.getView(R.id.content).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent1 = new Intent(HistoryInfoActivity.this,PublishNeedsActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putCharSequence("nameInfo", item.getName());
-                    bundle.putCharSequence("phoneInfo", item.getPhone());
-                    bundle.putCharSequence("delieverplaceInfo", item.getDeliverPlace());
-                    intent1.putExtras(bundle);
-                    v.getContext().startActivity(intent1);
-                    ((AppCompatActivity)mContext).finish();
-
+                    Intent intent1 = new Intent();
+                    intent1.putExtra("textName",item.getName());
+                    intent1.putExtra("textPhone",item.getPhone());
+                    intent1.putExtra("textDeliverPlace",item.getDeliverPlace());
+                    HistoryInfoActivity.this.setResult(requestCode,intent1);
+                    HistoryInfoActivity.this.finish();
                 }
             });
 
