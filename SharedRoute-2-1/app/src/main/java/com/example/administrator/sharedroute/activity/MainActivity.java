@@ -17,7 +17,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,22 +31,10 @@ import com.example.administrator.sharedroute.entity.ReleaseOrderItem;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
-/**
- * Created by ouyangshen on 2016/10/21.
- */
 public class MainActivity extends AppCompatActivity implements BannerClickListener {
 
 	private BannerPager mBanner;
@@ -125,6 +112,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 						return true;
 					case R.id.nav_setting:
 						return true;
+					case R.id.nav_login:
+						Intent intent8 = new Intent(MainActivity.this,LoginActivity.class);
+						startActivity(intent8);
+						return true;
 					default:
 				}
 				return true;
@@ -136,12 +127,12 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f/ 640f);
 		mBanner.setLayoutParams(params);
 		ArrayList<Integer> bannerArray = new ArrayList<>();
-		bannerArray.add(Integer.valueOf(R.drawable.banner_1));
-		bannerArray.add(Integer.valueOf(R.drawable.banner_2));
-		bannerArray.add(Integer.valueOf(R.drawable.banner_3));
-		bannerArray.add(Integer.valueOf(R.drawable.banner_4));
-		bannerArray.add(Integer.valueOf(R.drawable.banner_5));
-		mBanner.setImage(bannerArray);
+    bannerArray.add(R.drawable.banner_1);
+    bannerArray.add(R.drawable.banner_2);
+    bannerArray.add(R.drawable.banner_3);
+    bannerArray.add(R.drawable.banner_4);
+    bannerArray.add(R.drawable.banner_5);
+    mBanner.setImage(bannerArray);
 		mBanner.setOnBannerListener(this);
         mBanner.start();
 
@@ -371,7 +362,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
 	public void JumpToActivity(Class activity){
         startActivity(new Intent(this,activity));
-        overridePendingTransition(0,0);
     }
 
 //	private void sendRequestWithOkHttp(){
@@ -444,39 +434,39 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //			}
 //		});
 //	}
-
-	public void httpPostJSON(){
-		String json="{\n" +
-				"  \"id\" : 3,\n" +
-				"  \"expressName\" : \"45\",\n" +
-				"  \"releaseDate\" : \"366\",\n" +
-				"  \"releaseType\" : \"351\",\n" +
-				"  \"packageStatus\" : \"1234\"\n" +
-				"}";
-		MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-		//换成自己的ip就行
-		String url = "http://192.168.43.49:8080/packageMessage";
-		OkHttpClient client = new OkHttpClient();//创建okhttp实例
-		RequestBody body = RequestBody.create(JSON,json);
-		Request request = new Request.Builder()
-				.url(url)
-				.post(body)
-				.build();
-		Call call = client.newCall(request);
-		call.enqueue(new Callback() {
-			//请求失败时调用
-			@Override
-			public void onFailure(Call call, IOException e) {
-				Log.i("MainActivity", "onFailure: " + e);
-			}
-			//请求成功时调用
-			@Override
-			public void onResponse(Call call, Response response) throws IOException {
-				if (response.isSuccessful()) {
-					Log.i("MainActivity", "onResponse: " + response.body().string());
-				}
-			}
-		});
-
-	}
+//
+//	public void httpPostJSON(){
+//		String json="{\n" +
+//				"  \"id\" : 3,\n" +
+//				"  \"expressName\" : \"45\",\n" +
+//				"  \"releaseDate\" : \"366\",\n" +
+//				"  \"releaseType\" : \"351\",\n" +
+//				"  \"packageStatus\" : \"1234\"\n" +
+//				"}";
+//		MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+//		//换成自己的ip就行
+//		String url = "http://192.168.43.49:8080/packageMessage";
+//		OkHttpClient client = new OkHttpClient();//创建okhttp实例
+//		RequestBody body = RequestBody.create(JSON,json);
+//		Request request = new Request.Builder()
+//				.url(url)
+//				.post(body)
+//				.build();
+//		Call call = client.newCall(request);
+//		call.enqueue(new Callback() {
+//			//请求失败时调用
+//			@Override
+//			public void onFailure(Call call, IOException e) {
+//				Log.i("MainActivity", "onFailure: " + e);
+//			}
+//			//请求成功时调用
+//			@Override
+//			public void onResponse(Call call, Response response) throws IOException {
+//				if (response.isSuccessful()) {
+//					Log.i("MainActivity", "onResponse: " + response.body().string());
+//				}
+//			}
+//		});
+//
+//	}
 }

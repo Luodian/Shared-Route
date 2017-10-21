@@ -56,6 +56,7 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
         }
         View view = LayoutInflater.from(mContext).inflate(R.layout.release_order_item_layout,parent,false);
         final ViewHolder holder = new ViewHolder(view);
+
         holder.cardView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -73,6 +74,7 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     intent.putExtra("title_name","title"+Integer.toString(position+1));
                     intent.putExtra("select","release");
+                    intent.putExtra("Activity","Main");
                     mContext.startActivity(intent);
                 }
             });

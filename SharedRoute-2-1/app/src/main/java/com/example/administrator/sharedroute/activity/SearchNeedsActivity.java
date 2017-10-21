@@ -165,7 +165,6 @@ public class SearchNeedsActivity extends AppCompatActivity {
 
     public void JumpToActivity(Class activity){
         startActivity(new Intent(this,activity));
-        overridePendingTransition(0,0);
     }
 
     public boolean onOptionsItemSelected(MenuItem item){

@@ -1,5 +1,9 @@
 package com.example.administrator.sharedroute.adapter;
 
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,8 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.sharedroute.R;
+import com.example.administrator.sharedroute.activity.BlurredActivity;
 import com.example.administrator.sharedroute.entity.GoodsModel;
 import com.example.administrator.sharedroute.entity.listItem;
+import com.example.administrator.sharedroute.listener.OnBlurCompleteListener;
+import com.example.administrator.sharedroute.widget.BlurBehind;
 
 import java.util.ArrayList;
 
@@ -23,9 +30,9 @@ import static com.example.administrator.sharedroute.activity.SearchNeedsActivity
 public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRcViewAdapter.ViewHolder> implements View.OnClickListener {
     private ArrayList<listItem> mDataset;
     private CallBackListener mCallBackListener;
-
-    interface OnItemClickListener {
-        void onItemClick(View view , int position);
+    private Context mContext;
+    public static interface OnItemClickListener {
+        void onItemClick(View view, int position);
     }
     private OnItemClickListener mOnItemClickListener = null;
 
@@ -81,18 +88,43 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
     }
 
     // Create new views (invoked by the layout manager)
+//    @Override
+//    public SearchNeedsRcViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//        // create a new view
+//        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_search_needs, parent, false);
+//        // set the view's size, margins, paddings and layout parameters
+//        v.setOnClickListener(this);
+//        return new ViewHolder(v);
+//    }
+
     @Override
-    public SearchNeedsRcViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                  int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.content_search_needs, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        v.setOnClickListener(this);
-        return new ViewHolder(v);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+        if(mContext == null){
+            mContext = parent.getContext();
+        }
+        View view = LayoutInflater.from(mContext).inflate(R.layout.content_search_needs,parent,false);
+        final ViewHolder holder = new ViewHolder(view);
+
+        holder.mCardView.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v){
+                BlurBehind.getInstance().execute((Activity) mContext, new OnBlurCompleteListener() {
+                    final int position = holder.getAdapterPosition();
+                    @Override
+                    public void onBlurComplete() {
+                        Intent intent = new Intent(mContext, BlurredActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent.putExtra("title_name","title"+Integer.toString(position+1));
+                        intent.putExtra("select","release");
+                        intent.putExtra("Activity","SearchNeeds");
+                        mContext.startActivity(intent);
+                    }
+                });
+                return true;
+            }
+        });
+        return holder;
     }
-
-
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position)
@@ -105,6 +137,7 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
         holder.fetchLocTextView.setText(mDataset.get(position).getInLocation());
         holder.sendLocTextView.setText(mDataset.get(position).getOutLocation());
         holder.priceTextView.setText(mDataset.get(position).getPrice());
+
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             //说实话，这样监听不太好，每次滑动getView的时候都要重新new一个监听，但是必须获取ChechView所在的那个Item的position，所以只能卸载getView函数内部
             @Override
@@ -118,6 +151,20 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
                 selectedItem.add(item);
             }
         });
+//        holder.mCardView.setOnLongClickListener(new View.OnLongClickListener(){
+//            @Override
+//            public boolean onLongClick(View v){
+//                BlurBehind.getInstance().execute((Activity) mContext, new OnBlurCompleteListener() {
+//                    @Override
+//                    public void onBlurComplete() {
+//                        Intent intent = new Intent(mContext, BlurredActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        mContext.startActivity(intent);
+//                    }
+//                });
+//                return true;
+//            }
+//        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
