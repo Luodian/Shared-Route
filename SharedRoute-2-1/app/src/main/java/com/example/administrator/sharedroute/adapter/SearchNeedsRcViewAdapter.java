@@ -1,5 +1,6 @@
 package com.example.administrator.sharedroute.adapter;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -30,14 +31,11 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
     private ArrayList<listItem> mDataset;
     private CallBackListener mCallBackListener;
     private Context mContext;
-
     public static interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
     private OnItemClickListener mOnItemClickListener = null;
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mOnItemClickListener = listener;
-    }
+
     @Override
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
@@ -49,18 +47,19 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public class ViewHolder extends RecyclerView.ViewHolder
+    class ViewHolder extends RecyclerView.ViewHolder
     {
         // each data item is just a string in this case
-        public CardView mCardView;
-        public TextView kindsTextView;
-        public TextView priceTextView;
-        public TextView sendTimeTextView;
-        public TextView fetchTimeTextView;
-        public TextView sendLocTextView;
-        public TextView fetchLocTextView;
-        public ImageView mImageView;
-        public ViewHolder(final View itemView) {
+        CardView mCardView;
+        TextView kindsTextView;
+        TextView priceTextView;
+        TextView sendTimeTextView;
+        TextView fetchTimeTextView;
+        TextView sendLocTextView;
+        TextView fetchLocTextView;
+        ImageView mImageView;
+
+        ViewHolder(final View itemView) {
             super(itemView);
             mCardView = (CardView) itemView.findViewById(R.id.searchNeeds_card_view);
 
@@ -72,16 +71,6 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
             fetchLocTextView = (TextView) itemView.findViewById(R.id.searchNeeds_fetch_loc);
 
             mImageView = (ImageView) itemView.findViewById(R.id.trolley_icon);
-//            mImageView.setOnClickListener(
-//                    new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if (mImageView != null && mCallBackListener != null)
-//                                mCallBackListener.callBackImg(mImageView);
-//                                mImageView.setClickable(false);
-//                                mImageView.setImageResource(R.drawable.trolley_pressed);
-//                        }
-//                    });
         }
 
         public void updateUI(GoodsModel goods){
@@ -155,11 +144,11 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
             public void onClick(View v) {//等于说对于那10个左右的ChechBox,其绑定的监听在不断的改变
                 if (holder.mImageView != null && mCallBackListener != null)
                     mCallBackListener.callBackImg(holder.mImageView);
+                assert holder.mImageView != null;
                 holder.mImageView.setClickable(false);
                 holder.mImageView.setImageResource(R.drawable.trolley_pressed);
                 listItem item = mDataset.get(position);
                 selectedItem.add(item);
-//                notifyDataSetChanged();
             }
         });
 //        holder.mCardView.setOnLongClickListener(new View.OnLongClickListener(){

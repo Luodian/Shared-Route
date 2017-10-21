@@ -17,8 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 import com.unstoppable.submitbuttonview.SubmitButton;
@@ -142,10 +142,10 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         final Button delieverPlace = (Button) findViewById(R.id.delieverplace);
 
         final TextView qujiantext = (TextView) findViewById(R.id.qujiantext);
-        LinearLayout qujianshijan = (LinearLayout) findViewById(R.id.qujianshijian);
+//        LinearLayout qujianshijan = (LinearLayout) findViewById(R.id.qujianshijian);
 
         final TextView songjianText = (TextView) findViewById(R.id.songjiantext);
-        LinearLayout songjianshijian = (LinearLayout) findViewById(R.id.songjianshijian);
+//        LinearLayout songjianshijian = (LinearLayout) findViewById(R.id.songjianshijian);
 
         if (bundle != null && bundle.containsKey("nameInfo")) {
             nameText.setText(bundle.getString("nameInfo"));
@@ -153,8 +153,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             delieverPlace.setText(bundle.getString("delieverplaceInfo"));
         }
 
-
-        //cardView设置圆角和阴影
         CardView cdv1 = (CardView) findViewById(R.id.cdv1);
         cdv1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,7 +179,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         List<String> dataset = new LinkedList<>(Arrays.asList("书籍", "玩具", "化妆品", "电器"));
         niceSpinner.attachDataSource(dataset);
 
-        qujianshijan.setOnClickListener(new View.OnClickListener() {
+        qujiantext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 left = true;
@@ -197,29 +195,10 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                 dpd.dismissOnPause(true);
                 dpd.showYearPickerFirst(true);
                 dpd.show(getFragmentManager(), "Datepickerdialog");
-//                TimePickerDialog tpd = TimePickerDialog.newInstance(
-//                        MainActivity.this,
-//                        now.get(Calendar.HOUR_OF_DAY),
-//                        now.get(Calendar.MINUTE),
-//                        true
-//                );
-//                tpd.setThemeDark(false);
-//                tpd.vibrate(true);
-//                tpd.dismissOnPause(true);
-//                tpd.enableSeconds(true);
-//                tpd.setVersion(TimePickerDialog.Version.VERSION_1);
-//                tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//                    @Override
-//                    public void onCancel(DialogInterface dialogInterface) {
-//                        Log.d("TimePicker", "Dialog was cancelled");
-//                    }
-//                });
-//                tpd.show(getFragmentManager(), "Timepickerdialog");
-//                ((TextView) findViewById(R.id.qujiantext)).setText(leftDate+""+leftTime);
             }
         });
 
-        songjianshijian.setOnClickListener(new View.OnClickListener() {
+        songjianText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 left = false;
@@ -235,26 +214,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                 dpd.dismissOnPause(true);
                 dpd.showYearPickerFirst(true);
                 dpd.show(getFragmentManager(), "Datepickerdialog");
-
-//                TimePickerDialog tpd = TimePickerDialog.newInstance(
-//                        MainActivity.this,
-//                        now.get(Calendar.HOUR_OF_DAY),
-//                        now.get(Calendar.MINUTE),
-//                        true
-//                );
-//                tpd.setThemeDark(false);
-//                tpd.vibrate(true);
-//                tpd.dismissOnPause(true);
-//                tpd.enableSeconds(true);
-//                tpd.setVersion(TimePickerDialog.Version.VERSION_1);
-//                tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//                    @Override
-//                    public void onCancel(DialogInterface dialogInterface) {
-//                        Log.d("TimePicker", "Dialog was cancelled");
-//                    }
-//                });
-//                tpd.show(getFragmentManager(), "Timepickerdialog");
-//                ((TextView) findViewById(R.id.songjiantext)).setText(rightDate+""+rightTime);
             }
         });
 
@@ -266,21 +225,60 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (nameText.getText().toString().equals("")||phoneText.getText().toString().equals("")||numText.getText().toString().equals("")
+                        ||delieverPlace.getText().toString().equals("送件地点")||pickupPlace.getText().toString().equals("取件地点")||
+                        ((TextView) findViewById(R.id.qujiantext)).getText().toString().equals("选择时间")||
+                        ((TextView) findViewById(R.id.songjiantext)).getText().toString().equals("选择时间")||
+                        money.getText().toString().equals("")){
+                    Toast.makeText(PublishNeedsActivity.this,"请将信息填写完整",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                String str = phoneText.getText().toString();
+                for (int i=0;i<str.length();++i){
+                    if (str.charAt(i)<'0' || str.charAt(i)>'9') {
+                        Toast.makeText(PublishNeedsActivity.this,"请输入正确的手机号码",Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+                str = money.getText().toString();
+                boolean hasDotYet = false;
+                for (int i=0;i<str.length();++i) {
+                    if(str.charAt(i)=='.'&&(!hasDotYet)){
+                        hasDotYet=true;
+                    }else  if ((str.charAt(i)=='.'&&hasDotYet)) {
+                        Toast.makeText(PublishNeedsActivity.this,"请输入争取的金额",Toast.LENGTH_LONG).show();
+                        return;
+                    } else if (str.charAt(i)!='.'&&(str.charAt(i)<'0'||str.charAt(i)>'9')) {
+                        Toast.makeText(PublishNeedsActivity.this,"请输入争取的金额",Toast.LENGTH_LONG).show();
+                        return;
+                        }
+                }
                 submitBtn.doResult(true);
-                Intent intent1 = new Intent(PublishNeedsActivity.this, PayBillActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putCharSequence("name", nameText.getText().toString());
-                bundle.putCharSequence("phone", phoneText.getText().toString());
-                bundle.putCharSequence("packsort", niceSpinner.getText().toString());
-                bundle.putCharSequence("remark", remarkText.getText().toString());
-                bundle.putCharSequence("num", numText.getText().toString());
-                bundle.putCharSequence("pickupplace", pickupPlace.getText().toString());
-                bundle.putCharSequence("delieverplace", delieverPlace.getText().toString());
-                bundle.putCharSequence("pickuptime", qujiantext.getText().toString());
-                bundle.putCharSequence("delievertime", songjianText.getText().toString());
-                bundle.putCharSequence("money", money.getText().toString());
-                intent1.putExtras(bundle);
-                startActivity(intent1);
+                Thread thread = new Thread() {
+                 public void run(){
+                     try {
+                         Thread.sleep(1500);
+                     } catch (InterruptedException e) {
+                         e.printStackTrace();
+                     }
+                     Intent intent1 = new Intent(PublishNeedsActivity.this, PayBillActivity.class);
+                     Bundle bundle = new Bundle();
+                     bundle.putCharSequence("remark",remarkText.getText().toString());
+                     bundle.putCharSequence("name", nameText.getText().toString());
+                     bundle.putCharSequence("phone", phoneText.getText().toString());
+                     bundle.putCharSequence("packsort", niceSpinner.getText().toString());
+                     bundle.putCharSequence("remark", remarkText.getText().toString());
+                     bundle.putCharSequence("num", numText.getText().toString());
+                     bundle.putCharSequence("pickupplace", pickupPlace.getText().toString());
+                     bundle.putCharSequence("delieverplace", delieverPlace.getText().toString());
+                     bundle.putCharSequence("pickuptime", qujiantext.getText().toString());
+                     bundle.putCharSequence("delievertime", songjianText.getText().toString());
+                     bundle.putCharSequence("money", money.getText().toString());
+                     intent1.putExtras(bundle);
+                     startActivity(intent1);
+                 }
+                };
+                thread.start();
             }
         });
 
@@ -288,8 +286,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-
         switch (requestCode){
             case 0:{
                 if (data == null) break;
@@ -362,7 +358,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = "" + year + "/" + (++monthOfYear) + "/" + dayOfMonth;
+        String date = "" + year + "年" + (++monthOfYear) + "月" + dayOfMonth+"日";
 
         if (left) {
             leftDate = date;
@@ -377,10 +373,10 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                 now.get(Calendar.MINUTE),
                 true
         );
+        tpd.enableSeconds(false);
         tpd.setThemeDark(false);
         tpd.vibrate(true);
         tpd.dismissOnPause(true);
-        tpd.enableSeconds(true);
         tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
@@ -396,8 +392,8 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
         String minuteString = minute < 10 ? "0" + minute : "" + minute;
         String secondString = second < 10 ? "0" + second : "" + second;
-        String time = "" + hourString + "h" + minuteString + "m" + secondString + "s";
-        if (left) {
+        String time = "" + hourString + " : " + minuteString;
+        if (left == true) {
             leftTime = time;
             ((TextView) findViewById(R.id.qujiantext)).setText(leftDate + "\n" + leftTime);
         } else {
