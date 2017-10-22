@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
  */
 
 public class listItem implements Parcelable{
-    private int taskID;
     private String expressType;
     private String expressSize;
     private String publishTime;//发布时间
@@ -29,14 +28,6 @@ public class listItem implements Parcelable{
 
     private double price;//价格
     private int PorA;
-
-    public int getTaskID() {
-        return taskID;
-    }
-
-    public void setTaskID(int taskID) {
-        this.taskID = taskID;
-    }
 
     public String getPublishTime() {
         return publishTime;

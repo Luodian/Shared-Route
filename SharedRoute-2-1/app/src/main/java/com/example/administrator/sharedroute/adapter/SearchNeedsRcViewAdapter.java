@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.example.administrator.sharedroute.activity.BlurredActivity;
 import com.example.administrator.sharedroute.entity.GoodsModel;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.listener.OnBlurCompleteListener;
+import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BlurBehind;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
     private ArrayList<listItem> mDataset;
     private CallBackListener mCallBackListener;
     private Context mContext;
+    private OrderDao orderDao;
     public static interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
@@ -102,6 +105,7 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
         if(mContext == null){
             mContext = parent.getContext();
         }
+        if (orderDao==null) orderDao = new OrderDao(mContext);
         View view = LayoutInflater.from(mContext).inflate(R.layout.content_search_needs,parent,false);
         final ViewHolder holder = new ViewHolder(view);
 
@@ -148,6 +152,9 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
                 holder.mImageView.setClickable(false);
                 holder.mImageView.setImageResource(R.drawable.trolley_pressed);
                 listItem item = mDataset.get(position);
+                item.setPickupCode(String.valueOf((int)(Math.random()*1000000)));
+                orderDao.insertData(item);
+                Log.e("rrr","!!!");
                 selectedItem.add(item);
             }
         });
