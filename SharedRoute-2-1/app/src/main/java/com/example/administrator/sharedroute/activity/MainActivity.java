@@ -65,7 +65,9 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		setContentView(R.layout.activity_main);
 
 		orderDao = new OrderDao(this);
-
+//        if (! orderDao.isDataExist()){/*到时候连接了远程后该部分需要修改*/
+//            orderDao.initTable();
+//        }
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		ActionBar actionBar = getSupportActionBar();
