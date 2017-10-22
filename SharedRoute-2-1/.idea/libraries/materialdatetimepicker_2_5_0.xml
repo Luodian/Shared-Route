@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="materialdatetimepicker-2.5.0">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/9f6592ad8d00389552d7569d8a23536881ffe59c/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/9f6592ad8d00389552d7569d8a23536881ffe59c/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/1dc74a81d7671049c0b189f4b2e78c5fda5b0c65/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/1dc74a81d7671049c0b189f4b2e78c5fda5b0c65/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
