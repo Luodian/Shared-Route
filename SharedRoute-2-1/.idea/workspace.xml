@@ -21,14 +21,16 @@
     <bookmark url="file://$PROJECT_DIR$/app/src/main/res/layout/campus1_search_needs.xml" description="&gt;" line="10" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c43959e-ddcf-414a-93d7-1a601d9e4e6b" name="Default" comment="">
+    <list default="true" id="2c43959e-ddcf-414a-93d7-1a601d9e4e6b" name="Default" comment="update login page, now we can using cache to login default account">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/android-profile/profile-2017-10-21-23-08-33-640.rawproto" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/android-profile/profile-2017-10-21-23-09-32-701.rawproto" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/android-profile/profile-2017-10-21-23-12-02-878.rawproto" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/android-profile/profile-2017-10-22-00-59-44-672.rawproto" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../LoginConnectDemo/app/src/main/java/com/example/luodian/connect/LoginActivity.java" afterPath="$PROJECT_DIR$/../LoginConnectDemo/app/src/main/java/com/example/luodian/connect/LoginActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/sendLocationActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/sendLocationActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/adapter/SearchNeedsRcViewAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/adapter/SearchNeedsRcViewAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/fragment/PageFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/fragment/PageFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/LoginActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/MainActivity.java" />
     </list>
     <ignored path="SharedRoute.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -60,35 +62,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../LoginConnectDemo/app/src/main/java/com/example/luodian/connect/LoginActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="112">
+              <caret line="393" column="49" selection-start-line="393" selection-start-column="49" selection-end-line="393" selection-end-column="49" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="SearchNeedsActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/SearchNeedsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="166">
+              <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="139" selection-end-column="5" />
+              <folding>
+                <element signature="e#6233#6906#0" expanded="true" />
+                <element signature="e#6905#6906#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="446" column="57" selection-start-line="446" selection-start-column="57" selection-end-line="446" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_login.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="100" column="40" selection-start-line="100" selection-start-column="40" selection-end-line="100" selection-end-column="40" />
-              <folding />
+            <state relative-caret-position="112">
+              <caret line="397" column="40" selection-start-line="397" selection-start-column="40" selection-end-line="397" selection-end-column="40" />
+              <folding>
+                <element signature="e#3120#3481#0" expanded="true" />
+                <element signature="e#3480#3481#0" expanded="true" />
+                <element signature="e#3617#3763#0" expanded="true" />
+                <element signature="e#3762#3763#0" expanded="true" />
+                <element signature="e#7283#7312#0" expanded="true" />
+                <element signature="e#7394#7711#0" expanded="true" />
+                <element signature="e#7710#7711#0" expanded="true" />
+                <element signature="e#9192#9234#0" expanded="true" />
+                <element signature="e#9430#9470#0" expanded="true" />
+                <element signature="e#9611#9650#0" expanded="true" />
+                <element signature="e#11122#11339#0" expanded="true" />
+                <element signature="e#11338#11339#0" expanded="true" />
+                <element signature="e#11521#11737#0" expanded="true" />
+                <element signature="e#11736#11737#0" expanded="true" />
+                <element signature="e#14595#14610#0" expanded="true" />
+                <element signature="e#15799#15815#0" expanded="true" />
+                <element signature="e#16592#16636#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -96,7 +118,7 @@
       <file leaf-file-name="PageFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/fragment/PageFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
+            <state relative-caret-position="1050">
               <caret line="107" column="0" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
               <folding />
             </state>
@@ -106,9 +128,12 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="538">
-              <caret line="101" column="42" selection-start-line="101" selection-start-column="42" selection-end-line="101" selection-end-column="42" />
-              <folding />
+            <state relative-caret-position="67">
+              <caret line="146" column="43" selection-start-line="146" selection-start-column="43" selection-end-line="146" selection-end-column="43" />
+              <folding>
+                <element signature="e#11317#11318#0" expanded="true" />
+                <element signature="e#11341#11342#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -119,10 +144,10 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="44" column="49" selection-start-line="44" selection-start-column="49" selection-end-line="44" selection-end-column="49" />
+            <state relative-caret-position="-30">
+              <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
               <folding>
-                <marker date="1508667780931" expanded="false" signature="1934:1964" ph="&quot;Sign in&quot;" />
+                <marker date="1508668785393" expanded="false" signature="1938:1968" ph="&quot;Sign in&quot;" />
               </folding>
             </state>
           </provider>
@@ -131,7 +156,7 @@
       <file leaf-file-name="SearchNeedsRcViewAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/adapter/SearchNeedsRcViewAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
+            <state relative-caret-position="1425">
               <caret line="115" column="36" selection-start-line="115" selection-start-column="36" selection-end-line="115" selection-end-column="36" />
               <folding>
                 <element signature="e#3384#3385#0" expanded="true" />
@@ -144,14 +169,10 @@
       <file leaf-file-name="TaskViewActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/TaskViewActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
+            <state relative-caret-position="1005">
               <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3165#3814#0" expanded="true" />
-                <element signature="e#3813#3814#0" expanded="true" />
-                <element signature="e#3911#4619#0" expanded="true" />
-                <element signature="e#4618#4619#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -160,7 +181,7 @@
       <file leaf-file-name="OrderDao.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/localdatabase/OrderDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
+            <state relative-caret-position="225">
               <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
               <folding />
             </state>
@@ -190,6 +211,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Luodian &lt;drluodian@gmail.com&gt;" />
         <option value="Luodian &lt;1121058986@qq.com&gt;" />
       </list>
     </option>
@@ -3085,7 +3107,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_publish_needs.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/SearchNeedsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/sendLocationActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/localdatabase/OrderDao.java" />
@@ -3094,13 +3115,14 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/fragment/PageFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/MainActivity.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1280" />
-    <option name="height" value="736" />
+    <option name="height" value="740" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -3130,6 +3152,7 @@
       <pane id="ProjectPane">
         <subPane />
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="AndroidView">
@@ -3149,10 +3172,6 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -3184,28 +3203,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="sharedroute" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SharedRoute-2-1" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sharedroute" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fragment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -3246,7 +3243,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -3254,7 +3250,7 @@
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="device.picker.selection" value="af26388c" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../LoginConnectDemo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/layout" />
@@ -3690,7 +3686,14 @@
       <option name="project" value="LOCAL" />
       <updated>1508598073618</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="update main page to login page, do not connect to network since then.">
+      <created>1508668792267</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1508668792267</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -3703,17 +3706,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="736" extended-state="0" />
+    <frame x="0" y="23" width="1280" height="740" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37741935" sideWeight="0.48923573" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37660256" sideWeight="0.48923573" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32419354" sideWeight="0.51076424" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4887097" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24474959" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" x="0" y="23" width="1280" height="736" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32419354" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4516129" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -3733,6 +3735,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24474959" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" x="0" y="23" width="1280" height="736" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32419354" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -3806,7 +3809,9 @@
     <MESSAGE value="add animation" />
     <MESSAGE value="update remote luodian branch to current master" />
     <MESSAGE value="revised login page to connect network" />
-    <option name="LAST_COMMIT_MESSAGE" value="revised login page to connect network" />
+    <MESSAGE value="update main page to login page, do not connect to network since then." />
+    <MESSAGE value="update login page, now we can using cache to login default account" />
+    <option name="LAST_COMMIT_MESSAGE" value="update login page, now we can using cache to login default account" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -3854,13 +3859,18 @@
           <properties />
           <option name="timeStamp" value="32" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/LoginActivity.java</url>
+          <line>435</line>
+          <properties />
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="33" />
+      <option name="time" value="34" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/listener/OnRecyclerItemClickListener.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/free_dialog_bg.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -4048,7 +4058,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4063,7 +4072,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4090,7 +4098,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4112,7 +4119,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/localdatabase/OrderDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
+        <state relative-caret-position="225">
           <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding />
         </state>
@@ -4120,46 +4127,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/TaskViewActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
+        <state relative-caret-position="1005">
           <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3165#3814#0" expanded="true" />
-            <element signature="e#3813#3814#0" expanded="true" />
-            <element signature="e#3911#4619#0" expanded="true" />
-            <element signature="e#4618#4619#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/adapter/SearchNeedsRcViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
+        <state relative-caret-position="1425">
           <caret line="115" column="36" selection-start-line="115" selection-start-column="36" selection-end-line="115" selection-end-column="36" />
           <folding>
             <element signature="e#3384#3385#0" expanded="true" />
             <element signature="e#3420#3421#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/SearchNeedsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="44" column="49" selection-start-line="44" selection-start-column="49" selection-end-line="44" selection-end-column="49" />
-          <folding>
-            <marker date="1508667780931" expanded="false" signature="1934:1964" ph="&quot;Sign in&quot;" />
           </folding>
         </state>
       </provider>
@@ -4177,25 +4159,80 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/fragment/PageFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
+        <state relative-caret-position="1050">
           <caret line="107" column="0" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/SearchNeedsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="101" column="42" selection-start-line="101" selection-start-column="42" selection-end-line="101" selection-end-column="42" />
-          <folding />
+        <state relative-caret-position="166">
+          <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="139" selection-end-column="5" />
+          <folding>
+            <element signature="e#6233#6906#0" expanded="true" />
+            <element signature="e#6905#6906#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-30">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+          <folding>
+            <marker date="1508668785393" expanded="false" signature="1938:1968" ph="&quot;Sign in&quot;" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="446" column="57" selection-start-line="446" selection-start-column="57" selection-end-line="446" selection-end-column="57" />
-          <folding />
+        <state relative-caret-position="112">
+          <caret line="397" column="40" selection-start-line="397" selection-start-column="40" selection-end-line="397" selection-end-column="40" />
+          <folding>
+            <element signature="e#3120#3481#0" expanded="true" />
+            <element signature="e#3480#3481#0" expanded="true" />
+            <element signature="e#3617#3763#0" expanded="true" />
+            <element signature="e#3762#3763#0" expanded="true" />
+            <element signature="e#7283#7312#0" expanded="true" />
+            <element signature="e#7394#7711#0" expanded="true" />
+            <element signature="e#7710#7711#0" expanded="true" />
+            <element signature="e#9192#9234#0" expanded="true" />
+            <element signature="e#9430#9470#0" expanded="true" />
+            <element signature="e#9611#9650#0" expanded="true" />
+            <element signature="e#11122#11339#0" expanded="true" />
+            <element signature="e#11338#11339#0" expanded="true" />
+            <element signature="e#11521#11737#0" expanded="true" />
+            <element signature="e#11736#11737#0" expanded="true" />
+            <element signature="e#14595#14610#0" expanded="true" />
+            <element signature="e#15799#15815#0" expanded="true" />
+            <element signature="e#16592#16636#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/sharedroute/activity/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="67">
+          <caret line="146" column="43" selection-start-line="146" selection-start-column="43" selection-end-line="146" selection-end-column="43" />
+          <folding>
+            <element signature="e#11317#11318#0" expanded="true" />
+            <element signature="e#11341#11342#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../LoginConnectDemo/app/src/main/java/com/example/luodian/connect/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="393" column="49" selection-start-line="393" selection-start-column="49" selection-end-line="393" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

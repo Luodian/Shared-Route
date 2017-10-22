@@ -437,9 +437,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Boolean flag3 = true;
                 map.put("login2", flag3);
                 saveMsg("login", map);
+                Toast.makeText(LoginActivity.this, "Login success = " + result, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
                 intent.setClass(LoginActivity.this, MainActivity.class);
                 LoginActivity.this.startActivity(intent);
+                finish();
             } else {
                 Toast.makeText(LoginActivity.this, "Login error = " + result, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();

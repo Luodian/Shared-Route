@@ -36,6 +36,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.administrator.sharedroute.R.layout.activity_receive_order;
+import static com.example.administrator.sharedroute.R.layout.activity_release_order;
+
 public class MainActivity extends AppCompatActivity implements BannerClickListener {
 
 	private BannerPager mBanner;
@@ -143,9 +146,9 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
 		mTabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
 		mInflater = LayoutInflater.from(this);
-		view1 = mInflater.inflate(R.layout.activity_release_order, null);
-		view2 = mInflater.inflate(R.layout.activity_receive_order, null);
-		//添加页卡视图
+        view1 = mInflater.inflate(activity_release_order, null);
+        view2 = mInflater.inflate(activity_receive_order, null);
+        //添加页卡视图
 		mViewList.add(view1);
 		mViewList.add(view2);
 
@@ -299,10 +302,15 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	}
 
 	@Override
-	public void onPause(){
-		super.onPause();
-		mDrawerLayout.closeDrawers();
-	}
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mDrawerLayout.closeDrawers();
+    }
 
 //	public void BlurActivityDialog(final String title, final String select){
 //        Vibrator vibrator=(Vibrator)getSystemService(Service.VIBRATOR_SERVICE);
