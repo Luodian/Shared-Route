@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\libs\mysql-connector-java-5.1.44-bin.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="c5c76a610587bde4af517e457bc66f8f0339caac">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\mysql-connector-java-5.1.44-bin_a8e5fac3b324d70df1a0a3dc1e8fe0e021c5d311.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\FlipShare\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="6ae1dced36bab92b4a6fb97928ca94cb74ec112e">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_4580bf519ac1c9b045c0ddf35782535ce35ec84e.jar" />
+    </item>
+
+</items>
