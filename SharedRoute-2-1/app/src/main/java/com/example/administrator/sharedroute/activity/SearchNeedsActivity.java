@@ -73,7 +73,6 @@ public class SearchNeedsActivity extends AppCompatActivity {
                 bundle.putParcelableArrayList("listItemList",selectedItem);
                 intent.putExtras(bundle);
                 startActivity(intent);
-
             }
         });
         navigation = (BottomNavigationView) findViewById(R.id.search_navigation);
@@ -187,7 +186,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
         mViewPager = (ViewPager) this.findViewById(R.id.searchNeeds_viewpager);
 
         for(int i=0; i<tabTitles.length; i++){
-            PageFragment fragment = new PageFragment(curTab);
+                PageFragment fragment = new PageFragment(curTab);
             fragment.setTabPos(i);
             mFragments.add(fragment);
         }

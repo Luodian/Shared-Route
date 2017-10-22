@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.CardPagerAdapter;
@@ -23,7 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyOrder extends AppCompatActivity {
-
+/**
+ *讲道理这里应该接受的是远程的数据
+ */
     private ViewPager mViewPager;
     private LayoutInflater mInflater;
     private CardView view1, view2, view3,viewCard;//页卡视图
@@ -40,9 +43,9 @@ public class MyOrder extends AppCompatActivity {
         setContentView(R.layout.activity_my_order);
 
         orderDao = new OrderDao(this);
-        if (! orderDao.isDataExist()){
-            orderDao.initTable();
-        }
+//        if (! orderDao.isDataExist()){/*到时候连接了远程后该部分需要修改*/
+//            orderDao.initTable();
+//        }
         myOrders = orderDao.getAcceptOrder();
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -57,41 +60,45 @@ public class MyOrder extends AppCompatActivity {
         mInflater = LayoutInflater.from(this);
 
 
+        if (myOrders!=null){
+            for (listItem e:myOrders) {
+                viewCard = (CardView)mInflater.inflate(R.layout.adapter,null);
+                List<CardItem> cardItems = new ArrayList<>();
+                ListViewAdapter adapter = new ListViewAdapter(MyOrder.this ,R.layout.carditem_layout,cardItems);
+                CardItem item1 = new CardItem("快递类型:"+e.getExpressType(), R.mipmap.ic_express);
+                cardItems.add(item1);
+                CardItem item2 = new CardItem("发布时间:"+e.getPublishTime(), R.mipmap.ic_get_time);
+                cardItems.add(item2);
+                CardItem item3 = new CardItem("类型:"+e.getExpressSize(), R.mipmap.ic_type);
+                cardItems.add(item3);
+                CardItem item4 = new CardItem("取货码:"+e.getPickupCode(), R.mipmap.ic_code);
+                cardItems.add(item4);
+                CardItem item5 = new CardItem("金额:"+e.getPrice()+"元", R.mipmap.ic_money);
+                cardItems.add(item5);
+                CardItem item6 = new CardItem("状态:还没设置", R.mipmap.ic_status);
+                cardItems.add(item6);
+                ListView listViewCard = (ListView)viewCard.findViewById(R.id.list_view);
+                listViewCard.setAdapter(adapter);
+                mViewList.add(viewCard);
+                viewCard.setOnClickListener(new ViewPager.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        mViewPager.setCurrentItem(count++);
+                    }
+                });
+            }
 
-        for (listItem e:myOrders) {
-            viewCard = (CardView)mInflater.inflate(R.layout.adapter,null);
-            List<CardItem> cardItems = new ArrayList<>();
-            ListViewAdapter adapter = new ListViewAdapter(MyOrder.this ,R.layout.carditem_layout,cardItems);
-            CardItem item1 = new CardItem("快递类型:"+e.getExpressType(), R.mipmap.ic_express);
-            cardItems.add(item1);
-            CardItem item2 = new CardItem("发布时间:"+e.getPublishTime(), R.mipmap.ic_get_time);
-            cardItems.add(item2);
-            CardItem item3 = new CardItem("类型:"+e.getExpressSize(), R.mipmap.ic_type);
-            cardItems.add(item3);
-            CardItem item4 = new CardItem("取货码:"+e.getPickupCode(), R.mipmap.ic_code);
-            cardItems.add(item4);
-            CardItem item5 = new CardItem("金额:"+e.getPrice()+"元", R.mipmap.ic_money);
-            cardItems.add(item5);
-            CardItem item6 = new CardItem("状态:还没设置", R.mipmap.ic_status);
-            cardItems.add(item6);
-            ListView listViewCard = (ListView)viewCard.findViewById(R.id.list_view);
-            listViewCard.setAdapter(adapter);
-            mViewList.add(viewCard);
-            viewCard.setOnClickListener(new ViewPager.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    mViewPager.setCurrentItem(count++);
-                }
-            });
+
+            //给ViewPager设置适配器
+            mCardAdapter = new CardPagerAdapter(mViewList);
+            mViewPager.setAdapter(mCardAdapter);
+            mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+            mViewPager.setPageTransformer(false, mCardShadowTransformer);
+            mViewPager.setOffscreenPageLimit(1);
         }
-
-
-        //给ViewPager设置适配器
-        mCardAdapter = new CardPagerAdapter(mViewList);
-        mViewPager.setAdapter(mCardAdapter);
-        mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
-        mViewPager.setPageTransformer(false, mCardShadowTransformer);
-        mViewPager.setOffscreenPageLimit(1);
+       else {
+            Toast.makeText(this,"当前无任务",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item){

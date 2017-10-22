@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.TaskViewAdapter;
@@ -48,6 +49,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
+        orderDao = new OrderDao(this);
         initView();
     }
     private void initView() {
@@ -55,8 +57,11 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
         mToolbar = (Toolbar) findViewById(R.id.toolbartaskview) ;
 
         orderDao = new OrderDao(this);
+//        if (! orderDao.isDataExist()){/*到时候连接了远程后该部分需要修改*/
+//            orderDao.initTable();
+//        }
         listItemList = orderDao.getAcceptOrder();
-
+        if (listItemList == null) Toast.makeText(this,"当前无预订任务",Toast.LENGTH_SHORT).show();
         trollyAdapter  = new TaskViewAdapter(TaskViewActivity.this);
 
         if (listItemList != null)
@@ -191,8 +196,9 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onDismiss(@NonNull ViewGroup listView, @NonNull int[] reverseSortedPositions) {
+        List<listItem> arrayList = trollyAdapter.getItems();
         for (int position : reverseSortedPositions) {
-            Log.e("ppp",String.valueOf(trollyAdapter.getCount()));
+            orderDao.deleteOrder(arrayList.get(position));
             trollyAdapter.remove(position);
         }
     }
