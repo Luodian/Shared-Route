@@ -14,9 +14,6 @@ public class sendLocationActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    private TabLayout.Tab tab1;
-    private TabLayout.Tab tab2;
-
     private MyFragmentPagerAdapter myFragmentPagerAdapter;
 
     @Override
@@ -39,7 +36,6 @@ public class sendLocationActivity extends AppCompatActivity {
 
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        tab1=tabLayout.getTabAt(0);
-        tab2=tabLayout.getTabAt(1);
+        TabLayout.Tab tab2 = tabLayout.getTabAt(1);
     }
 }
