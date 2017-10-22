@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
 		mBanner = (BannerPager) findViewById(R.id.banner_pager);
 		LayoutParams params = (LayoutParams) mBanner.getLayoutParams();
-		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f/ 640f);
+		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 280f / 640f);
 		mBanner.setLayoutParams(params);
 		ArrayList<Integer> bannerArray = new ArrayList<>();
         bannerArray.add(R.drawable.banner_1);
