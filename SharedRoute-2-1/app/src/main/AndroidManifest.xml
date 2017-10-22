@@ -12,7 +12,8 @@
         android:roundIcon="@drawable/ic_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity"
+        <activity
+            android:name=".activity.LoginActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,10 +39,13 @@
         <activity android:name=".activity.HistoryInfoActivity" />
         <activity android:name=".activity.InfoSettingActivity" />
         <activity android:name=".activity.sendLocationActivity" />
+        <!--<activity-->
+        <!--android:name=".activity.LoginActivity"-->
+        <!--android:label="@string/title_activity_login"-->
+        <!--android:windowSoftInputMode="adjustPan|stateHidden" ></activity>-->
         <activity
-            android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustPan|stateHidden" ></activity>
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>

@@ -363,7 +363,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (resEntity != null) {
                     result = EntityUtils.toString(resEntity);
                 }
-                if (result.toString().equals("success"))
+                if (result.equals("success"))
                 {
                     client.getConnectionManager().shutdown();
                     return true;
@@ -390,7 +390,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
             else
             {
-                Toast.makeText(LoginActivity.this,result.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }

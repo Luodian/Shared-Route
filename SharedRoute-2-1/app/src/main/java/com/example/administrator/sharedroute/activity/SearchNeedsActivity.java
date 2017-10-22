@@ -73,7 +73,6 @@ public class SearchNeedsActivity extends AppCompatActivity {
                 bundle.putParcelableArrayList("listItemList",selectedItem);
                 intent.putExtras(bundle);
                 startActivity(intent);
-
             }
         });
         navigation = (BottomNavigationView) findViewById(R.id.search_navigation);
@@ -121,6 +120,10 @@ public class SearchNeedsActivity extends AppCompatActivity {
                         startActivity(intent6);
                         return true;
                     case R.id.nav_setting:
+                        return true;
+                    case R.id.nav_login:
+                        Intent intent8 = new Intent(SearchNeedsActivity.this, LoginActivity.class);
+                        startActivity(intent8);
                         return true;
                     default:
                 }
@@ -183,7 +186,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
         mViewPager = (ViewPager) this.findViewById(R.id.searchNeeds_viewpager);
 
         for(int i=0; i<tabTitles.length; i++){
-            PageFragment fragment = new PageFragment(curTab);
+                PageFragment fragment = new PageFragment(curTab);
             fragment.setTabPos(i);
             mFragments.add(fragment);
         }

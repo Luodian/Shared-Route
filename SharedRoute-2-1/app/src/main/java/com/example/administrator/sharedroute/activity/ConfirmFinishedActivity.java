@@ -77,7 +77,7 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ConfirmFinishedActivity.this,MainActivity.class);
+                Intent intent =new Intent(ConfirmFinishedActivity.this,MyOrder.class);
                 startActivity(intent);
             }
         });

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.example.administrator.sharedroute.activity.BlurredActivity;
 import com.example.administrator.sharedroute.entity.GoodsModel;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.listener.OnBlurCompleteListener;
+import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BlurBehind;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
     private ArrayList<listItem> mDataset;
     private CallBackListener mCallBackListener;
     private Context mContext;
+    private OrderDao orderDao;
     public static interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
@@ -102,6 +105,7 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
         if(mContext == null){
             mContext = parent.getContext();
         }
+        if (orderDao==null) orderDao = new OrderDao(mContext);
         View view = LayoutInflater.from(mContext).inflate(R.layout.content_search_needs,parent,false);
         final ViewHolder holder = new ViewHolder(view);
 
@@ -136,7 +140,7 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
         holder.sendTimeTextView.setText(mDataset.get(position).getOutTimeStamp());
         holder.fetchLocTextView.setText(mDataset.get(position).getInLocation());
         holder.sendLocTextView.setText(mDataset.get(position).getOutLocation());
-        holder.priceTextView.setText(mDataset.get(position).getPrice());
+        holder.priceTextView.setText(String.valueOf(mDataset.get(position).getPrice())+"元");
 
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             //说实话，这样监听不太好，每次滑动getView的时候都要重新new一个监听，但是必须获取ChechView所在的那个Item的position，所以只能卸载getView函数内部
@@ -148,6 +152,9 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
                 holder.mImageView.setClickable(false);
                 holder.mImageView.setImageResource(R.drawable.trolley_pressed);
                 listItem item = mDataset.get(position);
+                item.setPickupCode(String.valueOf((int)(Math.random()*1000000)));
+                orderDao.insertData(item);
+                Log.e("rrr","!!!");
                 selectedItem.add(item);
             }
         });

@@ -6,8 +6,11 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -30,11 +33,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -49,13 +67,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
@@ -68,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private TextView shared;
     private TextView oneKm;
     private LinearLayout button;
+    private HashMap<String, Object> map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +126,63 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         animSet.start();
         animator2.setDuration(1500);
         animator2.start();
+
+        map = (HashMap<String, Object>) getMsg("login");
+        if (map != null && !map.isEmpty()) {
+            if ((Boolean) map.get("login2")) {
+                //若值为true,用户无需输入密码，直接跳转进入操作界面
+                Intent intent = new Intent(LoginActivity.this,
+                        MainActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
+
+    //将数据存储进入共享参数
+    public boolean saveMsg(String fileName, Map<String, Object> map) {
+        boolean flag;
+        // 一般Mode都使用private,比较安全
+        SharedPreferences preferences = getSharedPreferences(fileName,
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        // Map类提供了一个称为entrySet()的方法，这个方法返回一个Map.Entry实例化后的对象集。
+        // 接着，Map.Entry类提供了一个getKey()方法和一个getValue()方法，
+        // 因此，上面的代码可以被组织得更符合逻辑
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            String key = entry.getKey();
+            Object object = entry.getValue();
+            // 根据值得不同类型，添加
+            if (object instanceof Boolean) {
+                Boolean new_name = (Boolean) object;
+                editor.putBoolean(key, new_name);
+            } else if (object instanceof Integer) {
+                Integer integer = (Integer) object;
+                editor.putInt(key, integer);
+            } else if (object instanceof Float) {
+                Float f = (Float) object;
+                editor.putFloat(key, f);
+            } else if (object instanceof Long) {
+                Long l = (Long) object;
+                editor.putLong(key, l);
+            } else if (object instanceof String) {
+                String s = (String) object;
+                editor.putString(key, s);
+            }
+        }
+        flag = editor.commit();
+        return flag;
+
+    }
+
+    // 读取数据
+    public Map<String, ?> getMsg(String fileName) {
+        Map<String, ?> map;
+        // 读取数据用不到edit
+        SharedPreferences preferences = getSharedPreferences(fileName,
+                Context.MODE_APPEND);
+        //Context.MODE_APPEND可以对已存在的值进行修改
+        map = preferences.getAll();
+        return map;
     }
 
     private void populateAutoComplete() {
@@ -230,32 +299,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
+        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        mProgressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     @Override
@@ -316,10 +378,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mEmail;
         private final String mPassword;
+        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
+
+        private String result = null;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -328,35 +393,60 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
+            System.out.println("AAA");
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+                HttpClient client = new DefaultHttpClient();
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+                HttpPost post = new HttpPost(url);
+
+                //參數
+                if (mEmail != "") {
+                    List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+                    parameters.add(new BasicNameValuePair("username", mEmail));
+                    parameters.add(new BasicNameValuePair("password", mPassword));
+                    UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
+                    post.setEntity(ent);
                 }
-            }
 
-            // TODO: register the new account here.
-            return true;
+                HttpResponse responsePOST = client.execute(post);
+
+                HttpEntity resEntity = responsePOST.getEntity();
+
+                if (resEntity != null) {
+                    result = EntityUtils.toString(resEntity);
+                }
+                if (result.equals("success")) {
+                    client.getConnectionManager().shutdown();
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                e.getMessage();
+            }
+            return false;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
             if (success) {
+                //登陆成功后将flag设置为ture存入共享参数中
+                HashMap<String, Object> map = new HashMap<String, Object>();
+                Boolean flag3 = true;
+                map.put("login2", flag3);
+                saveMsg("login", map);
+                Toast.makeText(LoginActivity.this, "Login success = " + result, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(LoginActivity.this, MainActivity.class);
+                LoginActivity.this.startActivity(intent);
                 finish();
             } else {
+                Toast.makeText(LoginActivity.this, "Login error = " + result, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(LoginActivity.this, MainActivity.class);
+                LoginActivity.this.startActivity(intent);
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }

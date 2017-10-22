@@ -16,10 +16,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.TaskViewAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
+import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
@@ -42,20 +44,24 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
     private  Toolbar mToolbar;
     private AnimationAdapter mAnimAdapter ;
     private static final int INITIAL_DELAY_MILLIS = 100;
+    private OrderDao orderDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
+        orderDao = new OrderDao(this);
         initView();
     }
     private void initView() {
         listView = (ListView) findViewById(R.id.shoppingtrolly_listview);
         mToolbar = (Toolbar) findViewById(R.id.toolbartaskview) ;
 
-        Intent intent = getIntent();
-        Bundle bundle =intent.getExtras();
-        listItemList = bundle.getParcelableArrayList("listItemList");
-
+        orderDao = new OrderDao(this);
+//        if (! orderDao.isDataExist()){/*到时候连接了远程后该部分需要修改*/
+//            orderDao.initTable();
+//        }
+        listItemList = orderDao.getAcceptOrder();
+        if (listItemList == null) Toast.makeText(this,"当前无预订任务",Toast.LENGTH_SHORT).show();
         trollyAdapter  = new TaskViewAdapter(TaskViewActivity.this);
 
         if (listItemList != null)
@@ -190,8 +196,9 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onDismiss(@NonNull ViewGroup listView, @NonNull int[] reverseSortedPositions) {
+        List<listItem> arrayList = trollyAdapter.getItems();
         for (int position : reverseSortedPositions) {
-            Log.e("ppp",String.valueOf(trollyAdapter.getCount()));
+            orderDao.deleteOrder(arrayList.get(position));
             trollyAdapter.remove(position);
         }
     }

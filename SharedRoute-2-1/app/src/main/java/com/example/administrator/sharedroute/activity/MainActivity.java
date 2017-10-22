@@ -28,12 +28,16 @@ import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.MyPagerAdapter;
 import com.example.administrator.sharedroute.adapter.ReleaseOrderItemAdapter;
 import com.example.administrator.sharedroute.entity.ReleaseOrderItem;
+import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.administrator.sharedroute.R.layout.activity_receive_order;
+import static com.example.administrator.sharedroute.R.layout.activity_release_order;
 
 public class MainActivity extends AppCompatActivity implements BannerClickListener {
 
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	private List<ReleaseOrderItem> itemList = new ArrayList<>();
 	private ReleaseOrderItemAdapter adapter;
 	private int mMenuId;
+	private OrderDao orderDao;
 	private BottomNavigationView navigation;
 	private SwipeRefreshLayout swipeRefresh;
 //    ReleaseOrderItem[] items = {new ReleaseOrderItem(R.drawable.yd_express,R.mipmap.ic_type_book,R.mipmap.ic_none_receive_status,"10月1日","书籍"),
@@ -62,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		orderDao = new OrderDao(this);
+//        if (! orderDao.isDataExist()){/*到时候连接了远程后该部分需要修改*/
+//            orderDao.initTable();
+//        }
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		ActionBar actionBar = getSupportActionBar();
@@ -127,21 +136,21 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f/ 640f);
 		mBanner.setLayoutParams(params);
 		ArrayList<Integer> bannerArray = new ArrayList<>();
-    bannerArray.add(R.drawable.banner_1);
-    bannerArray.add(R.drawable.banner_2);
-    bannerArray.add(R.drawable.banner_3);
-    bannerArray.add(R.drawable.banner_4);
-    bannerArray.add(R.drawable.banner_5);
-    mBanner.setImage(bannerArray);
-		mBanner.setOnBannerListener(this);
+        bannerArray.add(R.drawable.banner_1);
+        bannerArray.add(R.drawable.banner_2);
+        bannerArray.add(R.drawable.banner_3);
+        bannerArray.add(R.drawable.banner_4);
+        bannerArray.add(R.drawable.banner_5);
+        mBanner.setImage(bannerArray);
+        mBanner.setOnBannerListener(this);
         mBanner.start();
 
 		mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
 		mTabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
 		mInflater = LayoutInflater.from(this);
-		view1 = mInflater.inflate(R.layout.activity_release_order, null);
-		view2 = mInflater.inflate(R.layout.activity_receive_order, null);
-		//添加页卡视图
+        view1 = mInflater.inflate(activity_release_order, null);
+        view2 = mInflater.inflate(activity_receive_order, null);
+        //添加页卡视图
 		mViewList.add(view1);
 		mViewList.add(view2);
 
@@ -265,25 +274,25 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //		listView.setLayoutParams(params);
 //	}
 
-	public boolean onCreateOptionsMenu(Menu menu){
-		getMenuInflater().inflate(R.menu.toolbar,menu);
-		return true;
-	}
-
-	public boolean onMenuOpened(int featureId, Menu menu) {
-		if (menu != null) {
-			if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
-				try {
-					Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-					method.setAccessible(true);
-					method.invoke(menu, true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return super.onMenuOpened(featureId, menu);
-	}
+//	public boolean onCreateOptionsMenu(Menu menu){
+//		getMenuInflater().inflate(R.menu.toolbar,menu);
+//		return true;
+//	}
+//
+//	public boolean onMenuOpened(int featureId, Menu menu) {
+//		if (menu != null) {
+//			if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
+//				try {
+//					Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+//					method.setAccessible(true);
+//					method.invoke(menu, true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		return super.onMenuOpened(featureId, menu);
+//	}
 
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch (item.getItemId()){
@@ -295,10 +304,15 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	}
 
 	@Override
-	public void onPause(){
-		super.onPause();
-		mDrawerLayout.closeDrawers();
-	}
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mDrawerLayout.closeDrawers();
+    }
 
 //	public void BlurActivityDialog(final String title, final String select){
 //        Vibrator vibrator=(Vibrator)getSystemService(Service.VIBRATOR_SERVICE);

@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.SearchNeedsRcViewAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
+import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.utils.EndLessOnScrollListener;
 
 import java.util.ArrayList;
@@ -104,6 +105,7 @@ public class PageFragment extends Fragment {
 
         refreshCart();
         init_data();
+
         // 是否显示购物车商品数目
         mShoppingCartRly = (CoordinatorLayout) view.findViewById(R.id.searchNeeds_center_relView);
         pos_mfab = (FloatingActionButton) view.findViewById(R.id.fake_fab);
