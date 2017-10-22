@@ -33,6 +33,7 @@
         <activity android:name=".activity.TaskViewActivity"/>
         <activity
             android:name=".activity.PublishNeedsActivity"
+            android:windowSoftInputMode="stateHidden"
             android:launchMode="singleTask" />
         <activity android:name=".activity.PayBillActivity"/>
         <activity android:name=".activity.HistoryInfoActivity" />
