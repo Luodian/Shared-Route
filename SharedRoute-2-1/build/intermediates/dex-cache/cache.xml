@@ -2,6 +2,33 @@
 <items version="2" >
 
     <item
+        is-multidex="true"
+        jar="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/libs/mysql-connector-java-5.1.44-bin.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="c5c76a610587bde4af517e457bc66f8f0339caac">
+        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/2/mysql-connector-java-5.1.44-bin_653fc0e45b537edeec2908b7e0f947480199bc69/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_5bd53a35bc877916096463e6eb32121e5169eccb/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="f259a19450542d313463c9ee537e1da132f920e5">
+        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_98241954fc17adc45fae88ab0262d7ec20b1b9b6/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/libs/mysql-connector-java-5.1.44-bin.jar"
         jumboMode="false"

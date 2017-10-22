@@ -102,6 +102,7 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
         if(mContext == null){
             mContext = parent.getContext();
         }
+
         View view = LayoutInflater.from(mContext).inflate(R.layout.content_search_needs,parent,false);
         final ViewHolder holder = new ViewHolder(view);
 
