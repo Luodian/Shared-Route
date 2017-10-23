@@ -1,4 +1,4 @@
-package com.example.administrator.sharedroute.fragment;
+package com.example.administrator.sharedroute.animation;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;

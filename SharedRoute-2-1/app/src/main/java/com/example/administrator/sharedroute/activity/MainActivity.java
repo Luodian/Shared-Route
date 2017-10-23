@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
 		mBanner = (BannerPager) findViewById(R.id.banner_pager);
 		LayoutParams params = (LayoutParams) mBanner.getLayoutParams();
-		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f/ 640f);
+		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 280f / 640f);
 		mBanner.setLayoutParams(params);
 		ArrayList<Integer> bannerArray = new ArrayList<>();
         bannerArray.add(R.drawable.banner_1);
@@ -196,29 +196,14 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	public void onBannerClick(int position) {
 		switch (position+1){
 			case 1:
-				Intent intent1 = new Intent(Intent.ACTION_VIEW);
-				intent1.setData(Uri.parse("http://www.baidu.com"));
-				startActivity(intent1);
 				break;
 			case 2:
-				Intent intent2 = new Intent(Intent.ACTION_VIEW);
-				intent2.setData(Uri.parse("http://www.github.com"));
-				startActivity(intent2);
 				break;
 			case 3:
-				Intent intent3 = new Intent(Intent.ACTION_VIEW);
-				intent3.setData(Uri.parse("http://www.qq.com"));
-				startActivity(intent3);
 				break;
 			case 4:
-				Intent intent4 = new Intent(Intent.ACTION_VIEW);
-				intent4.setData(Uri.parse("http://www.4399.com"));
-				startActivity(intent4);
 				break;
 			case 5:
-				Intent intent5 = new Intent(Intent.ACTION_VIEW);
-				intent5.setData(Uri.parse("http://www.hao123.com"));
-				startActivity(intent5);
 				break;
 			default:
 		}
@@ -251,48 +236,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		}
 
 	};
-
-//	public void fixListViewHeight(ListView listView) {
-//		// 如果没有设置数据适配器，则ListView没有子项，返回。
-//		ListAdapter listAdapter = listView.getAdapter();
-//		int totalHeight = 0;
-//		if (listAdapter == null) {
-//			return;
-//		}
-//		for (int index = 0, len = listAdapter.getCount(); index < len; index++) {
-//			View listViewItem = listAdapter.getView(index , null, listView);
-//			// 计算子项View 的宽高
-//			listViewItem.measure(0, 0);
-//			// 计算所有子项的高度和
-//			totalHeight += listViewItem.getMeasuredHeight();
-//		}
-//
-//		ViewGroup.LayoutParams params = listView.getLayoutParams();
-//		// listView.getDividerHeight()获取子项间分隔符的高度
-//		// params.height设置ListView完全显示需要的高度
-//		params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-//		listView.setLayoutParams(params);
-//	}
-
-//	public boolean onCreateOptionsMenu(Menu menu){
-//		getMenuInflater().inflate(R.menu.toolbar,menu);
-//		return true;
-//	}
-//
-//	public boolean onMenuOpened(int featureId, Menu menu) {
-//		if (menu != null) {
-//			if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
-//				try {
-//					Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-//					method.setAccessible(true);
-//					method.invoke(menu, true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return super.onMenuOpened(featureId, menu);
-//	}
 
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch (item.getItemId()){
