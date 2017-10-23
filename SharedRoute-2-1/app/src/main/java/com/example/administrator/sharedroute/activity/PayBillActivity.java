@@ -385,8 +385,8 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
             }
             else
             {
-//                Toast.makeText(PayBillActivity.this,result.toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(PayBillActivity.this,"Failure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PayBillActivity.this,result.toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(PayBillActivity.this,"Failure", Toast.LENGTH_SHORT).show();
 //                mPasswordView.setError(getString(R.string.error_incorrect_password));
 //                mPasswordView.requestFocus();
             }

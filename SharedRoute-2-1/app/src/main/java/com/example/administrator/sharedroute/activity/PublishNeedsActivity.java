@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 import com.unstoppable.submitbuttonview.SubmitButton;
@@ -225,34 +224,35 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nameText.getText().toString().equals("")||phoneText.getText().toString().equals("")||numText.getText().toString().equals("")
-                        ||delieverPlace.getText().toString().equals("送件地点")||pickupPlace.getText().toString().equals("取件地点")||
-                        ((TextView) findViewById(R.id.qujiantext)).getText().toString().equals("选择时间")||
-                        ((TextView) findViewById(R.id.songjiantext)).getText().toString().equals("选择时间")||
-                        money.getText().toString().equals("")){
-                    Toast.makeText(PublishNeedsActivity.this,"请将信息填写完整",Toast.LENGTH_LONG).show();
-                    return;
-                }
-                String str = phoneText.getText().toString();
-                for (int i=0;i<str.length();++i){
-                    if (str.charAt(i)<'0' || str.charAt(i)>'9') {
-                        Toast.makeText(PublishNeedsActivity.this,"请输入正确的手机号码",Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                }
-                str = money.getText().toString();
-                boolean hasDotYet = false;
-                for (int i=0;i<str.length();++i) {
-                    if(str.charAt(i)=='.'&&(!hasDotYet)){
-                        hasDotYet=true;
-                    }else  if ((str.charAt(i)=='.'&&hasDotYet)) {
-                        Toast.makeText(PublishNeedsActivity.this,"请输入争取的金额",Toast.LENGTH_LONG).show();
-                        return;
-                    } else if (str.charAt(i)!='.'&&(str.charAt(i)<'0'||str.charAt(i)>'9')) {
-                        Toast.makeText(PublishNeedsActivity.this,"请输入争取的金额",Toast.LENGTH_LONG).show();
-                        return;
-                        }
-                }
+                //验证是否是合法输入
+//                if (nameText.getText().toString().equals("")||phoneText.getText().toString().equals("")||numText.getText().toString().equals("")
+//                        ||delieverPlace.getText().toString().equals("送件地点")||pickupPlace.getText().toString().equals("取件地点")||
+//                        ((TextView) findViewById(R.id.qujiantext)).getText().toString().equals("选择时间")||
+//                        ((TextView) findViewById(R.id.songjiantext)).getText().toString().equals("选择时间")||
+//                        money.getText().toString().equals("")){
+//                    Toast.makeText(PublishNeedsActivity.this,"请将信息填写完整",Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//                String str = phoneText.getText().toString();
+//                for (int i=0;i<str.length();++i){
+//                    if (str.charAt(i)<'0' || str.charAt(i)>'9') {
+//                        Toast.makeText(PublishNeedsActivity.this,"请输入正确的手机号码",Toast.LENGTH_LONG).show();
+//                        return;
+//                    }
+//                }
+//                str = money.getText().toString();
+//                boolean hasDotYet = false;
+//                for (int i=0;i<str.length();++i) {
+//                    if(str.charAt(i)=='.'&&(!hasDotYet)){
+//                        hasDotYet=true;
+//                    }else  if ((str.charAt(i)=='.'&&hasDotYet)) {
+//                        Toast.makeText(PublishNeedsActivity.this,"请输入正确的金额",Toast.LENGTH_LONG).show();
+//                        return;
+//                    } else if (str.charAt(i)!='.'&&(str.charAt(i)<'0'||str.charAt(i)>'9')) {
+//                        Toast.makeText(PublishNeedsActivity.this,"请输入正确的金额",Toast.LENGTH_LONG).show();
+//                        return;
+//                        }
+//                }
                 submitBtn.doResult(true);
                 Thread thread = new Thread() {
                  public void run(){

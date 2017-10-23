@@ -2,6 +2,7 @@
 <items version="2" >
 
     <item
+
         is-multidex="true"
         jar="/Users/luodian/Library/Android/sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
         jumboMode="true"
@@ -144,6 +145,7 @@
         revision="25.0.3"
         sha1="3b01abfc043b5e07d1166ac0e25a25a68ff59fde">
         <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_98241954fc17adc45fae88ab0262d7ec20b1b9b6/classes.dex" />
+
     </item>
 
 </items>
