@@ -15,15 +15,19 @@ import android.widget.Toast;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.activity.BlurredActivity;
 import com.example.administrator.sharedroute.entity.ReleaseOrderItem;
+import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.listener.OnBlurCompleteListener;
+import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BlurBehind;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderItemAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<ReleaseOrderItem> mItemList;
+    private List<listItem> mItemList;
+    private OrderDao orderDao;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
@@ -32,21 +36,22 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
         ImageView ItemStatus;
         TextView releaseDate;
         TextView releaseType;
-
-
+        TextView sendPlace;
         public ViewHolder(View view){
             super(view);
             cardView = (CardView)view;
             expressImage = (ImageView)view.findViewById(R.id.express_image);
             typeImage = (ImageView)view.findViewById(R.id.type_image);
-            releaseDate = (TextView) view.findViewById(R.id.release_date);
+            releaseDate = (TextView) view.findViewById(R.id.send_time);
+            sendPlace = (TextView) view.findViewById(R.id.send_location);
             releaseType = (TextView) view.findViewById(R.id.type);
             ItemStatus = (ImageView) view.findViewById(R.id.item_status);
         }
     }
 
-    public ReleaseOrderItemAdapter(List<ReleaseOrderItem> ItemList){
-        mItemList = ItemList;
+    public ReleaseOrderItemAdapter(List<listItem> ItemList) {
+        if (ItemList == null) mItemList = new ArrayList<listItem>();
+        else mItemList = ItemList;
     }
 
     @Override
@@ -54,6 +59,7 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
         if(mContext == null){
             mContext = parent.getContext();
         }
+        if (orderDao == null) orderDao = new OrderDao(mContext);
         View view = LayoutInflater.from(mContext).inflate(R.layout.release_order_item_layout,parent,false);
         final ViewHolder holder = new ViewHolder(view);
 
@@ -86,16 +92,47 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
 
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
-        ReleaseOrderItem item = mItemList.get(position);
-        holder.expressImage.setImageResource(item.getExpressimageId());
-        holder.typeImage.setImageResource(item.getTpyeimageId());
-        holder.releaseDate.setText(item.getDate());
-        holder.releaseType.setText(item.getType());
-        holder.ItemStatus.setImageResource(item.getStatusimageId());
+        listItem item = mItemList.get(position);
+        setImageView(item, holder);
+        holder.typeImage.setImageResource(R.mipmap.ic_type_book);
+        holder.releaseDate.setText(item.getOutTimeStamp());
+        holder.releaseType.setText(item.getExpressType());
+        holder.ItemStatus.setImageResource(R.mipmap.ic_none_receive_status);
+        holder.sendPlace.setText(item.getOutLocation());
     }
 
     @Override
     public int getItemCount(){
         return mItemList.size();
+    }
+
+    private void setImageView(listItem e, ViewHolder holder) {
+        int express = Integer.valueOf((e.getPickupCode()).charAt(0));//*主键第一位为快递公司代号
+        switch (express) {
+            case 1: {
+                holder.expressImage.setImageResource(R.drawable.sto_express);
+                break;
+            }
+            case 2: {
+                holder.expressImage.setImageResource(R.drawable.tt_express);
+                break;
+            }
+            case 3: {
+                holder.expressImage.setImageResource(R.drawable.yd_express);
+                break;
+            }
+            case 4: {
+                holder.expressImage.setImageResource(R.drawable.yt_express);
+                break;
+            }
+            case 5: {
+                holder.expressImage.setImageResource(R.drawable.zto_express);
+                break;
+            }
+            default:
+                break;
+        }
+
+        return;
     }
 }
