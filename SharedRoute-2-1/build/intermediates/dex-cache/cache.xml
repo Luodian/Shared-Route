@@ -2,150 +2,274 @@
 <items version="2" >
 
     <item
-
-        is-multidex="true"
-        jar="/Users/luodian/Library/Android/sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/constraint-layout-solver-1.0.2_a9425dbd362d998ebbe9933d48c94a46838ba106/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/luodian/.android/build-cache/c18aa30d5311f13ecc7785d979c68131e2445772/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="49223278ec2ede1d05d00868c5ce3e077b4016f8">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_63f7a9525871573d5b04d5baaa90030e56692463/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/luodian/.android/build-cache/d2e17b74fb62478e26830c761cc5e853ffce9117/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="5660e4bf78904137e90e62a5d4cc2e987258f02c">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f44b8ceb137efbab7db5667db437d135580706e5/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/luodian/.android/build-cache/20640cc758a7432bd23b828884f2f9858affbe95/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="8c5c8c77477dfacfef6651859b5485c1c225c565">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7d5589f3a26fe64e8fa35ce849ed916587cc0fdb/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_5bd53a35bc877916096463e6eb32121e5169eccb/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/luodian/.android/build-cache/9809b514cc3a0e3b6559c0882db196012d2daf12/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="21b3467d9b7f23914459f8c79d09040f8c949791">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_776d04716ca20fe925b5ac9216d6c1cc181b69c1/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/luodian/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.9.0/f824591a0016efbaeddb8300bee54832a1398cfa/okio-1.9.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="f824591a0016efbaeddb8300bee54832a1398cfa">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.9.0_503c2165be8014b5b44d682bdd88519111312e77/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/luodian/.android/build-cache/6b1f4774ec35b71dda5a9f4f322d0229d35276e6/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="acf66033b1418ccf9e15c8e77750981e4809c4ea">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_a58d4f8cbb89247ea0bca8f3cff0bb32df3517bd/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/luodian/.android/build-cache/c0db5b4646fa5d611f8b65a04c246a245a26137a/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\71f8e116e347930af37bf99b34b67459b77dcb09\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e939d7167324b22f242b4ebdac1f53759334c162/classes.dex" />
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_d7791a1dd71f2ac57df0969342e85b4bc322e495.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/luodian/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\69033dad96ecbbace166a2b918f8aaafbe765602\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/library-2.4.0_5a1a97d2793aecfd7678bcfc81c4197aba8c15f7/classes.dex" />
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_0f6d1865ba33d9fc0f7dfa9df422fafe9212ae99.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/luodian/.android/build-cache/9f6592ad8d00389552d7569d8a23536881ffe59c/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="06e747980282ac9a96c036c43d07908d0f3347f6">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_ca0230db837457ecc48b11e0b51710d0ec22f939/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/luodian/.android/build-cache/1262e77539c73f296ec3d3d08012cc47b036bcf0/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\dc41bb79b2f97c185119df72bb464658e9a3db78\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="941b6f6c3fd2d074138c8c4f086dc9e40dadd213">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_37bd16181db4a1e82e6b79ab9dbd8f0bc926426a/classes.dex" />
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_594cb173342a1ef6a633c54017df38b02eb88369.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/luodian/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.4.1/c7c4f9e35c2fd5900da24f9872e3971801f08ce0/okhttp-3.4.1.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\3639b58e53670f96e7e7144581fd3c76878e3c56\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="c7c4f9e35c2fd5900da24f9872e3971801f08ce0">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.4.1_35a91d07602a8c5814a1755e6f3cc16803e78e55/classes.dex" />
+        sha1="ce15b2f984c72d3484fb0567a6beca2d01a257e7">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_29b7367a458b3b5b563bd08f7c58dff5f9ae94ce.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/luodian/.android/build-cache/70304eb75bd121b1c2ee1794351a80c6f5b8482b/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\bb544318cfc968caf6116835e0fc659ce528c77f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_e5c8f531ac5ac7d7f8026bb11f0d45d7170f2065.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\0cfc8183ad186bdef248005c440f59c6b64cf8aa\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="06e747980282ac9a96c036c43d07908d0f3347f6">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_a3e50e435888eacf8d0fbe8fbe029c805bb9d054.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\714d78bb88422cf238593188dc029d10fe6433f1\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_ebb0199c1d91e107a729a22c5f062e6a3c812be8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\48e3bcaf04a845775e8fe953b7b00202ef248dc7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="8c5c8c77477dfacfef6651859b5485c1c225c565">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_8ee0f77d90b4743b543c5a5844567bf2d0cee347.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\99697259f44b845004ed908351e119ce9725e465\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_7f00bd34c5b944d4f6c1d54f128fa0c44dd64286.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\FlipShare\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6ae1dced36bab92b4a6fb97928ca94cb74ec112e">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_4580bf519ac1c9b045c0ddf35782535ce35ec84e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\e0f2a049de9e83fca50ce4da5984c6b5eb68391e\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_7bb16053cd9f600ccdba9acf8229f88e0855c69e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\d5164e27699810af7af3e65c2e92ad5065ee674f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="5660e4bf78904137e90e62a5d4cc2e987258f02c">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_7524512132c7a820c0c87ffb67ac04e0a281fcbc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\f7bea245632afc51f95425b31d42b231e0221ffc\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="a2af9c72ccaa4c5c049b500ca6ea664a4ce1f7d4">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_211a3fc66e6c76687b56c18d1b7e8c6dd81b82aa/classes.dex" />
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_741516477fefff11e8c76a5632267c4b4effb291.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/Users/luodian/.android/build-cache/91ce0d050d035fce078d3943765977e34777ea1f/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\17990\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.4.1\c7c4f9e35c2fd5900da24f9872e3971801f08ce0\okhttp-3.4.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="c7c4f9e35c2fd5900da24f9872e3971801f08ce0">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\okhttp-3.4.1_61ce07b29d4eed93cf7d09bb3bd36482979ae95a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\0d08c8185a960803e35204027d1b8f568a4a591f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="49223278ec2ede1d05d00868c5ce3e077b4016f8">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_c09ae614cfef531c0f685354e28aaee574768ca3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\library-2.4.0_9ab4f359dad1298bae13fbed03a0d530e714d4c7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.9.0\f824591a0016efbaeddb8300bee54832a1398cfa\okio-1.9.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="f824591a0016efbaeddb8300bee54832a1398cfa">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\okio-1.9.0_976035241cce65e38a3b169c0ddf63adc01b87c2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\59a836bd3b1e6ba68d96f93603e8d5379e2af7f1\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_8bd5b7cc8543f05ef90047d51caeffe4ce54b371.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\7156aabf5aa54eb097b38d099f906e469d9dd953\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_2e8bc8e5ecf3a43dd658702f4c637ea71eb3857f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\e8f2ddd65e13ffada65a48861df745ac435144bd\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_c2a69b66975636a27809a6ca6e3ef67f3e1e6476.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\c2d7755b33d0b608f5a6addf3e5fb65ea88990c3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_1697606e02b4ff094b8673244e84cc4ac04ec393.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\49c1a102b56216a82f162c358f1b61c76d16676f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_a2ed051b0755a57bb4f60cb3e892b66b2876bd92.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_6ef36c598f92581e67bdf318043e4906217654a7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\3d773d74776aea1056e75c3b96e55eff96f7d620\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="acf66033b1418ccf9e15c8e77750981e4809c4ea">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_590ab9a99094483b118e3b34e622411c7ad6bd57.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\9243fbfbeafbaf9cdebbd0ea956733c68f134b01\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_b730a73ce68a342d4b33254bde5423d534457dff.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_822cb4b711cd914d4aacf19906c6d56f84e80a3e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\000e13311d24255443f8d6c46bdd74ed1ad141be\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="914f5d3e3ace66080e59613708f06d129a222e25">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_f7f779fe7f1df97ac889abd4c59ad79718cc996c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\e020fd4e99bc12cb2870315eddcd2e41516e8303\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_13eba340c2d0f979cf38ccb07a82abab2230a13b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\2e447a3018eb422913ddb911ec1e3d20726c1354\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="21b3467d9b7f23914459f8c79d09040f8c949791">
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_932ca0fd20e7ab57fb207feeace8194162427666.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\17990\.android\build-cache\3342d31af7eda2ef33c02d16fbfaaff885c63d38\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="f06a1dd61d388f6ccf20277b7f9255bf50b48f3a">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c0540b967ccc7c2f76300dcbd3d9cb3495891e0f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="3b01abfc043b5e07d1166ac0e25a25a68ff59fde">
-        <dex dex="/Users/luodian/Desktop/Shared-Route/SharedRoute-2-1/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_98241954fc17adc45fae88ab0262d7ec20b1b9b6/classes.dex" />
-
+        <dex dex="C:\Users\17990\Desktop\Shared-Route\SharedRoute-2-1\app\build\intermediates\pre-dexed\debug\classes_3dd56ee431b3109ff669946604e151c960d1389d.jar" />
     </item>
 
 </items>
