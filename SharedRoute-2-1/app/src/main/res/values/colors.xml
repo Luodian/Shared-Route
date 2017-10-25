@@ -9,8 +9,10 @@
     <color name="blue_light">#aaaaff</color>
     <color name="tab_text_selected">#0084e8</color>
     <color name="tab_text_normal">#7597b3</color>
+
     <color name="white">#FFFFFF</color>
     <!-- 白色 -->
+    <color name="light_green">#76EEC6</color>
     <color name="ivory">#FFFFF0</color>
     <!-- 象牙色 -->
     <color name="lightyellow">#FFFFE0</color>

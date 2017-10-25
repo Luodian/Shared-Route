@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.MyPagerAdapter;
 import com.example.administrator.sharedroute.adapter.ReleaseOrderItemAdapter;
 import com.example.administrator.sharedroute.entity.ReleaseOrderItem;
+import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
@@ -50,8 +52,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	private View view1, view2;//页卡视图
 	private List<View> mViewList = new ArrayList<>();//页卡视图集合
 	public static String select = "releaseOrder";
-	private List<ReleaseOrderItem> itemList = new ArrayList<>();
-	private ReleaseOrderItemAdapter adapter;
+	private List<listItem> itemAcceptList = new ArrayList<>();
+	private List<listItem> itemPublishList = new ArrayList<>();
+	private ReleaseOrderItemAdapter adapter2;
+	private ReleaseOrderItemAdapter adapter1;
 	private int mMenuId;
 	private OrderDao orderDao;
 	private BottomNavigationView navigation;
@@ -71,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //        if (! orderDao.isDataExist()){/*到时候连接了远程后该部分需要修改*/
 //            orderDao.initTable();
 //        }
+		itemPublishList = orderDao.getPublishOrder();
+		itemAcceptList = orderDao.getAcceptOrder();
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		ActionBar actionBar = getSupportActionBar();
@@ -133,26 +139,26 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
 		mBanner = (BannerPager) findViewById(R.id.banner_pager);
 		LayoutParams params = (LayoutParams) mBanner.getLayoutParams();
-		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 280f / 640f);
+		params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f / 640f);
 		mBanner.setLayoutParams(params);
 		ArrayList<Integer> bannerArray = new ArrayList<>();
-        bannerArray.add(R.drawable.banner_1);
-        bannerArray.add(R.drawable.banner_2);
-        bannerArray.add(R.drawable.banner_3);
-        bannerArray.add(R.drawable.banner_4);
-        bannerArray.add(R.drawable.banner_5);
-        mBanner.setImage(bannerArray);
-        mBanner.setOnBannerListener(this);
-        mBanner.start();
+		bannerArray.add(R.drawable.banner_1);
+		bannerArray.add(R.drawable.banner_2);
+		bannerArray.add(R.drawable.banner_3);
+		bannerArray.add(R.drawable.banner_4);
+		bannerArray.add(R.drawable.banner_5);
+		mBanner.setImage(bannerArray);
+		mBanner.setOnBannerListener(this);
+		mBanner.start();
 
 		mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
 		mTabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
 		mInflater = LayoutInflater.from(this);
-        view1 = mInflater.inflate(activity_release_order, null);
-        view2 = mInflater.inflate(activity_receive_order, null);
-        //添加页卡视图
-		mViewList.add(view1);
+		view1 = mInflater.inflate(activity_release_order, null);
+		view2 = mInflater.inflate(activity_receive_order, null);
+		//添加页卡视图
 		mViewList.add(view2);
+		mViewList.add(view1);
 
 		MyPagerAdapter mAdapter = new MyPagerAdapter(mViewList);
 		//给ViewPager设置适配器
@@ -170,19 +176,32 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		// 设置分割线的样式
 		mLinearLayout.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_vertical));
 
-		initItems();
 		RecyclerView releaseOrder = (RecyclerView)view1.findViewById(R.id.release_order);
-		GridLayoutManager layoutManager = new GridLayoutManager(this,1);
-		releaseOrder.setLayoutManager(layoutManager);
-		adapter = new ReleaseOrderItemAdapter(itemList);
-		releaseOrder.setAdapter(adapter);
+		GridLayoutManager layoutManager1 = new GridLayoutManager(this, 1);
+		releaseOrder.setLayoutManager(layoutManager1);
 
-        navigation = (BottomNavigationView) findViewById(R.id.main_navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
 
-		swipeRefresh = (SwipeRefreshLayout)view1.findViewById(R.id.swipe_refresh);
-		swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+		RecyclerView receiveOrder = (RecyclerView) view2.findViewById(R.id.receive_order);
+		GridLayoutManager layoutManager2 = new GridLayoutManager(this, 1);
+		receiveOrder.setLayoutManager(layoutManager2);
+		adapter2 = new ReleaseOrderItemAdapter(itemAcceptList);
+		releaseOrder.setAdapter(adapter2);
+
+		navigation = (BottomNavigationView) findViewById(R.id.main_navigation);
+		navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+		navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
+
+		swipeRefresh = (SwipeRefreshLayout) view1.findViewById(R.id.swipe_refresh_release);
+		swipeRefresh.setColorSchemeResources(R.color.light_green);
+		swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				swipeRefresh.setRefreshing(false);
+			}
+		});
+
+		swipeRefresh = (SwipeRefreshLayout) view2.findViewById(R.id.swipe_refresh_receive);
+		swipeRefresh.setColorSchemeResources(R.color.light_green);
 		swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
 			public void onRefresh() {
@@ -196,14 +215,29 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	public void onBannerClick(int position) {
 		switch (position+1){
 			case 1:
+				Intent intent1 = new Intent(Intent.ACTION_VIEW);
+				intent1.setData(Uri.parse("http://www.baidu.com"));
+				startActivity(intent1);
 				break;
 			case 2:
+				Intent intent2 = new Intent(Intent.ACTION_VIEW);
+				intent2.setData(Uri.parse("http://www.github.com"));
+				startActivity(intent2);
 				break;
 			case 3:
+				Intent intent3 = new Intent(Intent.ACTION_VIEW);
+				intent3.setData(Uri.parse("http://www.qq.com"));
+				startActivity(intent3);
 				break;
 			case 4:
+				Intent intent4 = new Intent(Intent.ACTION_VIEW);
+				intent4.setData(Uri.parse("http://www.4399.com"));
+				startActivity(intent4);
 				break;
 			case 5:
+				Intent intent5 = new Intent(Intent.ACTION_VIEW);
+				intent5.setData(Uri.parse("http://www.hao123.com"));
+				startActivity(intent5);
 				break;
 			default:
 		}
@@ -228,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 					finish();
 					return true;
 				case R.id.navigation_notifications:
-                    JumpToActivity(SearchNeedsActivity.class);
+					JumpToActivity(SearchNeedsActivity.class);
 					finish();
 					return true;
 			}
@@ -236,6 +270,48 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		}
 
 	};
+
+//	public void fixListViewHeight(ListView listView) {
+//		// 如果没有设置数据适配器，则ListView没有子项，返回。
+//		ListAdapter listAdapter = listView.getAdapter();
+//		int totalHeight = 0;
+//		if (listAdapter == null) {
+//			return;
+//		}
+//		for (int index = 0, len = listAdapter.getCount(); index < len; index++) {
+//			View listViewItem = listAdapter.getView(index , null, listView);
+//			// 计算子项View 的宽高
+//			listViewItem.measure(0, 0);
+//			// 计算所有子项的高度和
+//			totalHeight += listViewItem.getMeasuredHeight();
+//		}
+//
+//		ViewGroup.LayoutParams params = listView.getLayoutParams();
+//		// listView.getDividerHeight()获取子项间分隔符的高度
+//		// params.height设置ListView完全显示需要的高度
+//		params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+//		listView.setLayoutParams(params);
+//	}
+
+//	public boolean onCreateOptionsMenu(Menu menu){
+//		getMenuInflater().inflate(R.menu.toolbar,menu);
+//		return true;
+//	}
+//
+//	public boolean onMenuOpened(int featureId, Menu menu) {
+//		if (menu != null) {
+//			if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
+//				try {
+//					Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+//					method.setAccessible(true);
+//					method.invoke(menu, true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		return super.onMenuOpened(featureId, menu);
+//	}
 
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch (item.getItemId()){
@@ -247,15 +323,15 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	}
 
 	@Override
-    public void onBackPressed() {
-        finish();
-    }
+	public void onBackPressed() {
+		finish();
+	}
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mDrawerLayout.closeDrawers();
-    }
+	@Override
+	public void onPause() {
+		super.onPause();
+		mDrawerLayout.closeDrawers();
+	}
 
 //	public void BlurActivityDialog(final String title, final String select){
 //        Vibrator vibrator=(Vibrator)getSystemService(Service.VIBRATOR_SERVICE);
@@ -272,54 +348,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //		});
 //	}
 
-	private void initItems(){
-
-        for(int i = 0;i<2;i++){
-            ReleaseOrderItem item1 = new ReleaseOrderItem();
-            item1.setExpressimageId(R.drawable.yd_express);
-            item1.setDate("10月1日");
-            item1.setTpyeimageId(R.mipmap.ic_type_book);
-            item1.setType("书籍");
-            item1.setStatusimageId(R.mipmap.ic_none_receive_status);
-            itemList.add(item1);
-
-            ReleaseOrderItem item2 = new ReleaseOrderItem();
-            item2.setExpressimageId(R.drawable.yt_express);
-            item2.setDate("10月2日");
-            item2.setTpyeimageId(R.mipmap.ic_type_clothes);
-            item2.setType("衣服");
-            item2.setStatusimageId(R.mipmap.ic_none_receive_status);
-            itemList.add(item2);
-
-            ReleaseOrderItem item3 = new ReleaseOrderItem();
-            item3.setExpressimageId(R.drawable.zto_express);
-            item3.setDate("10月3日");
-            item3.setTpyeimageId(R.mipmap.ic_type_electri);
-            item3.setType("电子");
-            item3.setStatusimageId(R.mipmap.ic_receive_status);
-            itemList.add(item3);
-
-            ReleaseOrderItem item4 = new ReleaseOrderItem();
-            item4.setExpressimageId(R.drawable.best_express);
-            item4.setDate("10月4日");
-            item4.setTpyeimageId(R.mipmap.ic_type_life);
-            item4.setType("生活");
-            item4.setStatusimageId(R.mipmap.ic_receive_status);
-            itemList.add(item4);
-
-            ReleaseOrderItem item5 = new ReleaseOrderItem();
-            item5.setExpressimageId(R.drawable.ems_express);
-            item5.setDate("10月5日");
-            item5.setTpyeimageId(R.mipmap.ic_type_else);
-            item5.setType("其他");
-            item5.setStatusimageId(R.mipmap.ic_none_receive_status);
-            itemList.add(item5);
-        }
-	}
 
 	public void JumpToActivity(Class activity){
-        startActivity(new Intent(this,activity));
-    }
+		startActivity(new Intent(this,activity));
+	}
 
 //	private void sendRequestWithOkHttp(){
 //		new Thread(new Runnable() {

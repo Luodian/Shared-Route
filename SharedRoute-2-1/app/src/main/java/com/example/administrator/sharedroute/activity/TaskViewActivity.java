@@ -2,8 +2,10 @@ package com.example.administrator.sharedroute.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -45,12 +47,21 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
     private AnimationAdapter mAnimAdapter ;
     private static final int INITIAL_DELAY_MILLIS = 100;
     private OrderDao orderDao;
+    private SwipeRefreshLayout swipeRefresh;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
         orderDao = new OrderDao(this);
         initView();
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_taskview);
+        swipeRefresh.setColorSchemeResources(R.color.light_green);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefresh.setRefreshing(false);
+            }
+        });
     }
     private void initView() {
         listView = (ListView) findViewById(R.id.shoppingtrolly_listview);
@@ -201,5 +212,17 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
             orderDao.deleteOrder(arrayList.get(position));
             trollyAdapter.remove(position);
         }
+    }
+}
+
+class refreshTask extends AsyncTask<Integer,Void,List<listItem>>{
+    @Override
+    protected List<listItem> doInBackground(Integer... params) {
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(List<listItem> listItemList) {
+        super.onPostExecute(listItemList);
     }
 }

@@ -57,7 +57,7 @@ public class listItem implements Parcelable{
     }
 
 
-    public listItem(String expressType, String expressSize, String inTimeStamp, String outTimeStamp, String inLocation, String outLocation, double price){
+    public listItem(String expressType, String expressSize, String inTimeStamp, String inLocation, String outTimeStamp, String outLocation, double price) {
         this.expressSize=expressSize;
         this.expressType=expressType;
         this.inTimeStamp=inTimeStamp;
@@ -66,7 +66,8 @@ public class listItem implements Parcelable{
         this.outLocation=outLocation;
         this.price=price;
     }
-    public listItem(String expressType, String expressSize, String inTimeStamp, String outTimeStamp, String inLocation, String outLocation, double price, Boolean radioButton){
+
+    public listItem(String expressType, String expressSize, String inTimeStamp, String inLocation, String outTimeStamp, String outLocation, double price, Boolean radioButton) {
         this.expressSize=expressSize;
         this.expressType=expressType;
         this.inTimeStamp=inTimeStamp;
@@ -158,13 +159,13 @@ public class listItem implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(expressType);
-            dest.writeString(expressSize);
-            dest.writeString(inTimeStamp);
-            dest.writeString(inLocation);
-            dest.writeString(outLocation);
-            dest.writeString(outTimeStamp);
-            dest.writeDouble(price);
+        dest.writeString(expressType);
+        dest.writeString(expressSize);
+        dest.writeString(inTimeStamp);
+        dest.writeString(inLocation);
+        dest.writeString(outLocation);
+        dest.writeString(outTimeStamp);
+        dest.writeDouble(price);
     }
     public static final Creator<listItem> CREATOR = new Creator(){
         @Override
@@ -186,4 +187,4 @@ public class listItem implements Parcelable{
         }
     };
 
-    }
+}

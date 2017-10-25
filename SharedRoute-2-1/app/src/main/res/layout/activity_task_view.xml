@@ -17,13 +17,20 @@
         android:layout_alignParentTop="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-    <ListView
-        android:id="@+id/shoppingtrolly_listview"
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_taskview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbartaskview"
         android:layout_above="@+id/bottom_toolbar">
-    </ListView>
+        <ListView
+            android:id="@+id/shoppingtrolly_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
     <LinearLayout
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
@@ -49,42 +56,42 @@
 
 
         <!--<FrameLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="#00000000"-->
-            <!--android:layout_gravity="fill">-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="#00000000"-->
+        <!--android:layout_gravity="fill">-->
 
-            <Button
-                android:layout_weight="1.5"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/deleteItems"
-                android:text="删除"
-                android:textSize="18dp"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:textColor="@color/black"
-                android:background="#00FFA54F"
-                />
+        <Button
+            android:layout_weight="1.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/deleteItems"
+            android:text="删除"
+            android:textSize="18dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:textColor="@color/black"
+            android:background="#00FFA54F"
+            />
         <!--</FrameLayout>-->
         <!--<FrameLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_gravity="fill"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/roundedcorner3">-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="fill"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/roundedcorner3">-->
 
-            <Button
-                android:layout_weight="1.5"
-                android:id="@+id/jiedan"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:text="接单"
-                android:background="@drawable/roundedcorner3"
-                android:textSize="18dp" />
+        <Button
+            android:layout_weight="1.5"
+            android:id="@+id/jiedan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:text="接单"
+            android:background="@drawable/roundedcorner3"
+            android:textSize="18dp" />
         <!--</FrameLayout>-->
 
 
