@@ -8,45 +8,16 @@
     tools:context="com.example.administrator.sharedroute.activity.MyOrder"
     android:weightSum="1">
 
-    <LinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_receive"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="类型"
-            android:textSize="20sp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/receive_order"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="7dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="取货码"
-            android:textSize="20sp"
-            android:layout_marginLeft="40dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="金额"
-            android:textSize="20sp"
-            android:layout_marginLeft="40dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="状态"
-            android:textSize="20sp"
-            android:layout_marginLeft="40dp"/>
-
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/receive_order"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="7dp" />
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

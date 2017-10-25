@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,8 +52,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	private View view1, view2;//页卡视图
 	private List<View> mViewList = new ArrayList<>();//页卡视图集合
 	public static String select = "releaseOrder";
-	private List<listItem> itemList = new ArrayList<>();
-	private ReleaseOrderItemAdapter adapter;
+	private List<listItem> itemAcceptList = new ArrayList<>();
+	private List<listItem> itemPublishList = new ArrayList<>();
+	private ReleaseOrderItemAdapter adapter2;
+	private ReleaseOrderItemAdapter adapter1;
 	private int mMenuId;
 	private OrderDao orderDao;
 	private BottomNavigationView navigation;
@@ -72,7 +75,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //        if (! orderDao.isDataExist()){/*到时候连接了远程后该部分需要修改*/
 //            orderDao.initTable();
 //        }
-		itemList = orderDao.getAcceptOrder();
+		itemPublishList = orderDao.getPublishOrder();
+		itemAcceptList = orderDao.getAcceptOrder();
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		ActionBar actionBar = getSupportActionBar();
@@ -153,8 +157,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         view1 = mInflater.inflate(activity_release_order, null);
         view2 = mInflater.inflate(activity_receive_order, null);
         //添加页卡视图
-		mViewList.add(view1);
 		mViewList.add(view2);
+		mViewList.add(view1);
 
 		MyPagerAdapter mAdapter = new MyPagerAdapter(mViewList);
 		//给ViewPager设置适配器
@@ -173,17 +177,31 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		mLinearLayout.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_vertical));
 
 		RecyclerView releaseOrder = (RecyclerView)view1.findViewById(R.id.release_order);
-		GridLayoutManager layoutManager = new GridLayoutManager(this,1);
-		releaseOrder.setLayoutManager(layoutManager);
-		adapter = new ReleaseOrderItemAdapter(itemList);
-		releaseOrder.setAdapter(adapter);
+		GridLayoutManager layoutManager1 = new GridLayoutManager(this, 1);
+		releaseOrder.setLayoutManager(layoutManager1);
+
+
+		RecyclerView receiveOrder = (RecyclerView) view2.findViewById(R.id.receive_order);
+		GridLayoutManager layoutManager2 = new GridLayoutManager(this, 1);
+		receiveOrder.setLayoutManager(layoutManager2);
+		adapter2 = new ReleaseOrderItemAdapter(itemAcceptList);
+		releaseOrder.setAdapter(adapter2);
 
         navigation = (BottomNavigationView) findViewById(R.id.main_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
 
-		swipeRefresh = (SwipeRefreshLayout)view1.findViewById(R.id.swipe_refresh);
-		swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+		swipeRefresh = (SwipeRefreshLayout) view1.findViewById(R.id.swipe_refresh_release);
+		swipeRefresh.setColorSchemeResources(R.color.light_green);
+		swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				swipeRefresh.setRefreshing(false);
+			}
+		});
+
+		swipeRefresh = (SwipeRefreshLayout) view2.findViewById(R.id.swipe_refresh_receive);
+		swipeRefresh.setColorSchemeResources(R.color.light_green);
 		swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
 			public void onRefresh() {

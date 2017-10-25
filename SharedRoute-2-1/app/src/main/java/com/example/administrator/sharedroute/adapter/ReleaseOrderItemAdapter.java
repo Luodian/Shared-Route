@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,7 +108,17 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
     }
 
     private void setImageView(listItem e, ViewHolder holder) {
-        int express = Integer.valueOf((e.getPickupCode()).charAt(0));//*主键第一位为快递公司代号
+        int express = -1;
+        String expressCompany = e.getInLocation();
+        Log.e("express", expressCompany);
+        if (expressCompany.contains("申通")) express = 1;
+        else if (expressCompany.contains("天天")) express = 2;
+        else if (expressCompany.contains("韵达")) express = 3;
+        else if (expressCompany.contains("圆通")) express = 4;
+        else if (expressCompany.contains("中通")) express = 5;
+        else if (expressCompany.contains("百事")) express = 6;
+        else if (expressCompany.contains("顺丰")) express = 7;
+        Log.e("express", String.valueOf(express));
         switch (express) {
             case 1: {
                 holder.expressImage.setImageResource(R.drawable.sto_express);
@@ -127,6 +138,14 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
             }
             case 5: {
                 holder.expressImage.setImageResource(R.drawable.zto_express);
+                break;
+            }
+            case 6: {
+                holder.expressImage.setImageResource(R.drawable.best_express);
+                break;
+            }
+            case 7: {
+                holder.expressImage.setImageResource(R.drawable.sf_express);
                 break;
             }
             default:

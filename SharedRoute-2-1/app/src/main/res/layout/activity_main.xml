@@ -15,9 +15,11 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="@color/light_green"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        <!--android:background="?attr/colorPrimary"-->
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -41,23 +43,26 @@
                     android:layout_marginEnd="14dp"
                     android:layout_marginRight="14dp" />
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/mainViewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
                 <android.support.design.widget.TabLayout
                     android:id="@+id/mainTabLayout"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:background="#00000000"
-                    app:tabIndicatorColor="#ff0000"
+                    android:background="@color/light_green"
+                    app:tabIndicatorColor="@color/yellow"
+                    app:tabIndicatorHeight="2dp"
                     app:tabMode="fixed"
                     app:tabPaddingEnd="20dp"
                     app:tabPaddingStart="20dp"
-                    app:tabSelectedTextColor="#ff0000"
-                    app:tabTextColor="#000000"
-                    app:tabTextAppearance="@style/TabLayoutTextStyle"/>
+                    app:tabSelectedTextColor="#ffffffff"
+                    app:tabTextAppearance="@style/TabLayoutTextStyle"
+                    app:tabTextColor="#60ffffff" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/mainViewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </android.support.v4.view.ViewPager>
 
             </LinearLayout>
 

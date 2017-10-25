@@ -152,7 +152,7 @@ public class PageFragment extends Fragment {
     //每次上拉加载的时候，给RecyclerView的后面添加了10条数据数据
     private void loadMoreData() {
         for (int i = 0; i < 10; i++) {
-            listItem item1 = new listItem("书籍", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+            listItem item1 = new listItem("书籍", "小件", "今天 12：30", "一区 顺丰速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
             myDataset.add(item1);
             adapter.notifyDataSetChanged();
         }
@@ -277,8 +277,8 @@ public class PageFragment extends Fragment {
     protected void init_data()
     {
         myDataset = new ArrayList<>();
-        listItem item1 = new listItem("书籍","小件","今天 12：30","一区 顺风速运","今天 12：30","一区 正心楼 524",2.0,false);
-        listItem item2 = new listItem("书籍","小件","今天 12：30","一区 顺风速运","今天 12：30","一区 正心楼 524",2.0,false);
+        listItem item1 = new listItem("书籍", "小件", "今天 12：30", "一区 顺丰速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+        listItem item2 = new listItem("书籍", "小件", "今天 12：30", "一区 顺丰速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
         listItem item3 = new listItem("设备","小件","今天 18：30","一区 韵达快递","今天 12：30","一区 2公寓 5024",8.0,false);
         listItem item4 = new listItem("设备","小件","今天 18：30","一区 韵达快递","今天 12：30","一区 2公寓 5024",8.0,false);
         listItem item5 = new listItem("食物","小件","今天 15：30","一区 中通快递","今天 12：30","一区 18公寓 9001",5.0,false);

@@ -17,13 +17,20 @@
         android:layout_alignParentTop="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-    <ListView
-        android:id="@+id/shoppingtrolly_listview"
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_taskview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbartaskview"
         android:layout_above="@+id/bottom_toolbar">
-    </ListView>
+    <ListView
+        android:id="@+id/shoppingtrolly_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
     <LinearLayout
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
