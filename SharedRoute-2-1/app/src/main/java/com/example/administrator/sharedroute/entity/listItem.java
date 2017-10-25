@@ -57,7 +57,7 @@ public class listItem implements Parcelable{
     }
 
 
-    public listItem(String expressType, String expressSize, String inTimeStamp, String outTimeStamp, String inLocation, String outLocation, double price){
+    public listItem(String expressType, String expressSize, String inTimeStamp, String inLocation, String outTimeStamp, String outLocation, double price) {
         this.expressSize=expressSize;
         this.expressType=expressType;
         this.inTimeStamp=inTimeStamp;
@@ -66,7 +66,8 @@ public class listItem implements Parcelable{
         this.outLocation=outLocation;
         this.price=price;
     }
-    public listItem(String expressType, String expressSize, String inTimeStamp, String outTimeStamp, String inLocation, String outLocation, double price, Boolean radioButton){
+
+    public listItem(String expressType, String expressSize, String inTimeStamp, String inLocation, String outTimeStamp, String outLocation, double price, Boolean radioButton) {
         this.expressSize=expressSize;
         this.expressType=expressType;
         this.inTimeStamp=inTimeStamp;

@@ -17,376 +17,327 @@
             android:layout_weight="1"
             android:fillViewport="true"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
 
             <!-- DatePicker Options -->
             <android.support.v7.widget.CardView
                 android:id="@+id/cdv1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="20dp"
-                android:background="#ffffff"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="2dp"
                 app:cardCornerRadius="10dp">
 
-                <TableLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp">
+                    android:layout_margin="10dp">
 
-                    <TableRow
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/person" />
+
+                    <TableLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp">
 
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_margin="8dp"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/reddot"/>
-                        <TextView
-                            android:layout_width="0dp"
+                        <TableRow
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="8dp"
-                            android:text="姓名"
-                            android:textSize="16sp" />
+                            android:layout_gravity="center_horizontal">
 
-                        <TextView
-                            android:id="@+id/nametext"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:layout_gravity="center"
-                            android:layout_margin="8dp"
-                            android:hint="请选择" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="姓名"
+                                android:textSize="12sp" />
 
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_marginTop="8dp"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/leftarrow" />
-                    </TableRow>
+                            <TextView
+                                android:id="@+id/nametext"
+                                android:layout_width="122dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="30dp"
+                                android:hint="请选择" />
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="end|center"
+                                android:scaleType="center"
+                                android:src="@drawable/leftarrow" />
+                        </TableRow>
 
-                        <View
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_margin="8dp"/>
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="8dp"
-                            android:text="手机"
-                            android:textSize="16sp" />
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="5dp">
 
-                        <TextView
-                            android:id="@+id/phonetext"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:layout_margin="8dp"
-                            android:hint="请选择" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="手机"
+                                android:textSize="12sp" />
 
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_marginTop="8dp"
-                            android:scaleType="centerInside"
-                            android:src="@drawable/leftarrow" />
-                    </TableRow>
+                            <TextView
+                                android:id="@+id/phonetext"
+                                android:layout_width="122dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="30dp"
+                                android:hint="请选择" />
 
-                </TableLayout>
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="end|center"
+                                android:scaleType="center"
+                                android:src="@drawable/leftarrow" />
+                        </TableRow>
+
+                    </TableLayout>
+                </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cdv2"
-                android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                app:cardCornerRadius="10dp">
-
-                    <TableLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginLeft="15dp">
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1">
-
-                            <ImageView
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginBottom="8dp"
-                                android:layout_marginTop="23dp"
-                                android:layout_marginRight="8dp"
-                                android:scaleType="centerInside"
-                                android:src="@drawable/bluedot"/>
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="3dp"
-                                android:text="包裹类型"
-                                android:textSize="16sp" />
-
-                            <org.angmarch.views.NiceSpinner
-                                android:id="@+id/nice_spinner"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="3dp"
-                                app:arrowTint="#ff6a6a"
-                                android:hint="请选择" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true">
-
-                            <View
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_marginTop="3dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginBottom="3dp"/>
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginTop="3dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginBottom="3dp"
-                                android:text="备注"
-                                android:textSize="16sp" />
-
-                            <EditText
-                                android:id="@+id/remarktext"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:layout_marginTop="3dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginBottom="3dp"
-                                android:textSize="15sp"
-                                android:hint="例如：小件/易碎品" />
-                        </TableRow>
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1">
-
-                            <View
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_marginTop="3dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginBottom="8dp"/>
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="提货号码"
-                                android:layout_marginTop="3dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginBottom="8dp"
-                                android:textSize="16sp" />
-
-                            <EditText
-                                android:id="@+id/numtext"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:layout_marginTop="0dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginBottom="8dp"
-                                android:hint="请输入"
-                                android:inputType="number"/>
-                        </TableRow>
-
-                    </TableLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/cdv3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="#ffffff"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="2dp"
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="23dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="23dp"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/greendot" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <TableLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_marginLeft="12dp">
 
-                        <Button
-                            android:id="@+id/pickupplace"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@android:color/transparent"
-                            android:text="取件地点"
-                            android:textColor="#ff6a6a"
-                            android:textSize="16sp" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
+                        <TableRow
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <ImageView
-                                android:id="@+id/time_add_icon1"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_marginBottom="8dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginTop="2dp"
-                                android:scaleType="centerInside"
-                                android:src="@drawable/circleadd" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|start"
+                                android:text="包裹类型"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+
+                            <org.angmarch.views.NiceSpinner
+                                android:id="@+id/nice_spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                app:arrowTint="#ff6a6a"
+                                android:hint="请选择" />
+
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="备注"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/remarktext"
+                                android:layout_width="145dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:textSize="15sp"
+                                android:hint="例如：小件/易碎品" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="提货号码"
+                                android:layout_gravity="center"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/numtext"
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:hint="请输入" />
+                        </TableRow>
+
+                    </TableLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cdv3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="2dp"
+                app:cardCornerRadius="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/place" />
+
+                    <Button
+                        android:id="@+id/pickupplace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:text="取件地点"
+                        android:textColor="#ff6a6a"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="12dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/tuzhong" />
+
+                    <Button
+                        android:id="@+id/delieverplace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="12dp"
+                        android:background="@android:color/transparent"
+                        android:text="送件地点"
+                        android:textColor="#ff6a6a"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
+
+                    <TableRow android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/alarm" />
+
+                        <LinearLayout
+                            android:id="@+id/select_time_from"
+                            android:layout_width="105dp"
+                            android:layout_height="wrap_content"
+                            android:padding="15dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="取件时间"
+                                android:textAlignment="center"
+                                android:textSize="13sp" />
 
                             <TextView
                                 android:id="@+id/qujiantext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginTop="2dp"
-                                android:hint="时间" />
-
+                                android:layout_gravity="center"
+                                android:hint="选择时间" />
                         </LinearLayout>
-                    </LinearLayout>
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginRight="23dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="#dedede"
-                        android:padding="8dp" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <Button
-                            android:id="@+id/delieverplace"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@android:color/transparent"
-                            android:text="送件地点"
-                            android:textColor="#ff6a6a"
-                            android:textSize="16sp" />
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/tuzhong" />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:id="@+id/select_time_to"
+                            android:layout_width="105dp"
+                            android:layout_height="wrap_content"
+                            android:padding="15dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
 
-                            <ImageView
-                                android:id="@+id/time_add_icon2"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_marginBottom="8dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginTop="2dp"
-                                android:scaleType="centerInside"
-                                android:src="@drawable/circleadd" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="送件时间"
+                                android:textAlignment="center"
+                                android:textSize="13sp" />
 
                             <TextView
                                 android:id="@+id/songjiantext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginTop="2dp"
-                                android:hint="时间" />
+                                android:layout_gravity="center"
+                                android:hint="选择时间" />
+
 
                         </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
+                    </TableRow>
+                </TableLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cdv4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="2dp"
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout
@@ -394,21 +345,11 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="23dp"
-                        android:src="@drawable/yellowdot"/>
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginLeft="25dp"
                         android:text="设定金额\t\t"
-                        android:textSize="16sp"
                         android:textColor="#eead0e" />
 
                     <TextView
@@ -420,18 +361,16 @@
 
                     <EditText
                         android:id="@+id/money"
-                        android:layout_width="0dp"
+                        android:layout_width="122dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="7"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginLeft="30dp"
                         android:hint="请输入金额(元)"
-                        android:inputType="number"
                         android:textSize="15sp" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
+
 
 </ScrollView>
 
@@ -440,12 +379,13 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="4dp"
-            android:layout_margin="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             app:buttonColor="#7b68ee"
             app:buttonText="确认发布"
             app:buttonTextSize="23sp"
             app:progressStyle="loading" />
+
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/publish_navigation"

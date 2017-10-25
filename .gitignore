@@ -7,3 +7,6 @@
 /build
 /captures
 .externalNativeBuild
+*.xml
+SharedRoute-2-1/.idea/libraries/BaseRecyclerViewAdapterHelper_2_9_18.xml
+*.xml
