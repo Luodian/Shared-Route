@@ -64,6 +64,8 @@ public class SearchNeedsActivity extends AppCompatActivity {
         }
         initView();
         selectedItem = new ArrayList<>();
+
+
         mfab = (FloatingActionButton) findViewById(R.id.fab);
         mfab.setOnClickListener(new View.OnClickListener(){
             @Override
