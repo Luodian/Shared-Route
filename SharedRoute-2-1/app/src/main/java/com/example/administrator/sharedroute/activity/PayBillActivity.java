@@ -98,4 +98,116 @@ public class PayBillActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    private class PostTask extends AsyncTask<Void,Void,Boolean> {
+        private String mMoney;
+        private String mName;
+        private String mPhone;
+        private String mNum;
+        private String mPackSort;
+        private String mPickPlace;
+        private String mDelieverPlace;
+        private String mPickTime;
+        private String mDelieverTime;
+        private String mPayPath;                //支付方式指明是支付宝支付还是微信支付
+        private String mRemark;                 //备注
+
+        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Task";
+
+        private String result = null;
+
+        //初始化
+        PostTask(String money,String name,String phone,String num,String packSort,
+                    String pickPlace,String delieverPlace,String pickTime,String delieverTime,
+                    String payPath,String remark) {
+            mMoney=money;
+            mName=name;
+            mPhone=phone;
+            mNum=num;
+            mPackSort=packSort;
+            mPickPlace=pickPlace;
+            mDelieverPlace=delieverPlace;
+            mPickTime=pickTime;
+            mDelieverTime=delieverTime;
+            mPayPath=payPath;
+            mRemark=remark;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+
+            try {
+
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(url);
+
+                //参数
+                List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+
+                parameters.add(new BasicNameValuePair("money",mMoney));
+                parameters.add(new BasicNameValuePair("name",mName));
+                parameters.add(new BasicNameValuePair("phone",mPhone));
+                parameters.add(new BasicNameValuePair("num",mNum));
+                parameters.add(new BasicNameValuePair("packSort",mPackSort));
+                parameters.add(new BasicNameValuePair("pickPlace",mPickPlace));
+                parameters.add(new BasicNameValuePair("delieverPlace",mDelieverPlace));
+                parameters.add(new BasicNameValuePair("pickTime",mPickTime));
+                parameters.add(new BasicNameValuePair("delieverTime",mDelieverTime));
+                parameters.add(new BasicNameValuePair("payPath",mPayPath));
+                parameters.add(new BasicNameValuePair("remark",mRemark));
+                parameters.add(new BasicNameValuePair("action", "submit"));
+
+                UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
+                post.setEntity(ent);
+
+                HttpResponse responsePOST = client.execute(post);
+
+                HttpEntity resEntity = responsePOST.getEntity();
+
+                if (resEntity != null) {
+                    result = EntityUtils.toString(resEntity);
+                }
+                if (result.toString().equals("success"))
+                {
+                    client.getConnectionManager().shutdown();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            } catch (IOException e) {
+                // TODO: handle exception
+                e.getMessage();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            mAuthTask = null;
+            showProgress(false);
+
+            if (success) {
+                Toast.makeText(PayBillActivity.this,"Successful!", Toast.LENGTH_SHORT).show();
+//                finish();
+            }
+            else
+            {
+                Toast.makeText(PayBillActivity.this,result.toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(PayBillActivity.this,"Failure", Toast.LENGTH_SHORT).show();
+//                mPasswordView.setError(getString(R.string.error_incorrect_password));
+//                mPasswordView.requestFocus();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mAuthTask = null;
+            showProgress(false);
+        }
+
+    }
+
 }
