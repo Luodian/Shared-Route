@@ -131,15 +131,23 @@ public class PageFragment extends Fragment {
 
 //                //数据重新加载完成后，提示数据发生改变，并且设置现在不在刷新
 //                adapter.notifyDataSetChanged();
-                mRefreshLayout.setRefreshing(false);
+                mRefreshLayout.setRefreshing(true);
             }
         });
-        mrc.addOnScrollListener(new EndLessOnScrollListener(llm) {
+
+        mRefreshLayout.post(new Runnable() {
             @Override
-            public void onLoadMore(int currentPage) {
-                loadMoreData();
+            public void run() {
+                mRefreshLayout.setRefreshing(true);
             }
         });
+
+//        mrc.addOnScrollListener(new EndLessOnScrollListener(llm) {
+//            @Override
+//            public void onLoadMore(int currentPage) {
+//                loadMoreData();
+//            }
+//        });
 
         //设置页和当前页一致时加载，防止预加载
         if (isFirst && mTabPos==mSerial) {
