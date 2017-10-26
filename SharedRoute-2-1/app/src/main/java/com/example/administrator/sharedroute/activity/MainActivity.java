@@ -1,7 +1,9 @@
 package com.example.administrator.sharedroute.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -26,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.example.administrator.sharedroute.R;
+import com.example.administrator.sharedroute.adapter.ConfirmFinishedAdapter;
 import com.example.administrator.sharedroute.adapter.MyPagerAdapter;
 import com.example.administrator.sharedroute.adapter.ReleaseOrderItemAdapter;
 import com.example.administrator.sharedroute.entity.ReleaseOrderItem;
@@ -33,6 +36,8 @@ import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
+import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
+import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -59,7 +64,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 	private int mMenuId;
 	private OrderDao orderDao;
 	private BottomNavigationView navigation;
-	private SwipeRefreshLayout swipeRefresh;
+	private SwipeRefreshLayout swipeRefresh1;
+	private SwipeRefreshLayout swipeRefresh2;
+	private AnimationAdapter mAnimAdapter;
+	private int status;
 //    ReleaseOrderItem[] items = {new ReleaseOrderItem(R.drawable.yd_express,R.mipmap.ic_type_book,R.mipmap.ic_none_receive_status,"10月1日","书籍"),
 //                                new ReleaseOrderItem(R.drawable.yt_express,R.mipmap.ic_type_book,R.mipmap.ic_none_receive_status,"10月2日","衣服"),
 //                                new ReleaseOrderItem(R.drawable.zto_express,R.mipmap.ic_type_book,R.mipmap.ic_receive_status,"10月3日","电子"),
@@ -72,11 +80,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		setContentView(R.layout.activity_main);
 
 		orderDao = new OrderDao(this);
-//        if (! orderDao.isDataExist()){/*到时候连接了远程后该部分需要修改*/
-//            orderDao.initTable();
-//        }
-		itemPublishList = orderDao.getPublishOrder();
-		itemAcceptList = orderDao.getAcceptOrder();
+		/**
+		 * 测试用的
+		 **/
+		if (!orderDao.isDataExist()) orderDao.initTable();
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		ActionBar actionBar = getSupportActionBar();
@@ -157,8 +164,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		view1 = mInflater.inflate(activity_release_order, null);
 		view2 = mInflater.inflate(activity_receive_order, null);
 		//添加页卡视图
-		mViewList.add(view2);
 		mViewList.add(view1);
+		mViewList.add(view2);
 
 		MyPagerAdapter mAdapter = new MyPagerAdapter(mViewList);
 		//给ViewPager设置适配器
@@ -176,39 +183,49 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		// 设置分割线的样式
 		mLinearLayout.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_vertical));
 
-		RecyclerView releaseOrder = (RecyclerView)view1.findViewById(R.id.release_order);
-		GridLayoutManager layoutManager1 = new GridLayoutManager(this, 1);
-		releaseOrder.setLayoutManager(layoutManager1);
 
-
-		RecyclerView receiveOrder = (RecyclerView) view2.findViewById(R.id.receive_order);
-		GridLayoutManager layoutManager2 = new GridLayoutManager(this, 1);
-		receiveOrder.setLayoutManager(layoutManager2);
-		adapter2 = new ReleaseOrderItemAdapter(itemAcceptList);
-		releaseOrder.setAdapter(adapter2);
 
 		navigation = (BottomNavigationView) findViewById(R.id.main_navigation);
 		navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 		navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
 
-		swipeRefresh = (SwipeRefreshLayout) view1.findViewById(R.id.swipe_refresh_release);
-		swipeRefresh.setColorSchemeResources(R.color.light_green);
-		swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+		swipeRefresh1 = (SwipeRefreshLayout) view1.findViewById(R.id.swipe_refresh_release);
+		swipeRefresh1.setColorSchemeColors(Color.RED, Color.CYAN);
+		swipeRefresh1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-				swipeRefresh.setRefreshing(false);
+				swipeRefresh1.setRefreshing(true);
+				new refreshKeep().execute();
 			}
 		});
 
-		swipeRefresh = (SwipeRefreshLayout) view2.findViewById(R.id.swipe_refresh_receive);
-		swipeRefresh.setColorSchemeResources(R.color.light_green);
-		swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+		swipeRefresh1.post(new Runnable() {
 			@Override
-			public void onRefresh() {
-				swipeRefresh.setRefreshing(false);
+			public void run() {
+				swipeRefresh1.setRefreshing(true);
+				status = 1;
+				new refreshTask().execute();
 			}
 		});
 
+		swipeRefresh2 = (SwipeRefreshLayout) view2.findViewById(R.id.swipe_refresh_receive);
+		swipeRefresh2.setColorSchemeColors(Color.RED, Color.CYAN);
+		swipeRefresh2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				swipeRefresh2.setRefreshing(true);
+				new refreshKeep().execute();
+			}
+		});
+
+		swipeRefresh2.post(new Runnable() {
+			@Override
+			public void run() {
+				swipeRefresh1.setRefreshing(true);
+				status = 2;
+				new refreshTask().execute();
+			}
+		});
 	}
 
 	@Override
@@ -243,6 +260,60 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 		}
 	}
 
+	private class refreshKeep extends AsyncTask<Void, Void, Void> {
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				Thread.sleep(1000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			super.onPostExecute(aVoid);
+			if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
+			if (swipeRefresh2 != null) swipeRefresh2.setRefreshing(false);
+		}
+	}
+
+	private class refreshTask extends AsyncTask<Void, Void, List<listItem>> {
+		@Override
+		protected List<listItem> doInBackground(Void... params) {
+			try {
+				Thread.sleep(1000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			itemPublishList = orderDao.getPublishOrder();
+			itemAcceptList = orderDao.getAcceptOrder();
+			return itemPublishList;
+		}
+
+		@Override
+		protected void onPostExecute(List<listItem> listItems) {
+			super.onPostExecute(listItems);
+			if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
+			if (swipeRefresh2 != null) swipeRefresh1.setRefreshing(false);
+			//if (status==1){
+			RecyclerView releaseOrder = (RecyclerView) view1.findViewById(R.id.release_order);
+			GridLayoutManager layoutManager1 = new GridLayoutManager(MainActivity.this, 1);
+			releaseOrder.setLayoutManager(layoutManager1);
+			adapter1 = new ReleaseOrderItemAdapter(itemPublishList);
+			releaseOrder.setAdapter(adapter1);
+			//	}
+			//if (status==2){
+			RecyclerView receiveOrder = (RecyclerView) view2.findViewById(R.id.receive_order);
+			GridLayoutManager layoutManager2 = new GridLayoutManager(MainActivity.this, 1);
+			receiveOrder.setLayoutManager(layoutManager2);
+			adapter2 = new ReleaseOrderItemAdapter(itemAcceptList);
+			receiveOrder.setAdapter(adapter2);
+			//	}
+
+		}
+	}
 	private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
 			= new BottomNavigationView.OnNavigationItemSelectedListener() {
 

@@ -338,9 +338,13 @@ public class PageFragment extends Fragment {
             listItem item3 = new listItem("设备", "小件", "今天 18：30", "一区 韵达快递", "今天 12：30", "一区 2公寓 5024", 8.0, false);
             listItem item4 = new listItem("设备", "小件", "今天 18：30", "一区 韵达快递", "今天 12：30", "一区 2公寓 5024", 8.0, false);
             listItem item5 = new listItem("食物", "小件", "今天 15：30", "一区 中通快递", "今天 12：30", "一区 18公寓 9001", 5.0, false);
+            item1.setPickupCode("202");
+            item2.setPickupCode("302");
+            item3.setPickupCode("402");
+            item4.setPickupCode("502");
+            item5.setPickupCode("602");
             data.add(item1);
             data.add(item2);
-            data.add(item1);
             data.add(item3);
             data.add(item4);
             data.add(item5);
@@ -477,18 +481,4 @@ public class PageFragment extends Fragment {
         }
     }
 
-    protected void init_data() {
-        TaskListItem = new ArrayList<>();
-        listItem item1 = new listItem("书籍", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-        listItem item2 = new listItem("书籍", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-        listItem item3 = new listItem("设备", "小件", "今天 18：30", "一区 韵达快递", "今天 12：30", "一区 2公寓 5024", 8.0, false);
-        listItem item4 = new listItem("设备", "小件", "今天 18：30", "一区 韵达快递", "今天 12：30", "一区 2公寓 5024", 8.0, false);
-        listItem item5 = new listItem("食物", "小件", "今天 15：30", "一区 中通快递", "今天 12：30", "一区 18公寓 9001", 5.0, false);
-        TaskListItem.add(item1);
-        TaskListItem.add(item2);
-        TaskListItem.add(item1);
-        TaskListItem.add(item3);
-        TaskListItem.add(item4);
-        TaskListItem.add(item5);
-    }
 }

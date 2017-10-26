@@ -75,6 +75,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
                 bundle.putParcelableArrayList("listItemList",selectedItem);
                 intent.putExtras(bundle);
                 startActivity(intent);
+                finish();
             }
         });
         navigation = (BottomNavigationView) findViewById(R.id.search_navigation);
