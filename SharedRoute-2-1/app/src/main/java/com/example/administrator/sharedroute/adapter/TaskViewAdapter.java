@@ -1,6 +1,7 @@
 package com.example.administrator.sharedroute.adapter;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,5 +95,4 @@ public class TaskViewAdapter extends ArrayAdapter<listItem> {
             checkBox=(CheckBox)view.findViewById(R.id.TaskView_checkBox);
         }
     }
-
 }

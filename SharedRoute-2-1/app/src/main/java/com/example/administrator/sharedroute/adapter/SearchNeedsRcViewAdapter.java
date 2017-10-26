@@ -157,23 +157,25 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
             holder.fetchLocTextView.setText(mDataset.get(position).getInLocation());
             holder.sendLocTextView.setText(mDataset.get(position).getOutLocation());
             holder.priceTextView.setText(String.valueOf(mDataset.get(position).getPrice()) + "元");
-
-            holder.mImageView.setOnClickListener(new View.OnClickListener() {
-                //说实话，这样监听不太好，每次滑动getView的时候都要重新new一个监听，但是必须获取ChechView所在的那个Item的position，所以只能卸载getView函数内部
-                @Override
-                public void onClick(View v) {//等于说对于那10个左右的ChechBox,其绑定的监听在不断的改变
-                    if (holder.mImageView != null && mCallBackListener != null)
-                        mCallBackListener.callBackImg(holder.mImageView);
-                    assert holder.mImageView != null;
-                    holder.mImageView.setClickable(false);
-                    holder.mImageView.setImageResource(R.drawable.trolley_pressed);
-                    listItem item = mDataset.get(position);
-                    item.setPickupCode(String.valueOf((int) (Math.random() * 1000000)));
-                    orderDao.insertData(item);
-                    Log.e("rrr", "!!!");
-                    selectedItem.add(item);
-                }
-            });
+            int num = orderDao.getItemCount(mDataset.get(position).getPickupCode());
+            if (num != 0) holder.mImageView.setImageResource(R.drawable.trolley_pressed);
+            else {
+                holder.mImageView.setOnClickListener(new View.OnClickListener() {
+                    //说实话，这样监听不太好，每次滑动getView的时候都要重新new一个监听，但是必须获取ChechView所在的那个Item的position，所以只能卸载getView函数内部
+                    @Override
+                    public void onClick(View v) {//等于说对于那10个左右的ChechBox,其绑定的监听在不断的改变
+                        if (holder.mImageView != null && mCallBackListener != null)
+                            mCallBackListener.callBackImg(holder.mImageView);
+                        assert holder.mImageView != null;
+                        holder.mImageView.setClickable(false);
+                        holder.mImageView.setImageResource(R.drawable.trolley_pressed);
+                        listItem item = mDataset.get(position);
+                        orderDao.insertData(item);
+                        Log.e("rrr", "!!!");
+                        selectedItem.add(item);
+                    }
+                });
+            }
         }
     }
 

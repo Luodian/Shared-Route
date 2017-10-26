@@ -42,7 +42,7 @@ public class OrderDao {
         try {
             db = ordersDBHelper.getReadableDatabase();
             // select count(Id) from Orders
-                cursor = db.query(OrderDBHelper.TABLE_item, new String[]{"COUNT(taskId)"}, null, null, null, null, null);
+            cursor = db.query(OrderDBHelper.TABLE_item, new String[]{"COUNT(pickupCode)"}, null, null, null, null, null);
 
             if (cursor.moveToFirst()) {
                 count = cursor.getInt(0);
@@ -63,6 +63,7 @@ public class OrderDao {
         return false;
     }
 
+
     public int count(){
         int count = 0;
 
@@ -72,7 +73,7 @@ public class OrderDao {
         try {
             db = ordersDBHelper.getReadableDatabase();
             // select count(Id) from Orders
-            cursor = db.query(OrderDBHelper.TABLE_item, new String[]{"COUNT(taskId)"}, null, null, null, null, null);
+            cursor = db.query(OrderDBHelper.TABLE_item, new String[]{"COUNT(pickupCode)"}, null, null, null, null, null);
 
             if (cursor.moveToFirst()) {
                 count = cursor.getInt(0);
@@ -103,12 +104,12 @@ public class OrderDao {
             db = ordersDBHelper.getWritableDatabase();
             db.beginTransaction();
 
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " ( type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '食物','大件', '10月21日21时42分', '10月21日21时42分','顺丰快递','10月21日21时42分','正心楼424','111111',5.2,0)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " ( type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '食物','大件', '10月21日21时42分', '10月21日21时42分','顺丰快递','10月21日21时42分','正心楼424','111112',5.2,0)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " ( type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '食物','大件', '10月21日21时42分', '10月21日21时42分','顺丰快递','10月21日21时42分','正心楼424','111113',5.2,0)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " ( type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '食物','大件', '10月21日21时42分', '10月21日21时42分','顺丰快递','10月21日21时42分','正心楼424','111114',5.2,0)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " ( type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '食物','大件', '10月21日21时42分', '10月21日21时42分','顺丰快递','10月21日21时42分','正心楼424','111115',5.2,0)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " ( type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '食物','大件', '10月21日21时42分', '10月21日21时42分','顺丰快递','10月21日21时42分','正心楼424','111116',5.2,1)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " ( type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '食物','大件', '10月21日21时42分', '10月21日21时42分','顺丰快递','10月21日21时42分','正心楼424','111',5.2,1)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " ( type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '食物','大件', '10月21日21时42分', '10月21日21时42分','天天快递','10月21日21时42分','正心楼424','112',5.2,1)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " ( type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '食物','大件', '10月21日21时42分', '10月21日21时42分','韵达快递','10月21日21时42分','正心楼424','113',5.2,1)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " ( type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '食物','大件', '10月21日21时42分', '10月21日21时42分','圆通快递','10月21日21时42分','正心楼424','114',5.2,1)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " ( type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '食物','大件', '10月21日21时42分', '10月21日21时42分','百世快递','10月21日21时42分','正心楼424','115',5.2,1)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " ( type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '食物','大件', '10月21日21时42分', '10月21日21时42分','申通快递','10月21日21时42分','正心楼424','116',5.2,1)");
 
             db.setTransactionSuccessful();
         }catch (Exception e){
@@ -130,6 +131,7 @@ public class OrderDao {
         try {
             if (sql.contains("select")){
                 //Toast.makeText(context, R.string.strUnableSql, Toast.LENGTH_SHORT).show();
+
             }else if (sql.contains("insert") || sql.contains("update") || sql.contains("delete")){
                 db = ordersDBHelper.getWritableDatabase();
                 db.beginTransaction();
@@ -372,7 +374,7 @@ public class OrderDao {
     /**
      * 统计查询  此处查询Country为China的用户总数,***待修改***
      */
-    public int getChinaCount(){
+    public int getItemCount(String sql) {
         int count = 0;
 
         SQLiteDatabase db = null;
@@ -382,9 +384,9 @@ public class OrderDao {
             db = ordersDBHelper.getReadableDatabase();
             // select count(Id) from Orders where Country = 'China'
             cursor = db.query(OrderDBHelper.TABLE_item,
-                    new String[]{"COUNT(Id)"},
-                    "Country = ?",
-                    new String[] {"China"},
+                    new String[]{"COUNT(pickupCode)"},
+                    "pickupCode = ?",
+                    new String[]{sql},
                     null, null, null);
 
             if (cursor.moveToFirst()) {

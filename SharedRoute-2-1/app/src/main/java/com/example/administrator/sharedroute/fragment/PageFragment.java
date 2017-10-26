@@ -461,6 +461,5 @@ public class PageFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         }
-
     }
 }
