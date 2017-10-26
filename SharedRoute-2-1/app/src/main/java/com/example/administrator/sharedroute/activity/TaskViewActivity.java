@@ -54,40 +54,27 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_task_view);
         orderDao = new OrderDao(this);
         initView();
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_taskview);
-        swipeRefresh.setColorSchemeResources(R.color.light_green);
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeRefresh.setRefreshing(false);
-            }
-        });
     }
     private void initView() {
         listView = (ListView) findViewById(R.id.shoppingtrolly_listview);
         mToolbar = (Toolbar) findViewById(R.id.toolbartaskview) ;
-
-        orderDao = new OrderDao(this);
-//        if (! orderDao.isDataExist()){/*到时候连接了远程后该部分需要修改*/
-//            orderDao.initTable();
-//        }
-        listItemList = orderDao.getAcceptOrder();
-        if (listItemList == null) Toast.makeText(this,"当前无预订任务",Toast.LENGTH_SHORT).show();
-        trollyAdapter  = new TaskViewAdapter(TaskViewActivity.this);
-
-        if (listItemList != null)
-        {
-            for (listItem e : listItemList) {
-                trollyAdapter.add(e);
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_taskview);
+        swipeRefresh.setColorSchemeColors(Color.RED, Color.CYAN);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefresh.setRefreshing(true);
             }
-        }
+        });
+//        listItemList = orderDao.getAcceptOrder();
+        swipeRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefresh.setRefreshing(true);
+                new refreshTask().execute();
+            }
+        });
 
-        SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(trollyAdapter, this));
-        swingBottomInAnimationAdapter.setAbsListView(listView);
-        assert swingBottomInAnimationAdapter.getViewAnimator() != null;
-        swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
-        listView.setAdapter(swingBottomInAnimationAdapter);
-        listView.setOnItemClickListener(this);
 
         deleteOrders=(Button)findViewById(R.id.deleteItems);
         deleteOrders.setOnClickListener(new View.OnClickListener() {
@@ -213,16 +200,43 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
             trollyAdapter.remove(position);
         }
     }
+
+    private class refreshTask extends AsyncTask<Void, Void, List<listItem>> {
+        @Override
+        protected List<listItem> doInBackground(Void... params) {
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            listItemList = orderDao.getAcceptOrder();
+            return listItemList;
+        }
+
+        @Override
+        protected void onPostExecute(List<listItem> listItemList) {
+            super.onPostExecute(listItemList);
+            if (swipeRefresh != null) {
+                swipeRefresh.setRefreshing(false);
+            }
+            if (listItemList == null)
+                Toast.makeText(TaskViewActivity.this, "当前无预订任务", Toast.LENGTH_SHORT).show();
+            trollyAdapter = new TaskViewAdapter(TaskViewActivity.this);
+            //没有新的数据，提示消息
+            if (listItemList != null) {
+                for (listItem e : listItemList) {
+                    trollyAdapter.add(e);
+                }
+            }
+            trollyAdapter.notifyDataSetChanged();
+            SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(trollyAdapter, TaskViewActivity.this));
+            swingBottomInAnimationAdapter.setAbsListView(listView);
+            assert swingBottomInAnimationAdapter.getViewAnimator() != null;
+            swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
+            listView.setAdapter(swingBottomInAnimationAdapter);
+            listView.setOnItemClickListener(TaskViewActivity.this);
+        }
+    }
 }
 
-class refreshTask extends AsyncTask<Integer,Void,List<listItem>>{
-    @Override
-    protected List<listItem> doInBackground(Integer... params) {
-        return null;
-    }
 
-    @Override
-    protected void onPostExecute(List<listItem> listItemList) {
-        super.onPostExecute(listItemList);
-    }
-}
