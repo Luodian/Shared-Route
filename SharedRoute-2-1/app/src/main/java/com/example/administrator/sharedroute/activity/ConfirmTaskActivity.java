@@ -146,7 +146,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
                 for (listItem e:itemlists) {
                     listElected.add(e);
                 }
-                attemptLogin();
+                //attemptLogin();
                 //将这个listElected传给下一个
                 Intent intent =new Intent(ConfirmTaskActivity.this,ConfirmFinishedActivity.class);
                 Bundle bundle = new Bundle();
@@ -326,10 +326,8 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 
     @Override
     public void onDismiss(@NonNull ViewGroup listView, @NonNull int[] reverseSortedPositions) {
-        List<listItem> arrayList = adapter.getItems();
         for (int position : reverseSortedPositions) {
             adapter.remove(position);
-            orderDao.deleteOrder(arrayList.get(position));
         }
     }
 

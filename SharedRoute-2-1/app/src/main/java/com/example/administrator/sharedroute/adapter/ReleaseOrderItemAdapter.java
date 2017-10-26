@@ -61,6 +61,8 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
             mContext = parent.getContext();
         }
         if (orderDao == null) orderDao = new OrderDao(mContext);
+
+
         View view = LayoutInflater.from(mContext).inflate(R.layout.release_order_item_layout,parent,false);
         final ViewHolder holder = new ViewHolder(view);
 
