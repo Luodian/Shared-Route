@@ -303,14 +303,14 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
         private String mPayPath;                //支付方式指明是支付宝支付还是微信支付
         private String mRemark;                 //备注
 
-        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
+        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Task";
 
         private String result = null;
 
         //初始化
         PostTask(String money,String name,String phone,String num,String packSort,
-                    String pickPlace,String delieverPlace,String pickTime,String delieverTime,
-                    String payPath,String remark) {
+                 String pickPlace,String delieverPlace,String pickTime,String delieverTime,
+                 String payPath,String remark) {
             mMoney=money;
             mName=name;
             mPhone=phone;
@@ -347,6 +347,7 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
                 parameters.add(new BasicNameValuePair("delieverTime",mDelieverTime));
                 parameters.add(new BasicNameValuePair("payPath",mPayPath));
                 parameters.add(new BasicNameValuePair("remark",mRemark));
+                parameters.add(new BasicNameValuePair("action", "submit"));
 
                 UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                 post.setEntity(ent);

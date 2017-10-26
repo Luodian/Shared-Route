@@ -299,7 +299,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="8dp"
             android:padding="8dp">
         <LinearLayout
             android:layout_width="0dp"
@@ -384,15 +384,18 @@
 
         <Button
             android:id="@+id/ensure_bill_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:background="#ffc125"
+            android:textColor="@color/white"
+            android:background="@drawable/shape"
+            android:padding="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:textStyle="bold"
             android:gravity="center"
             android:layout_gravity="center"
             android:text="确认支付 ￥ 2.0"
-            android:textColor="#ffffff"
-            android:textSize="25sp"/>
+            android:textSize="23sp"/>
     </LinearLayout>
 </ScrollView>
 </LinearLayout>
