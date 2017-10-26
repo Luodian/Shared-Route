@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismis
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import me.wangyuwei.flipshare.FlipShareView;
 import me.wangyuwei.flipshare.ShareItem;
@@ -48,6 +50,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
     private static final int INITIAL_DELAY_MILLIS = 100;
     private OrderDao orderDao;
     private SwipeRefreshLayout swipeRefresh;
+    private LinearLayout mLinearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,12 +61,14 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
     private void initView() {
         listView = (ListView) findViewById(R.id.shoppingtrolly_listview);
         mToolbar = (Toolbar) findViewById(R.id.toolbartaskview) ;
+        mLinearLayout = (LinearLayout) findViewById(R.id.bottom_toolbar);
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_taskview);
         swipeRefresh.setColorSchemeColors(Color.RED, Color.CYAN);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeRefresh.setRefreshing(true);
+                new refreshKeep().execute();
             }
         });
 //        listItemList = orderDao.getAcceptOrder();
@@ -71,6 +76,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void run() {
                 swipeRefresh.setRefreshing(true);
+                mLinearLayout.setVisibility(View.GONE);
                 new refreshTask().execute();
             }
         });
@@ -151,7 +157,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
                 finish();
                 return true;
             case R.id.back:
-                startActivity(new Intent(TaskViewActivity.this,MainActivity.class));
+                startActivity(new Intent(TaskViewActivity.this, SearchNeedsActivity.class));
                 finish();
                 return true;
         }
@@ -235,6 +241,25 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
             swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
             listView.setAdapter(swingBottomInAnimationAdapter);
             listView.setOnItemClickListener(TaskViewActivity.this);
+            if (mLinearLayout != null) mLinearLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private class refreshKeep extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (swipeRefresh != null) swipeRefresh.setRefreshing(false);
         }
     }
 }
