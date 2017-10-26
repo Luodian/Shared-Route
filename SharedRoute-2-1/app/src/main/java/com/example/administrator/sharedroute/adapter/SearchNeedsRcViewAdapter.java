@@ -83,13 +83,6 @@ public class SearchNeedsRcViewAdapter extends RecyclerView.Adapter<SearchNeedsRc
 
             mImageView = (ImageView) itemView.findViewById(R.id.trolley_icon);
         }
-
-        public void updateUI(GoodsModel goods){
-            if (goods != null
-                    && goods.getmGoodsBitmap() != null
-                    && mImageView != null)
-                mImageView.setImageBitmap(goods.getmGoodsBitmap());
-        }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
