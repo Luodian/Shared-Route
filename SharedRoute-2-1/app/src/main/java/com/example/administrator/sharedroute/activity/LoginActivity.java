@@ -127,6 +127,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         animator2.setDuration(1500);
         animator2.start();
 
+        //缓存框架
         map = (HashMap<String, Object>) getMsg("login");
         if (map != null && !map.isEmpty()) {
             if ((Boolean) map.get("login2")) {
@@ -434,8 +435,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 //登陆成功后将flag设置为ture存入共享参数中
                 HashMap<String, Object> map = new HashMap<String, Object>();
-                Boolean flag3 = true;
-                map.put("login2", flag3);
+                map.put("login2", true);
                 saveMsg("login", map);
                 Toast.makeText(LoginActivity.this, "Login success = " + result, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();

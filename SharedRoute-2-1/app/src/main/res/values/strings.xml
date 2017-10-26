@@ -19,4 +19,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- list 到了最底部 没有新数据了-->
+    <string name="list_more_data">更新了0条数据~</string>
+
+
+    <!-- list 到了最底部 没有新数据了-->
+    <string name="list_no_data">没有新的内容了哦~</string>
 </resources>

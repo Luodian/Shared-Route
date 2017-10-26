@@ -3,8 +3,10 @@ package com.example.administrator.sharedroute.fragment;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +14,7 @@ import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.SearchNeedsRcViewAdapter;
@@ -30,7 +34,10 @@ import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.utils.EndLessOnScrollListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 import static com.example.administrator.sharedroute.activity.SearchNeedsActivity.goodsCount;
 import static com.example.administrator.sharedroute.activity.SearchNeedsActivity.mfab;
@@ -44,6 +51,11 @@ public class PageFragment extends Fragment {
     private boolean isFirst = true;
     Vibrator vibrator;
 
+    private int totalItemCount;
+    private int lastVisibleItem;
+    private boolean loading = false;
+    private boolean bottom = false;
+
     private CoordinatorLayout mShoppingCartRly;
     private SearchNeedsRcViewAdapter adapter;
     // 贝塞尔曲线中间过程点坐标
@@ -51,7 +63,7 @@ public class PageFragment extends Fragment {
     // 路径测量
     private PathMeasure mPathMeasure;
     // 购物车商品数目
-    private ArrayList<listItem> myDataset;
+    private ArrayList<listItem> TaskListItem = new ArrayList<>();
 
     private FloatingActionButton pos_mfab;
 
@@ -104,7 +116,7 @@ public class PageFragment extends Fragment {
         vibrator = (Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE);
 
         refreshCart();
-        init_data();
+//        init_data();
 
         // 是否显示购物车商品数目
         mShoppingCartRly = (CoordinatorLayout) view.findViewById(R.id.searchNeeds_center_relView);
@@ -114,7 +126,7 @@ public class PageFragment extends Fragment {
         //End pos
 
         // 添加数据源
-        adapter = new SearchNeedsRcViewAdapter(myDataset);
+        adapter = new SearchNeedsRcViewAdapter(TaskListItem);
         adapter.setCallBackListener(new SearchNeedsRcViewAdapter.CallBackListener() {
             @Override
             public void callBackImg(ImageView goodsImg) {
@@ -125,6 +137,7 @@ public class PageFragment extends Fragment {
         mrc.setAdapter(adapter);
 
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.layout_swipe_refresh);
+        mRefreshLayout.setColorSchemeColors(Color.RED, Color.CYAN);
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
                 //我在List最前面加入一条数据
@@ -132,6 +145,7 @@ public class PageFragment extends Fragment {
 //                //数据重新加载完成后，提示数据发生改变，并且设置现在不在刷新
 //                adapter.notifyDataSetChanged();
                 mRefreshLayout.setRefreshing(true);
+                new MoreTask().execute();
             }
         });
 
@@ -139,15 +153,44 @@ public class PageFragment extends Fragment {
             @Override
             public void run() {
                 mRefreshLayout.setRefreshing(true);
+                new InitTask().execute();
             }
         });
 
-//        mrc.addOnScrollListener(new EndLessOnScrollListener(llm) {
+//        mrc.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            /**
+//             * Callback method to be invoked when the RecyclerView has been scrolled. This will be
+//             * called after the scroll has completed.
+//             * <p/>
+//             * This callback will also be called if visible item range changes after a layout
+//             * calculation. In that case, dx and dy will be 0.
+//             *
+//             * @param recyclerView The RecyclerView which scrolled.
+//             * @param dx           The amount of horizontal scroll.
+//             * @param dy           The amount of vertical scroll.
+//             */
 //            @Override
-//            public void onLoadMore(int currentPage) {
-//                loadMoreData();
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//
+//                super.onScrolled(recyclerView, dx, dy);
+//
+//
+//                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+//
+//                totalItemCount = layoutManager.getItemCount();
+//
+//                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+//
+//                if (lastVisibleItem != totalItemCount - 1) {
+//                    bottom = false;
+//                }
+//                if (!bottom && !loading && totalItemCount < (lastVisibleItem + 3)) {
+//                    new LatestArticleTask().execute();
+//                    loading = true;
+//                }
 //            }
 //        });
+
 
         //设置页和当前页一致时加载，防止预加载
         if (isFirst && mTabPos==mSerial) {
@@ -161,10 +204,11 @@ public class PageFragment extends Fragment {
     private void loadMoreData() {
         for (int i = 0; i < 10; i++) {
             listItem item1 = new listItem("书籍", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-            myDataset.add(item1);
+            TaskListItem.add(item1);
             adapter.notifyDataSetChanged();
         }
     }
+
 
     private void addGoodsToCart(ImageView goodsImg) {
         // 创造出执行动画的主题goodsImg（这个图片就是执行动画的图片,从开始位置出发,经过一个抛物线（贝塞尔曲线）,移动到购物车里）
@@ -280,21 +324,171 @@ public class PageFragment extends Fragment {
         }
     }
 
+    private class InitTask extends AsyncTask<Void, Void, ArrayList<listItem>> {
+        @Override
+        protected ArrayList<listItem> doInBackground(Void... params) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            ArrayList<listItem> data = new ArrayList<>();
+            listItem item1 = new listItem("书籍", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+            listItem item2 = new listItem("书籍", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+            listItem item3 = new listItem("设备", "小件", "今天 18：30", "一区 韵达快递", "今天 12：30", "一区 2公寓 5024", 8.0, false);
+            listItem item4 = new listItem("设备", "小件", "今天 18：30", "一区 韵达快递", "今天 12：30", "一区 2公寓 5024", 8.0, false);
+            listItem item5 = new listItem("食物", "小件", "今天 15：30", "一区 中通快递", "今天 12：30", "一区 18公寓 9001", 5.0, false);
+            data.add(item1);
+            data.add(item2);
+            data.add(item1);
+            data.add(item3);
+            data.add(item4);
+            data.add(item5);
+            return data;
 
+        }
 
-    protected void init_data()
-    {
-        myDataset = new ArrayList<>();
-        listItem item1 = new listItem("书籍","小件","今天 12：30","一区 顺风速运","今天 12：30","一区 正心楼 524",2.0,false);
-        listItem item2 = new listItem("书籍","小件","今天 12：30","一区 顺风速运","今天 12：30","一区 正心楼 524",2.0,false);
-        listItem item3 = new listItem("设备","小件","今天 18：30","一区 韵达快递","今天 12：30","一区 2公寓 5024",8.0,false);
-        listItem item4 = new listItem("设备","小件","今天 18：30","一区 韵达快递","今天 12：30","一区 2公寓 5024",8.0,false);
-        listItem item5 = new listItem("食物","小件","今天 15：30","一区 中通快递","今天 12：30","一区 18公寓 9001",5.0,false);
-        myDataset.add(item1);
-        myDataset.add(item2);
-        myDataset.add(item1);
-        myDataset.add(item3);
-        myDataset.add(item4);
-        myDataset.add(item5);
+        @Override
+        protected void onPostExecute(ArrayList<listItem> data) {
+            super.onPostExecute(data);
+
+            if (mRefreshLayout != null) {
+                mRefreshLayout.setRefreshing(false);
+            }
+            //没有新的数据，提示消息
+            if (data == null || data.size() == 0) {
+                Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
+            } else {
+                TaskListItem.addAll(data);
+                adapter.notifyDataSetChanged();
+            }
+        }
+
+    }
+
+    private class MoreTask extends AsyncTask<Void, Void, ArrayList<listItem>> {
+        @Override
+        protected ArrayList<listItem> doInBackground(Void... params) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            ArrayList<listItem> data;
+            data = new ArrayList<listItem>();
+            listItem item1 = new listItem("上滑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+            data.add(item1);
+//            //只有第一次需要加载头部的轮播图片
+//            //下拉刷新时候不加轮播图片
+//            if (myDataset.size() == 0) {
+//                data.addAll(getRotationItem());
+//            }
+
+//            data.addAll(getMoreById(mColumn, params[0]));
+            return data;
+
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<listItem> data) {
+            super.onPostExecute(data);
+
+            if (mRefreshLayout != null) {
+                mRefreshLayout.setRefreshing(false);
+            }
+            //没有新的数据，提示消息
+            if (data == null || data.size() == 0) {
+                Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
+            } else {
+                TaskListItem.addAll(data);
+                adapter.notifyDataSetChanged();
+            }
+        }
+
+    }
+
+    //Integer 是输入参数
+    private class LatestArticleTask extends AsyncTask<Void, Void, List<listItem>> {
+
+        /**
+         * Runs on the UI thread before {@link #doInBackground}.
+         */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //增加底部的一个null数据，表示ProgressBar
+            if (TaskListItem != null && TaskListItem.size() > 0) {
+                TaskListItem.add(null);
+                // notifyItemInserted(int position)，这个方法是在第position位置
+                // 被插入了一条数据的时候可以使用这个方法刷新，
+                // 注意这个方法调用后会有插入的动画，这个动画可以使用默认的，也可以自己定义。
+//                Logger.d("增加底部footer 圆形ProgressBar");
+
+                adapter.notifyItemInserted(TaskListItem.size() - 1);
+            }
+        }
+
+        @Override
+        protected List<listItem> doInBackground(Void... params) {
+//            Logger.d("in doInBackground");
+
+            ArrayList<listItem> data = new ArrayList<>();
+
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            listItem item1 = new listItem("下滑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+            data.add(item1);
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(final List<listItem> moreArticles) {
+            super.onPostExecute(moreArticles);
+            if (TaskListItem.size() == 0) {
+                TaskListItem.addAll(moreArticles);
+                adapter.notifyDataSetChanged();
+            } else {
+                //删除 footer
+                TaskListItem.remove(TaskListItem.size() - 1);
+
+//                Logger.d("下拉增加数据 " + moreArticles);
+
+                //只有到达最底部才加载
+                //防止上拉到了倒数两三个也加载
+                if (!bottom && lastVisibleItem == totalItemCount - 1 && moreArticles.size() == 0) {
+//                    Snackbar.with(getActivity()) // context
+//                            .text(getActivity().getResources().getString(R.string.list_no_data)) // text to display
+//                            .duration(Snackbar.SnackbarDuration.LENGTH_SHORT) // make it shorter
+//                            .show(PageFragment.this); // activity where it is displayed
+                    Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
+                    bottom = true;
+                }
+
+                TaskListItem.addAll(moreArticles);
+                adapter.notifyDataSetChanged();
+                loading = false;
+//            mArticleList.addAll(moreArticles);
+            }
+
+        }
+    }
+
+    protected void init_data() {
+        TaskListItem = new ArrayList<>();
+        listItem item1 = new listItem("书籍", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+        listItem item2 = new listItem("书籍", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+        listItem item3 = new listItem("设备", "小件", "今天 18：30", "一区 韵达快递", "今天 12：30", "一区 2公寓 5024", 8.0, false);
+        listItem item4 = new listItem("设备", "小件", "今天 18：30", "一区 韵达快递", "今天 12：30", "一区 2公寓 5024", 8.0, false);
+        listItem item5 = new listItem("食物", "小件", "今天 15：30", "一区 中通快递", "今天 12：30", "一区 18公寓 9001", 5.0, false);
+        TaskListItem.add(item1);
+        TaskListItem.add(item2);
+        TaskListItem.add(item1);
+        TaskListItem.add(item3);
+        TaskListItem.add(item4);
+        TaskListItem.add(item5);
     }
 }
