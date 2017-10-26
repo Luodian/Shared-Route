@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="书籍"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
         </LinearLayout>
 
@@ -59,7 +59,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="10月6日 16:30"
-                android:textSize="8sp" />
+                android:textSize="8dp" />
 
             <TextView
                 android:id="@+id/send_location"
@@ -72,7 +72,7 @@
                 android:layout_marginRight="19dp"
                 android:layout_marginStart="19dp"
                 android:text="二区  十五公寓"
-                android:textSize="8sp" />
+                android:textSize="8dp" />
         </LinearLayout>
 
         <ImageView

@@ -59,4 +59,9 @@
         <item name="android:activityOpenExitAnimation">@anim/slide_in_top</item>
     </style>
 
+    <style name="SmallGreyTextView">
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">@dimen/textSize_small</item>
+    </style>
+
 </resources>

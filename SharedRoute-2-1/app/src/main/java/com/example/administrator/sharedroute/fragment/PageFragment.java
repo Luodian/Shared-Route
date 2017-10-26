@@ -14,7 +14,6 @@ import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,15 +28,19 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
-import com.example.administrator.sharedroute.adapter.SearchNeedsRcViewAdapter;
+import com.example.administrator.sharedroute.adapter.PullRecyclerViewAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
-import com.example.administrator.sharedroute.localdatabase.OrderDao;
-import com.example.administrator.sharedroute.utils.EndLessOnScrollListener;
+import com.example.administrator.sharedroute.utils.CommonHttp;
 
-import java.lang.reflect.Array;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
 import static com.example.administrator.sharedroute.activity.SearchNeedsActivity.goodsCount;
 import static com.example.administrator.sharedroute.activity.SearchNeedsActivity.mfab;
@@ -51,13 +54,12 @@ public class PageFragment extends Fragment {
     private boolean isFirst = true;
     Vibrator vibrator;
 
-    private int totalItemCount;
-    private int lastVisibleItem;
-    private boolean loading = false;
-    private boolean bottom = false;
+    boolean isLoading;
 
     private CoordinatorLayout mShoppingCartRly;
-    private SearchNeedsRcViewAdapter adapter;
+
+    private PullRecyclerViewAdapter adapter;
+
     // 贝塞尔曲线中间过程点坐标
     private float[] mCurrentPosition = new float[2];
     // 路径测量
@@ -67,18 +69,11 @@ public class PageFragment extends Fragment {
 
     private FloatingActionButton pos_mfab;
 
-    private Handler handler = new Handler(){
-        public void handleMessage(Message msg) {
-            Log.e("tag", "IS_LOADED="+IS_LOADED);
-            if(!IS_LOADED){
-                IS_LOADED = true;
-                //这里执行加载数据的操作
-                Log.e("tag", "我是page"+(mTabPos+1));
-            }
-        }
-    };
+    private Handler handler = new Handler();
 
     private SwipeRefreshLayout mRefreshLayout;
+    private LinearLayoutManager llm;
+    private RecyclerView mrc;
 
     public PageFragment(int serial){
         mSerial = serial;
@@ -106,12 +101,12 @@ public class PageFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.campus1_search_needs, container, false);
 
-        RecyclerView mrc = (RecyclerView) view.findViewById(R.id.searchNeeds_recycler_view);
+        mrc = (RecyclerView) view.findViewById(R.id.searchNeeds_recycler_view);
 //        // use this setting to improve performance if you know that changes
 //        // in content do not change the layout size of the RecyclerView
         mrc.setHasFixedSize(true);
 //        // use a linear layout manager
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm = new LinearLayoutManager(getActivity());
         mrc.setLayoutManager(llm);
         vibrator = (Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -126,8 +121,8 @@ public class PageFragment extends Fragment {
         //End pos
 
         // 添加数据源
-        adapter = new SearchNeedsRcViewAdapter(TaskListItem);
-        adapter.setCallBackListener(new SearchNeedsRcViewAdapter.CallBackListener() {
+        adapter = new PullRecyclerViewAdapter(TaskListItem);
+        adapter.setCallBackListener(new PullRecyclerViewAdapter.CallBackListener() {
             @Override
             public void callBackImg(ImageView goodsImg) {
                 // 添加商品到购物车
@@ -140,12 +135,8 @@ public class PageFragment extends Fragment {
         mRefreshLayout.setColorSchemeColors(Color.RED, Color.CYAN);
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
-                //我在List最前面加入一条数据
-
-//                //数据重新加载完成后，提示数据发生改变，并且设置现在不在刷新
-//                adapter.notifyDataSetChanged();
                 mRefreshLayout.setRefreshing(true);
-                new MoreTask().execute();
+                new RefreshTask().execute();
             }
         });
 
@@ -153,44 +144,48 @@ public class PageFragment extends Fragment {
             @Override
             public void run() {
                 mRefreshLayout.setRefreshing(true);
-                new InitTask().execute();
+                new InitTask(1).execute();
             }
         });
 
-//        mrc.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            /**
-//             * Callback method to be invoked when the RecyclerView has been scrolled. This will be
-//             * called after the scroll has completed.
-//             * <p/>
-//             * This callback will also be called if visible item range changes after a layout
-//             * calculation. In that case, dx and dy will be 0.
-//             *
-//             * @param recyclerView The RecyclerView which scrolled.
-//             * @param dx           The amount of horizontal scroll.
-//             * @param dy           The amount of vertical scroll.
-//             */
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//
-//                super.onScrolled(recyclerView, dx, dy);
-//
-//
-//                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-//
-//                totalItemCount = layoutManager.getItemCount();
-//
-//                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-//
-//                if (lastVisibleItem != totalItemCount - 1) {
-//                    bottom = false;
-//                }
-//                if (!bottom && !loading && totalItemCount < (lastVisibleItem + 3)) {
-//                    new LatestArticleTask().execute();
-//                    loading = true;
-//                }
-//            }
-//        });
+        mrc.setAdapter(adapter);
+        mrc.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                Log.d("test", "StateChanged = " + newState);
 
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.d("test", "onScrolled");
+
+                int lastVisibleItemPosition = llm.findLastVisibleItemPosition();
+                if (lastVisibleItemPosition + 1 == adapter.getItemCount()) {
+                    Log.d("test", "loading executed");
+
+                    boolean isRefreshing = mRefreshLayout.isRefreshing();
+                    if (isRefreshing) {
+                        adapter.notifyItemRemoved(adapter.getItemCount());
+                        return;
+                    }
+                    if (!isLoading) {
+                        isLoading = true;
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                new MoreTask().execute();
+                                Log.d("test", "load more completed");
+                                isLoading = false;
+                            }
+                        }, 1000);
+                    }
+                }
+            }
+        });
 
         //设置页和当前页一致时加载，防止预加载
         if (isFirst && mTabPos==mSerial) {
@@ -199,16 +194,6 @@ public class PageFragment extends Fragment {
         }
         return view;
     }
-
-    //每次上拉加载的时候，给RecyclerView的后面添加了10条数据数据
-    private void loadMoreData() {
-        for (int i = 0; i < 10; i++) {
-            listItem item1 = new listItem("书籍", "小件", "今天 12：30", "一区 顺丰速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-            TaskListItem.add(item1);
-            adapter.notifyDataSetChanged();
-        }
-    }
-
 
     private void addGoodsToCart(ImageView goodsImg) {
         // 创造出执行动画的主题goodsImg（这个图片就是执行动画的图片,从开始位置出发,经过一个抛物线（贝塞尔曲线）,移动到购物车里）
@@ -324,49 +309,81 @@ public class PageFragment extends Fragment {
         }
     }
 
-    private class InitTask extends AsyncTask<Void, Void, ArrayList<listItem>> {
-        @Override
-        protected ArrayList<listItem> doInBackground(Void... params) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            ArrayList<listItem> data = new ArrayList<>();
-            listItem item1 = new listItem("书籍", "小件", "今天 12：30", "一区 顺丰速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-            listItem item2 = new listItem("书籍", "小件", "今天 12：30", "一区 顺丰速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-            listItem item3 = new listItem("设备", "小件", "今天 18：30", "一区 韵达快递", "今天 12：30", "一区 2公寓 5024", 8.0, false);
-            listItem item4 = new listItem("设备", "小件", "今天 18：30", "一区 韵达快递", "今天 12：30", "一区 2公寓 5024", 8.0, false);
-            listItem item5 = new listItem("食物", "小件", "今天 15：30", "一区 中通快递", "今天 12：30", "一区 18公寓 9001", 5.0, false);
-            data.add(item1);
-            data.add(item2);
-            data.add(item1);
-            data.add(item3);
-            data.add(item4);
-            data.add(item5);
-            return data;
+    private class InitTask extends AsyncTask<Void, Void, String>
+    {
 
+        private int requestItemNumber;
+
+        InitTask(int _a)
+        {
+            requestItemNumber = _a;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<listItem> data) {
-            super.onPostExecute(data);
+        protected String doInBackground(Void... params) {
+            String result = null;
+            String path = "http://suc.free.ngrok.cc/sharedroot_server/Task?action=show&length=40";
+            HttpURLConnection con=null;
+            InputStream is=null;
+            StringBuilder sbd=new StringBuilder();
+            try
+            {
+                URL url=new URL(path);
+                con= (HttpURLConnection) url.openConnection();
+                con.setConnectTimeout(5*1000);
+                con.setReadTimeout(5*1000);
+                /*
+                * http响应码：getResponseCode
+                  200：成功 404：未找到 500：发生错误
+              */
+                if (con.getResponseCode()==200){
+                    is=con.getInputStream();
+                    int next=0;
+                    byte[] bt=new byte[1024];
+                    while ((next=is.read(bt))>0)
+                    {
+                        sbd.append(new String(bt,0,next));
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                if (is!=null){
+                    try {
+                        is.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (con!=null){
+                    con.disconnect();
+                    //断开连接
+                }
+            }
+            return sbd.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
 
             if (mRefreshLayout != null) {
                 mRefreshLayout.setRefreshing(false);
             }
             //没有新的数据，提示消息
-            if (data == null || data.size() == 0) {
-                Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
-            } else {
-                TaskListItem.addAll(data);
-                adapter.notifyDataSetChanged();
+            if (result == null) {
+                Toast.makeText(getActivity(), R.string.check_network_status, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+//                TaskListItem.addAll(data);
+//                adapter.notifyDataSetChanged();
             }
         }
 
     }
 
-    private class MoreTask extends AsyncTask<Void, Void, ArrayList<listItem>> {
+    private class RefreshTask extends AsyncTask<Void, Void, ArrayList<listItem>> {
         @Override
         protected ArrayList<listItem> doInBackground(Void... params) {
             try {
@@ -375,7 +392,7 @@ public class PageFragment extends Fragment {
                 e.printStackTrace();
             }
             ArrayList<listItem> data;
-            data = new ArrayList<listItem>();
+            data = new ArrayList<>();
             listItem item1 = new listItem("上滑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
             data.add(item1);
 //            //只有第一次需要加载头部的轮播图片
@@ -404,91 +421,46 @@ public class PageFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         }
-
     }
 
-    //Integer 是输入参数
-    private class LatestArticleTask extends AsyncTask<Void, Void, List<listItem>> {
-
-        /**
-         * Runs on the UI thread before {@link #doInBackground}.
-         */
+    private class MoreTask extends AsyncTask<Void, Void, ArrayList<listItem>> {
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            //增加底部的一个null数据，表示ProgressBar
-            if (TaskListItem != null && TaskListItem.size() > 0) {
-                TaskListItem.add(null);
-                // notifyItemInserted(int position)，这个方法是在第position位置
-                // 被插入了一条数据的时候可以使用这个方法刷新，
-                // 注意这个方法调用后会有插入的动画，这个动画可以使用默认的，也可以自己定义。
-//                Logger.d("增加底部footer 圆形ProgressBar");
-
-                adapter.notifyItemInserted(TaskListItem.size() - 1);
-            }
-        }
-
-        @Override
-        protected List<listItem> doInBackground(Void... params) {
-//            Logger.d("in doInBackground");
-
-            ArrayList<listItem> data = new ArrayList<>();
-
+        protected ArrayList<listItem> doInBackground(Void... params) {
             try {
-                Thread.sleep(1500);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            ArrayList<listItem> data;
+            data = new ArrayList<>();
             listItem item1 = new listItem("下滑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
             data.add(item1);
+            data.add(item1);
+//            //只有第一次需要加载头部的轮播图片
+//            //下拉刷新时候不加轮播图片
+//            if (myDataset.size() == 0) {
+//                data.addAll(getRotationItem());
+//            }
+
+//            data.addAll(getMoreById(mColumn, params[0]));
             return data;
         }
 
         @Override
-        protected void onPostExecute(final List<listItem> moreArticles) {
-            super.onPostExecute(moreArticles);
-            if (TaskListItem.size() == 0) {
-                TaskListItem.addAll(moreArticles);
-                adapter.notifyDataSetChanged();
-            } else {
-                //删除 footer
-                TaskListItem.remove(TaskListItem.size() - 1);
+        protected void onPostExecute(ArrayList<listItem> data) {
+            super.onPostExecute(data);
 
-//                Logger.d("下拉增加数据 " + moreArticles);
-
-                //只有到达最底部才加载
-                //防止上拉到了倒数两三个也加载
-                if (!bottom && lastVisibleItem == totalItemCount - 1 && moreArticles.size() == 0) {
-//                    Snackbar.with(getActivity()) // context
-//                            .text(getActivity().getResources().getString(R.string.list_no_data)) // text to display
-//                            .duration(Snackbar.SnackbarDuration.LENGTH_SHORT) // make it shorter
-//                            .show(PageFragment.this); // activity where it is displayed
-                    Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
-                    bottom = true;
-                }
-
-                TaskListItem.addAll(moreArticles);
-                adapter.notifyDataSetChanged();
-                loading = false;
-//            mArticleList.addAll(moreArticles);
+            if (mRefreshLayout != null) {
+                mRefreshLayout.setRefreshing(false);
             }
-
+            //没有新的数据，提示消息
+            if (data == null || data.size() == 0) {
+                Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
+            } else {
+                TaskListItem.addAll(data);
+                adapter.notifyDataSetChanged();
+            }
         }
-    }
 
-    protected void init_data() {
-        TaskListItem = new ArrayList<>();
-        listItem item1 = new listItem("书籍", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-        listItem item2 = new listItem("书籍", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-        listItem item3 = new listItem("设备", "小件", "今天 18：30", "一区 韵达快递", "今天 12：30", "一区 2公寓 5024", 8.0, false);
-        listItem item4 = new listItem("设备", "小件", "今天 18：30", "一区 韵达快递", "今天 12：30", "一区 2公寓 5024", 8.0, false);
-        listItem item5 = new listItem("食物", "小件", "今天 15：30", "一区 中通快递", "今天 12：30", "一区 18公寓 9001", 5.0, false);
-        TaskListItem.add(item1);
-        TaskListItem.add(item2);
-        TaskListItem.add(item1);
-        TaskListItem.add(item3);
-        TaskListItem.add(item4);
-        TaskListItem.add(item5);
     }
 }

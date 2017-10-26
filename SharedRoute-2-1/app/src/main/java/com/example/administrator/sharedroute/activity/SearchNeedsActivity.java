@@ -1,8 +1,6 @@
 package com.example.administrator.sharedroute.activity;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.administrator.sharedroute.R;
-import com.example.administrator.sharedroute.adapter.SearchNeedsRcViewAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.fragment.PageFragment;
 
