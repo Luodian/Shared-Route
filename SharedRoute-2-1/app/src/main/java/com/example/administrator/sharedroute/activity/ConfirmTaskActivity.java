@@ -266,7 +266,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 //        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, HTTP.UTF_8);
 //        post.setEntity(ent);
 
-        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
+        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Task";
 
         private String result = null;
 
@@ -290,9 +290,18 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
                 HttpPost post = new HttpPost(url);
 
                 //參數
-                if (arraylist.size() != 0){
+                int length = arraylist.size();
+                if (length != 0){
                     List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-                    parameters.add(new BasicNameValuePair("listRequest", "还未设置"));
+                    String json = new String();
+                    json+="[";
+                    for (int i = 0 ; i< length;i++) {
+                        json += "{\"id\":\""+arraylist.get(i).getID()+"\"}";
+                        if ( i != (length-1) )json +=",";
+                        else json+="]";
+                    }
+                    parameters.add(new BasicNameValuePair("name", json));
+                    parameters.add(new BasicNameValuePair("action","update"));
                     UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                     post.setEntity(ent);
                 }
