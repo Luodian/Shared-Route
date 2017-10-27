@@ -133,20 +133,6 @@ public class PageFragment extends Fragment {
 
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.layout_swipe_refresh);
         mRefreshLayout.setColorSchemeColors(Color.RED, Color.CYAN);
-        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            public void onRefresh() {
-                mRefreshLayout.setRefreshing(true);
-                new RefreshTask().execute();
-            }
-        });
-
-        mRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mRefreshLayout.setRefreshing(true);
-                new InitTask(1).execute();
-            }
-        });
 
         mrc.setAdapter(adapter);
         mrc.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -184,6 +170,21 @@ public class PageFragment extends Fragment {
                         }, 1000);
                     }
                 }
+            }
+        });
+
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            public void onRefresh() {
+                mRefreshLayout.setRefreshing(true);
+                new RefreshTask().execute();
+            }
+        });
+
+        mRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(true);
+                new InitTask(1).execute();
             }
         });
 
