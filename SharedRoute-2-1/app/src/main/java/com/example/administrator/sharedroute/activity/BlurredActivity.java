@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.entity.DialogMenuItem;
+import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.widget.BlurBehind;
 import com.example.administrator.sharedroute.widget.NormalListDialog;
 
@@ -15,7 +16,7 @@ public class BlurredActivity extends Activity {
 
 	public static ArrayList<DialogMenuItem> testItems = new ArrayList<>();
 	public static String fromActivity;
-
+	private listItem listItem;
 //	private BaseAnimatorSet base_in;
 //	private BaseAnimatorSet base_out;
 //	private Context context = this;
@@ -24,26 +25,19 @@ public class BlurredActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_blurred);
+		Bundle bundle = getIntent().getExtras();
+		listItem info = bundle.getParcelable("item");
 		BlurBehind.getInstance()
                 .withAlpha(90)
                 .withFilterColor(Color.parseColor("#7fffffff"))
                 .setBackground(this);
-
-		if(getIntent().getStringExtra("Activity").equals("Main")){
-			fromActivity = "Main";
-		}else{
-			fromActivity = "SearchNeeds";
-		}
-		if(getIntent().getStringExtra("select").equals("release")) {
-			testItems.add(new DialogMenuItem("快递名称:", R.mipmap.ic_express));
-			testItems.add(new DialogMenuItem("发布时间:", R.mipmap.ic_get_time));
-		}else{
-			testItems.add(new DialogMenuItem("发布人:", R.mipmap.ic_user1));
-		}
-		testItems.add(new DialogMenuItem("类型:", R.mipmap.ic_type));
-		testItems.add(new DialogMenuItem("取货码:", R.mipmap.ic_code));
-		testItems.add(new DialogMenuItem("金额:", R.mipmap.ic_money));
-		testItems.add(new DialogMenuItem("状态:", R.mipmap.ic_status));
+		fromActivity = "Main";
+		testItems.add(new DialogMenuItem("快递名称:"+info.getInLocation(), R.mipmap.ic_express));
+		testItems.add(new DialogMenuItem("发布时间:"+info.getPublishTime(), R.mipmap.ic_get_time));
+		testItems.add(new DialogMenuItem("类型:"+info.getExpressType(), R.mipmap.ic_type));
+		testItems.add(new DialogMenuItem("取货码:"+info.getPickupCode(), R.mipmap.ic_code));
+		testItems.add(new DialogMenuItem("金额:"+info.getPrice()+"元", R.mipmap.ic_money));
+		testItems.add(new DialogMenuItem("状态:暂无", R.mipmap.ic_status));
 
 //		try {
 //			((BlurredActivity) context).setBaseIn((BaseAnimatorSet) ZoomInEnter.class.newInstance());
@@ -52,7 +46,7 @@ public class BlurredActivity extends Activity {
 //			e.printStackTrace();
 //		}
 		final NormalListDialog dialog = new NormalListDialog(BlurredActivity.this, testItems);
-		dialog.title(getIntent().getStringExtra("title_name"))//
+		dialog.title("物品详情")//
 				.titleTextSize_SP(22)//
 				.titleBgColor(Color.parseColor("#409ED7"))//
 				.itemPressColor(Color.parseColor("#85D3EF"))//

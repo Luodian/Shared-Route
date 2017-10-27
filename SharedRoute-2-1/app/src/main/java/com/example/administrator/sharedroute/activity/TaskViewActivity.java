@@ -29,6 +29,7 @@ import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
+import com.unstoppable.submitbuttonview.SubmitButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
     private TaskViewAdapter trollyAdapter;
     private ListView listView;
     private List<listItem> listItemList;//这个表应该接收之前代选中加入购物车的项
-    private Button getOrders;
+    private SubmitButton getOrders;
     private CheckBox getAll;
     private Button deleteOrders;
     private boolean lastCheckBoxStatus = false;
@@ -101,22 +102,34 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
         });
 
 
-        getOrders = (Button)findViewById(R.id.jiedan);
+        getOrders = (SubmitButton)findViewById(R.id.jiedan);
         getOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listItemList = trollyAdapter.getItems();
-                ArrayList<listItem> listElected = new ArrayList<>();
-                for (listItem e:listItemList) {
-                    if (e.isCheckBoxElected()) listElected.add(e);
-                }
+                getOrders.doResult(true);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1500);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        listItemList = trollyAdapter.getItems();
+                        ArrayList<listItem> listElected = new ArrayList<>();
+                        for (listItem e:listItemList) {
+                            if (e.isCheckBoxElected()) listElected.add(e);
+                        }
 
-                //将这个listElected传给下一个
-                Intent intent =new Intent(TaskViewActivity.this,ConfirmTaskActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("listItemList",listElected);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                        //将这个listElected传给下一个
+                        Intent intent =new Intent(TaskViewActivity.this,ConfirmTaskActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelableArrayList("listItemList",listElected);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                });
+                thread.start();
             }
         });
 

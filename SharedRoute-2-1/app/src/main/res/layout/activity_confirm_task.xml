@@ -17,14 +17,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_gravity="center"
         android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/informationlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="5">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -110,17 +111,23 @@
 
     </LinearLayout>
 
-        <Button
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/post"
+        android:paddingBottom="10dp">
+
+        <com.unstoppable.submitbuttonview.SubmitButton
             android:id="@+id/button"
             android:layout_width="160dp"
-            android:layout_marginBottom="20dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_gravity="center"
-            android:background="@drawable/roundedcorner3"
-            android:clickable="false"
-            android:focusable="false"
-            android:text="确认接单"
-            android:textColor="@color/black"
-            android:textSize="20dp"/>
+            android:padding="4dp"
+            app:buttonColor="@color/orange"
+            app:buttonText="确认接单"
+            app:buttonTextSize="23dp"
+            app:progressStyle="loading"/>
+    </FrameLayout>
 
 </LinearLayout>
