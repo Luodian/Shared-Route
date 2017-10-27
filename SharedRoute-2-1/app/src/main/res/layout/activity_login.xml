@@ -23,7 +23,7 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -40,17 +40,17 @@
                     android:id="@+id/shared"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="50dp"
                     android:text="共享"
-                    android:textSize="70dp"
-                    android:paddingTop="100dp"
-                    android:textColor="#FFD700"/>
+                    android:textColor="#FFD700"
+                    android:textSize="70dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="路径"
                     android:textColor="@color/black"
-                    android:textSize="50dp"/>
+                    android:textSize="50dp" />
 
             </LinearLayout>
 
@@ -58,17 +58,17 @@
                 android:id="@+id/line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/line"/>
+                android:src="@drawable/line" />
 
             <TextView
                 android:id="@+id/one_km"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="end"
                 android:text="您校园的最后1KM！"
-                android:textSize="20dp"
                 android:textColor="@color/black"
-                android:textStyle="italic"
-                android:gravity="end"/>
+                android:textSize="20dp"
+                android:textStyle="italic" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -78,10 +78,10 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
+                    android:hint="学号"
+                    android:inputType="number"
                     android:maxLines="1"
-                    android:text="123@gmail.com" />
+                    android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -99,28 +99,32 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:text="123456" />
+                    android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
 
-            <LinearLayout
-                android:id="@+id/button_layout"
+            <Button
+                android:id="@+id/email_sign_in_button"
+                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
-                android:paddingBottom="200dp">
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/shape"
+                android:text="登          陆"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/email_sign_in_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="登          陆"
-                    android:textColor="@color/black"
-                    android:background="@drawable/shape"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
         </LinearLayout>
+
     </ScrollView>
+
+    <TextView
+        android:id="@+id/regi_btn"
+        android:text="注册"
+        android:layout_margin="8dp"
+        android:textSize="18sp"
+        android:layout_gravity="bottom|left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

@@ -2,11 +2,8 @@ package com.example.administrator.sharedroute.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -25,32 +22,22 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.OvershootInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +54,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
+     * A dummy authentication store containing known user names and passwords.
+     * TODO: remove after connecting to a real authentication system.
+     */
+    private static final String[] DUMMY_CREDENTIALS = new String[]{
+            "foo@example.com:hello", "bar@example.com:world"
+    };
+    /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
@@ -76,15 +70,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private TextView shared;
-    private TextView oneKm;
-    private LinearLayout button;
-    private HashMap<String, Object> map;
 
+    private TextView mRegibtn;
+    private static final int REQUEST_CODE_GO_TO_REGIST = 20;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -101,89 +95,84 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        final SharedPreferences sp = getSharedPreferences("logininfo", MODE_PRIVATE);
+        String result = sp.getString("login_info", "");
+        String logInName="";
+        String loginPassword="";
+        try {
+            JSONArray array = new JSONArray(result);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject itemObject = array.getJSONObject(i);
+                JSONArray names = itemObject.names();
+                if (names!= null) {
+                    Map<String,String> itemMap = new HashMap<>();
+                    for (int j = 0; j < names.length(); j++) {
+                        String name = names.getString(j);
+                        String value = itemObject.getString(name);
+                        itemMap.put(name,value);
+                    }
+                    logInName = itemMap.get("stuNum");
+                    loginPassword= itemMap.get("password");
+                    break;
+                }
+            }
+            mEmailView.setText(logInName);
+            mPasswordView.setText(loginPassword);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!mEmailView.getText().equals(""))
+                {
+                    JSONArray mJsonArray = new JSONArray();
+                    String stuNum = mEmailView.getText().toString();
+                    String passWord = mPasswordView.getText().toString();
+                    Map<String, String> itemMap = new HashMap<>();
+
+                    itemMap.put("stuNum",stuNum);
+                    itemMap.put("password",passWord);
+                    Iterator<Map.Entry<String, String>> iterator = itemMap.entrySet().iterator();
+
+                    JSONObject object = new JSONObject();
+
+                    while (iterator.hasNext()) {
+                        Map.Entry<String, String> entry = iterator.next();
+                        try {
+                            object.put(entry.getKey(), entry.getValue());
+                        } catch (JSONException e) {
+
+                        }
+                    }
+                    mJsonArray.put(object);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("login_info", mJsonArray.toString());
+                    editor.commit();
+                }
                 attemptLogin();
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-
-        shared = (TextView)findViewById(R.id.shared);
-        oneKm = (TextView)findViewById(R.id.one_km);
-        button = (LinearLayout)findViewById(R.id.button_layout);
-
-        ObjectAnimator animator1 = ObjectAnimator.ofFloat(shared, "translationY",-500f, 0);
-        ObjectAnimator animator2 = ObjectAnimator.ofFloat(oneKm, "translationX",-1500f, 0);
-        ObjectAnimator animator3 = ObjectAnimator.ofFloat(button, "translationY",500f, 0);
-        animator2.setInterpolator(new OvershootInterpolator());
-        AnimatorSet animSet = new AnimatorSet();
-        animSet.play(animator1).with(animator3);
-        animSet.setDuration(1000);
-        animSet.start();
-        animator2.setDuration(1500);
-        animator2.start();
-
-        //缓存框架
-        map = (HashMap<String, Object>) getMsg("login");
-        if (map != null && !map.isEmpty()) {
-            if ((Boolean) map.get("login2")) {
-                //若值为true,用户无需输入密码，直接跳转进入操作界面
-                Intent intent = new Intent(LoginActivity.this,
-                        MainActivity.class);
-                startActivity(intent);
+        mRegibtn = (TextView)findViewById(R.id.regi_btn);
+        mRegibtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivityForResult(intent,REQUEST_CODE_GO_TO_REGIST);
             }
-        }
+        });
     }
-
-    //将数据存储进入共享参数
-    public boolean saveMsg(String fileName, Map<String, Object> map) {
-        boolean flag;
-        // 一般Mode都使用private,比较安全
-        SharedPreferences preferences = getSharedPreferences(fileName,
-                Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        // Map类提供了一个称为entrySet()的方法，这个方法返回一个Map.Entry实例化后的对象集。
-        // 接着，Map.Entry类提供了一个getKey()方法和一个getValue()方法，
-        // 因此，上面的代码可以被组织得更符合逻辑
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            String key = entry.getKey();
-            Object object = entry.getValue();
-            // 根据值得不同类型，添加
-            if (object instanceof Boolean) {
-                Boolean new_name = (Boolean) object;
-                editor.putBoolean(key, new_name);
-            } else if (object instanceof Integer) {
-                Integer integer = (Integer) object;
-                editor.putInt(key, integer);
-            } else if (object instanceof Float) {
-                Float f = (Float) object;
-                editor.putFloat(key, f);
-            } else if (object instanceof Long) {
-                Long l = (Long) object;
-                editor.putLong(key, l);
-            } else if (object instanceof String) {
-                String s = (String) object;
-                editor.putString(key, s);
-            }
+    @Override
+    public void onActivityResult(int requestCode,int resultCode,Intent data){
+        if(requestCode==REQUEST_CODE_GO_TO_REGIST && resultCode==RESULT_OK){
+            mEmailView.setText(data.getStringExtra("name"));
+            mPasswordView.setText(data.getStringExtra("password"));
         }
-        flag = editor.commit();
-        return flag;
-
-    }
-
-    // 读取数据
-    public Map<String, ?> getMsg(String fileName) {
-        Map<String, ?> map;
-        // 读取数据用不到edit
-        SharedPreferences preferences = getSharedPreferences(fileName,
-                Context.MODE_APPEND);
-        //Context.MODE_APPEND可以对已存在的值进行修改
-        map = preferences.getAll();
-        return map;
     }
 
     private void populateAutoComplete() {
@@ -203,7 +192,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
             Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok, new OnClickListener() {
+                    .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
                         public void onClick(View v) {
@@ -284,7 +273,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+//        return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
@@ -300,25 +290,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
 
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        mProgressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 
     @Override
@@ -379,13 +376,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mEmail;
         private final String mPassword;
         private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
-
-        private String result = null;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -394,59 +389,35 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            System.out.println("AAA");
+            // TODO: attempt authentication against a network service.
+
             try {
-                HttpClient client = new DefaultHttpClient();
-
-                HttpPost post = new HttpPost(url);
-
-                //參數
-                if (mEmail != "") {
-                    List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-                    parameters.add(new BasicNameValuePair("username", mEmail));
-                    parameters.add(new BasicNameValuePair("password", mPassword));
-                    UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
-                    post.setEntity(ent);
-                }
-
-                HttpResponse responsePOST = client.execute(post);
-
-                HttpEntity resEntity = responsePOST.getEntity();
-
-                if (resEntity != null) {
-                    result = EntityUtils.toString(resEntity);
-                }
-                if (result.equals("success")) {
-                    client.getConnectionManager().shutdown();
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (IOException e) {
-                e.getMessage();
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                return false;
             }
-            return false;
+
+            for (String credential : DUMMY_CREDENTIALS) {
+                String[] pieces = credential.split(":");
+                if (pieces[0].equals(mEmail)) {
+                    // Account exists, return true if the password matches.
+                    return pieces[1].equals(mPassword);
+                }
+            }
+
+            // TODO: register the new account here.
+            return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
+
             if (success) {
-                //登陆成功后将flag设置为ture存入共享参数中
-                HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("login2", true);
-                saveMsg("login", map);
-                Toast.makeText(LoginActivity.this, "Login success = " + result, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                intent.setClass(LoginActivity.this, MainActivity.class);
-                LoginActivity.this.startActivity(intent);
                 finish();
             } else {
-                Toast.makeText(LoginActivity.this, "Login error = " + result, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                intent.setClass(LoginActivity.this, MainActivity.class);
-                LoginActivity.this.startActivity(intent);
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }
