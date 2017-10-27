@@ -17,6 +17,42 @@ public class listItem implements Parcelable{
     private String outLocation;//送件地点
     private String outTimeStamp;//送件时间
     private String pickupCode;
+    private int ID;
+    private int status;
+    private String publisherID;
+    private String accepterID;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getPublisherID() {
+        return publisherID;
+    }
+
+    public void setPublisherID(String publisherID) {
+        this.publisherID = publisherID;
+    }
+
+    public String getAccepterID() {
+        return accepterID;
+    }
+
+    public void setAccepterID(String accepterID) {
+        this.accepterID = accepterID;
+    }
 
     public String getPickupCode() {
         return pickupCode;
