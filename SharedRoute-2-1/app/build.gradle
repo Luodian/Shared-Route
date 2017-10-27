@@ -28,7 +28,6 @@ dependencies {
     compile project(':FlipShare')
 
 
-
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:appcompat-v7:25.4.0'
     compile 'com.android.support:design:25.4.0'

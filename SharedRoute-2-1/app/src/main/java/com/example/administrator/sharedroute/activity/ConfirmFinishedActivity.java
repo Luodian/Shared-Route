@@ -22,6 +22,7 @@ import com.example.administrator.sharedroute.entity.DialogMenuItem;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.fragment.FailFragment;
 import com.example.administrator.sharedroute.fragment.SuccessFragment;
+import com.unstoppable.submitbuttonview.SubmitButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private ArrayList<listItem> successList = new ArrayList<listItem>();
     private ArrayList<listItem> failList = new ArrayList<listItem>();
-    private Button mButton;
+    private SubmitButton mButton;
     public static int lastPosition = 0;
     private int mMenuId;
     @Override
@@ -73,12 +74,24 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
     private void initView(){
         mTabLayout = (TabLayout) findViewById(R.id.confirmfinished_tablayout);
         mViewPager = (ViewPager) findViewById(R.id.confirmfinished_viewpager);
-        mButton = (Button) findViewById(R.id.confirm_finished_return);
+        mButton = (SubmitButton) findViewById(R.id.confirm_finished_return);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ConfirmFinishedActivity.this,MyOrder.class);
-                startActivity(intent);
+                mButton.doResult(true);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1500);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        Intent intent =new Intent(ConfirmFinishedActivity.this,MyOrder.class);
+                        startActivity(intent);
+                    }
+                });
+                thread.start();
             }
         });
         Intent intent = getIntent();
