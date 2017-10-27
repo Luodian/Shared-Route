@@ -19,7 +19,7 @@ public class listItem implements Parcelable{
     private String pickupCode;
     private int ID;
     private int status;
-    private String publisherID;
+    private String publisherID;//
     private String accepterID;
 
     public int getID() {
