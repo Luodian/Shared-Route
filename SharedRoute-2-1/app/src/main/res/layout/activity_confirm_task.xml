@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.sharedroute.activity.ConfirmTaskActivity">
+
+    <include layout="@layout/back_layout" />
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/informationlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView2"
+            android:clickable="false"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardCornerRadius="3dp"
+            card_view:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请确认您的信息是否正确"
+                    android:textColor="@color/red"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="40dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="姓名   "
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/textName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="李四"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="手机   "
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/textPhoneNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="12345678"
+                        android:textSize="18dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    <ListView
+        android:id="@+id/listViewFirmOrders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/confirm"
+        android:layout_below="@id/informationlayout"
+        android:layout_gravity="top"
+        android:divider="@drawable/listview_divider1"
+        android:dividerHeight="1dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    </LinearLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="160dp"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/roundedcorner3"
+            android:clickable="false"
+            android:focusable="false"
+            android:text="确认接单"
+            android:textColor="@color/black"
+            android:textSize="20dp"/>
+
+</LinearLayout>

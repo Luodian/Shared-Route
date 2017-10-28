@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.administrator.sharedroute.activity.TaskViewActivity"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbartaskview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:title="任务栏"
+        android:layout_alignParentTop="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_taskview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbartaskview"
+        android:layout_above="@+id/bottom_toolbar">
+        <ListView
+            android:id="@+id/shoppingtrolly_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/bottom_toolbar"
+        android:orientation="horizontal"
+        android:elevation="4dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+
+        <CheckBox
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:id="@+id/checkbox_item_all"
+            android:layout_gravity="center|right"
+            android:layout_weight="1"
+            android:text="全选"
+            android:textSize="18sp"
+            android:layout_marginLeft="60dp"/>
+
+
+
+        <!--<FrameLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="#00000000"-->
+        <!--android:layout_gravity="fill">-->
+
+        <Button
+            android:layout_weight="1.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/deleteItems"
+            android:text="删除"
+            android:textSize="18dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:textColor="@color/black"
+            android:background="#00FFA54F"
+            />
+        <!--</FrameLayout>-->
+        <!--<FrameLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="fill"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/roundedcorner3">-->
+
+        <Button
+            android:layout_weight="1.5"
+            android:id="@+id/jiedan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:text="接单"
+            android:background="@drawable/roundedcorner3"
+            android:textSize="18dp" />
+        <!--</FrameLayout>-->
+
+
+    </LinearLayout>
+
+</RelativeLayout>
