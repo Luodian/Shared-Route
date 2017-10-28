@@ -28,13 +28,25 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -381,6 +393,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mEmail;
         private final String mPassword;
         private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
+        private String result = null;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -392,22 +405,35 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(url);
+
+                if (mEmail!=""&&mPassword!=""){
+                    List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+                    parameters.add(new BasicNameValuePair("username", mEmail));
+                    parameters.add(new BasicNameValuePair("password", mPassword));
+                    UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
+                    post.setEntity(ent);
+                }
+                HttpResponse responsePOST = client.execute(post);
+
+                HttpEntity resEntity = responsePOST.getEntity();
+
+                if (resEntity != null) {
+                    result = EntityUtils.toString(resEntity);
+                }
+                if (result.equals("success"))
+                {
+                    client.getConnectionManager().shutdown();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            } catch (IOException e) {
                 return false;
             }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
         }
 
         @Override
@@ -416,8 +442,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
+                Toast.makeText(LoginActivity.this,"Successful!", Toast.LENGTH_SHORT).show();
             } else {
+                Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }
