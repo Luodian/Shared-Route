@@ -328,6 +328,12 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 
     };
 
+    @Override
+    public void onBackPressed() {
+        JumpToActivity(MainActivity.class);
+        finish();
+    }
+
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
