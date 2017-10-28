@@ -30,16 +30,17 @@ import android.widget.Toast;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.PullRecyclerViewAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
-import com.example.administrator.sharedroute.utils.CommonHttp;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import static com.example.administrator.sharedroute.activity.SearchNeedsActivity.goodsCount;
@@ -176,7 +177,7 @@ public class PageFragment extends Fragment {
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
                 mRefreshLayout.setRefreshing(true);
-                new RefreshTask().execute();
+                new InitTask().execute();
             }
         });
 
@@ -184,7 +185,7 @@ public class PageFragment extends Fragment {
             @Override
             public void run() {
                 mRefreshLayout.setRefreshing(true);
-                new InitTask(1).execute();
+                new InitTask().execute();
             }
         });
 
@@ -312,21 +313,13 @@ public class PageFragment extends Fragment {
 
     private class InitTask extends AsyncTask<Void, Void, String>
     {
-
-        private int requestItemNumber;
-
-        InitTask(int _a)
-        {
-            requestItemNumber = _a;
-        }
-
         @Override
         protected String doInBackground(Void... params) {
             String result = null;
-            String path = "http://suc.free.ngrok.cc/sharedroot_server/Task?action=show&length=40";
+            String path = "http://suc.free.ngrok.cc/sharedroot_server/Task?action=show&length=1";
             HttpURLConnection con=null;
-            InputStream is=null;
-            StringBuilder sbd=new StringBuilder();
+            InputStream in=null;
+            ArrayList<listItem> InitTaskListItem = new ArrayList<>();
             try
             {
                 URL url=new URL(path);
@@ -337,22 +330,75 @@ public class PageFragment extends Fragment {
                 * http响应码：getResponseCode
                   200：成功 404：未找到 500：发生错误
               */
-                if (con.getResponseCode()==200){
-                    is=con.getInputStream();
-                    int next=0;
-                    byte[] bt=new byte[1024];
-                    while ((next=is.read(bt))>0)
-                    {
-                        sbd.append(new String(bt,0,next));
+                if (con.getResponseCode()==200)
+                {
+                    System.out.println("连接成功");
+                    in = con.getInputStream();
+                    InputStreamReader isr = new InputStreamReader(in);
+                    //InputStreamReader isr = new InputStreamReader(getAssets().open("get_data.json"),"UTF-8");
+                    BufferedReader br = new BufferedReader(isr);
+                    String line;
+                    //StringBuilder 缓存区 StringBuffer
+                    StringBuilder builder = new StringBuilder();
+                    while ((line = br.readLine()) != null) {
+                        builder.append(line);
                     }
+                    br.close();
+                    isr.close();
+                    result = builder.toString();
+                    System.out.println(builder.toString());
+                    Log.e("LUODIANDIAN",builder.toString());
+                    Toast.makeText(getActivity(), builder.toString(), Toast.LENGTH_SHORT).show();
+//                    JSONObject root = new JSONObject(builder.toString());
+                    JSONArray arr = new JSONArray(builder.toString());
+
+//                    System.out.println("money= " + root.getString("money") +
+//                            " name= " + root.getString("name") +
+//                            " phone= " + root.getString("phone") +
+//                            " num= " + root.getString("num") +
+//                            " packsort= " + root.getString("packsort") +
+//                            " pickplace= " + root.getString("pickplace") +
+//                            " delivertime= " + root.getString("delivertime") +
+//                            " paypath= " + root.getString("paypath") +
+//                            " remark= " + root.getString("remark") +
+//                            " id= " + root.getString("id"));
+                    //读取多个数据
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject lan = arr.getJSONObject(i);
+                        System.out.println("money= " + lan.getString("money") +
+                                " name= " + lan.getString("name") +
+                                " phone= " + lan.getString("phone") +
+                                " num= " + lan.getString("num") +
+                                " packsort= " + lan.getString("packsort") +
+                                " pickplace= " + lan.getString("pickplace") +
+                                " delivertime= " + lan.getString("delivertime") +
+                                " paypath= " + lan.getString("paypath") +
+                                " remark= " + lan.getString("remark") +
+                                " id= " + lan.getInt("id"));
+                        listItem item = new listItem("电脑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+                        InitTaskListItem.add(item);
+                    }
+                    listItem item = new listItem("电脑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+                    InitTaskListItem.add(item);
                 }
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 e.printStackTrace();
-            }finally {
-                if (is!=null){
-                    try {
-                        is.close();
-                    } catch (IOException e) {
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                if (in!=null){
+                    try
+                    {
+                        in.close();
+                    }
+                    catch (IOException e)
+                    {
                         e.printStackTrace();
                     }
                 }
@@ -361,7 +407,7 @@ public class PageFragment extends Fragment {
                     //断开连接
                 }
             }
-            return sbd.toString();
+            return result;
         }
 
         @Override
@@ -372,10 +418,11 @@ public class PageFragment extends Fragment {
                 mRefreshLayout.setRefreshing(false);
             }
             //没有新的数据，提示消息
-            if (result == null) {
+            if (result == null || result.length() == 0) {
                 Toast.makeText(getActivity(), R.string.check_network_status, Toast.LENGTH_SHORT).show();
             }
-            else {
+            else
+            {
                 Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
 //                TaskListItem.addAll(data);
 //                adapter.notifyDataSetChanged();
