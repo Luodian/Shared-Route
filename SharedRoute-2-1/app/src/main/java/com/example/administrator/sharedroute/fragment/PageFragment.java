@@ -311,10 +311,10 @@ public class PageFragment extends Fragment {
         }
     }
 
-    private class InitTask extends AsyncTask<Void, Void, String>
+    private class InitTask extends AsyncTask<Void, Void, ArrayList<listItem>>
     {
         @Override
-        protected String doInBackground(Void... params) {
+        protected ArrayList<listItem> doInBackground(Void... params) {
             String result = null;
             String path = "http://suc.free.ngrok.cc/sharedroot_server/Task?action=show&length=1";
             HttpURLConnection con=null;
@@ -348,7 +348,6 @@ public class PageFragment extends Fragment {
                     result = builder.toString();
                     System.out.println(builder.toString());
                     Log.e("LUODIANDIAN",builder.toString());
-                    Toast.makeText(getActivity(), builder.toString(), Toast.LENGTH_SHORT).show();
 //                    JSONObject root = new JSONObject(builder.toString());
                     JSONArray arr = new JSONArray(builder.toString());
 
@@ -373,13 +372,10 @@ public class PageFragment extends Fragment {
                                 " pickplace= " + lan.getString("pickplace") +
                                 " delivertime= " + lan.getString("delivertime") +
                                 " paypath= " + lan.getString("paypath") +
-                                " remark= " + lan.getString("remark") +
-                                " id= " + lan.getInt("id"));
-                        listItem item = new listItem("电脑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+                                " remark= " + lan.getString("remark"));
+                        listItem item = new listItem(lan.getString("packsort"), lan.getString("num"), lan.getString("delivertime"), lan.getString("pickplace"), "今天 12：30", "一区 正心楼 524", Integer.parseInt(lan.getString("money")), false);
                         InitTaskListItem.add(item);
                     }
-                    listItem item = new listItem("电脑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-                    InitTaskListItem.add(item);
                 }
             }
             catch (IOException e)
@@ -407,25 +403,25 @@ public class PageFragment extends Fragment {
                     //断开连接
                 }
             }
-            return result;
+            return InitTaskListItem;
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(ArrayList<listItem> result) {
             super.onPostExecute(result);
 
             if (mRefreshLayout != null) {
                 mRefreshLayout.setRefreshing(false);
             }
             //没有新的数据，提示消息
-            if (result == null || result.length() == 0) {
+            if (result == null || result.size() == 0) {
                 Toast.makeText(getActivity(), R.string.check_network_status, Toast.LENGTH_SHORT).show();
             }
             else
             {
-                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-//                TaskListItem.addAll(data);
-//                adapter.notifyDataSetChanged();
+//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                TaskListItem.addAll(result);
+                adapter.notifyDataSetChanged();
             }
         }
 
