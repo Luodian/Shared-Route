@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -35,7 +34,6 @@ import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
-import com.unstoppable.submitbuttonview.SubmitButton;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -61,13 +59,12 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
     private List<listItem> itemlists;//理论上这个列表应该由之前的页面传过来，这里先自己造几个数据。
     private Toolbar mToolbar;
     private AnimationAdapter mAnimAdapter;
-    private SubmitButton mButton;
+    private Button mButton;
     private static final int INITIAL_DELAY_MILLIS = 100;
     private CardView mCardView;
     private LinearLayout mInformation;
     private View mProgressView;
     private UserLoginTask mAuthTask;
-    private FrameLayout mButtonLayout;
     private OrderDao orderDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +106,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
         Bundle bundle =intent.getExtras();
         itemlists = bundle.getParcelableArrayList("listItemList");
         mCardView = (CardView) findViewById(R.id.cardView2);
-        mButton =(SubmitButton) findViewById(R.id.button);
-        mButtonLayout = (FrameLayout) findViewById(R.id.post) ;
+        mButton =(Button) findViewById(R.id.button);
         adapter = new ConfirmTaskAdapter(ConfirmTaskActivity.this);
         for (int i = 0; i < itemlists.size(); i++) {
             adapter.add(itemlists.get(i));
@@ -145,31 +141,18 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mButton.doResult(true);
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            Thread.sleep(1500);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        itemlists = adapter.getItems();
-                        ArrayList<listItem> listElected = new ArrayList<listItem>();
-                        for (listItem e:itemlists) {
-                            listElected.add(e);
-                        }
-                        //attemptLogin();
-                        //将这个listElected传给下一个
-                        Intent intent =new Intent(ConfirmTaskActivity.this,ConfirmFinishedActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelableArrayList("listItemList",listElected);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
-                });
-                thread.start();
-
+                itemlists = adapter.getItems();
+                ArrayList<listItem> listElected = new ArrayList<listItem>();
+                for (listItem e:itemlists) {
+                    listElected.add(e);
+                }
+                //attemptLogin();
+                //将这个listElected传给下一个
+                Intent intent =new Intent(ConfirmTaskActivity.this,ConfirmFinishedActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("listItemList",listElected);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
@@ -230,13 +213,11 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             mInformation.setVisibility(show ? View.GONE : View.VISIBLE);
-            mButtonLayout.setVisibility(show ? View.GONE : View.VISIBLE);
             mInformation.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mInformation.setVisibility(show ? View.GONE : View.VISIBLE);
-                    mButtonLayout.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
             });
 
@@ -253,7 +234,6 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mInformation.setVisibility(show ? View.GONE : View.VISIBLE);
-            mButtonLayout.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 
@@ -266,7 +246,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 //        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, HTTP.UTF_8);
 //        post.setEntity(ent);
 
-        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Task";
+        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
 
         private String result = null;
 
@@ -290,18 +270,9 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
                 HttpPost post = new HttpPost(url);
 
                 //參數
-                int length = arraylist.size();
-                if (length != 0){
+                if (arraylist.size() != 0){
                     List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-                    String json = new String();
-                    json+="[";
-                    for (int i = 0 ; i< length;i++) {
-                        json += "{\"id\":\""+arraylist.get(i).getID()+"\"}";
-                        if ( i != (length-1) )json +=",";
-                        else json+="]";
-                    }
-                    parameters.add(new BasicNameValuePair("name", json));
-                    parameters.add(new BasicNameValuePair("action","update"));
+                    parameters.add(new BasicNameValuePair("listRequest", "还未设置"));
                     UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                     post.setEntity(ent);
                 }

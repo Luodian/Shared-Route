@@ -123,8 +123,8 @@
         android:id="@+id/regi_btn"
         android:text="注册"
         android:layout_margin="8dp"
-        android:textSize="20sp"
-        android:layout_gravity="bottom|right"
+        android:textSize="18sp"
+        android:layout_gravity="bottom|left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

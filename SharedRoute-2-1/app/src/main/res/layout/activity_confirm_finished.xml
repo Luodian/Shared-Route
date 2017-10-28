@@ -22,8 +22,8 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="vertical">
 
 
@@ -45,23 +45,17 @@
         <!--android:id="@+id/confirm_finished_return"-->
         <!--android:background="@drawable/roundedcorner3">-->
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingBottom="10dp">
-
-        <com.unstoppable.submitbuttonview.SubmitButton
+        <Button
             android:id="@+id/confirm_finished_return"
             android:layout_width="160dp"
-            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="4dp"
-            app:buttonColor="@color/orange"
-            app:buttonText="查看详情"
-            app:buttonTextSize="23dp"
-            app:progressStyle="loading"/>
-    </FrameLayout>
+            android:background="@drawable/roundedcorner3"
+            android:clickable="false"
+            android:text="确认"
+            android:textColor="@color/black"
+            android:textSize="20dp"/>
     <!--</FrameLayout>-->
 
     <!--<include layout="@layout/content_search_needs" />-->

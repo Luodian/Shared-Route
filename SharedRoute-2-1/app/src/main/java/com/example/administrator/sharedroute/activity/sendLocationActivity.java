@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.MyFragmentPagerAdapter;
@@ -24,6 +25,9 @@ public class sendLocationActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_send_location);
 
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_selectexpress);
+        setSupportActionBar(toolbar);
 
         initView();
     }

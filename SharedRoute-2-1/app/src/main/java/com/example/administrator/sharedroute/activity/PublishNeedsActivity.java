@@ -54,15 +54,14 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_needs);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_publishneeds);
+        setSupportActionBar(toolbar);
         final Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         /*
          *显示返回的收件地点信息
          */
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("发布需求");
         pickupLocationButton = (Button)findViewById(R.id.pickupplace);
         textViewName = (TextView)findViewById(R.id.nametext) ;
         textViewPhoneNumber = (TextView)findViewById(R.id.phonetext) ;
@@ -327,12 +326,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         }
 
     };
-
-    @Override
-    public void onBackPressed() {
-        JumpToActivity(MainActivity.class);
-        finish();
-    }
 
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){

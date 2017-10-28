@@ -10,8 +10,10 @@
         android:background="#d9d9d9"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <include layout="@layout/back_layout"/>
+        <include
+            layout="@layout/back_layout"
+            android:title="@string/title_publishneeds"
+            android:elevation="4dp"/>
 
         <ScrollView
             android:layout_weight="1"
