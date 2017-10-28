@@ -316,7 +316,7 @@ public class PageFragment extends Fragment {
         @Override
         protected ArrayList<listItem> doInBackground(Void... params) {
             String result = null;
-            String path = "http://suc.free.ngrok.cc/sharedroot_server/Task?action=show&length=1";
+            String path = "http://47.95.194.146/sharedroot_server/Task?action=show&length=1";
             HttpURLConnection con=null;
             InputStream in=null;
             ArrayList<listItem> InitTaskListItem = new ArrayList<>();
