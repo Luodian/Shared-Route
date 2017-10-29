@@ -1,57 +1,76 @@
 package com.example.administrator.sharedroute.entity;
 
 public class ReleaseOrderItem {
-    private int expressimageId;
-    private int tpyeimageId;
-    private int statusimageId;
-    private String date;
-    private String type;
+    private int headImageId;
+    private int phoneImageId;
+    private String userName;
+    private String userPhone;
+    private String releaseTime;
+    private String fetchLocation;
+    private int statusImageId;
+    private String statusText;
 
-//    public ReleaseOrderItem(int expressimageId,int tpyeimageId,int statuscolorId,String date,String type){
-//        this.statusimageId = statuscolorId;
-//        this.expressimageId = expressimageId;
-//        this.tpyeimageId = tpyeimageId;
-//        this.date = date;
-//        this.type = type;
-//    }
-
-    public int getStatusimageId() {
-        return statusimageId;
+    public int getHeadImageId() {
+        return headImageId;
     }
 
-    public int getExpressimageId() {
-        return expressimageId;
+    public void setHeadImageId(int headImageId) {
+        this.headImageId = headImageId;
     }
 
-    public int getTpyeimageId() {
-        return tpyeimageId;
+    public int getPhoneImageId() {
+        return phoneImageId;
     }
 
-    public String getDate() {
-        return date;
+    public void setPhoneImageId(int phoneImageId) {
+        this.phoneImageId = phoneImageId;
     }
 
-    public String getType() {
-        return type;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setExpressimageId(int expressimageId) {
-        this.expressimageId = expressimageId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void setTpyeimageId(int tpyeimageId) {
-        this.tpyeimageId = tpyeimageId;
+    public String getUserPhone() {
+        return userPhone;
     }
 
-    public void setStatusimageId(int statusimageId) {
-        this.statusimageId = statusimageId;
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getReleaseTime() {
+        return releaseTime;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setReleaseTime(String releaseTime) {
+        this.releaseTime = releaseTime;
+    }
+
+    public String getFetchLocation() {
+        return fetchLocation;
+    }
+
+    public void setFetchLocation(String fetchLocation) {
+        this.fetchLocation = fetchLocation;
+    }
+
+    public int getStatusImageId() {
+        return statusImageId;
+    }
+
+    public void setStatusImageId(int statusImageId) {
+        this.statusImageId = statusImageId;
+    }
+
+    public String getStatusText() {
+        return statusText;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
     }
 }

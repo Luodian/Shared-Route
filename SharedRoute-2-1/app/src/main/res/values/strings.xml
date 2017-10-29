@@ -31,4 +31,7 @@
     <string name="list_no_data">没有新的内容了哦~</string>
 
     <string name="check_network_status">请检查网络状态</string>
+    <string name="title_activity_waiting_future">WaitingFutureActivity</string>
+    <string name="waitforTitle">敬请期待</string>
+    <string name="waitforText">这里还没有开放，但是未来值得期待~</string>
 </resources>

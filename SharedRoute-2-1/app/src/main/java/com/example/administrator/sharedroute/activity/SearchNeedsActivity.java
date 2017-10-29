@@ -58,6 +58,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_user);
         }
         initView();
         selectedItem = new ArrayList<>();
