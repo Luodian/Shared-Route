@@ -6,7 +6,9 @@ New way to explore your campus life.
 
 快递来了没时间取？你可以在这里发布你的需求，附加一定的赏金，马上就会有通过我们信誉度认证的用户看到，为您取到您的快递，送达您的手中。
 
-![](http://opmza2br0.bkt.clouddn.com/17-10-28/2110367.jpg)
+![](http://opmza2br0.bkt.clouddn.com/17-10-30/90325758.jpg)
+
+![](http://opmza2br0.bkt.clouddn.com/17-10-30/30828145.jpg)
 
 ### 项目进度
 

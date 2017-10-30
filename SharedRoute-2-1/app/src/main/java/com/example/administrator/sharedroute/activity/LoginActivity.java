@@ -399,7 +399,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
-        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
+        private String url = "http://47.95.194.146:8080/sharedroot_server/Login";
         private String result = null;
 
         UserLoginTask(String email, String password) {

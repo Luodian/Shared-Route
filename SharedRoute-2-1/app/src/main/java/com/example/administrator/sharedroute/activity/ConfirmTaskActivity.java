@@ -13,7 +13,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,9 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
@@ -34,6 +33,7 @@ import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
+import com.unstoppable.submitbuttonview.SubmitButton;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -65,6 +65,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
     private LinearLayout mInformation;
     private View mProgressView;
     private UserLoginTask mAuthTask;
+    private FrameLayout mButtonLayout;
     private OrderDao orderDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,18 +142,33 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemlists = adapter.getItems();
-                ArrayList<listItem> listElected = new ArrayList<listItem>();
-                for (listItem e:itemlists) {
-                    listElected.add(e);
-                }
-                //attemptLogin();
-                //将这个listElected传给下一个
-                Intent intent =new Intent(ConfirmTaskActivity.this,ConfirmFinishedActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("listItemList",listElected);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                //mButton.doResult(true);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            Thread.sleep(1500);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        Intent intent =new Intent(ConfirmTaskActivity.this,ConfirmFinishedActivity.class);
+
+                        itemlists = adapter.getItems();
+                        ArrayList<listItem> listElected = new ArrayList<listItem>();
+                        for (listItem e:itemlists) {
+                            listElected.add(e);
+                        }
+                        attemptLogin();
+                        //将这个listElected传给下一个
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelableArrayList("listItemList",listElected);
+                        intent.putExtras(bundle);
+
+                        startActivity(intent);
+                    }
+                });
+                thread.start();
+
             }
         });
     }
@@ -161,44 +177,14 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
         if (mAuthTask != null) {
             return;
         }
-//
-//        // Reset errors.
-//        mEmailView.setError(null);
-//        mPasswordView.setError(null);
-//
-//        // Store values at the time of the login attempt.
-//        String email = mEmailView.getText().toString();
-//        String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
-//        View focusView = null;
-//
-//        // Check for a valid password, if the user entered one.
-//        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-//            mPasswordView.setError(getString(R.string.error_invalid_password));
-//            focusView = mPasswordView;
-//            cancel = true;
-//        }
-//
-//        // Check for a valid email address.
-//        if (TextUtils.isEmpty(email)) {
-//            mEmailView.setError(getString(R.string.error_field_required));
-//            focusView = mEmailView;
-//            cancel = true;
-//        } else if (!isEmailValid(email)) {
-//            mEmailView.setError(getString(R.string.error_invalid_email));
-//            focusView = mEmailView;
-//            cancel = true;
-//        }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-           // focusView.requestFocus();
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            //showProgress(true);
             mAuthTask = new UserLoginTask(itemlists);
             mAuthTask.execute((Void) null);
         }
@@ -211,13 +197,15 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
         // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mInformation.setVisibility(show ? View.GONE : View.VISIBLE);
+            Log.e("???",String.valueOf(mInformation));
+            mInformation.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
+            mButtonLayout.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
             mInformation.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mInformation.setVisibility(show ? View.GONE : View.VISIBLE);
+                    mButtonLayout.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
             });
 
@@ -234,10 +222,11 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mInformation.setVisibility(show ? View.GONE : View.VISIBLE);
+            mButtonLayout.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+   private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
 //        HttpClient client = new DefaultHttpClient();
 //        HttpPost post = new HttpPost("http://suc.free.ngrok.cc/sharedroot_server/Login");
@@ -245,8 +234,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 //        params.add(new BasicNameValuePair(_queryKey, _queryValue));
 //        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, HTTP.UTF_8);
 //        post.setEntity(ent);
-
-        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
+        private String url = "http://47.95.194.146:8080/sharedroot_server/Task";
 
         private String result = null;
 
@@ -270,9 +258,18 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
                 HttpPost post = new HttpPost(url);
 
                 //參數
-                if (arraylist.size() != 0){
+                int length = arraylist.size();
+                if (length != 0){
                     List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-                    parameters.add(new BasicNameValuePair("listRequest", "还未设置"));
+                    String json = new String();
+                    json+="[";
+                    for (int i = 0 ; i< length;i++) {
+                        json += "{\"id\":\""+arraylist.get(i).getID()+"\"}";
+                        if ( i != (length-1) )json +=",";
+                        else json+="]";
+                    }
+                    parameters.add(new BasicNameValuePair("name", json));
+                    parameters.add(new BasicNameValuePair("action","update"));
                     UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                     post.setEntity(ent);
                 }
@@ -303,24 +300,25 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
+            //showProgress(false);
 
             if (success) {
                 Toast.makeText(ConfirmTaskActivity.this,"Successful!", Toast.LENGTH_SHORT).show();
-//                finish();
+//              finish();
+
             }
             else
             {
                 Toast.makeText(ConfirmTaskActivity.this,result.toString(), Toast.LENGTH_SHORT).show();
 //                mPasswordView.setError(getString(R.string.error_incorrect_password));
 //                mPasswordView.requestFocus();
-        }
+            }
         }
 
         @Override
         protected void onCancelled() {
             mAuthTask = null;
-            showProgress(false);
+           // showProgress(false);
         }
     }
 
