@@ -14,16 +14,18 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
-    <!--<ScrollView-->
-    <!--android:id="@+id/login_form"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content">-->
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <!--<LinearLayout-->
-    <!--android:id="@+id/email_login_form"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical">-->
+    <LinearLayout
+        android:id="@+id/email_login_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
     <!--<LinearLayout-->
     <!--android:layout_width="match_parent"-->
@@ -73,7 +75,7 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content"-->
     <!--android:hint="学号"-->
-    <!--android:inputType="number"-->
+    <!--android:Type="number"-->
     <!--android:maxLines="1"-->
     <!--android:singleLine="true" />-->
 
@@ -128,6 +130,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:gravity="start">
 
 
@@ -172,15 +175,21 @@
             android:textSize="18sp"
             android:textColor="#FFEB3B" />
 
-        <EditText
-            android:id="@+id/user_edit_text"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="255dp"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+            android:id="@+id/user_edit_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/UserID"
+            android:hint="请输入学号"
             android:textColorHint="#b3ffffff"
-            android:textSize="16sp"
-            android:background="@null"
-            android:layout_marginTop="6dp"/>
+            android:inputType="number"
+            android:maxLines="1" android:background="@null"
+            android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
 
 
         <ImageView
@@ -197,16 +206,24 @@
             android:textSize="18sp"
             android:textColor="#FFEB3B"
             android:layout_marginTop="20dp"/>
-
-        <EditText
-            android:id="@+id/pass_edit_text"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="255dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+            android:id="@+id/pass_edit_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/UserPassword"
+            android:hint="@string/prompt_password"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
             android:textColorHint="#b3ffffff"
-            android:textSize="16sp"
             android:background="@null"
-            android:layout_marginTop="6dp"/>
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -219,7 +236,8 @@
     <Button
         android:id="@+id/email_sign_in_button"
         android:layout_width="255dp"
-        android:layout_height="46dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/LoginButtonText"
         android:textColor="#b3000000"
@@ -228,14 +246,17 @@
         android:layout_marginTop="28dp"
         android:layout_below="@id/login_center_view"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/RegisterButtonText"
-        android:textSize="18sp"
-        android:textColor="#b3ffffff"
-        android:layout_marginTop="15dp"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/email_sign_in_button"/>
-
+        <TextView
+            android:id="@+id/regi_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/email_sign_in_button"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="@string/RegisterButtonText"
+            android:textColor="#b3ffffff"
+            android:textSize="18sp" />
+    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
