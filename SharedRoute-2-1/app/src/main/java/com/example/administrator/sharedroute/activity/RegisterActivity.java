@@ -261,7 +261,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
         private String inviteCode;
         private String password;
 
-        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Task";
+        private String url = "http://47.95.194.146:8080/sharedroot_server/Task";
 
         private String result = null;
 

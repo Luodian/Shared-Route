@@ -303,7 +303,7 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
         private String mPayPath;                //支付方式指明是支付宝支付还是微信支付
         private String mRemark;                 //备注
 
-        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Task";
+        private String url = "http://47.95.194.146:8080/sharedroot_server/Task";
 
         private String result = null;
 

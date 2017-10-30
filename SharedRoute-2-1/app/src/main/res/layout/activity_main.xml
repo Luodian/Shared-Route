@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_green"
+            android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         <!--android:background="?attr/colorPrimary"-->
@@ -47,8 +47,8 @@
                     android:id="@+id/mainTabLayout"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:background="@color/light_green"
-                    app:tabIndicatorColor="@color/yellow"
+                    android:background="?attr/colorPrimary"
+                    app:tabIndicatorColor="@color/colorAccent"
                     app:tabIndicatorHeight="2dp"
                     app:tabMode="fixed"
                     app:tabPaddingEnd="20dp"

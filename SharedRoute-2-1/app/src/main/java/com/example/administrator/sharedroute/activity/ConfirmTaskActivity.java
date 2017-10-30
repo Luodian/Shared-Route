@@ -13,8 +13,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +22,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
@@ -264,8 +261,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 //        params.add(new BasicNameValuePair(_queryKey, _queryValue));
 //        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, HTTP.UTF_8);
 //        post.setEntity(ent);
-
-        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Task";
+        private String url = "http://47.95.194.146:8080/sharedroot_server/Login";
 
         private String result = null;
 
