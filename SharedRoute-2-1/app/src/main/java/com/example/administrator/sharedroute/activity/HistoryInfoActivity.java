@@ -35,8 +35,11 @@ public class HistoryInfoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MyAdapter myAdapter;
     private List<HistoryInfo> listData= new ArrayList<>();
+    List<HistoryInfo> datas=new ArrayList<>();
     private LayoutInflater inflater;
     final static private int requestCode = 0;
+    private int requestCodeToInfoSetting=123;
+    private int resultCodeFromInfoSetting = 124;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +50,7 @@ public class HistoryInfoActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         SharedPreferences sp = getSharedPreferences("finals", MODE_PRIVATE);
 
-        //从主页面进入，就只需要读数据
-        List<HistoryInfo> datas=new ArrayList<>();
-
+        //读取数据
         String result = sp.getString("history_info", "");
         try {
             JSONArray array = new JSONArray(result);
@@ -75,6 +76,7 @@ public class HistoryInfoActivity extends AppCompatActivity {
         }
         listData=datas;
 
+        //写数据
         int index=-1;// 表示新增加的
         if (bundle!=null ) {
             String name=bundle.getString("name");
@@ -186,13 +188,14 @@ public class HistoryInfoActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent1 = new Intent(HistoryInfoActivity.this,InfoSettingActivity.class);
                     Bundle bundle = new Bundle();
+                    int index = listData.indexOf(item);
                     bundle.putCharSequence("nameInfo", "");
                     bundle.putCharSequence("phoneInfo", "");
                     bundle.putCharSequence("delieverplaceInfo", "");
-                    bundle.putCharSequence("index","-1");
+                    bundle.putCharSequence("index",String.valueOf(index));
                     intent1.putExtras(bundle);
-                    startActivity(intent1);
-                    finish();
+                    startActivityForResult(intent1,requestCodeToInfoSetting);
+//                    finish();
                 }
             });
             helper.getView(R.id.del_btn).setOnClickListener(new View.OnClickListener() {
@@ -253,6 +256,51 @@ public class HistoryInfoActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode,int resultCode,Intent data){
+        if(requestCode==requestCodeToInfoSetting && resultCode==resultCodeFromInfoSetting) {
+            String name = data.getStringExtra("name");
+            String phone = data.getStringExtra("phone");
+            String place = data.getStringExtra("place");
+            int index = Integer.parseInt(data.getStringExtra("index"));
+            HistoryInfo historyInfo = new HistoryInfo(name, phone, place);
+            listData.set(index, historyInfo);
+
+            JSONArray mJsonArray = new JSONArray();
+            for (int i = 0; i < listData.size(); i++) {
+                String userName = listData.get(i).getName();
+                String userPhone = listData.get(i).getPhone();
+                String userPlace = listData.get(i).getDeliverPlace();
+                Map<String, String> itemMap = new HashMap<>();
+
+                itemMap.put("name", userName);
+                itemMap.put("phone", userPhone);
+                itemMap.put("delieverPlace", userPlace);
+                Iterator<Map.Entry<String, String>> iterator = itemMap.entrySet().iterator();
+
+                JSONObject object = new JSONObject();
+
+                while (iterator.hasNext()) {
+                    Map.Entry<String, String> entry = iterator.next();
+                    try {
+                        object.put(entry.getKey(), entry.getValue());
+                    } catch (JSONException e) {
+
+                    }
+                }
+                mJsonArray.put(object);
+            }
+
+            SharedPreferences sp = getSharedPreferences("finals", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("history_info", mJsonArray.toString());
+            editor.commit();
+            initIView();
+            initIEvent();
+            initIData();
+        }
     }
 }
 

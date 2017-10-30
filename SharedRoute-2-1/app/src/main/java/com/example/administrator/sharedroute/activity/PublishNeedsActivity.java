@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.sharedroute.R;
@@ -177,7 +178,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         List<String> dataset = new LinkedList<>(Arrays.asList("书籍", "玩具", "化妆品", "电器"));
         niceSpinner.attachDataSource(dataset);
 
-        qujiantext.setOnClickListener(new View.OnClickListener() {
+        ((LinearLayout)findViewById(R.id.pick_time_block)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 left = true;
@@ -196,7 +197,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             }
         });
 
-        songjianText.setOnClickListener(new View.OnClickListener() {
+        ((LinearLayout)findViewById(R.id.deliever_time_block)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 left = false;
@@ -273,6 +274,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                      bundle.putCharSequence("pickuptime", qujiantext.getText().toString());
                      bundle.putCharSequence("delievertime", songjianText.getText().toString());
                      bundle.putCharSequence("money", money.getText().toString());
+                     bundle.putCharSequence("securitymoney",((EditText)findViewById(R.id.securitymoney)).getText().toString());
                      intent1.putExtras(bundle);
                      startActivity(intent1);
                  }
@@ -395,9 +397,11 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         if (left == true) {
             leftTime = time;
             ((TextView) findViewById(R.id.qujiantext)).setText(leftDate + "\n" + leftTime);
+            ((TextView) findViewById(R.id.qujiantext)).setTextSize(8);
         } else {
             rightTime = time;
             ((TextView) findViewById(R.id.songjiantext)).setText(rightDate + "\n" + rightTime);
+            ((TextView) findViewById(R.id.songjiantext)).setTextSize(8);
         }
     }
 }

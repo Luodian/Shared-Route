@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="倒计时"
         android:gravity="center"
-        android:layout_margin="8dp" />
+        android:layout_margin="4dp" />
 
     <ProgressBar
         android:id="@+id/pay_progress"
@@ -23,11 +23,12 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:visibility="gone" />
 <ScrollView
     android:layout_weight="1"
     android:fillViewport="true"
+    android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 <LinearLayout
@@ -35,18 +36,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_gravity="center"
         android:padding="10dp">
 
         <LinearLayout
             android:id="@+id/secondblock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/roundedcorner"
+            android:background="@drawable/shadow"
             android:orientation="vertical"
+            android:layout_marginTop="4dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="10dp"
-            android:padding="8dp">
+            android:padding="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,6 +59,7 @@
                     android:id="@+id/totalEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
                     android:gravity="left|center"
                     android:inputType="textPersonName"
                     android:text="总计" />
@@ -64,7 +68,7 @@
                     android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="4dp"
                     android:gravity="left|bottom"
                     android:text="￥ 2.0"
                     android:textColor="#ff7f24"
@@ -91,7 +95,7 @@
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
+                        android:layout_margin="4dp"
                         android:gravity="left|center"
                         android:text="张三"
                         android:textColor="#000010"
@@ -101,9 +105,9 @@
                         android:id="@+id/textView7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginStart="8dp"
+                        android:layout_margin="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginStart="4dp"
                         android:gravity="center|left"
                         android:text="12345678"
                         android:textColor="#000030"
@@ -129,7 +133,7 @@
                         android:id="@+id/textView5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
+                        android:layout_margin="4dp"
                         android:gravity="center|left"
                         android:text="包裹类型" />
 
@@ -137,7 +141,7 @@
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
+                        android:layout_margin="4dp"
                         android:gravity="center|left"
                         android:text="书籍（小件）"
                         android:textColor="#000000"
@@ -159,7 +163,7 @@
                         android:id="@+id/textView6"
                         android:layout_width="80dp"
                         android:layout_height="36dp"
-                        android:layout_margin="8dp"
+                        android:layout_margin="4dp"
                         android:gravity="center|left"
                         android:text="提货号码" />
 
@@ -167,7 +171,7 @@
                         android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
+                        android:layout_margin="4dp"
                         android:text="123"
                         android:textColor="#000000"
                         android:textSize="18dp" />
@@ -202,11 +206,11 @@
                     <ImageView
                         android:id="@+id/imageView2"
                         android:layout_width="0dp"
-                        android:layout_height="20dp"
-                        android:layout_weight="2"
-                        android:layout_marginTop="15dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="2.5"
+                        android:layout_marginTop="13dp"
                         android:layout_marginRight="4dp"
-                        android:scaleType="centerCrop"
+                        android:scaleType="centerInside"
                         app:srcCompat="@mipmap/dizhi" />
 
                     <Button
@@ -241,7 +245,7 @@
                             android:id="@+id/qujianshijian"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
+                            android:layout_margin="4dp"
                             android:gravity="left|center"
                             android:text="取件时间" />
 
@@ -249,7 +253,10 @@
                             android:id="@+id/pick_time"
                             android:layout_width="117dp"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_marginBottom="8dp"
                             android:gravity="top|left"
                             android:text="8月14日 12:30"
                             android:textColor="#9fb6cd"
@@ -260,7 +267,7 @@
                         android:layout_width="1dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_horizontal"
-                        android:layout_margin="8dp"
+                        android:layout_margin="4dp"
                         android:background="#dedede" />
 
                     <LinearLayout
@@ -273,7 +280,7 @@
                             android:id="@+id/songjianshijian"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
+                            android:layout_margin="4dp"
                             android:gravity="left|center"
                             android:text="送件时间" />
 
@@ -281,7 +288,10 @@
                             android:id="@+id/deliever_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_marginBottom="8dp"
                             android:gravity="top|left"
                             android:text="8月15日 17:00"
                             android:textColor="#9fb6cd"
@@ -294,13 +304,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:background="@drawable/roundedcorner"
+            android:background="@drawable/shadow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginBottom="8dp"
-            android:padding="8dp">
+            android:layout_marginBottom="4dp"
+            android:padding="4dp">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -313,14 +324,14 @@
                     android:id="@+id/imageView"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_margin="8dp"
+                    android:layout_margin="5dp"
                     app:srcCompat="@mipmap/zhifubao" />
 
                 <TextView
                     android:id="@+id/zhifubaotopay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_margin="5dp"
                     android:gravity="center|left"
                     android:text="支付宝支付"
                     android:textColor="#000000"
@@ -340,14 +351,14 @@
                     android:id="@+id/imageView4"
                     android:layout_width="38dp"
                     android:layout_height="38dp"
-                    android:layout_margin="8dp"
+                    android:layout_margin="5dp"
                     app:srcCompat="@mipmap/wechat" />
 
                 <TextView
                     android:id="@+id/wechattopay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_margin="5dp"
                     android:gravity="center|left"
                     android:text="微信支付 "
                     android:textColor="#000000"
@@ -359,7 +370,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_margin="8dp"
+                android:layout_margin="4dp"
                 android:orientation="vertical">
 
                 <RadioButton
@@ -367,12 +378,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="8dp"
+                    android:layout_margin="4dp"
                     android:checked="true" />
 
                 <RadioButton
                     android:id="@+id/wechat"
-                    android:layout_margin="8dp"
+                    android:layout_margin="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center" />
@@ -388,9 +399,10 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:background="@drawable/shape"
-            android:padding="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:padding="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="10dp"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_gravity="center"

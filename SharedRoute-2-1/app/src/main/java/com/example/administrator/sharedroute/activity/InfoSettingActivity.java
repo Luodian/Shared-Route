@@ -11,6 +11,8 @@ import com.unstoppable.submitbuttonview.SubmitButton;
 
 public class InfoSettingActivity extends AppCompatActivity {
 
+    private int requestCodeFromHistory = 123;
+    private int resultCodeToHistory = 124;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +43,13 @@ public class InfoSettingActivity extends AppCompatActivity {
                         }
                     }
                 }).start();
-                Intent intent1=new Intent(InfoSettingActivity.this,HistoryInfoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putCharSequence("index",String.valueOf(index));
-                bundle.putCharSequence("name",name.getText().toString());
-                bundle.putCharSequence("phone",phone.getText().toString());
-                bundle.putCharSequence("place",place.getText().toString());
-                intent1.putExtras(bundle);
-                startActivity(intent1);
+                Intent intent1=new Intent();
+                intent1.putExtra("index",String.valueOf(index));
+                intent1.putExtra("name",name.getText().toString());
+                intent1.putExtra("phone",phone.getText().toString());
+                intent1.putExtra("place",place.getText().toString());
+                setResult(resultCodeToHistory,intent1);
+                finish();
             }
         });
     }
