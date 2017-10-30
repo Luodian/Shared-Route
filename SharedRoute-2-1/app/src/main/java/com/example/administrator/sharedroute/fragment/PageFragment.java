@@ -377,8 +377,21 @@ public class PageFragment extends Fragment {
                                 " delivertime= " + lan.getString("delivertime") +
                                 " paypath= " + lan.getString("paypath") +
                                 " remark= " + lan.getString("remark"));
-                        listItem item = new listItem(lan.getString("packsort"), lan.getString("num"), lan.getString("delivertime"), lan.getString("pickplace"), "今天 12：30", "一区 正心楼 524", Integer.parseInt(lan.getString("money")), false);
-                        InitTaskListItem.add(item);
+                        listItem item = new listItem();
+                        item.setPrice(lan.getInt("money"));
+                        item.setPickupCode(lan.getString("num"));
+                        item.setExpressType(lan.getString("packsort"));
+                        item.setInTimeStamp(lan.getString(""));
+                        item.setInLocation(lan.getString("pickplace"));
+                        item.setOutTimeStamp(lan.getString("delivertime"));
+                        item.setOutLocation(lan.getString(""));
+                        item.setID(lan.getInt(""));
+                        item.setStatus(lan.getInt(""));
+                        item.setPublisherID(lan.getString(""));
+                        item.setCheckBoxElected(false);
+                        item.setPublishTime(lan.getString(""));
+                        item.setExpressSize(lan.getString(""));
+                        if (item.getStatus()==1) InitTaskListItem.add(item);
                     }
                 }
             }
@@ -493,7 +506,7 @@ public class PageFragment extends Fragment {
             }
             //没有新的数据，提示消息
             if (data == null || data.size() == 0) {
-                Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
             } else {
                 TaskListItem.addAll(data);
                 adapter.notifyDataSetChanged();

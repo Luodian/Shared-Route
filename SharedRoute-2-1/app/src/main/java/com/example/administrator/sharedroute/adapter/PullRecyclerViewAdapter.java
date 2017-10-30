@@ -3,9 +3,11 @@ package com.example.administrator.sharedroute.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,20 +65,19 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
             holder.mCardView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    BlurBehind.getInstance().execute((Activity) mContext, new OnBlurCompleteListener() {
                         final int position = holder.getAdapterPosition();
-
-                        @Override
-                        public void onBlurComplete() {
-                            Intent intent = new Intent(mContext, BlurredActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            intent.putExtra("title_name", "title" + Integer.toString(position + 1));
-                            intent.putExtra("select", "release");
-                            intent.putExtra("Activity", "SearchNeeds");
-                            mContext.startActivity(intent);
-                        }
-                    });
-                    return true;
+                            BlurBehind.getInstance().execute((Activity) mContext, new OnBlurCompleteListener() {
+                            @Override
+                            public void onBlurComplete() {
+                                Intent intent = new Intent(mContext, BlurredActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable("item",mDataset.get(position));
+                                intent.putExtras(bundle);
+                                mContext.startActivity(intent);
+                            }
+                        });
+                return true;
                 }
             });
             return holder;
@@ -101,21 +102,26 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
             ((ItemViewHolder) holder).sendLocTextView.setText(mDataset.get(position).getOutLocation());
             ((ItemViewHolder) holder).priceTextView.setText(String.valueOf(mDataset.get(position).getPrice()) + "元");
 
-            ((ItemViewHolder) holder).mImageView.setOnClickListener(new View.OnClickListener() {
-                //说实话，这样监听不太好，每次滑动getView的时候都要重新new一个监听，但是必须获取ChechView所在的那个Item的position，所以只能卸载getView函数内部
-                @Override
-                public void onClick(View v) {//等于说对于那10个左右的ChechBox,其绑定的监听在不断的改变
-                    if (((ItemViewHolder) holder).mImageView != null && mCallBackListener != null)
-                        mCallBackListener.callBackImg(((ItemViewHolder) holder).mImageView);
-                    assert ((ItemViewHolder) holder).mImageView != null;
-                    ((ItemViewHolder) holder).mImageView.setClickable(false);
-                    ((ItemViewHolder) holder).mImageView.setImageResource(R.drawable.trolley_pressed);
-                    listItem item = mDataset.get(position);
-                    item.setPickupCode(String.valueOf((int) (Math.random() * 1000000)));
-                    orderDao.insertData(item);
-                    selectedItem.add(item);
-                }
-            });
+            int num = orderDao.getItemCount(mDataset.get(position).getID());
+            Log.e("???",String.valueOf(num));
+            if (num != 0)  ((ItemViewHolder) holder).mImageView.setImageResource(R.drawable.trolley_pressed);
+            else {
+                ((ItemViewHolder) holder).mImageView.setOnClickListener(new View.OnClickListener() {
+                    //说实话，这样监听不太好，每次滑动getView的时候都要重新new一个监听，但是必须获取ChechView所在的那个Item的position，所以只能卸载getView函数内部
+                    @Override
+                    public void onClick(View v) {//等于说对于那10个左右的ChechBox,其绑定的监听在不断的改变
+                        if ( ((ItemViewHolder) holder).mImageView != null && mCallBackListener != null)
+                            mCallBackListener.callBackImg( ((ItemViewHolder) holder).mImageView);
+                        assert  ((ItemViewHolder) holder).mImageView != null;
+                        ((ItemViewHolder) holder).mImageView.setClickable(false);
+                        ((ItemViewHolder) holder).mImageView.setImageResource(R.drawable.trolley_pressed);
+                        listItem item = mDataset.get(position);
+                        orderDao.insertData(item);
+                        Log.e("rrr", "!!!");
+                        selectedItem.add(item);
+                    }
+                });
+            }
         }
     }
 
