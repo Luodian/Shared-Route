@@ -34,4 +34,8 @@
     <string name="title_activity_waiting_future">WaitingFutureActivity</string>
     <string name="waitforTitle">敬请期待</string>
     <string name="waitforText">这里还没有开放，但是未来值得期待~</string>
+    <string name="UserID">学号</string>
+    <string name="UserPassword">密码</string>
+    <string name="LoginButtonText">登      录</string>
+    <string name="RegisterButtonText">注 册</string>
 </resources>
