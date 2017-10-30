@@ -3,6 +3,7 @@ package com.example.administrator.sharedroute.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -81,9 +82,9 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
                     public void onBlurComplete() {
                         Intent intent = new Intent(mContext, BlurredActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        intent.putExtra("title_name","title"+Integer.toString(position+1));
-                        intent.putExtra("select","release");
-                        intent.putExtra("Activity","Main");
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("item",mItemList.get(position));
+                        intent.putExtras(bundle);
                         mContext.startActivity(intent);
                     }
                 });
