@@ -2,9 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="2dp">
+    android:layout_height="80dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="4dp">
     <!--<LinearLayout-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
@@ -85,18 +85,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_gravity="center_vertical"
             android:id="@+id/user_header"
-            android:layout_width="38dp"
+            android:layout_width="0dp"
             android:layout_height="38dp"
+            android:layout_weight="1"
             android:src="@drawable/nav_icon"
             android:layout_centerInParent="true"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical">
 
             <LinearLayout
@@ -104,12 +109,14 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/phone_image"
                     android:layout_width="16sp"
                     android:layout_height="16sp"
                     android:src="@drawable/mainpage_ringphone"/>
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,49 +136,52 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginLeft="60dp">
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/release_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Today16:30"
-                android:textSize="16sp"
-                android:textColor="#b3000000"/>
+                android:text="今日16:30"
+                android:textColor="#b3000000"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/fetch_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Two 4"
+                android:text="二区 四公寓"
                 android:textSize="14sp"
                 android:textColor="#85000000"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="18dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_weight="2"
             android:gravity="end">
 
             <ImageView
                 android:id="@+id/status_image"
                 android:layout_width="20sp"
                 android:layout_height="20sp"
-                android:src="@drawable/mainpage_semimoon"/>
+                android:src="@drawable/mainpage_semimoon" />
 
             <TextView
                 android:id="@+id/status_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="YIJIE"
-                android:textSize="16sp"
-                android:textColor="#0097BA"/>
+                android:text="已接单"
+                android:textColor="#0097BA"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
