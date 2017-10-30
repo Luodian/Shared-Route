@@ -368,7 +368,7 @@ public class PageFragment extends Fragment {
                     //读取多个数据
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject lan = arr.getJSONObject(i);
-                        System.out.println("money= " + lan.getString("money") +
+                        System.out.println("money= " + lan.getInt("money") +
                                 " name= " + lan.getString("name") +
                                 " phone= " + lan.getString("phone") +
                                 " num= " + lan.getString("num") +
