@@ -50,6 +50,10 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 public class PayBillActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>  {
 
+    //测试使用，真实情况的时候，登录时缓存到本地，然后使用本地的学号
+    private String stuNum = "1234567890";
+
+
     private static final int REQUEST_READ_CONTACTS = 0;
     private PostTask mAuthTask = null;
 
@@ -191,7 +195,7 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
                 bundle.getString("phone"),bundle.getString("num"),bundle.getString("packsort"),
                 bundle.getString("pickupplace"),bundle.getString("delieverplace"),
                 bundle.getString("pickuptime"),bundle.getString("delievertime"),
-                payPath,bundle.getString("remark"));
+                payPath,bundle.getString("remark"),stuNum,bundle.getString("securitymoney"));
         mAuthTask.execute((Void) null);
 
     }
@@ -302,6 +306,8 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
         private String mDelieverTime;
         private String mPayPath;                //支付方式指明是支付宝支付还是微信支付
         private String mRemark;                 //备注
+        private String mStuNum;                 //学号
+        private String mSecurityMoney;          //保证金
 
         private String url = "http://suc.free.ngrok.cc/sharedroot_server/Task";
 
@@ -310,7 +316,7 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
         //初始化
         PostTask(String money,String name,String phone,String num,String packSort,
                  String pickPlace,String delieverPlace,String pickTime,String delieverTime,
-                 String payPath,String remark) {
+                 String payPath,String remark,String stuNum,String securityMoney) {
             mMoney=money;
             mName=name;
             mPhone=phone;
@@ -322,6 +328,9 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
             mDelieverTime=delieverTime;
             mPayPath=payPath;
             mRemark=remark;
+
+            mStuNum=stuNum;
+            mSecurityMoney=securityMoney;
         }
 
         @Override
@@ -347,6 +356,8 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
                 parameters.add(new BasicNameValuePair("delieverTime",mDelieverTime));
                 parameters.add(new BasicNameValuePair("payPath",mPayPath));
                 parameters.add(new BasicNameValuePair("remark",mRemark));
+                parameters.add(new BasicNameValuePair("stuNum",mStuNum));
+                parameters.add(new BasicNameValuePair("securityMoney",mSecurityMoney));
                 parameters.add(new BasicNameValuePair("action", "submit"));
 
                 UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);

@@ -23,7 +23,7 @@
         completions."
     </string>
 
-    <string name="securitymoneytip">* 您可以为该快递设置保证金（可选项）</string>
+    <string name="securitymoneytip">* 您可以为设置保证金，接单者付出保证金后方可接单（可选项）</string>
 
     <!-- list 到了最底部 没有新数据了-->
     <string name="list_more_data">更新了0条数据~</string>

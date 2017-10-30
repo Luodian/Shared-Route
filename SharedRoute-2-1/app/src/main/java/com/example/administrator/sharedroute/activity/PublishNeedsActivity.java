@@ -274,6 +274,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                      bundle.putCharSequence("pickuptime", qujiantext.getText().toString());
                      bundle.putCharSequence("delievertime", songjianText.getText().toString());
                      bundle.putCharSequence("money", money.getText().toString());
+                     bundle.putCharSequence("securitymoney",((EditText)findViewById(R.id.securitymoney)).getText().toString());
                      intent1.putExtras(bundle);
                      startActivity(intent1);
                  }

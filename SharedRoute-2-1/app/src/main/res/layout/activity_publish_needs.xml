@@ -520,7 +520,7 @@
 
             <com.unstoppable.submitbuttonview.SubmitButton
                 android:id="@+id/submit_btn"
-                android:layout_width="250dp"
+                android:layout_width="255dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="4dp"
