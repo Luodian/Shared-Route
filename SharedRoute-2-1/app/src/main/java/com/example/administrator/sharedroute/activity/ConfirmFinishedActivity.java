@@ -29,12 +29,11 @@ import java.util.List;
 public class ConfirmFinishedActivity extends AppCompatActivity {
 
     public static ArrayList<DialogMenuItem> testItems = new ArrayList<>();
-    private List<listItem> listItemList;
     private TabLayout mTabLayout;
     private PagerAdapter mpagerAdapter;
     private ViewPager mViewPager;
-    private ArrayList<listItem> successList = new ArrayList<listItem>();
-    private ArrayList<listItem> failList = new ArrayList<listItem>();
+    private ArrayList<listItem> successList ;
+    private ArrayList<listItem> failList ;
     private Button mButton;
     public static int lastPosition = 0;
     private int mMenuId;
@@ -83,11 +82,14 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         Bundle bundle =intent.getExtras();
-        listItemList= bundle.getParcelableArrayList("listItemList");
-        randomApart(listItemList);
+
+        successList= bundle.getParcelableArrayList("successList");
+        failList = bundle.getParcelableArrayList("failList");
+        if (successList == null) successList = new ArrayList<listItem>();
+        if (failList == null) failList = new ArrayList<listItem>();
+
         //注册PageViewr的Adapter
         mpagerAdapter = new PagerAdapter(getSupportFragmentManager(),ConfirmFinishedActivity.this);
-
 
         mViewPager.setAdapter(mpagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager,true);
@@ -103,17 +105,6 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {}
         });
 
-    }
-    private void randomApart(List<listItem> listItemList){
-        for (int i =0 ;i<listItemList.size();i++){
-            double random = Math.random();
-            if (random < 0.5){
-                successList.add(listItemList.get(i));
-            }
-            else{
-                failList.add(listItemList.get(i));
-            }
-        }
     }
 
 
