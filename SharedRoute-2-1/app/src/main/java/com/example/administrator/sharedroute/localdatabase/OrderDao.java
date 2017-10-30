@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Created by Jne
  * Date: 2015/1/6.
+ * PorA属性中，0代表在购物车中的信息，1代表发布的信息
  */
 public class OrderDao {
     private static final String TAG = "OrdersDao";
@@ -107,7 +108,7 @@ public class OrderDao {
             db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-1','食物','大件', '10月21日21时42分', '10月21日21时42分','顺丰快递','10月21日21时42分','正心楼424','111',5.2,1)");
             db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-2','食物','大件', '10月21日21时42分', '10月21日21时42分','天天快递','10月21日21时42分','正心楼424','112',5.2,1)");
             db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-3','食物','大件', '10月21日21时42分', '10月21日21时42分','韵达快递','10月21日21时42分','正心楼424','113',5.2,1)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-4','食物','大件', '10月21日21时42分', '10月21日21时42分','圆通快递','10月21日21时42分','正心楼424','114',5.2,1)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-4','食物','大件', '10月21日21时42分', '10月21日21时42分','圆通快递','10月21日21时42分','正心楼424','114',5.2,0)");
             db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-5','食物','大件', '10月21日21时42分', '10月21日21时42分','百世快递','10月21日21时42分','正心楼424','115',5.2,1)");
             db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-6','食物','大件', '10月21日21时42分', '10月21日21时42分','申通快递','10月21日21时42分','正心楼424','116',5.2,1)");
 

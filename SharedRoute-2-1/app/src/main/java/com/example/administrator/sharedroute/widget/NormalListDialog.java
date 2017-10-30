@@ -196,8 +196,6 @@ public class NormalListDialog extends BaseDialog {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (contents.get(position).operName.equals("确认送达"))
                 {
-
-
                     dismiss();
                 }
                 else dismiss();
