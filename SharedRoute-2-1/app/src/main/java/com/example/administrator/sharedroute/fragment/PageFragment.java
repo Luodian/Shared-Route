@@ -2,6 +2,7 @@ package com.example.administrator.sharedroute.fragment;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Path;
@@ -46,6 +47,8 @@ import java.util.ArrayList;
 import static com.example.administrator.sharedroute.activity.SearchNeedsActivity.goodsCount;
 import static com.example.administrator.sharedroute.activity.SearchNeedsActivity.mfab;
 
+
+@SuppressLint("ValidFragment")
 public class PageFragment extends Fragment {
 
     public static final String ARG_PAGE = "ARG_PAGE";
@@ -76,6 +79,7 @@ public class PageFragment extends Fragment {
     private LinearLayoutManager llm;
     private RecyclerView mrc;
 
+    @SuppressLint("ValidFragment")
     public PageFragment(int serial){
         mSerial = serial;
     }
