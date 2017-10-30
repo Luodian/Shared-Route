@@ -28,6 +28,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.example.administrator.sharedroute.R;
+import com.example.administrator.sharedroute.adapter.AcceptedOrderItemAdapter;
 import com.example.administrator.sharedroute.adapter.MyPagerAdapter;
 import com.example.administrator.sharedroute.adapter.ReleaseOrderItemAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     public static String select = "releaseOrder";
     private List<listItem> itemAcceptList = new ArrayList<>();
     private List<listItem> itemPublishList = new ArrayList<>();
-    private ReleaseOrderItemAdapter adapter2;
+    private AcceptedOrderItemAdapter adapter2;
     private ReleaseOrderItemAdapter adapter1;
     private int mMenuId;
     private OrderDao orderDao;
@@ -328,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             RecyclerView receiveOrder = (RecyclerView) view2.findViewById(R.id.receive_order);
             GridLayoutManager layoutManager2 = new GridLayoutManager(MainActivity.this, 1);
             receiveOrder.setLayoutManager(layoutManager2);
-            adapter2 = new ReleaseOrderItemAdapter(itemAcceptList);
+            adapter2 = new AcceptedOrderItemAdapter(itemAcceptList);
             receiveOrder.setAdapter(adapter2);
             //	}
 
