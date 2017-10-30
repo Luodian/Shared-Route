@@ -1,7 +1,6 @@
 package com.example.administrator.sharedroute.adapter;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +32,7 @@ public class TaskViewAdapter extends ArrayAdapter<listItem> {
     public TaskViewAdapter(Context mContext) {
         this.mContext=mContext;
         this.listItems=getItems();
-        mToolbar = (Toolbar) (((TaskViewActivity)mContext).findViewById(R.id.toolbartaskview));
+        mToolbar = (Toolbar) (((TaskViewActivity)mContext).findViewById(R.id.toolbar));
         mLinearLayout=(LinearLayout) (((TaskViewActivity)mContext).findViewById(R.id.bottom_toolbar));
         checkStatus = new HashMap<Integer, Boolean>(listItems.size());
         for (int i = 0; i < listItems.size(); i++) {

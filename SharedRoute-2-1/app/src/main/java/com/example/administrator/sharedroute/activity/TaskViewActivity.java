@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,9 +29,10 @@ import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationA
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
 
+import org.zackratos.ultimatebar.UltimateBar;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import me.wangyuwei.flipshare.FlipShareView;
 import me.wangyuwei.flipshare.ShareItem;
@@ -56,11 +56,20 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
         orderDao = new OrderDao(this);
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setImmersionBar(false);
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("任务栏");
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         initView();
     }
     private void initView() {
         listView = (ListView) findViewById(R.id.shoppingtrolly_listview);
-        mToolbar = (Toolbar) findViewById(R.id.toolbartaskview) ;
         mLinearLayout = (LinearLayout) findViewById(R.id.bottom_toolbar);
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_taskview);
         swipeRefresh.setColorSchemeColors(Color.RED, Color.CYAN);
@@ -141,12 +150,6 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         });
-
-        setSupportActionBar(mToolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
     }
 
 

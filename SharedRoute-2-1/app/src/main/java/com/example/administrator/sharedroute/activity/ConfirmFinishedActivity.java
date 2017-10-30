@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.entity.DialogMenuItem;
@@ -23,8 +22,9 @@ import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.fragment.FailFragment;
 import com.example.administrator.sharedroute.fragment.SuccessFragment;
 
+import org.zackratos.ultimatebar.UltimateBar;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class ConfirmFinishedActivity extends AppCompatActivity {
 
@@ -41,6 +41,9 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_finished);
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setImmersionBar(false);
+
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("接单详情");
         setSupportActionBar(toolbar);

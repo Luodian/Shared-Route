@@ -44,6 +44,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.zackratos.ultimatebar.UltimateBar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -99,6 +100,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //        userEditText.setTypeface(typeFace);
 //        passEditText.setTypeface(typeFace);
         // Set up the login form.
+
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setImmersionBar(false);
+
         mEmailView = (AutoCompleteTextView) findViewById(R.id.user_edit_text);
         populateAutoComplete();
 

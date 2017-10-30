@@ -11,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -23,6 +24,8 @@ import android.view.ViewGroup;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.fragment.PageFragment;
+
+import org.zackratos.ultimatebar.UltimateBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,9 @@ public class SearchNeedsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_search_needs);
+
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setImmersionBar(false);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("寻找需求");
         setSupportActionBar(toolbar);
@@ -174,9 +180,8 @@ public class SearchNeedsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-                JumpToActivity(MainActivity.class);
-                finish();
-                return true;
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                break;
         }
         return true;
     }

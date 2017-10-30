@@ -27,6 +27,7 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.angmarch.views.NiceSpinner;
+import org.zackratos.ultimatebar.UltimateBar;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -55,6 +56,9 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_needs);
+
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setImmersionBar(false);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_publishneeds);
         setSupportActionBar(toolbar);

@@ -9,20 +9,21 @@
     android:orientation="vertical"
     >
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbartaskview"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:title="任务栏"
         android:layout_alignParentTop="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:paddingTop="15dp"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_taskview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbartaskview"
+        android:layout_below="@id/toolbar"
         android:layout_above="@+id/bottom_toolbar">
         <ListView
             android:id="@+id/shoppingtrolly_listview"

@@ -40,6 +40,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.zackratos.ultimatebar.UltimateBar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,6 +79,9 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_bill);
+
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setImmersionBar(false);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

@@ -37,6 +37,8 @@ import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 
+import org.zackratos.ultimatebar.UltimateBar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //		fetchLocation.setTypeface(typeFace);
 //		statusText.setTypeface(typeFace);
 
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setImmersionBar(false);
         orderDao = new OrderDao(this);
         /**
          * 测试用的

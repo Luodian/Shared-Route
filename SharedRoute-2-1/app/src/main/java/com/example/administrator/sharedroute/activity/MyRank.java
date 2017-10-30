@@ -17,6 +17,8 @@ import android.widget.ListView;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.MyPagerAdapter;
 
+import org.zackratos.ultimatebar.UltimateBar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +41,9 @@ public class MyRank extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_rank);
+
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setImmersionBar(false);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("排行榜");

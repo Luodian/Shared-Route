@@ -20,6 +20,8 @@ import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.utils.ShadowTransformer;
 
+import org.zackratos.ultimatebar.UltimateBar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +43,9 @@ public class MyOrder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
+
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setImmersionBar(false);
 
         orderDao = new OrderDao(this);
 //        if (! orderDao.isDataExist()){/*到时候连接了远程后该部分需要修改*/
