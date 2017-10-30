@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +113,6 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
                     listItem item = mDataset.get(position);
                     item.setPickupCode(String.valueOf((int) (Math.random() * 1000000)));
                     orderDao.insertData(item);
-                    Log.e("rrr", "!!!");
                     selectedItem.add(item);
                 }
             });
