@@ -316,7 +316,7 @@ public class PageFragment extends Fragment {
         @Override
         protected ArrayList<listItem> doInBackground(Void... params) {
             String result = null;
-            String path = "http://47.95.194.146/sharedroot_server/Task?action=show&length=1";
+            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=show&length=1";
             HttpURLConnection con=null;
             InputStream in=null;
             ArrayList<listItem> InitTaskListItem = new ArrayList<>();
@@ -477,16 +477,6 @@ public class PageFragment extends Fragment {
             }
             ArrayList<listItem> data;
             data = new ArrayList<>();
-            listItem item1 = new listItem("下滑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-            data.add(item1);
-            data.add(item1);
-//            //只有第一次需要加载头部的轮播图片
-//            //下拉刷新时候不加轮播图片
-//            if (myDataset.size() == 0) {
-//                data.addAll(getRotationItem());
-//            }
-
-//            data.addAll(getMoreById(mColumn, params[0]));
             return data;
         }
 
