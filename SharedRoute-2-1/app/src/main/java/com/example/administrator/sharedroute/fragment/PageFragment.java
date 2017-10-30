@@ -74,14 +74,15 @@ public class PageFragment extends Fragment {
     private FloatingActionButton pos_mfab;
 
     private Handler handler = new Handler();
-
+    private Context mContext;
     private SwipeRefreshLayout mRefreshLayout;
     private LinearLayoutManager llm;
     private RecyclerView mrc;
 
     @SuppressLint("ValidFragment")
-    public PageFragment(int serial){
+    public PageFragment(int serial,Context mContext){
         mSerial = serial;
+        this.mContext = mContext;
     }
 
     @Override
@@ -432,7 +433,7 @@ public class PageFragment extends Fragment {
             }
             //没有新的数据，提示消息
             if (result == null || result.size() == 0) {
-                Toast.makeText(getActivity(), R.string.check_network_status, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, R.string.check_network_status, Toast.LENGTH_SHORT).show();
             }
             else
             {

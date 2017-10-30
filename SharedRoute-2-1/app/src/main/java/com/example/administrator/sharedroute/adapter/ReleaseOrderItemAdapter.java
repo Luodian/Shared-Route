@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.activity.BlurredActivity;
+import com.example.administrator.sharedroute.activity.ConfirmBlurredActivity;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.listener.OnBlurCompleteListener;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
@@ -72,7 +73,18 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
         holder.cardView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Toast.makeText(v.getContext(),"长按订单可查看详细信息!", Toast.LENGTH_SHORT).show();
+                final int position = holder.getAdapterPosition();
+                BlurBehind.getInstance().execute((Activity) mContext, new OnBlurCompleteListener() {
+                    @Override
+                    public void onBlurComplete() {
+                        Intent intent = new Intent(mContext, ConfirmBlurredActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("item",mItemList.get(position));
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
         });
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener(){
