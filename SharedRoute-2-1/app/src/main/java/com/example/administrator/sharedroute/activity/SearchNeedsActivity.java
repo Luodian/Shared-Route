@@ -187,7 +187,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
         mViewPager = (ViewPager) this.findViewById(R.id.searchNeeds_viewpager);
 
         for(int i=0; i<tabTitles.length; i++){
-                PageFragment fragment = new PageFragment(curTab);
+                PageFragment fragment = new PageFragment(curTab,SearchNeedsActivity.this);
             fragment.setTabPos(i);
             mFragments.add(fragment);
         }

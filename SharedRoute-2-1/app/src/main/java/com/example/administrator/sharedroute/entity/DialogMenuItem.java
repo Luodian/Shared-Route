@@ -10,4 +10,7 @@ public class DialogMenuItem
 		this.operName = operName;
 		this.resId = resId;
 	}
+	public DialogMenuItem(String operName){
+		this.operName = operName;
+	}
 }

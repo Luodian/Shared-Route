@@ -33,7 +33,7 @@ public class BlurredActivity extends Activity {
 				.setBackground(this);
 		fromActivity = "Main";
 		testItems.add(new DialogMenuItem("快递名称:"+info.getInLocation(), R.mipmap.ic_express));
-		testItems.add(new DialogMenuItem("发布时间:"+info.getPublishTime(), R.mipmap.ic_get_time));
+		testItems.add(new DialogMenuItem("取件时间:"+info.getInTimeStamp(), R.mipmap.ic_get_time));
 		testItems.add(new DialogMenuItem("类型:"+info.getExpressType(), R.mipmap.ic_type));
 		testItems.add(new DialogMenuItem("取货码:"+info.getPickupCode(), R.mipmap.ic_code));
 		testItems.add(new DialogMenuItem("金额:"+info.getPrice()+"元", R.mipmap.ic_money));
@@ -47,7 +47,7 @@ public class BlurredActivity extends Activity {
 		final NormalListDialog dialog = new NormalListDialog(BlurredActivity.this, testItems);
 		dialog.title("物品详情")//
 				.titleTextSize_SP(22)//
-				.titleBgColor(Color.parseColor("#409ED7"))//
+				.titleBgColor(Color.parseColor("#0097A8"))//
 				.itemPressColor(Color.parseColor("#85D3EF"))//
 				.itemTextColor(Color.parseColor("#303030"))//
 				.itemTextSize(20)//

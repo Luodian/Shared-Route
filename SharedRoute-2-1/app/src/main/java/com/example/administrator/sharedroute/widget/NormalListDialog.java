@@ -194,7 +194,13 @@ public class NormalListDialog extends BaseDialog {
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                dismiss();
+                if (contents.get(position).operName.equals("确认送达"))
+                {
+
+
+                    dismiss();
+                }
+                else dismiss();
             }
         });
 
