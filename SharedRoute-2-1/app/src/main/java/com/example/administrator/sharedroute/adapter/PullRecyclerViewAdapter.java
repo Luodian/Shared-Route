@@ -48,7 +48,7 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mDataset.size() == 0 ? 0 : mDataset.size() + 1;
+       return mDataset.size() == 0 ? 0 : mDataset.size() + 1;
     }
 
     @Override
@@ -75,6 +75,7 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
         else if (viewType == TYPE_FOOTER) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_foot, parent,
                     false);
+            Log.e("!!!!!","111111111111");
             return new FootViewHolder(view);
         }
         return null;
