@@ -157,7 +157,9 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         return true;
                     case R.id.nav_login:
                         Intent intent8 = new Intent(MainActivity.this,LoginActivity.class);
+                        intent8.putExtra("from","homePage");
                         startActivity(intent8);
+                        finish();
                         return true;
                     default:
                 }

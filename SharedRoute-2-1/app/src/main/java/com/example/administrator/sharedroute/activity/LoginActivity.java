@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.user_edit_text);
-        mEmailView.setFocusable(false);
+//        mEmailView.setFocusable(false);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.pass_edit_text);
@@ -190,8 +190,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         //如果条件满足，就自动登录
-        if ((!mEmailView.getText().equals(""))&&(!mPasswordView.getText().equals(""))){
-            attemptLogin();
+
+        if (!(getIntent().hasExtra("from"))||!(getIntent().getStringExtra("from").equals("homePage"))){
+            if ((!mEmailView.getText().equals(""))&&(!mPasswordView.getText().equals(""))){
+                attemptLogin();
+            }
         }
     }
     @Override
@@ -288,7 +291,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
-            focusView.requestFocus();
+//            focusView.requestFocus();
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.

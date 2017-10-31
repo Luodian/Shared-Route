@@ -129,7 +129,9 @@ public class SearchNeedsActivity extends AppCompatActivity {
                         return true;
                     case R.id.nav_login:
                         Intent intent8 = new Intent(SearchNeedsActivity.this,LoginActivity.class);
+                        intent8.putExtra("from","homePage");
                         startActivity(intent8);
+                        finish();
                         return true;
                     default:
                 }
