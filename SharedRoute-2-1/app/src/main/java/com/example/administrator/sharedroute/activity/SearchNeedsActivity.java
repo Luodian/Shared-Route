@@ -21,8 +21,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.administrator.sharedroute.R;
+import com.example.administrator.sharedroute.base.BaseDialog;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.fragment.PageFragment;
+import com.example.administrator.sharedroute.fragment.WaitingFutureFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("寻找需求");
         setSupportActionBar(toolbar);
+        BaseDialog.fromActivity = "search";
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -188,11 +191,14 @@ public class SearchNeedsActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) this.findViewById(R.id.searchNeeds_tablayout);
         mViewPager = (ViewPager) this.findViewById(R.id.searchNeeds_viewpager);
 
-        for(int i=0; i<tabTitles.length; i++){
-                PageFragment fragment = new PageFragment(curTab,SearchNeedsActivity.this);
-            fragment.setTabPos(i);
-            mFragments.add(fragment);
-        }
+
+        PageFragment fragment = new PageFragment(curTab,SearchNeedsActivity.this);
+        fragment.setTabPos(0);
+        mFragments.add(fragment);
+
+        WaitingFutureFragment waitingFutureFragment = new WaitingFutureFragment();
+        mFragments.add(waitingFutureFragment);
+
         mAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), mFragments);
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -206,7 +212,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 //滑动监听加载数据，一次只加载一个标签页
-                ((PageFragment)mAdapter.getItem(position)).sendMessage();
+                if ((mAdapter.getClass()).equals(PageFragment.class)) ((PageFragment)mAdapter.getItem(position)).sendMessage();
             }
 
             @Override

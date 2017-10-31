@@ -15,6 +15,7 @@ import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,6 +57,7 @@ public class PageFragment extends Fragment {
     private static int mSerial=0;
     private int mTabPos=0;
     private boolean isFirst = true;
+    private View viewFooter;
     Vibrator vibrator;
 
     boolean isLoading = false;
@@ -78,6 +80,7 @@ public class PageFragment extends Fragment {
     private SwipeRefreshLayout mRefreshLayout;
     private LinearLayoutManager llm;
     private RecyclerView mrc;
+    private TabLayout mTablayout;
 
     @SuppressLint("ValidFragment")
     public PageFragment(int serial,Context mContext){
@@ -106,7 +109,7 @@ public class PageFragment extends Fragment {
         Log.e("tag","onCreateView()方法执行");
 
         View view = inflater.inflate(R.layout.campus1_search_needs, container, false);
-
+        mTablayout = (TabLayout)getActivity().findViewById(R.id.searchNeeds_tablayout);
         mrc = (RecyclerView) view.findViewById(R.id.searchNeeds_recycler_view);
 //        // use this setting to improve performance if you know that changes
 //        // in content do not change the layout size of the RecyclerView
@@ -127,7 +130,7 @@ public class PageFragment extends Fragment {
         //End pos
 
         // 添加数据源
-        adapter = new PullRecyclerViewAdapter(TaskListItem);
+        adapter = new PullRecyclerViewAdapter(TaskListItem,mTablayout);
         adapter.setCallBackListener(new PullRecyclerViewAdapter.CallBackListener() {
             @Override
             public void callBackImg(ImageView goodsImg) {
@@ -140,44 +143,44 @@ public class PageFragment extends Fragment {
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.layout_swipe_refresh);
         mRefreshLayout.setColorSchemeColors(Color.RED, Color.CYAN);
 
+        viewFooter = view.findViewById(R.id.item_foot);
+
         mrc.setAdapter(adapter);
-//        mrc.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                Log.d("test", "StateChanged = " + newState);
-//
-//
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                Log.d("test", "onScrolled");
-//
-//                int lastVisibleItemPosition = llm.findLastVisibleItemPosition();
-//                if (lastVisibleItemPosition + 1 == adapter.getItemCount()) {
-//                    Log.d("test", "loading executed");
-//
-//                    boolean isRefreshing = mRefreshLayout.isRefreshing();
-//                    if (isRefreshing) {
-//                        adapter.notifyItemRemoved(adapter.getItemCount());
-//                        return;
-//                    }
-//                    if (!isLoading) {
-//                        isLoading = true;
-//                        handler.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                new MoreTask().execute();
-//                                Log.d("test", "load more completed");
-//                                isLoading = false;
-//                            }
-//                        }, 1000);
-//                    }
-//                }
-//            }
-//        });
+        mrc.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                Log.d("test", "StateChanged = " + newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.d("test", "onScrolled");
+
+                int lastVisibleItemPosition = llm.findLastVisibleItemPosition();
+                if (lastVisibleItemPosition + 1 == adapter.getItemCount()) {
+                    Log.d("test", "loading executed");
+
+                    boolean isRefreshing = mRefreshLayout.isRefreshing();
+                    if (isRefreshing) {
+                        adapter.notifyItemRemoved(adapter.getItemCount());
+                        return;
+                    }
+                    if (!isLoading) {
+                        isLoading = true;
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                new MoreTask().execute();
+                                Log.d("test", "load more completed");
+                                isLoading = false;
+                            }
+                        }, 1000);
+                    }
+                }
+            }
+        });
 
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
@@ -501,7 +504,6 @@ public class PageFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<listItem> data) {
             super.onPostExecute(data);
-
             //没有新的数据，提示消息
             if (data == null || data.size() == 0) {
                 Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();

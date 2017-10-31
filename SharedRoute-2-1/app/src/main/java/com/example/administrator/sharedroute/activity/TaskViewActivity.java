@@ -211,7 +211,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
         @Override
         protected List<listItem> doInBackground(Void... params) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(400);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -236,6 +236,9 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
             }
             trollyAdapter.notifyDataSetChanged();
             SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(trollyAdapter, TaskViewActivity.this));
+
+            mAnimAdapter = swingBottomInAnimationAdapter;
+
             swingBottomInAnimationAdapter.setAbsListView(listView);
             assert swingBottomInAnimationAdapter.getViewAnimator() != null;
             swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);

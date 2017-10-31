@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.administrator.sharedroute.R;
+import com.example.administrator.sharedroute.base.BaseDialog;
 import com.example.administrator.sharedroute.entity.DialogMenuItem;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.widget.BlurBehind;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class BlurredActivity extends Activity {
 
 	public static ArrayList<DialogMenuItem> testItems = new ArrayList<>();
-	public static String fromActivity;
+	public static String fromActivity ;
 	private listItem listItem;
 //	private BaseAnimatorSet base_in;
 //	private BaseAnimatorSet base_out;
@@ -27,11 +28,11 @@ public class BlurredActivity extends Activity {
 		setContentView(R.layout.activity_blurred);
 		Bundle bundle = getIntent().getExtras();
 		listItem info = bundle.getParcelable("item");
+		BaseDialog.fromActivity = "main";
 		BlurBehind.getInstance()
 				.withAlpha(90)
 				.withFilterColor(Color.parseColor("#7fffffff"))
 				.setBackground(this);
-		fromActivity = "Main";
 		testItems.add(new DialogMenuItem("快递名称:"+info.getInLocation(), R.mipmap.ic_express));
 		testItems.add(new DialogMenuItem("取件时间:"+info.getInTimeStamp(), R.mipmap.ic_get_time));
 		testItems.add(new DialogMenuItem("类型:"+info.getExpressType(), R.mipmap.ic_type));

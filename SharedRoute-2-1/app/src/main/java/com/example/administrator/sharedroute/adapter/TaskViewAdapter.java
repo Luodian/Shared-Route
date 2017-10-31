@@ -3,6 +3,7 @@ package com.example.administrator.sharedroute.adapter;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class TaskViewAdapter extends ArrayAdapter<listItem> {
     private HashMap<Integer,Boolean> checkStatus;
     private Toolbar mToolbar;
     private LinearLayout mLinearLayout;
+    private static int count = 0;
     //private HashMap<String,Boolean> radioMap;
 
     public TaskViewAdapter(Context mContext) {
@@ -52,7 +54,7 @@ public class TaskViewAdapter extends ArrayAdapter<listItem> {
         else{
             viewHolder = (ViewHolder) view.getTag();
         }
-
+        Log.e("???0",String.valueOf(count++));
         viewHolder.expressType.setText(listItems.get(position).getExpressType());
         viewHolder.expressSize.setText(listItems.get(position).getExpressSize());
         viewHolder.inTimeStamp.setText(listItems.get(position).getInTimeStamp());
