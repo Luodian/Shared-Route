@@ -170,6 +170,7 @@ public class PageFragment extends Fragment {
                     }
                     if (!isLoading) {
                         isLoading = true;
+//                        new MoreTask().execute();
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -195,6 +196,7 @@ public class PageFragment extends Fragment {
             public void run() {
                 mRefreshLayout.setRefreshing(true);
                 new InitTask().execute();
+                Log.d("test", "load more completed");
             }
         });
 
@@ -437,6 +439,7 @@ public class PageFragment extends Fragment {
             }
             //没有新的数据，提示消息
             if (result == null || result.size() == 0) {
+                adapter.notifyItemRemoved(adapter.getItemCount());
                 Toast.makeText(mContext, R.string.check_network_status, Toast.LENGTH_SHORT).show();
             }
             else
@@ -460,7 +463,14 @@ public class PageFragment extends Fragment {
             ArrayList<listItem> data;
             data = new ArrayList<>();
             listItem item1 = new listItem("上滑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+            listItem item2 = new listItem("上滑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
+            listItem item3 = new listItem("上滑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
             data.add(item1);
+            data.add(item2);
+//            data.add(item1);
+//            data.add(item1);
+//            data.add(item1);
+//            data.add(item1);
 //            //只有第一次需要加载头部的轮播图片
 //            //下拉刷新时候不加轮播图片
 //            if (myDataset.size() == 0) {
@@ -476,15 +486,16 @@ public class PageFragment extends Fragment {
         protected void onPostExecute(ArrayList<listItem> data) {
             super.onPostExecute(data);
 
-            if (mRefreshLayout != null) {
-                mRefreshLayout.setRefreshing(false);
-            }
             //没有新的数据，提示消息
             if (data == null || data.size() == 0) {
+                adapter.notifyItemRemoved(adapter.getItemCount());
                 Toast.makeText(getActivity(), "???", Toast.LENGTH_SHORT).show();
             } else {
                 TaskListItem.addAll(data);
                 adapter.notifyDataSetChanged();
+            }
+            if (mRefreshLayout != null) {
+                mRefreshLayout.setRefreshing(false);
             }
         }
     }
@@ -498,7 +509,9 @@ public class PageFragment extends Fragment {
                 e.printStackTrace();
             }
             ArrayList<listItem> data;
+            listItem item1 = new listItem("MoreTask", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
             data = new ArrayList<>();
+//            data.add(item1);
             return data;
         }
 
@@ -507,6 +520,8 @@ public class PageFragment extends Fragment {
             super.onPostExecute(data);
             //没有新的数据，提示消息
             if (data == null || data.size() == 0) {
+//                adapter.setNoMoreData();
+                adapter.notifyItemRemoved(adapter.getItemCount());
                 Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
             } else {
                 TaskListItem.addAll(data);

@@ -1,10 +1,7 @@
 package com.example.administrator.sharedroute.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView.Adapter;
@@ -14,15 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.sharedroute.R;
-import com.example.administrator.sharedroute.activity.BlurredActivity;
 import com.example.administrator.sharedroute.activity.SearchNeedsActivity;
 import com.example.administrator.sharedroute.entity.listItem;
-import com.example.administrator.sharedroute.listener.OnBlurCompleteListener;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
-import com.example.administrator.sharedroute.widget.BlurBehind;
 
 import java.util.ArrayList;
 
@@ -40,6 +35,7 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
     private OrderDao orderDao;
     private Context mContext;
     private TabLayout mTablayout;
+    private boolean isMoreData = true;
 
     public PullRecyclerViewAdapter(ArrayList<listItem> mDataset ,TabLayout mTablayout) {
         this.mDataset = mDataset;
@@ -131,6 +127,29 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
                 });
             }
         }
+//        else
+//        {
+//            if (!isMoreData)
+//            {
+//                ((FootViewHolder) holder).pb.setVisibility(View.INVISIBLE);
+//                ((FootViewHolder) holder).tips.setText("已经加载完毕...");
+//            }
+//            else
+//            {
+//                ((FootViewHolder) holder).pb.setVisibility(View.VISIBLE);
+//                ((FootViewHolder) holder).tips.setText("正在加载中...");
+//            }
+//        }
+    }
+
+    public void setNoMoreData()
+    {
+        isMoreData = false;
+    }
+
+    public void setHasMoreData()
+    {
+        isMoreData = true;
     }
 
     public void setCallBackListener(CallBackListener mCallBackListener){
@@ -167,9 +186,12 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
     }
 
     private static class FootViewHolder extends ViewHolder {
-
+        TextView tips;
+        ProgressBar pb;
         FootViewHolder(View view) {
             super(view);
+            pb = (ProgressBar) view.findViewById(R.id.progress);
+            tips = (TextView) view.findViewById(R.id.text_footer);
         }
     }
 }
