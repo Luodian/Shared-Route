@@ -92,13 +92,13 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                         return true;
                     case R.id.nav_release:
                         select = "releaseOrder";
-                        Intent intent2 = new Intent(PublishNeedsActivity.this,MyOrder.class);
+                        Intent intent2 = new Intent(PublishNeedsActivity.this,MyPublishOrder.class);
                         intent2.putExtra("select_order",select);
                         startActivity(intent2);
                         return true;
                     case R.id.nav_receive:
                         select = "receiveOrder";
-                        Intent intent3 = new Intent(PublishNeedsActivity.this,MyOrder.class);
+                        Intent intent3 = new Intent(PublishNeedsActivity.this,MyFinishedActivity.class);
                         intent3.putExtra("select_order",select);
                         startActivity(intent3);
                         return true;

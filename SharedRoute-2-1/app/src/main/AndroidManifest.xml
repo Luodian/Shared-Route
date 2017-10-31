@@ -24,7 +24,7 @@
             android:name=".activity.BandCard"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MyOrder"
+            android:name=".activity.MyPublishOrder"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MyRank"
@@ -82,6 +82,7 @@
         </activity>
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.ConfirmBlurredActivity" />
+        <activity android:name=".activity.MyFinishedActivity"></activity>
     </application>
 
 </manifest>

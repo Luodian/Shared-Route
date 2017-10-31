@@ -32,6 +32,7 @@ public class ListViewAdapter extends ArrayAdapter<CardItem> {
             viewHolder = new ViewHolder();
             viewHolder.infoImage = (ImageView)view.findViewById(R.id.info_image);
             viewHolder.infoText = (TextView)view.findViewById(R.id.info_text);
+            viewHolder.infoText.setTextSize(12);
             view.setTag(viewHolder);
         }else{
             view = convertView;

@@ -61,13 +61,13 @@ public class WaitingFutureActivity extends AppCompatActivity {
                         return true;
                     case R.id.nav_release:
                         select = "releaseOrder";
-                        Intent intent2 = new Intent(WaitingFutureActivity.this,MyOrder.class);
+                        Intent intent2 = new Intent(WaitingFutureActivity.this,MyPublishOrder.class);
                         intent2.putExtra("select_order",select);
                         startActivity(intent2);
                         return true;
                     case R.id.nav_receive:
                         select = "receiveOrder";
-                        Intent intent3 = new Intent(WaitingFutureActivity.this,MyOrder.class);
+                        Intent intent3 = new Intent(WaitingFutureActivity.this,MyFinishedActivity.class);
                         intent3.putExtra("select_order",select);
                         startActivity(intent3);
                         return true;
