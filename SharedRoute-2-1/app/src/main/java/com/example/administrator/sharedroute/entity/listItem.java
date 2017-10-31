@@ -201,6 +201,13 @@ public class listItem implements Parcelable{
         dest.writeString(inLocation);
         dest.writeString(outLocation);
         dest.writeString(outTimeStamp);
+        dest.writeInt(ID);
+        dest.writeString(pickupCode);
+        dest.writeString(publishTime);
+        dest.writeInt(status);
+        dest.writeInt(PorA);
+        dest.writeString(accepterID);
+        dest.writeString(publisherID);
         dest.writeDouble(price);
     }
     public static final Creator<listItem> CREATOR = new Creator(){
@@ -213,6 +220,13 @@ public class listItem implements Parcelable{
             item.setInLocation(source.readString());
             item.setOutLocation(source.readString());
             item.setOutTimeStamp(source.readString());
+            item.setID(source.readInt());
+            item.setPickupCode(source.readString());
+            item.setPublishTime(source.readString());
+            item.setStatus(source.readInt());
+            item.setPorA(source.readInt());
+            item.setAccepterID(source.readString());
+            item.setPublisherID(source.readString());
             item.setPrice(source.readDouble());
             return item;
         }
