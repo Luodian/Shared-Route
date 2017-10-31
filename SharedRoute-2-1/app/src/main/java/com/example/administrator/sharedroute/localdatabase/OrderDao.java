@@ -105,10 +105,10 @@ public class OrderDao {
             db = ordersDBHelper.getWritableDatabase();
             db.beginTransaction();
 
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-1','食物','大件', '10月21日21时42分', '10月21日21时42分','顺丰快递','10月21日21时42分','正心楼424','111',5.2,1)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-2','食物','大件', '10月21日21时42分', '10月21日21时42分','天天快递','10月21日21时42分','正心楼424','112',5.2,1)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-3','食物','大件', '10月21日21时42分', '10月21日21时42分','韵达快递','10月21日21时42分','正心楼424','113',5.2,1)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-4','食物','大件', '10月21日21时42分', '10月21日21时42分','圆通快递','10月21日21时42分','正心楼424','114',5.2,0)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '1','食物','大件', '10月21日21时42分', '10月21日21时42分','顺丰快递','10月21日21时42分','正心楼424','111',5.2,1)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '2','食物','大件', '10月21日21时42分', '10月21日21时42分','天天快递','10月21日21时42分','正心楼424','112',5.2,1)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '3','食物','大件', '10月21日21时42分', '10月21日21时42分','韵达快递','10月21日21时42分','正心楼424','113',5.2,1)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '4','食物','大件', '10月21日21时42分', '10月21日21时42分','圆通快递','10月21日21时42分','正心楼424','114',5.2,0)");
             db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-5','食物','大件', '10月21日21时42分', '10月21日21时42分','百世快递','10月21日21时42分','正心楼424','115',5.2,1)");
             db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-6','食物','大件', '10月21日21时42分', '10月21日21时42分','申通快递','10月21日21时42分','正心楼424','116',5.2,1)");
 
@@ -133,7 +133,7 @@ public class OrderDao {
             if (sql.contains("select")){
                 //Toast.makeText(context, R.string.strUnableSql, Toast.LENGTH_SHORT).show();
 
-            }else if (sql.contains("insert") || sql.contains("update") || sql.contains("delete")){
+            }else if (sql.contains("insert") || sql.contains("update") || sql.contains("DELETE")){
                 db = ordersDBHelper.getWritableDatabase();
                 db.beginTransaction();
                 db.execSQL(sql);

@@ -80,6 +80,7 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
                         Intent intent = new Intent(mContext, ConfirmBlurredActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         Bundle bundle = new Bundle();
+                        System.out.println( mItemList.get(position).getID()+"|");
                         bundle.putParcelable("item",mItemList.get(position));
                         intent.putExtras(bundle);
                         mContext.startActivity(intent);
