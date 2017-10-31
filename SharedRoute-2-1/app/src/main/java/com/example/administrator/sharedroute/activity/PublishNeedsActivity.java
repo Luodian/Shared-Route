@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -181,8 +182,13 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         }
 
         final NiceSpinner niceSpinner = (NiceSpinner) findViewById(R.id.nice_spinner);
-        List<String> dataset = new LinkedList<>(Arrays.asList("书籍", "玩具", "化妆品", "电器"));
+        List<String> dataset = new LinkedList<>(Arrays.asList("书籍", "玩具", "化妆品",
+                "电器","水果","零食","文具","日常用品","其他"));
         niceSpinner.attachDataSource(dataset);
+//        String[] dataset={"书籍", "玩具", "化妆品", "电器"};
+//        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,dataset);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        niceSpinner.setAdapter(adapter);
 
         ((LinearLayout)findViewById(R.id.pick_time_block)).setOnClickListener(new View.OnClickListener() {
             @Override
