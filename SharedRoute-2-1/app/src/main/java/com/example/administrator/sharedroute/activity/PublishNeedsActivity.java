@@ -317,9 +317,9 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                 break;
             }
             case 1:{
-                if (data != null)
-
-
+                if (data != null) {
+                    ((Button)findViewById(R.id.pickupplace)).setText(data.getStringExtra("pickupLocation"));
+                }
                 break;
             }
             default:break;
@@ -406,21 +406,8 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         tpd.show(getFragmentManager(), "Timepickerdialog");
     }
 
-
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-        String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
-        String minuteString = minute < 10 ? "0" + minute : "" + minute;
-        String secondString = second < 10 ? "0" + second : "" + second;
-        String time = "" + hourString + " : " + minuteString;
-        if (left == true) {
-            leftTime = time;
-            ((TextView) findViewById(R.id.qujiantext)).setText(leftDate + "\n" + leftTime);
-            ((TextView) findViewById(R.id.qujiantext)).setTextSize(8);
-        } else {
-            rightTime = time;
-            ((TextView) findViewById(R.id.songjiantext)).setText(rightDate + "\n" + rightTime);
-            ((TextView) findViewById(R.id.songjiantext)).setTextSize(8);
-        }
+
     }
 }

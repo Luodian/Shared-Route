@@ -266,7 +266,11 @@ public class HistoryInfoActivity extends AppCompatActivity {
             String place = data.getStringExtra("place");
             int index = Integer.parseInt(data.getStringExtra("index"));
             HistoryInfo historyInfo = new HistoryInfo(name, phone, place);
-            listData.set(index, historyInfo);
+            if (index==-1){
+                listData.add(historyInfo);
+            } else {
+                listData.set(index,historyInfo);
+            }
 
             JSONArray mJsonArray = new JSONArray();
             for (int i = 0; i < listData.size(); i++) {
