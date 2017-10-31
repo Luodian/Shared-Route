@@ -317,9 +317,9 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                 break;
             }
             case 1:{
-                if (data != null)
-
-
+                if (data != null) {
+                    ((Button)findViewById(R.id.pickupplace)).setText(data.getStringExtra("pickupLocation"));
+                }
                 break;
             }
             default:break;
@@ -405,7 +405,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         });
         tpd.show(getFragmentManager(), "Timepickerdialog");
     }
-
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
