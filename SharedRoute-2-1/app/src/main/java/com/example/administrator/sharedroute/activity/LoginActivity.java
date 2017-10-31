@@ -98,6 +98,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //        passText.setTypeface(typeFace);
 //        userEditText.setTypeface(typeFace);
 //        passEditText.setTypeface(typeFace);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.user_edit_text);
         populateAutoComplete();
@@ -417,8 +418,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 if (mEmail!=""&&mPassword!=""){
                     List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-                    parameters.add(new BasicNameValuePair("username", mEmail));
-                    parameters.add(new BasicNameValuePair("password", mPassword));
+                    parameters.add(new BasicNameValuePair("UserID", mEmail));
+                    parameters.add(new BasicNameValuePair("Password", mPassword));
+                    parameters.add(new BasicNameValuePair("action", "login"));
                     UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                     post.setEntity(ent);
                 }
@@ -450,8 +452,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 Toast.makeText(LoginActivity.this,"Successful!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                finish();
             } else {
-                Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "登录失败，失败信息为\n"+result, Toast.LENGTH_SHORT).show();
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }

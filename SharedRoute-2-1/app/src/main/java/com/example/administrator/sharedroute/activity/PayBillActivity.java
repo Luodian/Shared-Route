@@ -345,19 +345,19 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
                 //参数
                 List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 
-                parameters.add(new BasicNameValuePair("money",mMoney));
-                parameters.add(new BasicNameValuePair("name",mName));
+                parameters.add(new BasicNameValuePair("Money",mMoney));
+//                parameters.add(new BasicNameValuePair("name",mName));
                 parameters.add(new BasicNameValuePair("phone",mPhone));
-                parameters.add(new BasicNameValuePair("num",mNum));
+                parameters.add(new BasicNameValuePair("ID",mNum));
                 parameters.add(new BasicNameValuePair("packSort",mPackSort));
                 parameters.add(new BasicNameValuePair("pickPlace",mPickPlace));
                 parameters.add(new BasicNameValuePair("delieverPlace",mDelieverPlace));
                 parameters.add(new BasicNameValuePair("pickTime",mPickTime));
                 parameters.add(new BasicNameValuePair("delieverTime",mDelieverTime));
-                parameters.add(new BasicNameValuePair("payPath",mPayPath));
-                parameters.add(new BasicNameValuePair("remark",mRemark));
-                parameters.add(new BasicNameValuePair("stuNum",mStuNum));
-                parameters.add(new BasicNameValuePair("securityMoney",mSecurityMoney));
+                parameters.add(new BasicNameValuePair("",mPayPath));
+                parameters.add(new BasicNameValuePair("Remark",mRemark));
+                parameters.add(new BasicNameValuePair("PublisherID",mStuNum));
+                parameters.add(new BasicNameValuePair("PromiseMoney",mSecurityMoney));
                 parameters.add(new BasicNameValuePair("action", "submit"));
 
                 UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);

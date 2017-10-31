@@ -262,7 +262,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
         private String inviteCode;
         private String password;
 
-        private String url = "http://47.95.194.146:8080/sharedroot_server/Task";
+        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
 
         private String result = null;
 
@@ -287,12 +287,12 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
                 //参数
                 List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 
-                parameters.add(new BasicNameValuePair("name",this.name));
-                parameters.add(new BasicNameValuePair("stuNum",this.stuNum));
-                parameters.add(new BasicNameValuePair("phone",this.phone));
-                parameters.add(new BasicNameValuePair("inviteCode",this.inviteCode));
-                parameters.add(new BasicNameValuePair("passWord",this.password));
-                parameters.add(new BasicNameValuePair("action", "register"));           //数据库应该建表
+                parameters.add(new BasicNameValuePair("Name",this.name));
+                parameters.add(new BasicNameValuePair("UserID",this.stuNum));
+                parameters.add(new BasicNameValuePair("Account",this.phone));
+                parameters.add(new BasicNameValuePair("ID",this.inviteCode));
+                parameters.add(new BasicNameValuePair("Password",this.password));
+                parameters.add(new BasicNameValuePair("action", "registe"));           //数据库应该建表
 
                 UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                 post.setEntity(ent);
