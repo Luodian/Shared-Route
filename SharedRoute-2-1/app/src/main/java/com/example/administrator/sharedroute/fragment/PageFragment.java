@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
@@ -81,6 +82,7 @@ public class PageFragment extends Fragment {
     private LinearLayoutManager llm;
     private RecyclerView mrc;
     private TabLayout mTablayout;
+    private TextView textFooter;
 
     @SuppressLint("ValidFragment")
     public PageFragment(int serial,Context mContext){
@@ -157,7 +159,6 @@ public class PageFragment extends Fragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 Log.d("test", "onScrolled");
-
                 int lastVisibleItemPosition = llm.findLastVisibleItemPosition();
                 if (lastVisibleItemPosition + 1 == adapter.getItemCount()) {
                     Log.d("test", "loading executed");
@@ -480,7 +481,7 @@ public class PageFragment extends Fragment {
             }
             //没有新的数据，提示消息
             if (data == null || data.size() == 0) {
-                Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "???", Toast.LENGTH_SHORT).show();
             } else {
                 TaskListItem.addAll(data);
                 adapter.notifyDataSetChanged();
