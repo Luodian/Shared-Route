@@ -23,7 +23,7 @@ import com.example.administrator.sharedroute.utils.ShadowTransformer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyOrder extends AppCompatActivity {
+public class MyPublishOrder extends AppCompatActivity {
 /**
  *讲道理这里应该接受的是远程的数据
  */
@@ -46,10 +46,10 @@ public class MyOrder extends AppCompatActivity {
 //        if (! orderDao.isDataExist()){/*到时候连接了远程后该部分需要修改*/
 //            orderDao.initTable();
 //        }
-        myOrders = orderDao.getAcceptOrder();
+        myOrders = orderDao.getPublishOrder();
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitle("我的订单");
+        toolbar.setTitle("我发布的订单");
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
@@ -64,8 +64,8 @@ public class MyOrder extends AppCompatActivity {
             for (listItem e:myOrders) {
                 viewCard = (CardView)mInflater.inflate(R.layout.adapter,null);
                 List<CardItem> cardItems = new ArrayList<>();
-                ListViewAdapter adapter = new ListViewAdapter(MyOrder.this ,R.layout.carditem_layout,cardItems);
-                CardItem item1 = new CardItem("快递类型:"+e.getExpressType(), R.mipmap.ic_express);
+                ListViewAdapter adapter = new ListViewAdapter(MyPublishOrder.this ,R.layout.carditem_layout,cardItems);
+                CardItem item1 = new CardItem("类型:"+e.getExpressType(), R.mipmap.ic_express);
                 cardItems.add(item1);
                 CardItem item2 = new CardItem("发布时间:"+e.getPublishTime(), R.mipmap.ic_get_time);
                 cardItems.add(item2);
@@ -75,7 +75,7 @@ public class MyOrder extends AppCompatActivity {
                 cardItems.add(item4);
                 CardItem item5 = new CardItem("金额:"+e.getPrice()+"元", R.mipmap.ic_money);
                 cardItems.add(item5);
-                CardItem item6 = new CardItem("状态:还没设置", R.mipmap.ic_status);
+                CardItem item6 = new CardItem("状态:待定", R.mipmap.ic_status);
                 cardItems.add(item6);
                 ListView listViewCard = (ListView)viewCard.findViewById(R.id.list_view);
                 listViewCard.setAdapter(adapter);

@@ -254,7 +254,6 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
             // TODO: attempt authentication against a network service.
             try {
                 HttpClient client = new DefaultHttpClient();
-
                 HttpPost post = new HttpPost(url);
 
                 //參數
