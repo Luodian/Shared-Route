@@ -417,8 +417,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 if (mEmail!=""&&mPassword!=""){
                     List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-                    parameters.add(new BasicNameValuePair("username", mEmail));
-                    parameters.add(new BasicNameValuePair("password", mPassword));
+                    parameters.add(new BasicNameValuePair("UserID", mEmail));
+                    parameters.add(new BasicNameValuePair("Password", mPassword));
+                    parameters.add(new BasicNameValuePair("action", "login"));
                     UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                     post.setEntity(ent);
                 }

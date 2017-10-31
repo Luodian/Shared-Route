@@ -286,6 +286,12 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     }
 
     @Override
+    public void onBackPressed() {
+        JumpToActivity(MainActivity.class);
+        finish();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case 0:{
