@@ -350,15 +350,24 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
                 List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 
                 parameters.add(new BasicNameValuePair("Money",mMoney));
-//                parameters.add(new BasicNameValuePair("name",mName));
-                parameters.add(new BasicNameValuePair("phone",mPhone));
-                parameters.add(new BasicNameValuePair("ID",mNum));
-                parameters.add(new BasicNameValuePair("packSort",mPackSort));
-                parameters.add(new BasicNameValuePair("pickPlace",mPickPlace));
-                parameters.add(new BasicNameValuePair("delieverPlace",mDelieverPlace));
-                parameters.add(new BasicNameValuePair("pickTime",mPickTime));
-                parameters.add(new BasicNameValuePair("delieverTime",mDelieverTime));
-                parameters.add(new BasicNameValuePair("",mPayPath));
+                parameters.add(new BasicNameValuePair("Name",mName));
+                parameters.add(new BasicNameValuePair("Phone",mPhone));
+                parameters.add(new BasicNameValuePair("PickID",mNum));
+                parameters.add(new BasicNameValuePair("TaskKindID",mPackSort));
+                parameters.add(new BasicNameValuePair("FetchLocation",mPickPlace));
+                parameters.add(new BasicNameValuePair("SendLocation",mDelieverPlace));
+                parameters.add(new BasicNameValuePair("FetchTime",mPickTime));
+                parameters.add(new BasicNameValuePair("SendTime",mDelieverTime));
+                int whichPay;
+                if (mPayPath.equals("zhifubao")){
+                    whichPay=0;
+                }
+                else if(mPayPath.equals("wechat")){
+                    whichPay=1;
+                }else {
+                    whichPay=2;         //虚拟货币
+                }
+                parameters.add(new BasicNameValuePair("WhichPay",String.valueOf(whichPay)));
                 parameters.add(new BasicNameValuePair("Remark",mRemark));
                 parameters.add(new BasicNameValuePair("PublisherID",mStuNum));
                 parameters.add(new BasicNameValuePair("PromiseMoney",mSecurityMoney));
