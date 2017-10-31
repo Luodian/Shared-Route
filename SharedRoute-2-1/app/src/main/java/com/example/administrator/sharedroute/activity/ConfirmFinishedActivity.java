@@ -2,6 +2,7 @@ package com.example.administrator.sharedroute.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +25,16 @@ import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.fragment.FailFragment;
 import com.example.administrator.sharedroute.fragment.SuccessFragment;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +48,7 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
     private ArrayList<listItem> failList ;
     private Button mButton;
     public static int lastPosition = 0;
+    private  ArrayList<listItem> arrayList;
     private int mMenuId;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,13 +95,10 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         Bundle bundle =intent.getExtras();
-
         successList= bundle.getParcelableArrayList("successList");
         failList = bundle.getParcelableArrayList("failList");
         if (successList == null) successList = new ArrayList<listItem>();
         if (failList == null) failList = new ArrayList<listItem>();
-
-        //注册PageViewr的Adapter
         mpagerAdapter = new PagerAdapter(getSupportFragmentManager(),ConfirmFinishedActivity.this);
 
         mViewPager.setAdapter(mpagerAdapter);
@@ -104,6 +114,8 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
+        //注册PageViewr的Adapter
+
 
     }
 
