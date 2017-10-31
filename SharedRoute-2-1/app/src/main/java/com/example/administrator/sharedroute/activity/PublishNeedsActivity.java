@@ -124,7 +124,9 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                         return true;
                     case R.id.nav_login:
                         Intent intent8 = new Intent(PublishNeedsActivity.this,LoginActivity.class);
+                        intent8.putExtra("from","homePage");
                         startActivity(intent8);
+                        finish();
                         return true;
                     default:
                 }

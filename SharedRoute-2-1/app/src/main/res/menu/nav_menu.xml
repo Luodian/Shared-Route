@@ -4,7 +4,7 @@
         <item
             android:id="@+id/nav_login"
             android:icon="@mipmap/ic_user1"
-            android:title="用户登陆"/>
+            android:title="更换用户"/>
 
         <item
             android:id="@+id/nav_shop"
