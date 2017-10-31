@@ -76,8 +76,6 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_foot, parent,
                     false);
             Log.e("!!!!!","111111111111");
-            if (getItemCount()>=5) view.setVisibility(View.VISIBLE);
-            else view.setVisibility(View.GONE);
             return new FootViewHolder(view);
         }
         return null;
