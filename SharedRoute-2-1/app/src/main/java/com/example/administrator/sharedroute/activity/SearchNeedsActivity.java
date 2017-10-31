@@ -38,7 +38,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
 
     private SimpleFragmentPagerAdapter mAdapter;
     private List<Fragment> mFragments = new ArrayList<>();
-    private String tabTitles[] = new String[]{"一校区","二校区","三校区"};
+    private String tabTitles[] = new String[]{"一校区","二校区"};
 
     public static int goodsCount = 0;
     public static FloatingActionButton mfab;
@@ -49,7 +49,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
     public static ArrayList<listItem> selectedItem;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_search_needs);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -84,7 +84,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected(MenuItem item){
                 switch (item.getItemId()){
                     case R.id.nav_shop:
                         select = "releaseOrder";
@@ -106,24 +106,26 @@ public class SearchNeedsActivity extends AppCompatActivity {
                         return true;
                     case R.id.release_rank:
                         select = "releaseRank";
-                        Intent intent4 = new Intent(SearchNeedsActivity.this,MyRank.class);
+                        Intent intent4 = new Intent(SearchNeedsActivity.this,WaitingFutureActivity.class);
                         intent4.putExtra("select_order",select);
                         startActivity(intent4);
                         return true;
                     case R.id.receive_rank:
-                        select = "receiveRank";
-                        Intent intent5 = new Intent(SearchNeedsActivity.this,MyRank.class);
-                        intent5.putExtra("select_order",select);
+//                        select = "receiveRank";
+                        Intent intent5 = new Intent(SearchNeedsActivity.this,WaitingFutureActivity.class);
+//                        intent5.putExtra("select_order",select);
                         startActivity(intent5);
                         return true;
                     case R.id.nav_wallet:
-                        Intent intent6 = new Intent(SearchNeedsActivity.this,BandCard.class);
+                        Intent intent6 = new Intent(SearchNeedsActivity.this,WaitingFutureActivity.class);
                         startActivity(intent6);
                         return true;
                     case R.id.nav_setting:
+                        Intent intent7 = new Intent(SearchNeedsActivity.this,WaitingFutureActivity.class);
+                        startActivity(intent7);
                         return true;
                     case R.id.nav_login:
-                        Intent intent8 = new Intent(SearchNeedsActivity.this, LoginActivity.class);
+                        Intent intent8 = new Intent(SearchNeedsActivity.this,LoginActivity.class);
                         startActivity(intent8);
                         return true;
                     default:

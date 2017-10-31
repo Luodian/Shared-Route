@@ -249,6 +249,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
                 return true;
             case R.id.back:
                 startActivity(new Intent(RegisterActivity.this,MainActivity.class));
+                finish();
                 return true;
         }
         return true;

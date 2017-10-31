@@ -1,5 +1,6 @@
 package com.example.administrator.sharedroute.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -31,6 +32,17 @@ public class sendLocationActivity extends AppCompatActivity {
 
         initView();
     }
+
+    public void JumpToActivity(Class activity){
+        startActivity(new Intent(this,activity));
+    }
+
+//    @Override
+//    public void onBackPressed() {
+//        JumpToActivity(MainActivity.class);
+//        finish();
+//    }
+
     private void initView(){
         tabLayout=(TabLayout)findViewById(R.id.tabLayout);
         viewPager=(ViewPager)findViewById(R.id.viewPager);
