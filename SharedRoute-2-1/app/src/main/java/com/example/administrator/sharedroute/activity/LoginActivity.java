@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -452,6 +453,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 Toast.makeText(LoginActivity.this,"Successful!", Toast.LENGTH_SHORT).show();
+                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+                sp.edit().putString("now_stu_num",mEmailView.getText().toString()).commit();
                 startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 finish();
             } else {

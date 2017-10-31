@@ -4,9 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -51,7 +53,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class PayBillActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>  {
 
     //测试使用，真实情况的时候，登录时缓存到本地，然后使用本地的学号
-    private String stuNum = "1234567890";
+    private String stuNum;
 
 
     private static final int REQUEST_READ_CONTACTS = 0;
@@ -190,6 +192,8 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
         } else if (wechat.isChecked()) {
             payPath="wechat";
         }
+        SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+        stuNum=sp.getString("now_stu_num",null);
         Bundle bundle = getIntent().getExtras();
         mAuthTask = new PostTask(bundle.getString("money"),bundle.getString("name"),
                 bundle.getString("phone"),bundle.getString("num"),bundle.getString("packsort"),
