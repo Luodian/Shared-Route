@@ -26,6 +26,8 @@ import com.nineoldandroids.animation.Animator;
 public abstract class BaseDialog<T extends BaseDialog<T>> extends Dialog{
     /** TAG(日志) */
     protected String TAG;
+
+    public static String fromActivity;
     /** context(上下文) */
     protected Context context;
     /** (DisplayMetrics)设备密度 */
@@ -196,16 +198,8 @@ public abstract class BaseDialog<T extends BaseDialog<T>> extends Dialog{
     @Override
     protected void onStop() {
         super.onStop();
-        if(((!ConfirmBlurredActivity.fromActivity.isEmpty())&&(ConfirmBlurredActivity.fromActivity.equals("Main")))
-                ||((!BlurredActivity.fromActivity.isEmpty())&&(BlurredActivity.fromActivity.equals("Main")))) {
-            Intent intent = new Intent(context, MainActivity.class);
-            context.startActivity(intent);
-        }
-        else{
-            Intent intent = new Intent(context, SearchNeedsActivity.class);
-            context.startActivity(intent);
-        }
-        Log.d(TAG, "onStop");
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
     }
 
     @Override

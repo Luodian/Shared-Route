@@ -2,9 +2,11 @@ package com.example.administrator.sharedroute.activity;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.BaseBundle;
 import android.os.Bundle;
 
 import com.example.administrator.sharedroute.R;
+import com.example.administrator.sharedroute.base.BaseDialog;
 import com.example.administrator.sharedroute.entity.DialogMenuItem;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.widget.BlurBehind;
@@ -15,7 +17,6 @@ import java.util.ArrayList;
 public class ConfirmBlurredActivity extends Activity {
 
     public static ArrayList<DialogMenuItem> testItems = new ArrayList<>();
-    public static String fromActivity;
     private listItem listItem;
 //	private BaseAnimatorSet base_in;
 //	private BaseAnimatorSet base_out;
@@ -27,11 +28,11 @@ public class ConfirmBlurredActivity extends Activity {
         setContentView(R.layout.activity_blurred);
         Bundle bundle = getIntent().getExtras();
         listItem info = bundle.getParcelable("item");
+        BaseDialog.fromActivity = "main";
         BlurBehind.getInstance()
                 .withAlpha(90)
                 .withFilterColor(Color.parseColor("#7fffffff"))
                 .setBackground(this);
-        fromActivity = "Main";
         testItems.add(new DialogMenuItem("确认送达"));
         testItems.add(new DialogMenuItem("取消"));
 //		try {

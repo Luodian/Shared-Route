@@ -3,7 +3,9 @@ package com.example.administrator.sharedroute.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -16,12 +18,16 @@ import android.widget.TextView;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.activity.BlurredActivity;
+import com.example.administrator.sharedroute.activity.SearchNeedsActivity;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.listener.OnBlurCompleteListener;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BlurBehind;
 
 import java.util.ArrayList;
+
+import me.wangyuwei.flipshare.FlipShareView;
+import me.wangyuwei.flipshare.ShareItem;
 
 import static com.example.administrator.sharedroute.activity.SearchNeedsActivity.selectedItem;
 
@@ -33,9 +39,11 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
     private CallBackListener mCallBackListener;
     private OrderDao orderDao;
     private Context mContext;
+    private TabLayout mTablayout;
 
-    public PullRecyclerViewAdapter(ArrayList<listItem> mDataset) {
+    public PullRecyclerViewAdapter(ArrayList<listItem> mDataset ,TabLayout mTablayout) {
         this.mDataset = mDataset;
+        this.mTablayout = mTablayout;
     }
 
     @Override
@@ -62,24 +70,6 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
             view = LayoutInflater.from(mContext).inflate(R.layout.content_search_needs, parent, false);
             if (orderDao == null) orderDao = new OrderDao(mContext);
             final ItemViewHolder holder = new ItemViewHolder(view);
-            holder.mCardView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                        final int position = holder.getAdapterPosition();
-                            BlurBehind.getInstance().execute((Activity) mContext, new OnBlurCompleteListener() {
-                            @Override
-                            public void onBlurComplete() {
-                                Intent intent = new Intent(mContext, BlurredActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                Bundle bundle = new Bundle();
-                                bundle.putParcelable("item",mDataset.get(position));
-                                intent.putExtras(bundle);
-                                mContext.startActivity(intent);
-                            }
-                        });
-                return true;
-                }
-            });
             return holder;
         }
         else if (viewType == TYPE_FOOTER) {
@@ -102,6 +92,23 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
             ((ItemViewHolder) holder).sendLocTextView.setText(mDataset.get(position).getOutLocation());
             ((ItemViewHolder) holder).priceTextView.setText(String.valueOf(mDataset.get(position).getPrice()) + "元");
 
+            ((ItemViewHolder) holder).mCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FlipShareView shareBottom = new FlipShareView.Builder((SearchNeedsActivity)mContext, mTablayout)
+                            .addItem(new ShareItem("类型："+mDataset.get(position).getExpressType(), Color.WHITE, 0xffea650b))
+                            .addItem(new ShareItem("描述："+mDataset.get(position).getExpressSize(), Color.WHITE, 0xff4999F0))
+                            .addItem(new ShareItem("取件时间："+mDataset.get(position).getInTimeStamp(), Color.WHITE, 0xffD9392D))
+                            .addItem(new ShareItem("取件地点："+mDataset.get(position).getInLocation(), Color.WHITE, 0xff57708A))
+                            .addItem(new ShareItem("送件时间："+mDataset.get(position).getOutTimeStamp(), Color.WHITE, 0xffea0bb2))
+                            .addItem(new ShareItem("送件地点："+mDataset.get(position).getOutLocation(), Color.WHITE, 0xffea650b))
+                            .addItem(new ShareItem("价格："+mDataset.get(position).getPrice(), Color.WHITE,0xff063e04))
+                            .setItemDuration(200)
+                            .setBackgroundColor(0x60000000)
+                            .setAnimType(FlipShareView.TYPE_SLIDE)
+                            .create();
+                }
+            });
             int num = orderDao.getItemCount(mDataset.get(position).getID());
             Log.e("???",String.valueOf(num));
             if (num != 0)  ((ItemViewHolder) holder).mImageView.setImageResource(R.drawable.trolley_pressed);
