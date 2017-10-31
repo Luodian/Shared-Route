@@ -129,8 +129,9 @@ public class HistoryInfoActivity extends AppCompatActivity {
                 bundle.putCharSequence("delieverplaceInfo", "");
                 bundle.putCharSequence("index","-1");
                 intent1.putExtras(bundle);
-                startActivity(intent1);
-                finish();
+                startActivityForResult(intent1,requestCodeToInfoSetting);
+//                startActivity(intent1);
+//                finish();
             }
         });
         initIView();
@@ -189,9 +190,9 @@ public class HistoryInfoActivity extends AppCompatActivity {
                     Intent intent1 = new Intent(HistoryInfoActivity.this,InfoSettingActivity.class);
                     Bundle bundle = new Bundle();
                     int index = listData.indexOf(item);
-                    bundle.putCharSequence("nameInfo", "");
-                    bundle.putCharSequence("phoneInfo", "");
-                    bundle.putCharSequence("delieverplaceInfo", "");
+                    bundle.putCharSequence("nameInfo", item.getName().toString());
+                    bundle.putCharSequence("phoneInfo", item.getPhone().toString());
+                    bundle.putCharSequence("delieverplaceInfo", item.getDeliverPlace().toString());
                     bundle.putCharSequence("index",String.valueOf(index));
                     intent1.putExtras(bundle);
                     startActivityForResult(intent1,requestCodeToInfoSetting);
@@ -266,7 +267,11 @@ public class HistoryInfoActivity extends AppCompatActivity {
             String place = data.getStringExtra("place");
             int index = Integer.parseInt(data.getStringExtra("index"));
             HistoryInfo historyInfo = new HistoryInfo(name, phone, place);
-            listData.set(index, historyInfo);
+            if (index==-1){
+                listData.add(historyInfo);
+            } else {
+                listData.set(index,historyInfo);
+            }
 
             JSONArray mJsonArray = new JSONArray();
             for (int i = 0; i < listData.size(); i++) {

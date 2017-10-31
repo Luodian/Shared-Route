@@ -19,8 +19,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.BandCard"
             android:screenOrientation="portrait" />
@@ -73,8 +72,8 @@
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -82,7 +81,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.ConfirmBlurredActivity"/>
+        <activity android:name=".activity.ConfirmBlurredActivity" />
     </application>
 
 </manifest>
