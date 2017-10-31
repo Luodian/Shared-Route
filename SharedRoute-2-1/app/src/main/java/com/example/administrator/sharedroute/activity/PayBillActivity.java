@@ -396,15 +396,23 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
             showProgress(false);
 
             if (success) {
-                Toast.makeText(PayBillActivity.this,"Successful!", Toast.LENGTH_SHORT).show();
-//                finish();
+                Toast.makeText(PayBillActivity.this,"支付成功，即将返回主页!", Toast.LENGTH_SHORT).show();
+                Thread thread = new Thread() {
+                    public void run(){
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        startActivity(new Intent(PayBillActivity.this,MainActivity.class));
+                        finish();
+                    }
+                };
+                thread.start();
             }
             else
             {
                 Toast.makeText(PayBillActivity.this,result.toString(), Toast.LENGTH_SHORT).show();
-//                Toast.makeText(PayBillActivity.this,"Failure", Toast.LENGTH_SHORT).show();
-//                mPasswordView.setError(getString(R.string.error_incorrect_password));
-//                mPasswordView.requestFocus();
             }
         }
 
