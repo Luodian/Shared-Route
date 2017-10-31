@@ -102,6 +102,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.user_edit_text);
+        mEmailView.setFocusable(false);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.pass_edit_text);
@@ -187,6 +188,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 startActivityForResult(intent,REQUEST_CODE_GO_TO_REGIST);
             }
         });
+
+        //如果条件满足，就自动登录
+        if ((!mEmailView.getText().equals(""))&&(!mPasswordView.getText().equals(""))){
+            attemptLogin();
+        }
     }
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data){
