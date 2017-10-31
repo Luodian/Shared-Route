@@ -73,21 +73,23 @@ public class WaitingFutureActivity extends AppCompatActivity {
                         return true;
                     case R.id.release_rank:
                         select = "releaseRank";
-                        Intent intent4 = new Intent(WaitingFutureActivity.this,MyRank.class);
+                        Intent intent4 = new Intent(WaitingFutureActivity.this,WaitingFutureActivity.class);
                         intent4.putExtra("select_order",select);
                         startActivity(intent4);
                         return true;
                     case R.id.receive_rank:
-                        select = "receiveRank";
-                        Intent intent5 = new Intent(WaitingFutureActivity.this,MyRank.class);
-                        intent5.putExtra("select_order",select);
+//                        select = "receiveRank";
+                        Intent intent5 = new Intent(WaitingFutureActivity.this,WaitingFutureActivity.class);
+//                        intent5.putExtra("select_order",select);
                         startActivity(intent5);
                         return true;
                     case R.id.nav_wallet:
-                        Intent intent6 = new Intent(WaitingFutureActivity.this,BandCard.class);
+                        Intent intent6 = new Intent(WaitingFutureActivity.this,WaitingFutureActivity.class);
                         startActivity(intent6);
                         return true;
                     case R.id.nav_setting:
+                        Intent intent7 = new Intent(WaitingFutureActivity.this,WaitingFutureActivity.class);
+                        startActivity(intent7);
                         return true;
                     case R.id.nav_login:
                         Intent intent8 = new Intent(WaitingFutureActivity.this,LoginActivity.class);

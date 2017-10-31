@@ -81,7 +81,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected(MenuItem item){
                 switch (item.getItemId()){
                     case R.id.nav_shop:
                         select = "releaseOrder";
@@ -103,21 +103,27 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                         return true;
                     case R.id.release_rank:
                         select = "releaseRank";
-                        Intent intent4 = new Intent(PublishNeedsActivity.this,MyRank.class);
+                        Intent intent4 = new Intent(PublishNeedsActivity.this,WaitingFutureActivity.class);
                         intent4.putExtra("select_order",select);
                         startActivity(intent4);
                         return true;
                     case R.id.receive_rank:
-                        select = "receiveRank";
-                        Intent intent5 = new Intent(PublishNeedsActivity.this,MyRank.class);
-                        intent5.putExtra("select_order",select);
+//                        select = "receiveRank";
+                        Intent intent5 = new Intent(PublishNeedsActivity.this,WaitingFutureActivity.class);
+//                        intent5.putExtra("select_order",select);
                         startActivity(intent5);
                         return true;
                     case R.id.nav_wallet:
-                        Intent intent6 = new Intent(PublishNeedsActivity.this,BandCard.class);
+                        Intent intent6 = new Intent(PublishNeedsActivity.this,WaitingFutureActivity.class);
                         startActivity(intent6);
                         return true;
                     case R.id.nav_setting:
+                        Intent intent7 = new Intent(PublishNeedsActivity.this,WaitingFutureActivity.class);
+                        startActivity(intent7);
+                        return true;
+                    case R.id.nav_login:
+                        Intent intent8 = new Intent(PublishNeedsActivity.this,LoginActivity.class);
+                        startActivity(intent8);
                         return true;
                     default:
                 }
@@ -286,6 +292,12 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     }
 
     @Override
+    public void onBackPressed() {
+        JumpToActivity(MainActivity.class);
+        finish();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case 0:{
@@ -299,8 +311,9 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                 break;
             }
             case 1:{
-                String pickupLocation = data.getStringExtra("pickupLocation");
-                pickupLocationButton.setText(pickupLocation);
+                if (data != null)
+
+
                 break;
             }
             default:break;

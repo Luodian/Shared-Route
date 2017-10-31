@@ -58,7 +58,7 @@ public class PageFragment extends Fragment {
     private boolean isFirst = true;
     Vibrator vibrator;
 
-    boolean isLoading;
+    boolean isLoading = false;
 
     private CoordinatorLayout mShoppingCartRly;
 
@@ -141,48 +141,48 @@ public class PageFragment extends Fragment {
         mRefreshLayout.setColorSchemeColors(Color.RED, Color.CYAN);
 
         mrc.setAdapter(adapter);
-        mrc.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                Log.d("test", "StateChanged = " + newState);
-
-
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                Log.d("test", "onScrolled");
-
-                int lastVisibleItemPosition = llm.findLastVisibleItemPosition();
-                if (lastVisibleItemPosition + 1 == adapter.getItemCount()) {
-                    Log.d("test", "loading executed");
-
-                    boolean isRefreshing = mRefreshLayout.isRefreshing();
-                    if (isRefreshing) {
-                        adapter.notifyItemRemoved(adapter.getItemCount());
-                        return;
-                    }
-                    if (!isLoading) {
-                        isLoading = true;
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                new MoreTask().execute();
-                                Log.d("test", "load more completed");
-                                isLoading = false;
-                            }
-                        }, 1000);
-                    }
-                }
-            }
-        });
+//        mrc.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                Log.d("test", "StateChanged = " + newState);
+//
+//
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                Log.d("test", "onScrolled");
+//
+//                int lastVisibleItemPosition = llm.findLastVisibleItemPosition();
+//                if (lastVisibleItemPosition + 1 == adapter.getItemCount()) {
+//                    Log.d("test", "loading executed");
+//
+//                    boolean isRefreshing = mRefreshLayout.isRefreshing();
+//                    if (isRefreshing) {
+//                        adapter.notifyItemRemoved(adapter.getItemCount());
+//                        return;
+//                    }
+//                    if (!isLoading) {
+//                        isLoading = true;
+//                        handler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                new MoreTask().execute();
+//                                Log.d("test", "load more completed");
+//                                isLoading = false;
+//                            }
+//                        }, 1000);
+//                    }
+//                }
+//            }
+//        });
 
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
                 mRefreshLayout.setRefreshing(true);
-                new InitTask().execute();
+                new RefreshTask().execute();
             }
         });
 
@@ -502,15 +502,15 @@ public class PageFragment extends Fragment {
         protected void onPostExecute(ArrayList<listItem> data) {
             super.onPostExecute(data);
 
-            if (mRefreshLayout != null) {
-                mRefreshLayout.setRefreshing(false);
-            }
             //没有新的数据，提示消息
             if (data == null || data.size() == 0) {
-//                Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
             } else {
                 TaskListItem.addAll(data);
                 adapter.notifyDataSetChanged();
+            }
+            if (mRefreshLayout != null) {
+                mRefreshLayout.setRefreshing(false);
             }
         }
     }
