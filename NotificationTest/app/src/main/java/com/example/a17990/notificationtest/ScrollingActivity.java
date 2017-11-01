@@ -3,6 +3,7 @@ package com.example.a17990.notificationtest;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -18,17 +19,35 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.Socket;
 
 public class ScrollingActivity extends AppCompatActivity {
 
     private Socket socket;
-    private Handler handler;
-    private DataInputStream in;
+    private BufferedReader in;
+    private PrintStream out;
     Button btn;
     TextView scrollText;
+
+//    private Handler handler = new Handler(){
+//        @Override
+//        public void handleMessage(Message msg){
+//            switch (msg.what){
+//                case 0x11:
+////                    noti(msg.getData().getString("msg"));
+//                    scrollText.setText(msg.getData().getString("msg"));
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,5 +74,25 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         });
 
-}}
+
+}
+//    public void noti(String str){
+//
+//        Notification notification = new NotificationCompat.Builder(this)
+//                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.banner_1))
+//                .setSmallIcon(R.drawable.banner_2)
+//                .setTicker("You have a message")
+//                .setContentTitle("title")
+//                .setContentText("text:"+str)
+//                .setWhen(System.currentTimeMillis())
+//                .setPriority(Notification.PRIORITY_DEFAULT)
+//                .setAutoCancel(true)
+//                .setOngoing(false)
+//                .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
+//                .setContentIntent(PendingIntent.getActivity(this, 1, new Intent(this, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT))
+//                .build();
+//        NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+//        notificationManager.notify(1,notification);
+//    }
+}
 
