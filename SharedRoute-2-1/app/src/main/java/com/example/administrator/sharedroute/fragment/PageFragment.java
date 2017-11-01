@@ -174,7 +174,7 @@ public class PageFragment extends Fragment {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                new MoreTask().execute();
+                                new MoreTask(adapter.getItemCount() - 1).execute();
                                 Log.d("test", "load more completed");
                                 isLoading = false;
                             }
@@ -195,8 +195,7 @@ public class PageFragment extends Fragment {
             @Override
             public void run() {
                 mRefreshLayout.setRefreshing(true);
-                new InitTask().execute();
-                Log.d("test", "load more completed");
+                new RefreshTask().execute();
             }
         });
 
@@ -354,7 +353,7 @@ public class PageFragment extends Fragment {
         @Override
         protected ArrayList<listItem> doInBackground(Void... params) {
             String result = null;
-            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=show&length=1";
+            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=RefreshTask";
             HttpURLConnection con=null;
             InputStream in=null;
             ArrayList<listItem> InitTaskListItem = new ArrayList<>();
@@ -443,6 +442,14 @@ public class PageFragment extends Fragment {
                     //断开连接
                 }
             }
+            listItem item = new listItem();
+            item.SendLocation = "正心420";
+            item.SendTime = "18:00";
+            item.FetchLocation = "顺丰快递";
+            item.FetchTime = "12:00";
+            item.TaskKindID = "水果";
+            item.PickID = "AE86";
+            InitTaskListItem.add(item);
             return InitTaskListItem;
         }
 
@@ -468,45 +475,18 @@ public class PageFragment extends Fragment {
 
     }
 
-    //这里写成从本地数据库中获取数据
-    private class InitTask extends AsyncTask<Void, Void, ArrayList<listItem>> {
-        @Override
-        protected ArrayList<listItem> doInBackground(Void... params) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            ArrayList<listItem> data;
-            data = new ArrayList<>();
-            return data;
-
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<listItem> data) {
-            super.onPostExecute(data);
-
-            //没有新的数据，提示消息
-            if (data == null || data.size() == 0) {
-                adapter.notifyItemRemoved(adapter.getItemCount());
-                Toast.makeText(getActivity(), "???", Toast.LENGTH_SHORT).show();
-            } else {
-                TaskListItem.addAll(data);
-                adapter.notifyDataSetChanged();
-            }
-            if (mRefreshLayout != null) {
-                mRefreshLayout.setRefreshing(false);
-            }
-        }
-    }
-
     //上拉加载
-    private class MoreTask extends AsyncTask<Void, Void, ArrayList<listItem>> {
+    private class MoreTask extends AsyncTask<Integer, Void, ArrayList<listItem>> {
+
+        private int lastID;
+        public MoreTask(int _lastID) {
+            lastID = _lastID;
+        }
+
         @Override
-        protected ArrayList<listItem> doInBackground(Void... params) {
+        protected ArrayList<listItem> doInBackground(Integer... currrent) {
             String result = null;
-            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=show&length=1";
+            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=MoreTask&CurrentID=" + String.valueOf(currrent);
             HttpURLConnection con=null;
             InputStream in=null;
             ArrayList<listItem> InitTaskListItem = new ArrayList<>();
