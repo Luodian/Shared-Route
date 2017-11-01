@@ -2,7 +2,6 @@ package com.example.administrator.sharedroute.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,10 +23,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.AcceptedOrderItemAdapter;
@@ -37,8 +36,19 @@ import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
-import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,43 +70,27 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     private List<listItem> itemPublishList = new ArrayList<>();
     private AcceptedOrderItemAdapter adapter2;
     private ReleaseOrderItemAdapter adapter1;
-    private int mMenuId;
+
     private OrderDao orderDao;
     private BottomNavigationView navigation;
     private SwipeRefreshLayout swipeRefresh1;
     private SwipeRefreshLayout swipeRefresh2;
-    private AnimationAdapter mAnimAdapter;
-    private int status;
-    private View view;
-    private ImageView userHeader;
-    private ImageView phoneImage;
-    private TextView userName;
-    private TextView userPhone;
-    private TextView releaseTime;
-    private TextView fetchLocation;
-    private ImageView statusImage;
-    private TextView statusText;
+
+    private FetchUserInfo mFetchTask;
+    public String usrid = "";
+    public String usrphone = "";
+    public double usraccount = 0;
+
+    private TextView UserID;
+    private TextView UserName;
+    private TextView UserAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//		view = mInflater.inflate(release_order_item_layout, null);
-//		userHeader = (ImageView)view.findViewById(R.id.user_header);
-//		phoneImage = (ImageView)view.findViewById(R.id.phone_image);
-//		userName = (TextView) view.findViewById(R.id.user_name);
-//		userPhone = (TextView) view.findViewById(R.id.user_phone);
-//		releaseTime = (TextView) view.findViewById(R.id.release_time);
-//		fetchLocation = (TextView) view.findViewById(R.id.fetch_location);
-//		statusImage = (ImageView) view.findViewById(R.id.status_image);
-//		statusText = (TextView) view.findViewById(R.id.status_text);
-//		Typeface typeFace = Typeface.createFromAsset(getAssets(),"fonts/youyuan.TTF");
-//		userName.setTypeface(typeFace);
-//		userPhone.setTypeface(typeFace);
-//		releaseTime.setTypeface(typeFace);
-//		fetchLocation.setTypeface(typeFace);
-//		statusText.setTypeface(typeFace);
+        Bundle bundle = getIntent().getExtras();   //得到传过来的bundle
+        usrid = bundle.getString("ID");
 
         orderDao = new OrderDao(this);
         /**
@@ -112,9 +106,16 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_user);
         }
-
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+
+        View nav_header_view = LayoutInflater.from(MainActivity.this).inflate(R.layout.nav_header,null);
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
+
+        UserID = (TextView) nav_header_view.findViewById(R.id.nav_header_id);
+        UserName = (TextView) nav_header_view.findViewById(R.id.nav_header_name);
+        UserAccount = (TextView) nav_header_view.findViewById(R.id.nav_header_account);
+        UserID.setText(String.format("学号：%s", usrid));
+
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
             public boolean onNavigationItemSelected(MenuItem item){
@@ -161,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         Intent intent8 = new Intent(MainActivity.this,LoginActivity.class);
                         intent8.putExtra("from","homePage");
                         startActivity(intent8);
+                        finish();
                         return true;
                     default:
                 }
@@ -207,14 +209,15 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         // 设置分割线的样式
         mLinearLayout.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_vertical));
 
-
+        mFetchTask = new FetchUserInfo(usrid);
 
         navigation = (BottomNavigationView) findViewById(R.id.main_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
 
         swipeRefresh1 = (SwipeRefreshLayout) view1.findViewById(R.id.swipe_refresh_release);
-        swipeRefresh1.setColorSchemeColors(Color.RED, Color.CYAN);
+        swipeRefresh1.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
+                android.R.color.holo_orange_light, android.R.color.holo_green_light);
         swipeRefresh1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -227,18 +230,18 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             @Override
             public void run() {
                 swipeRefresh1.setRefreshing(true);
-                status = 1;
-                new refreshTask().execute();
+                new refreshKeep().execute();
             }
         });
 
         swipeRefresh2 = (SwipeRefreshLayout) view2.findViewById(R.id.swipe_refresh_receive);
-        swipeRefresh2.setColorSchemeColors(Color.RED, Color.CYAN);
+        swipeRefresh2.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
+                android.R.color.holo_orange_light, android.R.color.holo_green_light);
         swipeRefresh2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeRefresh2.setRefreshing(true);
-                new refreshKeep().execute();
+//                new refreshKeepTwo().execute();
             }
         });
 
@@ -246,8 +249,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             @Override
             public void run() {
                 swipeRefresh1.setRefreshing(true);
-                status = 2;
-                new refreshTask().execute();
+//                new refreshKeepTwo().execute();
             }
         });
     }
@@ -311,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            itemPublishList = new ArrayList<listItem>();//这里就等着连数据吧
+            itemPublishList = new ArrayList<>();//这里就等着连数据吧
             itemAcceptList = orderDao.getAllDate();
             return itemPublishList;
         }
@@ -319,8 +321,13 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         @Override
         protected void onPostExecute(List<listItem> listItems) {
             super.onPostExecute(listItems);
-            if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
-            if (swipeRefresh2 != null) swipeRefresh1.setRefreshing(false);
+            if (swipeRefresh1 != null) {
+                swipeRefresh1.setRefreshing(false);
+            }
+            if (swipeRefresh2 != null) {
+                assert swipeRefresh1 != null;
+                swipeRefresh1.setRefreshing(false);
+            }
             //if (status==1){
             RecyclerView releaseOrder = (RecyclerView) view1.findViewById(R.id.release_order);
             GridLayoutManager layoutManager1 = new GridLayoutManager(MainActivity.this, 1);
@@ -438,9 +445,71 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         mDrawerLayout.closeDrawers();
     }
 
-
     public void JumpToActivity(Class activity){
         startActivity(new Intent(this,activity));
+    }
+
+    public class FetchUserInfo extends AsyncTask<Void, Void, Boolean> {
+
+        private String id = null;
+        private String url = "http://47.95.194.146:8080/sharedroot_server/Login";
+        private String result = null;
+
+        FetchUserInfo(String UserID) {
+            id = UserID;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+
+            try {
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(url);
+
+                if (id!=""){
+                    List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+                    parameters.add(new BasicNameValuePair("UserID", id));
+                    parameters.add(new BasicNameValuePair("action", "login"));
+                    UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
+                    post.setEntity(ent);
+                }
+                HttpResponse responsePOST = client.execute(post);
+
+                HttpEntity resEntity = responsePOST.getEntity();
+
+                if (resEntity != null) {
+                    result = EntityUtils.toString(resEntity);
+                }
+                if (result.equals("success"))
+                {
+                    client.getConnectionManager().shutdown();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            } catch (IOException e) {
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            mFetchTask = null;
+            if (success) {
+                UserName.setText("电话：" + usrphone);
+                UserAccount.setText("余额：" + String.valueOf(usraccount));
+            } else {
+                Toast.makeText(MainActivity.this, "接受失败", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mFetchTask = null;
+        }
     }
 
 

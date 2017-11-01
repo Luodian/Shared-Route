@@ -485,10 +485,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
                 sp.edit().putString("now_stu_num",mEmailView.getText().toString()).commit();
+                Bundle mBundle = new Bundle();
+                mBundle.putString("ID",mEmailView.getText().toString());//压入数据
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                intent.putExtras(mBundle);
+                
                 //启动接收命令的线程
                 new MyThread().start();
                 //开始新界面
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(LoginActivity.this, "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
