@@ -1,10 +1,7 @@
 package com.example.administrator.sharedroute.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView.Adapter;
@@ -14,15 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.sharedroute.R;
-import com.example.administrator.sharedroute.activity.BlurredActivity;
 import com.example.administrator.sharedroute.activity.SearchNeedsActivity;
 import com.example.administrator.sharedroute.entity.listItem;
-import com.example.administrator.sharedroute.listener.OnBlurCompleteListener;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
-import com.example.administrator.sharedroute.widget.BlurBehind;
 
 import java.util.ArrayList;
 
@@ -40,6 +35,7 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
     private OrderDao orderDao;
     private Context mContext;
     private TabLayout mTablayout;
+    private boolean isMoreData = true;
 
     public PullRecyclerViewAdapter(ArrayList<listItem> mDataset ,TabLayout mTablayout) {
         this.mDataset = mDataset;
@@ -86,31 +82,33 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         if (holder instanceof ItemViewHolder) {
             //holder.tv.setText(data.get(position));
-            ((ItemViewHolder) holder).kindsTextView.setText(mDataset.get(position).getExpressType());
-            ((ItemViewHolder) holder).fetchTimeTextView.setText(mDataset.get(position).getInTimeStamp());
-            ((ItemViewHolder) holder).sendTimeTextView.setText(mDataset.get(position).getOutTimeStamp());
-            ((ItemViewHolder) holder).fetchLocTextView.setText(mDataset.get(position).getInLocation());
-            ((ItemViewHolder) holder).sendLocTextView.setText(mDataset.get(position).getOutLocation());
-            ((ItemViewHolder) holder).priceTextView.setText(String.valueOf(mDataset.get(position).getPrice()) + "元");
+            ((ItemViewHolder) holder).kindsTextView.setText(mDataset.get(position).TaskKindID);
+            ((ItemViewHolder) holder).fetchTimeTextView.setText(mDataset.get(position).FetchTime);
+            ((ItemViewHolder) holder).sendTimeTextView.setText(mDataset.get(position).SendTime);
+            ((ItemViewHolder) holder).fetchLocTextView.setText(mDataset.get(position).FetchLocation);
+            ((ItemViewHolder) holder).sendLocTextView.setText(mDataset.get(position).SendLocation);
+            ((ItemViewHolder) holder).priceTextView.setText(String.valueOf(mDataset.get(position).Money) + "元");
 
             ((ItemViewHolder) holder).mCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     FlipShareView shareBottom = new FlipShareView.Builder((SearchNeedsActivity)mContext, mTablayout)
-                            .addItem(new ShareItem("类型："+mDataset.get(position).getExpressType(), Color.WHITE, 0xffea650b))
-                            .addItem(new ShareItem("描述："+mDataset.get(position).getExpressSize(), Color.WHITE, 0xff4999F0))
-                            .addItem(new ShareItem("取件时间："+mDataset.get(position).getInTimeStamp(), Color.WHITE, 0xffD9392D))
-                            .addItem(new ShareItem("取件地点："+mDataset.get(position).getInLocation(), Color.WHITE, 0xff57708A))
-                            .addItem(new ShareItem("送件时间："+mDataset.get(position).getOutTimeStamp(), Color.WHITE, 0xffea0bb2))
-                            .addItem(new ShareItem("送件地点："+mDataset.get(position).getOutLocation(), Color.WHITE, 0xffea650b))
-                            .addItem(new ShareItem("价格："+mDataset.get(position).getPrice(), Color.WHITE,0xff063e04))
+                            .addItem(new ShareItem("发布者："+mDataset.get(position).PublisherName, Color.WHITE,0xff00bcd4))
+                            .addItem(new ShareItem("联系方式："+mDataset.get(position).PublisherPhone, Color.WHITE, 0xffea650b))
+                            .addItem(new ShareItem("类型："+mDataset.get(position).TaskKindID, Color.WHITE, 0xffea650b))
+                            .addItem(new ShareItem("描述："+mDataset.get(position).Remark, Color.WHITE, 0xff4999F0))
+                            .addItem(new ShareItem("取件时间："+mDataset.get(position).FetchTime, Color.WHITE, 0xffD9392D))
+                            .addItem(new ShareItem("取件地点："+mDataset.get(position).FetchLocation, Color.WHITE, 0xff57708A))
+                            .addItem(new ShareItem("送件时间："+mDataset.get(position).SendTime, Color.WHITE, 0xffea0bb2))
+                            .addItem(new ShareItem("送件地点："+mDataset.get(position).SendLocation, Color.WHITE, 0xffea650b))
+                            .addItem(new ShareItem("价格："+mDataset.get(position).Money, Color.WHITE,0xff063e04))
                             .setItemDuration(200)
                             .setBackgroundColor(0x60000000)
                             .setAnimType(FlipShareView.TYPE_SLIDE)
                             .create();
                 }
             });
-            int num = orderDao.getItemCount(mDataset.get(position).getID());
+            int num = orderDao.getItemCount(mDataset.get(position).ID);
             Log.e("???",String.valueOf(num));
             if (num != 0)  ((ItemViewHolder) holder).mImageView.setImageResource(R.drawable.trolley_pressed);
             else {
@@ -131,6 +129,29 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
                 });
             }
         }
+//        else
+//        {
+//            if (!isMoreData)
+//            {
+//                ((FootViewHolder) holder).pb.setVisibility(View.INVISIBLE);
+//                ((FootViewHolder) holder).tips.setText("已经加载完毕...");
+//            }
+//            else
+//            {
+//                ((FootViewHolder) holder).pb.setVisibility(View.VISIBLE);
+//                ((FootViewHolder) holder).tips.setText("正在加载中...");
+//            }
+//        }
+    }
+
+    public void setNoMoreData()
+    {
+        isMoreData = false;
+    }
+
+    public void setHasMoreData()
+    {
+        isMoreData = true;
     }
 
     public void setCallBackListener(CallBackListener mCallBackListener){
@@ -167,9 +188,12 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
     }
 
     private static class FootViewHolder extends ViewHolder {
-
+        TextView tips;
+        ProgressBar pb;
         FootViewHolder(View view) {
             super(view);
+            pb = (ProgressBar) view.findViewById(R.id.progress);
+            tips = (TextView) view.findViewById(R.id.text_footer);
         }
     }
 }

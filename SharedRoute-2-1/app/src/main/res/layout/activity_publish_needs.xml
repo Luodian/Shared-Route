@@ -525,7 +525,7 @@
                 android:layout_gravity="center"
                 android:padding="4dp"
                 android:layout_margin="8dp"
-                app:buttonColor="#ffd700"
+                app:buttonColor="@color/colorPrimary"
                 app:buttonText="确认发布"
                 app:buttonTextSize="23sp"
                 app:progressStyle="loading" />

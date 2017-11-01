@@ -1,7 +1,5 @@
 package com.example.administrator.sharedroute.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,7 +11,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +30,6 @@ import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
-import com.unstoppable.submitbuttonview.SubmitButton;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -45,8 +41,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,13 +123,15 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 List<listItem> listItemList = adapter.getItems();
                 FlipShareView shareBottom = new FlipShareView.Builder(ConfirmTaskActivity.this, mCardView)
-                        .addItem(new ShareItem("类型："+listItemList.get(position).getExpressType(), Color.WHITE, 0xff43549C))
-                        .addItem(new ShareItem("描述："+listItemList.get(position).getExpressSize(), Color.WHITE, 0xff4999F0))
-                        .addItem(new ShareItem("取件时间："+listItemList.get(position).getInTimeStamp(), Color.WHITE, 0xffD9392D))
-                        .addItem(new ShareItem("取件地点："+listItemList.get(position).getInLocation(), Color.WHITE, 0xff57708A))
-                        .addItem(new ShareItem("送件时间："+listItemList.get(position).getOutTimeStamp(), Color.WHITE, 0xffea0bb2))
-                        .addItem(new ShareItem("送件地点："+listItemList.get(position).getOutLocation(), Color.WHITE, 0xffea650b))
-                        .addItem(new ShareItem("价格："+listItemList.get(position).getPrice(), Color.WHITE,0xff063e04))
+                        .addItem(new ShareItem("发布者：："+listItemList.get(position).PublisherName, Color.WHITE, 0xff43549C))
+                        .addItem(new ShareItem("联系方式："+listItemList.get(position).PublisherName, Color.WHITE, 0xff43549C))
+                        .addItem(new ShareItem("物品类型："+listItemList.get(position).TaskKindID, Color.WHITE, 0xff43549C))
+                        .addItem(new ShareItem("物品描述："+listItemList.get(position).Remark, Color.WHITE, 0xff4999F0))
+                        .addItem(new ShareItem("取件时间："+listItemList.get(position).FetchTime, Color.WHITE, 0xffD9392D))
+                        .addItem(new ShareItem("取件地点："+listItemList.get(position).FetchLocation, Color.WHITE, 0xff57708A))
+                        .addItem(new ShareItem("送件时间："+listItemList.get(position).SendTime, Color.WHITE, 0xffea0bb2))
+                        .addItem(new ShareItem("送件地点："+listItemList.get(position).SendLocation, Color.WHITE, 0xffea650b))
+                        .addItem(new ShareItem("订单价格："+listItemList.get(position).Money, Color.WHITE,0xff063e04))
                         .setItemDuration(250)
                         .setBackgroundColor(0x60000000)
                         .setAnimType(FlipShareView.TYPE_SLIDE)
@@ -147,86 +146,21 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
                     @Override
                     public void run() {
                         try{
-                            Thread.sleep(1500);
+                            mAuthTask = new UserLoginTask(itemlists);
+                            mAuthTask.execute();
                         }catch (Exception e){
                             e.printStackTrace();
                         }
-                        Intent intent =new Intent(ConfirmTaskActivity.this,ConfirmFinishedActivity.class);
-
-                        itemlists = adapter.getItems();
-                        ArrayList<listItem> listElected = new ArrayList<listItem>();
-                        for (listItem e:itemlists) {
-                            listElected.add(e);
-                        }
-                        attemptLogin();
-                        //将这个listElected传给下一个
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelableArrayList("listItemList",listElected);
-                        intent.putExtras(bundle);
-
-                        startActivity(intent);
                     }
                 });
                 thread.start();
-
             }
         });
     }
 
-    private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
-
-        boolean cancel = false;
-
-        if (cancel) {
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            //showProgress(true);
-            mAuthTask = new UserLoginTask(itemlists);
-            mAuthTask.execute((Void) null);
-        }
-    }
-
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-            Log.e("???",String.valueOf(mInformation));
-            mInformation.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
-            mButtonLayout.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
-            mInformation.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mInformation.setVisibility(show ? View.GONE : View.VISIBLE);
-                    mButtonLayout.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mInformation.setVisibility(show ? View.GONE : View.VISIBLE);
-            mButtonLayout.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
-   private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+   private class UserLoginTask extends AsyncTask<Void, Void, ArrayList<Integer>> {
 
 //        HttpClient client = new DefaultHttpClient();
 //        HttpPost post = new HttpPost("http://suc.free.ngrok.cc/sharedroot_server/Login");
@@ -234,7 +168,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 //        params.add(new BasicNameValuePair(_queryKey, _queryValue));
 //        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, HTTP.UTF_8);
 //        post.setEntity(ent);
-        private String url = "http://47.95.194.146:8080/sharedroot_server/Task";
+        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Task";
 
         private String result = null;
 
@@ -250,7 +184,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 //        }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected ArrayList<Integer> doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
             try {
                 HttpClient client = new DefaultHttpClient();
@@ -258,17 +192,21 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 
                 //參數
                 int length = arraylist.size();
+                arraylist.get(0).ID = 2;
+                arraylist.get(1).ID = 3;
                 if (length != 0){
                     List<NameValuePair> parameters = new ArrayList<NameValuePair>();
                     String json = new String();
                     json+="[";
                     for (int i = 0 ; i< length;i++) {
-                        json += "{\"id\":\""+arraylist.get(i).getID()+"\"}";
+                        json += "{\"id\":"+arraylist.get(i).ID+"}";
                         if ( i != (length-1) )json +=",";
                         else json+="]";
                     }
+                    System.out.println(json);
                     parameters.add(new BasicNameValuePair("name", json));
                     parameters.add(new BasicNameValuePair("action","update"));
+                    parameters.add(new BasicNameValuePair("FetcherID","1153710308"));
                     UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                     post.setEntity(ent);
                 }
@@ -277,41 +215,46 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 
                 HttpEntity resEntity = responsePOST.getEntity();
 
+
                 if (resEntity != null) {
                     result = EntityUtils.toString(resEntity);
                 }
-                if (result.toString().equals("success"))
-                {
-                    client.getConnectionManager().shutdown();
-                    return true;
+
+                JSONArray arr = new JSONArray(result.toString());
+                ArrayList<Integer> array = new ArrayList<Integer>();
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject lan = arr.getJSONObject(i);
+                    array.add(lan.getInt("id"));
                 }
-                else
-                {
-                    return false;
-                }
-            } catch (IOException e) {
+                return  array;
+            } catch (Exception e) {
                 // TODO: handle exception
                 e.getMessage();
             }
-            return false;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final ArrayList<Integer> integers) {
+            if (integers == null) {
+                Toast.makeText(ConfirmTaskActivity.this,"接单失败",Toast.LENGTH_SHORT);
+                return;
+            }
+            ArrayList<listItem> failList = new ArrayList<listItem>();
+            ArrayList<listItem> successList = new ArrayList<listItem>();
+            for (listItem e:itemlists){
+                if (integers.contains(e.ID)) failList.add(e);
+                else successList.add(e);
+            }
             mAuthTask = null;
             //showProgress(false);
-
-            if (success) {
-                Toast.makeText(ConfirmTaskActivity.this,"Successful!", Toast.LENGTH_SHORT).show();
-//              finish();
-
-            }
-            else
-            {
-                Toast.makeText(ConfirmTaskActivity.this,result.toString(), Toast.LENGTH_SHORT).show();
-//                mPasswordView.setError(getString(R.string.error_incorrect_password));
-//                mPasswordView.requestFocus();
-            }
+            Intent intent =new Intent(ConfirmTaskActivity.this,ConfirmFinishedActivity.class);
+            itemlists = adapter.getItems();
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("successList",successList);
+            bundle.putParcelableArrayList("failList",failList);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
 
         @Override

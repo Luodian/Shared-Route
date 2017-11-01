@@ -3,6 +3,7 @@ package com.example.administrator.sharedroute.widget;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -21,9 +22,28 @@ import android.widget.TextView;
 
 import com.example.administrator.sharedroute.base.BaseDialog;
 import com.example.administrator.sharedroute.entity.DialogMenuItem;
+import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.utils.CornerUtils;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class NormalListDialog extends BaseDialog {
     /**
@@ -85,6 +105,7 @@ public class NormalListDialog extends BaseDialog {
     private int itemExtraTop;
     private int itemExtraRight;
     private int itemExtraBottom;
+    private OrderDao orderDao;
     /**
      * enable title show(是否显示标题)
      */
@@ -98,11 +119,13 @@ public class NormalListDialog extends BaseDialog {
      */
     private ArrayList<DialogMenuItem> contents = new ArrayList<>();
     private LayoutAnimationController lac;
+    private int itemId;
 
-
-    public NormalListDialog(Context context, ArrayList<DialogMenuItem> baseItems) {
+    public NormalListDialog(Context context, ArrayList<DialogMenuItem> baseItems , int id) {
         super(context);
         this.contents.addAll(baseItems);
+        orderDao = new OrderDao(context);
+        itemId = id;
         init();
     }
 //
@@ -191,12 +214,17 @@ public class NormalListDialog extends BaseDialog {
         }
 
         lv.setAdapter(adapter);
+        /**
+         *
+         *
+         *
+         * **/
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (contents.get(position).operName.equals("确认送达"))
                 {
-                    dismiss();
+                    new ConfirmTask().execute();
                 }
                 else dismiss();
             }
@@ -423,6 +451,50 @@ public class NormalListDialog extends BaseDialog {
             iv_item.setVisibility(item.resId == 0 ? View.GONE : View.VISIBLE);
 
             return ll_item;
+        }
+    }
+    class ConfirmTask extends AsyncTask<Void,Void,Boolean>{
+        String path = "http://suc.free.ngrok.cc/sharedroot_server/Task";
+        HttpURLConnection con=null;
+        InputStream in=null;
+        String result = null;
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            try {
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(path);
+
+                //參數
+                    List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+                    parameters.add(new BasicNameValuePair("id", String.valueOf(itemId)));
+                    parameters.add(new BasicNameValuePair("action","confirm"));
+                    UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
+                    post.setEntity(ent);
+                HttpResponse responsePOST = client.execute(post);
+
+                HttpEntity resEntity = responsePOST.getEntity();
+
+
+                if (resEntity != null) {
+                    result = EntityUtils.toString(resEntity);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+           if (result!=null&&result.equals("success")) return true;
+            else return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if (aBoolean.booleanValue()==false) dismiss();
+            else{
+                String sql = "DELETE FROM client WHERE ID = "+itemId;
+                orderDao.execSQL(sql);
+                dismiss();
+            }
         }
     }
 }

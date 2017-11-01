@@ -170,10 +170,11 @@ public class PageFragment extends Fragment {
                     }
                     if (!isLoading) {
                         isLoading = true;
+//                        new MoreTask().execute();
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                new MoreTask().execute();
+                                new MoreTask(adapter.getItemCount() - 1).execute();
                                 Log.d("test", "load more completed");
                                 isLoading = false;
                             }
@@ -194,7 +195,7 @@ public class PageFragment extends Fragment {
             @Override
             public void run() {
                 mRefreshLayout.setRefreshing(true);
-                new InitTask().execute();
+                new RefreshTask().execute();
             }
         });
 
@@ -316,16 +317,176 @@ public class PageFragment extends Fragment {
             case 5:
                 mfab.setImageResource(R.mipmap.ch5);
                 break;
+            case 6:
+                mfab.setImageResource(R.mipmap.ch6);
+                break;
+            case 7:
+                mfab.setImageResource(R.mipmap.ch7);
+                break;
+            case 8:
+                mfab.setImageResource(R.mipmap.ch8);
+                break;
+            case 9:
+                mfab.setImageResource(R.mipmap.ch9);
+                break;
+            case 10:
+                mfab.setImageResource(R.mipmap.ch10);
+                break;
+            case 11:
+                mfab.setImageResource(R.mipmap.ch11);
+                break;
+            case 12:
+                mfab.setImageResource(R.mipmap.ch12);
+                break;
+            case 13:
+                mfab.setImageResource(R.mipmap.ch13);
+                break;
+            case 14:
+                mfab.setImageResource(R.mipmap.ch14);
+                break;
             default:
         }
     }
 
-    private class InitTask extends AsyncTask<Void, Void, ArrayList<listItem>>
+    private class RefreshTask extends AsyncTask<Void, Void, ArrayList<listItem>>
     {
         @Override
         protected ArrayList<listItem> doInBackground(Void... params) {
             String result = null;
-            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=show&length=1";
+            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=RefreshTask";
+            HttpURLConnection con=null;
+            InputStream in=null;
+            ArrayList<listItem> InitTaskListItem = new ArrayList<>();
+            try
+            {
+                URL url=new URL(path);
+                con= (HttpURLConnection) url.openConnection();
+                con.setConnectTimeout(5*1000);
+                con.setReadTimeout(5*1000);
+                /*
+                * http响应码：getResponseCode
+                  200：成功 404：未找到 500：发生错误
+              */
+                if (con.getResponseCode()==200)
+                {
+                    System.out.println("连接成功");
+                    in = con.getInputStream();
+                    InputStreamReader isr = new InputStreamReader(in);
+                    //InputStreamReader isr = new InputStreamReader(getAssets().open("get_data.json"),"UTF-8");
+                    BufferedReader br = new BufferedReader(isr);
+                    String line;
+                    //StringBuilder 缓存区 StringBuffer
+                    StringBuilder builder = new StringBuilder();
+                    while ((line = br.readLine()) != null) {
+                        builder.append(line);
+                    }
+                    br.close();
+                    isr.close();
+                    result = builder.toString();
+                    System.out.println(builder.toString());
+                    Log.e("LUODIANDIAN",builder.toString());
+//                    JSONObject root = new JSONObject(builder.toString());
+                    JSONArray arr = new JSONArray(builder.toString());
+                    //读取多个数据
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject lan = arr.getJSONObject(i);
+//                        System.out.println("money= " + lan.getInt("money") +
+//                                " name= " + lan.getString("name") +
+//                                " phone= " + lan.getString("phone") +
+//                                " num= " + lan.getString("num") +
+//                                " packsort= " + lan.getString("packsort") +
+//                                " pickplace= " + lan.getString("pickplace") +
+//                                " delivertime= " + lan.getString("delivertime") +
+//                                " paypath= " + lan.getString("paypath") +
+//                                " remark= " + lan.getString("remark"));
+//                        listItem item = new listItem();
+//                        item.setPrice(lan.getInt("money"));
+//                        item.setPickupCode(lan.getString("num"));
+//                        item.setExpressType(lan.getString("packsort"));
+//                        item.setInTimeStamp(lan.getString(""));
+//                        item.setInLocation(lan.getString("pickplace"));
+//                        item.setOutTimeStamp(lan.getString("delivertime"));
+//                        item.setOutLocation(lan.getString(""));
+//                        item.setID(lan.getInt(""));
+//                        item.setStatus(lan.getInt(""));
+//                        item.setPublisherID(lan.getString(""));
+//                        item.setCheckBoxElected(false);
+//                        item.setPublishTime(lan.getString(""));
+//                        item.setExpressSize(lan.getString(""));
+//                        if (item.getStatus()==1) InitTaskListItem.add(item);
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                if (in!=null){
+                    try
+                    {
+                        in.close();
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                if (con!=null){
+                    con.disconnect();
+                    //断开连接
+                }
+            }
+            listItem item = new listItem();
+            item.SendLocation = "正心420";
+            item.SendTime = "18:00";
+            item.FetchLocation = "顺丰快递";
+            item.FetchTime = "12:00";
+            item.TaskKindID = "水果";
+            item.PickID = "AE86";
+            InitTaskListItem.add(item);
+            return InitTaskListItem;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<listItem> result) {
+            super.onPostExecute(result);
+
+            if (mRefreshLayout != null) {
+                mRefreshLayout.setRefreshing(false);
+            }
+            //没有新的数据，提示消息
+            if (result == null || result.size() == 0) {
+                adapter.notifyItemRemoved(adapter.getItemCount());
+                Toast.makeText(mContext, R.string.check_network_status, Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                TaskListItem.addAll(result);
+                adapter.notifyDataSetChanged();
+            }
+        }
+
+    }
+
+    //上拉加载
+    private class MoreTask extends AsyncTask<Integer, Void, ArrayList<listItem>> {
+
+        private int lastID;
+        public MoreTask(int _lastID) {
+            lastID = _lastID;
+        }
+
+        @Override
+        protected ArrayList<listItem> doInBackground(Integer... currrent) {
+            String result = null;
+            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=MoreTask&CurrentID=" + String.valueOf(currrent);
             HttpURLConnection con=null;
             InputStream in=null;
             ArrayList<listItem> InitTaskListItem = new ArrayList<>();
@@ -373,30 +534,30 @@ public class PageFragment extends Fragment {
                     //读取多个数据
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject lan = arr.getJSONObject(i);
-                        System.out.println("money= " + lan.getInt("money") +
-                                " name= " + lan.getString("name") +
-                                " phone= " + lan.getString("phone") +
-                                " num= " + lan.getString("num") +
-                                " packsort= " + lan.getString("packsort") +
-                                " pickplace= " + lan.getString("pickplace") +
-                                " delivertime= " + lan.getString("delivertime") +
-                                " paypath= " + lan.getString("paypath") +
-                                " remark= " + lan.getString("remark"));
-                        listItem item = new listItem();
-                        item.setPrice(lan.getInt("money"));
-                        item.setPickupCode(lan.getString("num"));
-                        item.setExpressType(lan.getString("packsort"));
-                        item.setInTimeStamp(lan.getString(""));
-                        item.setInLocation(lan.getString("pickplace"));
-                        item.setOutTimeStamp(lan.getString("delivertime"));
-                        item.setOutLocation(lan.getString(""));
-                        item.setID(lan.getInt(""));
-                        item.setStatus(lan.getInt(""));
-                        item.setPublisherID(lan.getString(""));
-                        item.setCheckBoxElected(false);
-                        item.setPublishTime(lan.getString(""));
-                        item.setExpressSize(lan.getString(""));
-                        if (item.getStatus()==1) InitTaskListItem.add(item);
+//                        System.out.println("money= " + lan.getInt("money") +
+//                                " name= " + lan.getString("name") +
+//                                " phone= " + lan.getString("phone") +
+//                                " num= " + lan.getString("num") +
+//                                " packsort= " + lan.getString("packsort") +
+//                                " pickplace= " + lan.getString("pickplace") +
+//                                " delivertime= " + lan.getString("delivertime") +
+//                                " paypath= " + lan.getString("paypath") +
+//                                " remark= " + lan.getString("remark"));
+//                        listItem item = new listItem();
+//                        item.setPrice(lan.getInt("money"));
+//                        item.setPickupCode(lan.getString("num"));
+//                        item.setExpressType(lan.getString("packsort"));
+//                        item.setInTimeStamp(lan.getString(""));
+//                        item.setInLocation(lan.getString("pickplace"));
+//                        item.setOutTimeStamp(lan.getString("delivertime"));
+//                        item.setOutLocation(lan.getString(""));
+//                        item.setID(lan.getInt(""));
+//                        item.setStatus(lan.getInt(""));
+//                        item.setPublisherID(lan.getString(""));
+//                        item.setCheckBoxElected(false);
+//                        item.setPublishTime(lan.getString(""));
+//                        item.setExpressSize(lan.getString(""));
+//                        if (item.getStatus()==1) InitTaskListItem.add(item);
                     }
                 }
             }
@@ -429,84 +590,12 @@ public class PageFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<listItem> result) {
-            super.onPostExecute(result);
-
-            if (mRefreshLayout != null) {
-                mRefreshLayout.setRefreshing(false);
-            }
-            //没有新的数据，提示消息
-            if (result == null || result.size() == 0) {
-                Toast.makeText(mContext, R.string.check_network_status, Toast.LENGTH_SHORT).show();
-            }
-            else
-            {
-//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                TaskListItem.addAll(result);
-                adapter.notifyDataSetChanged();
-            }
-        }
-
-    }
-
-    private class RefreshTask extends AsyncTask<Void, Void, ArrayList<listItem>> {
-        @Override
-        protected ArrayList<listItem> doInBackground(Void... params) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            ArrayList<listItem> data;
-            data = new ArrayList<>();
-            listItem item1 = new listItem("上滑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-            data.add(item1);
-//            //只有第一次需要加载头部的轮播图片
-//            //下拉刷新时候不加轮播图片
-//            if (myDataset.size() == 0) {
-//                data.addAll(getRotationItem());
-//            }
-
-//            data.addAll(getMoreById(mColumn, params[0]));
-            return data;
-
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<listItem> data) {
-            super.onPostExecute(data);
-
-            if (mRefreshLayout != null) {
-                mRefreshLayout.setRefreshing(false);
-            }
-            //没有新的数据，提示消息
-            if (data == null || data.size() == 0) {
-                Toast.makeText(getActivity(), "???", Toast.LENGTH_SHORT).show();
-            } else {
-                TaskListItem.addAll(data);
-                adapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-    private class MoreTask extends AsyncTask<Void, Void, ArrayList<listItem>> {
-        @Override
-        protected ArrayList<listItem> doInBackground(Void... params) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            ArrayList<listItem> data;
-            data = new ArrayList<>();
-            return data;
-        }
-
-        @Override
         protected void onPostExecute(ArrayList<listItem> data) {
             super.onPostExecute(data);
             //没有新的数据，提示消息
             if (data == null || data.size() == 0) {
+//                adapter.setNoMoreData();
+                adapter.notifyItemRemoved(adapter.getItemCount());
                 Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
             } else {
                 TaskListItem.addAll(data);

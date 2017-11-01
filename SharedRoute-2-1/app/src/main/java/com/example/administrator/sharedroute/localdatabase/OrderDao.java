@@ -6,8 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
-import com.example.administrator.sharedroute.R;
+
 import com.example.administrator.sharedroute.entity.listItem;
 
 import java.util.ArrayList;
@@ -22,7 +21,8 @@ public class OrderDao {
     private static final String TAG = "OrdersDao";
 
     // 列定义
-    private final String[] ORDER_COLUMNS = new String[] {"id","type","describe","publishTime","getTime","getLocation","sendTime","sendLocation","pickupCode","price","PorA"};
+    private final String[] ORDER_COLUMNS = new String[] {"ID","Money","PickID","TaskkindID","PublisherName","PublisherPhone","FetchLocation",
+            "SendLocation","FetchTime","SendTime","WhichPay","Remark","PublisherID","FetcherID","Status","PromiseMoney","FetcherName","FetcherPhone"};
     private Context context;
     private OrderDBHelper ordersDBHelper;
 
@@ -43,7 +43,7 @@ public class OrderDao {
         try {
             db = ordersDBHelper.getReadableDatabase();
             // select count(Id) from Orders
-            cursor = db.query(OrderDBHelper.TABLE_item, new String[]{"COUNT(id)"}, null, null, null, null, null);
+            cursor = db.query(OrderDBHelper.TABLE_item, new String[]{"COUNT(ID)"}, null, null, null, null, null);
 
             if (cursor.moveToFirst()) {
                 count = cursor.getInt(0);
@@ -65,36 +65,6 @@ public class OrderDao {
     }
 
 
-    public int count(){
-        int count = 0;
-
-        SQLiteDatabase db = null;
-        Cursor cursor = null;
-
-        try {
-            db = ordersDBHelper.getReadableDatabase();
-            // select count(Id) from Orders
-            cursor = db.query(OrderDBHelper.TABLE_item, new String[]{"COUNT(id)"}, null, null, null, null, null);
-
-            if (cursor.moveToFirst()) {
-                count = cursor.getInt(0);
-            }
-            if (count > 0) return count;
-        }
-        catch (Exception e) {
-            Log.e(TAG, "", e);
-        }
-        finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-            if (db != null) {
-                db.close();
-            }
-        }
-        return 0;
-    }
-
     /**
      * 初始化数据
      */
@@ -105,13 +75,21 @@ public class OrderDao {
             db = ordersDBHelper.getWritableDatabase();
             db.beginTransaction();
 
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-1','食物','大件', '10月21日21时42分', '10月21日21时42分','顺丰快递','10月21日21时42分','正心楼424','111',5.2,1)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-2','食物','大件', '10月21日21时42分', '10月21日21时42分','天天快递','10月21日21时42分','正心楼424','112',5.2,1)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-3','食物','大件', '10月21日21时42分', '10月21日21时42分','韵达快递','10月21日21时42分','正心楼424','113',5.2,1)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-4','食物','大件', '10月21日21时42分', '10月21日21时42分','圆通快递','10月21日21时42分','正心楼424','114',5.2,0)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-5','食物','大件', '10月21日21时42分', '10月21日21时42分','百世快递','10月21日21时42分','正心楼424','115',5.2,1)");
-            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (id, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values ( '-6','食物','大件', '10月21日21时42分', '10月21日21时42分','申通快递','10月21日21时42分','正心楼424','116',5.2,1)");
-
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (ID,Money,PickID,TaskkindID,PublisherName,PublisherPhone,FetchLocation," +
+                    "SendLocation,FetchTime,SendTime,WhichPay,Remark,PublisherID,FetcherID,Status,PromiseMoney) " +
+                    "values ( '1','2.7','111','食物','wyz','1153710308','顺丰快递','正心楼424', '10月21日21时42分', '10月21日21时42分','支付宝','大件','1503',null,1,5.2)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (ID,Money,PickID,TaskkindID,PublisherName,PublisherPhone,FetchLocation," +
+                    "SendLocation,FetchTime,SendTime,WhichPay,Remark,PublisherID,FetcherID,Status,PromiseMoney) " +
+                    "values ( '2','2.7','111','食物','wyz','1153710308','顺丰快递','正心楼424', '10月21日21时42分', '10月21日21时42分','支付宝','大件','1503',null,1,5.2)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (ID,Money,PickID,TaskkindID,PublisherName,PublisherPhone,FetchLocation," +
+                    "SendLocation,FetchTime,SendTime,WhichPay,Remark,PublisherID,FetcherID,Status,PromiseMoney) " +
+                    "values ( '3','2.7','111','食物','wyz','1153710308','顺丰快递','正心楼424', '10月21日21时42分', '10月21日21时42分','支付宝','大件','1503',null,1,5.2)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (ID,Money,PickID,TaskkindID,PublisherName,PublisherPhone,FetchLocation," +
+                    "SendLocation,FetchTime,SendTime,WhichPay,Remark,PublisherID,FetcherID,Status,PromiseMoney) " +
+                    "values ( '4','2.7','111','食物','wyz','1153710308','顺丰快递','正心楼424', '10月21日21时42分', '10月21日21时42分','支付宝','大件','1503',null,1,5.2)");
+            db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (ID,Money,PickID,TaskkindID,PublisherName,PublisherPhone,FetchLocation," +
+                    "SendLocation,FetchTime,SendTime,WhichPay,Remark,PublisherID,FetcherID,Status,PromiseMoney) " +
+                    "values ( '5','2.7','111','食物','wyz','1153710308','顺丰快递','正心楼424', '10月21日21时42分', '10月21日21时42分','支付宝','大件','1503',null,1,5.2)");
             db.setTransactionSuccessful();
         }catch (Exception e){
             Log.e(TAG, "", e);
@@ -133,7 +111,7 @@ public class OrderDao {
             if (sql.contains("select")){
                 //Toast.makeText(context, R.string.strUnableSql, Toast.LENGTH_SHORT).show();
 
-            }else if (sql.contains("insert") || sql.contains("update") || sql.contains("delete")){
+            }else if (sql.contains("insert") || sql.contains("update") || sql.contains("DELETE")){
                 db = ordersDBHelper.getWritableDatabase();
                 db.beginTransaction();
                 db.execSQL(sql);
@@ -162,7 +140,7 @@ public class OrderDao {
             db = ordersDBHelper.getReadableDatabase();
             // select * from Orders
             cursor = db.query(OrderDBHelper.TABLE_item, ORDER_COLUMNS, null, null, null, null, null);
-
+            Log.e("ppp",String.valueOf(cursor.getCount()));
             if (cursor.getCount() > 0) {
                 List<listItem> orderList = new ArrayList<listItem>(cursor.getCount());
                 while (cursor.moveToNext()) {
@@ -197,18 +175,26 @@ public class OrderDao {
             //db.execSQL("insert into " + OrderDBHelper.TABLE_item + " (taskId, type, describe, publishTime,getTime,getLocation,sendTime,sendLocation,pickupCode,price,PorA) values (1, '食物','大件', '10月21日21时42分', '10月21日21时42分','顺丰快递','10月21日21时42分','正心楼424','111111',5.2,0)");
             db.beginTransaction();
             // insert into Orders(Id, CustomName, OrderPrice, Country) values (7, "Jne", 700, "China");
+            //"ID","Money","PickID","TaskkindID","PublisherName","PublisherPhone","FetchLocation",
+            //"SendLocation","FetchTime","SendTime","WhichPay","Remark","PublisherID","FetcherID","Status","PromiseMoney"
             ContentValues contentValues = new ContentValues();
-            contentValues.put("id",listItem.getID());
-            contentValues.put("type",listItem.getExpressType());
-            contentValues.put("describe",listItem.getExpressSize());
-            contentValues.put("publishTime",listItem.getPublishTime());
-            contentValues.put("getTime",listItem.getInTimeStamp());
-            contentValues.put("getLocation",listItem.getInLocation());
-            contentValues.put("sendTime",listItem.getOutTimeStamp());
-            contentValues.put("sendLocation",listItem.getOutLocation());
-            contentValues.put("pickupCode",listItem.getPickupCode());
-            contentValues.put("price",listItem.getPrice());
-            contentValues.put("PorA",listItem.getPorA());
+            contentValues.put("ID",listItem.ID);
+            contentValues.put("Money",listItem.Money);
+            contentValues.put("TaskkindID",listItem.TaskKindID);
+            contentValues.put("PublisherName",listItem.PublisherName);
+            contentValues.put("PublisherPhone",listItem.PublisherPhone);
+            contentValues.put("FetcherPhone",listItem.FetcherPhone);
+            contentValues.put("FetcherName",listItem.FetcherName);
+            contentValues.put("FetchLocation",listItem.FetchLocation);
+            contentValues.put("SendLocation",listItem.SendLocation);
+            contentValues.put("FetchTime",listItem.FetchTime);
+            contentValues.put("SendTime",listItem.SendTime);
+            contentValues.put("WhichPay",listItem.WhichPay);
+            contentValues.put("Remark",listItem.Remark);
+            contentValues.put("PublisherID",listItem.PublisherID);
+            contentValues.put("FetcherID",listItem.FetcherID);
+            contentValues.put("Status",listItem.status);
+            contentValues.put("PromiseMoney",listItem.PromiseMoney);
             db.insertOrThrow(OrderDBHelper.TABLE_item, null, contentValues);
             db.setTransactionSuccessful();
             return true;
@@ -237,7 +223,7 @@ public class OrderDao {
             db.beginTransaction();
 
             // delete from Orders where Id = 7
-            db.delete(OrderDBHelper.TABLE_item, "id = ?", new String[]{String.valueOf(listItem.getID())});
+            db.delete(OrderDBHelper.TABLE_item, "ID = ?", new String[]{String.valueOf(listItem.ID)});
             db.setTransactionSuccessful();
             return true;
         } catch (Exception e) {
@@ -262,20 +248,26 @@ public class OrderDao {
 
             // update Orders set OrderPrice = 800 where Id = 6
             ContentValues contentValues = new ContentValues();
-            contentValues.put("id",listItem.getID());
-            contentValues.put("type",listItem.getExpressType());
-            contentValues.put("describe",listItem.getExpressSize());
-            contentValues.put("publishTime",listItem.getPublishTime());
-            contentValues.put("getTime",listItem.getInTimeStamp());
-            contentValues.put("getLocation",listItem.getInLocation());
-            contentValues.put("sendTime",listItem.getOutTimeStamp());
-            contentValues.put("sendLocation",listItem.getOutLocation());
-            contentValues.put("pickupCode",listItem.getPickupCode());
-            contentValues.put("price",listItem.getPrice());
-            contentValues.put("PorA",listItem.getPorA());
+            contentValues.put("ID",listItem.ID);
+            contentValues.put("Money",listItem.Money);
+            contentValues.put("TaskkindID",listItem.TaskKindID);
+            contentValues.put("PublisherName",listItem.PublisherName);
+            contentValues.put("PublisherPhone",listItem.PublisherPhone);
+            contentValues.put("FetcherPhone",listItem.FetcherPhone);
+            contentValues.put("FetcherName",listItem.FetcherName);
+            contentValues.put("FetchLocation",listItem.FetchLocation);
+            contentValues.put("SendLocation",listItem.SendLocation);
+            contentValues.put("FetchTime",listItem.FetchTime);
+            contentValues.put("SendTime",listItem.SendTime);
+            contentValues.put("WhichPay",listItem.WhichPay);
+            contentValues.put("Remark",listItem.Remark);
+            contentValues.put("PublisherID",listItem.PublisherID);
+            contentValues.put("FetcherID",listItem.FetcherID);
+            contentValues.put("Status",listItem.status);
+            contentValues.put("PromiseMoney",listItem.PromiseMoney);
             db.update(OrderDBHelper.TABLE_item,
-                   contentValues,
-                    "id = ?",
+                    contentValues,
+                    "ID = ?",
                     new String[]{String.valueOf(id)});
             db.setTransactionSuccessful();
             return true;
@@ -387,8 +379,8 @@ public class OrderDao {
             db = ordersDBHelper.getReadableDatabase();
             // select count(Id) from Orders where Country = 'China'
             cursor = db.query(OrderDBHelper.TABLE_item,
-                    new String[]{"COUNT(id)"},
-                    "id = ?",
+                    new String[]{"COUNT(ID)"},
+                    "ID = ?",
                     new String[]{String.valueOf(sql)},
                     null, null, null);
 
@@ -449,17 +441,24 @@ public class OrderDao {
      */
     private listItem parseOrder(Cursor cursor){
         listItem order = new listItem();
-        order.setID(cursor.getInt(cursor.getColumnIndex("id")));
-        order.setExpressType(cursor.getString(cursor.getColumnIndex("type")));
-        order.setExpressSize(cursor.getString(cursor.getColumnIndex("describe")));
-        order.setPublishTime(cursor.getString(cursor.getColumnIndex("publishTime")));
-        order.setInTimeStamp(cursor.getString(cursor.getColumnIndex("getTime")));
-        order.setInLocation(cursor.getString(cursor.getColumnIndex("getLocation")));
-        order.setOutTimeStamp(cursor.getString(cursor.getColumnIndex("sendTime")));
-        order.setOutLocation(cursor.getString(cursor.getColumnIndex("sendLocation")));
-        order.setPickupCode(cursor.getString(cursor.getColumnIndex("pickupCode")));
-        order.setPrice(cursor.getDouble(cursor.getColumnIndex("price")));
-        order.setPorA(cursor.getInt(cursor.getColumnIndex("PorA")));
+        order.ID=cursor.getInt(cursor.getColumnIndex("ID"));
+        order.Money=cursor.getDouble(cursor.getColumnIndex("Money"));
+        order.FetcherID=cursor.getString(cursor.getColumnIndex("FetcherID"));
+        order.FetcherName=cursor.getString(cursor.getColumnIndex("FetcherName"));
+        order.FetcherPhone=cursor.getString(cursor.getColumnIndex("FetcherPhone"));
+        order.PublisherID=cursor.getString(cursor.getColumnIndex("PublisherID"));
+        order.PublisherName=cursor.getString(cursor.getColumnIndex("PublisherName"));
+        order.PublisherPhone=cursor.getString(cursor.getColumnIndex("PublisherPhone"));
+        order.TaskKindID=cursor.getString(cursor.getColumnIndex("TaskkindID"));
+        order.FetchLocation= cursor.getString(cursor.getColumnIndex("FetchLocation"));
+        order.FetchTime= cursor.getString(cursor.getColumnIndex("FetchTime"));
+        order.SendLocation= cursor.getString(cursor.getColumnIndex("SendLocation"));
+        order.SendTime=cursor.getString(cursor.getColumnIndex("SendTime"));
+        order.status=cursor.getInt(cursor.getColumnIndex("Status"));
+        order.PickID=cursor.getString(cursor.getColumnIndex("PickID"));
+        order.Remark= cursor.getString(cursor.getColumnIndex("Remark"));
+        order.WhichPay=cursor.getInt(cursor.getColumnIndex("WhichPay"));
+        order.PromiseMoney=cursor.getDouble(cursor.getColumnIndex("PromiseMoney"));
         return order;
     }
 }
