@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.Socket;
 
 /**
@@ -18,12 +19,12 @@ public class ApplicationUtil extends Application{
     private static final String HOST = "free.ngrok.cc";
     private static final int PORT = 14123;
 
-    private OutputStream out=null;
+    private PrintStream out=null;
     private BufferedReader in = null;
 
     public void init() throws IOException {
         this.socket=new Socket(HOST,PORT);
-        this.out = socket.getOutputStream();
+        this.out = new PrintStream(socket.getOutputStream());
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
@@ -35,11 +36,11 @@ public class ApplicationUtil extends Application{
         this.socket = socket;
     }
 
-    public OutputStream getOut() {
+    public PrintStream getOut() {
         return out;
     }
 
-    public void setOut(OutputStream out) {
+    public void setOut(PrintStream out) {
         this.out = out;
     }
 
