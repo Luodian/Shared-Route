@@ -1,7 +1,6 @@
 package com.example.administrator.sharedroute.adapter;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,13 +54,13 @@ public class TaskViewAdapter extends ArrayAdapter<listItem> {
             viewHolder = (ViewHolder) view.getTag();
         }
         Log.e("???0",String.valueOf(count++));
-        viewHolder.expressType.setText(listItems.get(position).getExpressType());
-        viewHolder.expressSize.setText(listItems.get(position).getExpressSize());
-        viewHolder.inTimeStamp.setText(listItems.get(position).getInTimeStamp());
-        viewHolder.inLocation.setText(listItems.get(position).getInLocation());
-        viewHolder.outTimeStamp.setText(listItems.get(position).getOutTimeStamp());
-        viewHolder.outLocation.setText(listItems.get(position).getOutLocation());
-        viewHolder.price.setText(String.valueOf(listItems.get(position).getPrice())+"元");
+        viewHolder.expressType.setText(listItems.get(position).TaskKindID);
+        viewHolder.expressSize.setText(listItems.get(position).Remark);
+        viewHolder.inTimeStamp.setText(listItems.get(position).FetchTime);
+        viewHolder.inLocation.setText(listItems.get(position).FetchLocation);
+        viewHolder.outTimeStamp.setText(listItems.get(position).SendTime);
+        viewHolder.outLocation.setText(listItems.get(position).SendLocation);
+        viewHolder.price.setText(String.valueOf(listItems.get(position).Money)+"元");
         viewHolder.checkBox.setChecked(listItems.get(position).isCheckBoxElected());
         viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {//说实话，这样监听不太好，每次滑动getView的时候都要重新new一个监听，但是必须获取ChechView所在的那个Item的position，所以只能卸载getView函数内部
             @Override

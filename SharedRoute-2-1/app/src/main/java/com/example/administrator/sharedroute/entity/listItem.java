@@ -9,77 +9,25 @@ import android.widget.LinearLayout;
  */
 
 public class listItem implements Parcelable{
-    private String expressType;
-    private String expressSize;
-    private String publishTime;//发布时间
-    private String inTimeStamp;//取件时间
-    private String inLocation;//取件地点
-    private String outLocation;//送件地点
-    private String outTimeStamp;//送件时间
-    private String pickupCode;
-    private int ID;
-    private int status;
-    private String publisherID;//
-    private String accepterID;
 
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getPublisherID() {
-        return publisherID;
-    }
-
-    public void setPublisherID(String publisherID) {
-        this.publisherID = publisherID;
-    }
-
-    public String getAccepterID() {
-        return accepterID;
-    }
-
-    public void setAccepterID(String accepterID) {
-        this.accepterID = accepterID;
-    }
-
-    public String getPickupCode() {
-        return pickupCode;
-    }
-
-    public void setPickupCode(String pickupCode) {
-        this.pickupCode = pickupCode;
-    }
-
-    private double price;//价格
-    private int PorA;
-
-    public String getPublishTime() {
-        return publishTime;
-    }
-
-    public void setPublishTime(String publishTime) {
-        this.publishTime = publishTime;
-    }
-
-    public int getPorA() {
-        return PorA;
-    }
-
-    public void setPorA(int porA) {
-        PorA = porA;
-    }
+    public int ID;
+    public double Money;
+    public String PickID; //取货码
+    public String TaskKindID; //物品种类
+    public String FetchLocation;
+    public String SendLocation;
+    public String FetchTime;
+    public String SendTime;
+    public int WhichPay;
+    public String Remark;
+    public String PublisherID;
+    public String PublisherName;
+    public String FetcherID;
+    public String PublisherPhone;
+    public String FetcherPhone;
+    public String FetcherName;
+    public int status;
+    public double PromiseMoney;
 
     private boolean isCheckBoxElected;
     public LinearLayout item_bg;
@@ -92,142 +40,53 @@ public class listItem implements Parcelable{
         isCheckBoxElected = checkBoxElected;
     }
 
-
-    public listItem(String expressType, String expressSize, String inTimeStamp, String inLocation, String outTimeStamp, String outLocation, double price) {
-        this.expressSize=expressSize;
-        this.expressType=expressType;
-        this.inTimeStamp=inTimeStamp;
-        this.outTimeStamp=outTimeStamp;
-        this.inLocation=inLocation;
-        this.outLocation=outLocation;
-        this.price=price;
-    }
-
-    public listItem(String expressType, String expressSize, String inTimeStamp, String inLocation, String outTimeStamp, String outLocation, double price, Boolean radioButton) {
-        this.expressSize=expressSize;
-        this.expressType=expressType;
-        this.inTimeStamp=inTimeStamp;
-        this.outTimeStamp=outTimeStamp;
-        this.inLocation=inLocation;
-        this.outLocation=outLocation;
-        this.price=price;
-        this.isCheckBoxElected = radioButton;
-    }
-
-    public listItem(listItem item){
-        this.expressSize=item.getExpressSize();
-        this.expressType=item.getExpressType();
-        this.inTimeStamp=item.getInTimeStamp();
-        this.outTimeStamp=item.getOutTimeStamp();
-        this.inLocation=item.getInLocation();
-        this.outLocation=item.getOutLocation();
-        this.price=item.findPrice();
-        this.isCheckBoxElected = item.isCheckBoxElected();
-    }
-    public listItem(){
-
-    }
-
-    public String getExpressType() {
-        return expressType;
-    }
-
-    public void setExpressType(String expressType) {
-        this.expressType = expressType;
-    }
-
-    public String getExpressSize() {
-        return expressSize;
-    }
-
-    public void setExpressSize(String expressSize) {
-        this.expressSize = expressSize;
-    }
-
-    public String getInTimeStamp() {
-        return inTimeStamp;
-    }
-
-    public void setInTimeStamp(String inTimeStamp) {
-        this.inTimeStamp = inTimeStamp;
-    }
-
-    public String getOutTimeStamp() {
-        return outTimeStamp;
-    }
-
-    public void setOutTimeStamp(String outTimeStamp) {
-        this.outTimeStamp = outTimeStamp;
-    }
-
-    public String getInLocation() {
-        return inLocation;
-    }
-
-    public void setInLocation(String inLocation) {
-        this.inLocation = inLocation;
-    }
-
-    public String getOutLocation() {
-        return outLocation;
-    }
-
-    public void setOutLocation(String outLocation) {
-        this.outLocation = outLocation;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public double findPrice(){
-        return price;
-    }
-
     @Override
     public int describeContents() {
         return 0;
     }
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(expressType);
-        dest.writeString(expressSize);
-        dest.writeString(inTimeStamp);
-        dest.writeString(inLocation);
-        dest.writeString(outLocation);
-        dest.writeString(outTimeStamp);
         dest.writeInt(ID);
-        dest.writeString(pickupCode);
-        dest.writeString(publishTime);
+        dest.writeDouble(Money);
+        dest.writeString(PickID);
+        dest.writeString(TaskKindID);
+        dest.writeString(FetchLocation);
+        dest.writeString(SendLocation);
+        dest.writeString(FetchTime);
+        dest.writeString(SendTime);
+        dest.writeInt(WhichPay);
+        dest.writeString(Remark);
+        dest.writeString(PublisherID);
+        dest.writeString(PublisherName);
+        dest.writeString(FetcherID);
+        dest.writeString(PublisherPhone);
+        dest.writeString(FetcherPhone);
+        dest.writeString(FetcherName);
         dest.writeInt(status);
-        dest.writeInt(PorA);
-        dest.writeString(accepterID);
-        dest.writeString(publisherID);
-        dest.writeDouble(price);
+        dest.writeDouble(PromiseMoney);
     }
     public static final Creator<listItem> CREATOR = new Creator(){
         @Override
         public Object createFromParcel(Parcel source) {
             listItem item = new listItem();
-            item.setExpressType(source.readString());
-            item.setExpressSize(source.readString());
-            item.setInTimeStamp(source.readString());
-            item.setInLocation(source.readString());
-            item.setOutLocation(source.readString());
-            item.setOutTimeStamp(source.readString());
-            item.setID(source.readInt());
-            item.setPickupCode(source.readString());
-            item.setPublishTime(source.readString());
-            item.setStatus(source.readInt());
-            item.setPorA(source.readInt());
-            item.setAccepterID(source.readString());
-            item.setPublisherID(source.readString());
-            item.setPrice(source.readDouble());
+            item.ID = source.readInt();
+            item.Money = source.readDouble();
+            item.PickID = source.readString();
+            item.TaskKindID = source.readString();
+            item.FetchLocation = source.readString();
+            item.SendLocation = source.readString();
+            item.FetchTime = source.readString();
+            item.SendTime = source.readString();
+            item.WhichPay = source.readInt();
+            item.Remark = source.readString();
+            item.PublisherID = source.readString();
+            item.PublisherName = source.readString();
+            item.FetcherID = source.readString();
+            item.PublisherPhone = source.readString();
+            item.FetcherPhone = source.readString();
+            item.FetcherName = source.readString();
+            item.status = source.readInt();
+            item.PromiseMoney = source.readDouble();
             return item;
         }
 

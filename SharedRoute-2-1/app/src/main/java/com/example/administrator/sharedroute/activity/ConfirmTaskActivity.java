@@ -1,7 +1,5 @@
 package com.example.administrator.sharedroute.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,7 +11,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +30,6 @@ import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
-import com.unstoppable.submitbuttonview.SubmitButton;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -48,7 +44,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,13 +123,15 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 List<listItem> listItemList = adapter.getItems();
                 FlipShareView shareBottom = new FlipShareView.Builder(ConfirmTaskActivity.this, mCardView)
-                        .addItem(new ShareItem("类型："+listItemList.get(position).getExpressType(), Color.WHITE, 0xff43549C))
-                        .addItem(new ShareItem("描述："+listItemList.get(position).getExpressSize(), Color.WHITE, 0xff4999F0))
-                        .addItem(new ShareItem("取件时间："+listItemList.get(position).getInTimeStamp(), Color.WHITE, 0xffD9392D))
-                        .addItem(new ShareItem("取件地点："+listItemList.get(position).getInLocation(), Color.WHITE, 0xff57708A))
-                        .addItem(new ShareItem("送件时间："+listItemList.get(position).getOutTimeStamp(), Color.WHITE, 0xffea0bb2))
-                        .addItem(new ShareItem("送件地点："+listItemList.get(position).getOutLocation(), Color.WHITE, 0xffea650b))
-                        .addItem(new ShareItem("价格："+listItemList.get(position).getPrice(), Color.WHITE,0xff063e04))
+                        .addItem(new ShareItem("发布者：："+listItemList.get(position).PublisherName, Color.WHITE, 0xff43549C))
+                        .addItem(new ShareItem("联系方式："+listItemList.get(position).PublisherName, Color.WHITE, 0xff43549C))
+                        .addItem(new ShareItem("物品类型："+listItemList.get(position).TaskKindID, Color.WHITE, 0xff43549C))
+                        .addItem(new ShareItem("物品描述："+listItemList.get(position).Remark, Color.WHITE, 0xff4999F0))
+                        .addItem(new ShareItem("取件时间："+listItemList.get(position).FetchTime, Color.WHITE, 0xffD9392D))
+                        .addItem(new ShareItem("取件地点："+listItemList.get(position).FetchLocation, Color.WHITE, 0xff57708A))
+                        .addItem(new ShareItem("送件时间："+listItemList.get(position).SendTime, Color.WHITE, 0xffea0bb2))
+                        .addItem(new ShareItem("送件地点："+listItemList.get(position).SendLocation, Color.WHITE, 0xffea650b))
+                        .addItem(new ShareItem("订单价格："+listItemList.get(position).Money, Color.WHITE,0xff063e04))
                         .setItemDuration(250)
                         .setBackgroundColor(0x60000000)
                         .setAnimType(FlipShareView.TYPE_SLIDE)
@@ -195,14 +192,14 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 
                 //參數
                 int length = arraylist.size();
-                arraylist.get(0).setID(2);
-                arraylist.get(1).setID(3);
+                arraylist.get(0).ID = 2;
+                arraylist.get(1).ID = 3;
                 if (length != 0){
                     List<NameValuePair> parameters = new ArrayList<NameValuePair>();
                     String json = new String();
                     json+="[";
                     for (int i = 0 ; i< length;i++) {
-                        json += "{\"id\":"+arraylist.get(i).getID()+"}";
+                        json += "{\"id\":"+arraylist.get(i).ID+"}";
                         if ( i != (length-1) )json +=",";
                         else json+="]";
                     }
@@ -246,7 +243,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
             ArrayList<listItem> failList = new ArrayList<listItem>();
             ArrayList<listItem> successList = new ArrayList<listItem>();
             for (listItem e:itemlists){
-                if (integers.contains(e.getID())) failList.add(e);
+                if (integers.contains(e.ID)) failList.add(e);
                 else successList.add(e);
             }
             mAuthTask = null;

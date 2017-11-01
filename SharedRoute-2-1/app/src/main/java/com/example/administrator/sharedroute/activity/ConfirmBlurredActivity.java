@@ -2,7 +2,6 @@ package com.example.administrator.sharedroute.activity;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.os.BaseBundle;
 import android.os.Bundle;
 
 import com.example.administrator.sharedroute.R;
@@ -41,8 +40,8 @@ public class ConfirmBlurredActivity extends Activity {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-        System.out.println(info.getID()+"?");
-        final NormalListDialog dialog = new NormalListDialog(ConfirmBlurredActivity.this, testItems,info.getID());
+        System.out.println(info.ID +"?");
+        final NormalListDialog dialog = new NormalListDialog(ConfirmBlurredActivity.this, testItems,info.ID );
         dialog.title("确认收货")//
                 .titleTextSize_SP(22)//
                 .titleBgColor(Color.parseColor("#0097A8"))//
