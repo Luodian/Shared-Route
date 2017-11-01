@@ -318,6 +318,33 @@ public class PageFragment extends Fragment {
             case 5:
                 mfab.setImageResource(R.mipmap.ch5);
                 break;
+            case 6:
+                mfab.setImageResource(R.mipmap.ch6);
+                break;
+            case 7:
+                mfab.setImageResource(R.mipmap.ch7);
+                break;
+            case 8:
+                mfab.setImageResource(R.mipmap.ch8);
+                break;
+            case 9:
+                mfab.setImageResource(R.mipmap.ch9);
+                break;
+            case 10:
+                mfab.setImageResource(R.mipmap.ch10);
+                break;
+            case 11:
+                mfab.setImageResource(R.mipmap.ch11);
+                break;
+            case 12:
+                mfab.setImageResource(R.mipmap.ch12);
+                break;
+            case 13:
+                mfab.setImageResource(R.mipmap.ch13);
+                break;
+            case 14:
+                mfab.setImageResource(R.mipmap.ch14);
+                break;
             default:
         }
     }

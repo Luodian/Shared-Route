@@ -461,13 +461,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                Toast.makeText(LoginActivity.this,"Successful!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_SHORT).show();
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
                 sp.edit().putString("now_stu_num",mEmailView.getText().toString()).commit();
                 startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 finish();
             } else {
-                Toast.makeText(LoginActivity.this, "登录失败，失败信息为\n"+result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }
