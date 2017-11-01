@@ -3,6 +3,7 @@
     package="com.example.a17990.notificationtest">
 
     <application
+        android:name="com.example.a17990.notificationtest.ApplicationUtil"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +20,13 @@
         <activity
             android:name=".ScrollingActivity"
             android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
+
+    <!-- 振动需要的权限 -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- 声明网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>
