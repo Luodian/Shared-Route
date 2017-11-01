@@ -388,44 +388,33 @@ public class PageFragment extends Fragment {
                     Log.e("LUODIANDIAN",builder.toString());
 //                    JSONObject root = new JSONObject(builder.toString());
                     JSONArray arr = new JSONArray(builder.toString());
-
-//                    System.out.println("money= " + root.getString("money") +
-//                            " name= " + root.getString("name") +
-//                            " phone= " + root.getString("phone") +
-//                            " num= " + root.getString("num") +
-//                            " packsort= " + root.getString("packsort") +
-//                            " pickplace= " + root.getString("pickplace") +
-//                            " delivertime= " + root.getString("delivertime") +
-//                            " paypath= " + root.getString("paypath") +
-//                            " remark= " + root.getString("remark") +
-//                            " id= " + root.getString("id"));
                     //读取多个数据
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject lan = arr.getJSONObject(i);
-                        System.out.println("money= " + lan.getInt("money") +
-                                " name= " + lan.getString("name") +
-                                " phone= " + lan.getString("phone") +
-                                " num= " + lan.getString("num") +
-                                " packsort= " + lan.getString("packsort") +
-                                " pickplace= " + lan.getString("pickplace") +
-                                " delivertime= " + lan.getString("delivertime") +
-                                " paypath= " + lan.getString("paypath") +
-                                " remark= " + lan.getString("remark"));
-                        listItem item = new listItem();
-                        item.setPrice(lan.getInt("money"));
-                        item.setPickupCode(lan.getString("num"));
-                        item.setExpressType(lan.getString("packsort"));
-                        item.setInTimeStamp(lan.getString(""));
-                        item.setInLocation(lan.getString("pickplace"));
-                        item.setOutTimeStamp(lan.getString("delivertime"));
-                        item.setOutLocation(lan.getString(""));
-                        item.setID(lan.getInt(""));
-                        item.setStatus(lan.getInt(""));
-                        item.setPublisherID(lan.getString(""));
-                        item.setCheckBoxElected(false);
-                        item.setPublishTime(lan.getString(""));
-                        item.setExpressSize(lan.getString(""));
-                        if (item.getStatus()==1) InitTaskListItem.add(item);
+//                        System.out.println("money= " + lan.getInt("money") +
+//                                " name= " + lan.getString("name") +
+//                                " phone= " + lan.getString("phone") +
+//                                " num= " + lan.getString("num") +
+//                                " packsort= " + lan.getString("packsort") +
+//                                " pickplace= " + lan.getString("pickplace") +
+//                                " delivertime= " + lan.getString("delivertime") +
+//                                " paypath= " + lan.getString("paypath") +
+//                                " remark= " + lan.getString("remark"));
+//                        listItem item = new listItem();
+//                        item.setPrice(lan.getInt("money"));
+//                        item.setPickupCode(lan.getString("num"));
+//                        item.setExpressType(lan.getString("packsort"));
+//                        item.setInTimeStamp(lan.getString(""));
+//                        item.setInLocation(lan.getString("pickplace"));
+//                        item.setOutTimeStamp(lan.getString("delivertime"));
+//                        item.setOutLocation(lan.getString(""));
+//                        item.setID(lan.getInt(""));
+//                        item.setStatus(lan.getInt(""));
+//                        item.setPublisherID(lan.getString(""));
+//                        item.setCheckBoxElected(false);
+//                        item.setPublishTime(lan.getString(""));
+//                        item.setExpressSize(lan.getString(""));
+//                        if (item.getStatus()==1) InitTaskListItem.add(item);
                     }
                 }
             }
@@ -490,11 +479,6 @@ public class PageFragment extends Fragment {
             }
             ArrayList<listItem> data;
             data = new ArrayList<>();
-            listItem item1 = new listItem("上滑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-            listItem item2 = new listItem("上滑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-            listItem item3 = new listItem("上滑", "小件", "今天 12：30", "一区 顺风速运", "今天 12：30", "一区 正心楼 524", 2.0, false);
-            data.add(item1);
-            data.add(item2);
             return data;
 
         }
@@ -570,30 +554,30 @@ public class PageFragment extends Fragment {
                     //读取多个数据
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject lan = arr.getJSONObject(i);
-                        System.out.println("money= " + lan.getInt("money") +
-                                " name= " + lan.getString("name") +
-                                " phone= " + lan.getString("phone") +
-                                " num= " + lan.getString("num") +
-                                " packsort= " + lan.getString("packsort") +
-                                " pickplace= " + lan.getString("pickplace") +
-                                " delivertime= " + lan.getString("delivertime") +
-                                " paypath= " + lan.getString("paypath") +
-                                " remark= " + lan.getString("remark"));
-                        listItem item = new listItem();
-                        item.setPrice(lan.getInt("money"));
-                        item.setPickupCode(lan.getString("num"));
-                        item.setExpressType(lan.getString("packsort"));
-                        item.setInTimeStamp(lan.getString(""));
-                        item.setInLocation(lan.getString("pickplace"));
-                        item.setOutTimeStamp(lan.getString("delivertime"));
-                        item.setOutLocation(lan.getString(""));
-                        item.setID(lan.getInt(""));
-                        item.setStatus(lan.getInt(""));
-                        item.setPublisherID(lan.getString(""));
-                        item.setCheckBoxElected(false);
-                        item.setPublishTime(lan.getString(""));
-                        item.setExpressSize(lan.getString(""));
-                        if (item.getStatus()==1) InitTaskListItem.add(item);
+//                        System.out.println("money= " + lan.getInt("money") +
+//                                " name= " + lan.getString("name") +
+//                                " phone= " + lan.getString("phone") +
+//                                " num= " + lan.getString("num") +
+//                                " packsort= " + lan.getString("packsort") +
+//                                " pickplace= " + lan.getString("pickplace") +
+//                                " delivertime= " + lan.getString("delivertime") +
+//                                " paypath= " + lan.getString("paypath") +
+//                                " remark= " + lan.getString("remark"));
+//                        listItem item = new listItem();
+//                        item.setPrice(lan.getInt("money"));
+//                        item.setPickupCode(lan.getString("num"));
+//                        item.setExpressType(lan.getString("packsort"));
+//                        item.setInTimeStamp(lan.getString(""));
+//                        item.setInLocation(lan.getString("pickplace"));
+//                        item.setOutTimeStamp(lan.getString("delivertime"));
+//                        item.setOutLocation(lan.getString(""));
+//                        item.setID(lan.getInt(""));
+//                        item.setStatus(lan.getInt(""));
+//                        item.setPublisherID(lan.getString(""));
+//                        item.setCheckBoxElected(false);
+//                        item.setPublishTime(lan.getString(""));
+//                        item.setExpressSize(lan.getString(""));
+//                        if (item.getStatus()==1) InitTaskListItem.add(item);
                     }
                 }
             }

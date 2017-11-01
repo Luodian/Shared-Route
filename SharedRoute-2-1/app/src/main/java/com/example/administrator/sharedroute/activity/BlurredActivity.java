@@ -33,19 +33,19 @@ public class BlurredActivity extends Activity {
 				.withAlpha(90)
 				.withFilterColor(Color.parseColor("#7fffffff"))
 				.setBackground(this);
-		testItems.add(new DialogMenuItem("快递名称:"+info.getInLocation(), R.mipmap.ic_express));
-		testItems.add(new DialogMenuItem("取件时间:"+info.getInTimeStamp(), R.mipmap.ic_get_time));
-		testItems.add(new DialogMenuItem("类型:"+info.getExpressType(), R.mipmap.ic_type));
-		testItems.add(new DialogMenuItem("取货码:"+info.getPickupCode(), R.mipmap.ic_code));
-		testItems.add(new DialogMenuItem("金额:"+info.getPrice()+"元", R.mipmap.ic_money));
-		testItems.add(new DialogMenuItem("状态:暂无", R.mipmap.ic_status));
+		testItems.add(new DialogMenuItem("取件地点："+info.FetchLocation, R.mipmap.ic_express));
+		testItems.add(new DialogMenuItem("取件时间："+info.FetchTime, R.mipmap.ic_get_time));
+		testItems.add(new DialogMenuItem("类型："+info.TaskKindID, R.mipmap.ic_type));
+		testItems.add(new DialogMenuItem("取货码："+info.PickID, R.mipmap.ic_code));
+		testItems.add(new DialogMenuItem("金额："+info.Money+" 元", R.mipmap.ic_money));
+		testItems.add(new DialogMenuItem("状态：", R.mipmap.ic_status));
 //		try {
 //			((BlurredActivity) context).setBaseIn((BaseAnimatorSet) ZoomInEnter.class.newInstance());
 //			((BlurredActivity) context).setBaseOut((BaseAnimatorSet) ZoomOutExit.class.newInstance());
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-		final NormalListDialog dialog = new NormalListDialog(BlurredActivity.this, testItems,listItem.getID());
+		final NormalListDialog dialog = new NormalListDialog(BlurredActivity.this, testItems,listItem.ID);
 		dialog.title("物品详情")//
 				.titleTextSize_SP(22)//
 				.titleBgColor(Color.parseColor("#0097A8"))//

@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.sharedroute.R;
-import com.example.administrator.sharedroute.base.*;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.nhaarman.listviewanimations.ArrayAdapter;
 
@@ -37,13 +36,13 @@ public class ConfirmTaskAdapter extends ArrayAdapter<listItem> {
         else{
             viewHolder = (ViewHolder)view.getTag();
         }
-        viewHolder.expressType.setText(listItems.get(position).getExpressType());
-        viewHolder.expressSize.setText(listItems.get(position).getExpressSize());
-        viewHolder.inTimeStamp.setText(listItems.get(position).getInTimeStamp());
-        viewHolder.inLocation.setText(listItems.get(position).getInLocation());
-        viewHolder.outTimeStamp.setText(listItems.get(position).getOutTimeStamp());
-        viewHolder.outLocation.setText(listItems.get(position).getOutLocation());
-        viewHolder.price.setText(String.valueOf(listItems.get(position).getPrice())+"元");
+        viewHolder.expressType.setText(listItems.get(position).TaskKindID);
+        viewHolder.expressSize.setText(listItems.get(position).Remark);
+        viewHolder.inTimeStamp.setText(listItems.get(position).FetchTime);
+        viewHolder.inLocation.setText(listItems.get(position).FetchLocation);
+        viewHolder.outTimeStamp.setText(listItems.get(position).SendTime);
+        viewHolder.outLocation.setText(listItems.get(position).SendLocation);
+        viewHolder.price.setText(String.valueOf(listItems.get(position).Money)+"元");
         return view;
     }
     final static class ViewHolder{//这是每个Item的tag信息

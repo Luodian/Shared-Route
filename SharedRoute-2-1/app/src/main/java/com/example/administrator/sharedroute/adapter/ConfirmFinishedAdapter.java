@@ -36,13 +36,13 @@ public class ConfirmFinishedAdapter extends ArrayAdapter<listItem> {
         else{
             viewHolder = (ConfirmTaskAdapter.ViewHolder)view.getTag();
         }
-        viewHolder.expressType.setText(listItems.get(position).getExpressType());
-        viewHolder.expressSize.setText(listItems.get(position).getExpressSize());
-        viewHolder.inTimeStamp.setText(listItems.get(position).getInTimeStamp());
-        viewHolder.inLocation.setText(listItems.get(position).getInLocation());
-        viewHolder.outTimeStamp.setText(listItems.get(position).getOutTimeStamp());
-        viewHolder.outLocation.setText(listItems.get(position).getOutLocation());
-        viewHolder.price.setText(String.valueOf(listItems.get(position).getPrice())+"元");
+        viewHolder.expressType.setText(listItems.get(position).TaskKindID);
+        viewHolder.expressSize.setText(listItems.get(position).Remark);
+        viewHolder.inTimeStamp.setText(listItems.get(position).FetchTime);
+        viewHolder.inLocation.setText(listItems.get(position).FetchLocation);
+        viewHolder.outTimeStamp.setText(listItems.get(position).SendTime);
+        viewHolder.outLocation.setText(listItems.get(position).SendLocation);
+        viewHolder.price.setText(String.valueOf(listItems.get(position).Money)+"元");
         return view;
     }
     final static class ViewHolder{//这是每个Item的tag信息
