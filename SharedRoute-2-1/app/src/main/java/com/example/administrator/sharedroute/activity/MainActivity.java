@@ -49,6 +49,7 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,13 +109,16 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         }
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
-        View nav_header_view = LayoutInflater.from(MainActivity.this).inflate(R.layout.nav_header,null);
+//        View nav_header_view = LayoutInflater.from(MainActivity.this).inflate(R.layout.nav_header,null);
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
+        View nav_header_view = navView.getHeaderView(0);
 
         UserID = (TextView) nav_header_view.findViewById(R.id.nav_header_id);
         UserName = (TextView) nav_header_view.findViewById(R.id.nav_header_name);
         UserAccount = (TextView) nav_header_view.findViewById(R.id.nav_header_account);
-        UserID.setText(String.format("学号：%s", usrid));
+
+        UserID.setText(MessageFormat.format("学号：{0}", usrid));
+        mFetchTask = new FetchUserInfo(usrid);
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
@@ -209,7 +213,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         // 设置分割线的样式
         mLinearLayout.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_vertical));
 
-        mFetchTask = new FetchUserInfo(usrid);
 
         navigation = (BottomNavigationView) findViewById(R.id.main_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -449,7 +452,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         startActivity(new Intent(this,activity));
     }
 
-    public class FetchUserInfo extends AsyncTask<Void, Void, Boolean> {
+    public class FetchUserInfo extends AsyncTask<Integer, Void, Boolean> {
 
         private String id = null;
         private String url = "http://47.95.194.146:8080/sharedroot_server/Login";
@@ -460,7 +463,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected Boolean doInBackground(Integer... params) {
             // TODO: attempt authentication against a network service.
 
             try {
