@@ -45,7 +45,8 @@ public class BlurredActivity extends Activity {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-		final NormalListDialog dialog = new NormalListDialog(BlurredActivity.this, testItems,listItem.ID);
+
+		final NormalListDialog dialog = new NormalListDialog(BlurredActivity.this, testItems,info.getID());
 		dialog.title("物品详情")//
 				.titleTextSize_SP(22)//
 				.titleBgColor(Color.parseColor("#0097A8"))//
