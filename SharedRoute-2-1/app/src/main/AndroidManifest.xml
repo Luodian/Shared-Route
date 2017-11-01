@@ -63,6 +63,9 @@
             android:name=".activity.InfoSettingActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.BugSendActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.sendLocationActivity"
             android:screenOrientation="portrait" />
         <!-- <activity -->
