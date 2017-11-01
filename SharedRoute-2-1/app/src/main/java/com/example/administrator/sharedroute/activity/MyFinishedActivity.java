@@ -46,7 +46,7 @@ public class MyFinishedActivity extends AppCompatActivity {
 //        if (! orderDao.isDataExist()){/*到时候连接了远程后该部分需要修改*/
 //            orderDao.initTable();
 //        }
-        myOrders = orderDao.getAcceptOrder();
+        myOrders = orderDao.getAllDate();/*到时候连接了远程后该部分需要修改*/
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("我接受的订单");

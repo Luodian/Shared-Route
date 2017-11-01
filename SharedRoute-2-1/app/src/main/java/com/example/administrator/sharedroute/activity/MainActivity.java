@@ -309,8 +309,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            itemPublishList = orderDao.getPublishOrder();
-            itemAcceptList = orderDao.getAcceptOrder();
+            itemPublishList = new ArrayList<listItem>();//这里就等着连数据吧
+            itemAcceptList = orderDao.getAllDate();
             return itemPublishList;
         }
 

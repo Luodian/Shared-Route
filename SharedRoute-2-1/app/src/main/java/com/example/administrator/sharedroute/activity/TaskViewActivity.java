@@ -215,7 +215,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            listItemList = orderDao.getAcceptOrder();
+            listItemList = orderDao.getAllDate();
             return listItemList;
         }
 

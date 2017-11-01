@@ -140,7 +140,7 @@ public class OrderDao {
             db = ordersDBHelper.getReadableDatabase();
             // select * from Orders
             cursor = db.query(OrderDBHelper.TABLE_item, ORDER_COLUMNS, null, null, null, null, null);
-
+            Log.e("ppp",String.valueOf(cursor.getCount()));
             if (cursor.getCount() > 0) {
                 List<listItem> orderList = new ArrayList<listItem>(cursor.getCount());
                 while (cursor.moveToNext()) {
@@ -449,7 +449,7 @@ public class OrderDao {
         order.PublisherID=cursor.getString(cursor.getColumnIndex("PublisherID"));
         order.PublisherName=cursor.getString(cursor.getColumnIndex("PublisherName"));
         order.PublisherPhone=cursor.getString(cursor.getColumnIndex("PublisherPhone"));
-        order.TaskKindID=cursor.getString(cursor.getColumnIndex("TaskKindID"));
+        order.TaskKindID=cursor.getString(cursor.getColumnIndex("TaskkindID"));
         order.FetchLocation= cursor.getString(cursor.getColumnIndex("FetchLocation"));
         order.FetchTime= cursor.getString(cursor.getColumnIndex("FetchTime"));
         order.SendLocation= cursor.getString(cursor.getColumnIndex("SendLocation"));
