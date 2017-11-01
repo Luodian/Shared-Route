@@ -93,6 +93,8 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     FlipShareView shareBottom = new FlipShareView.Builder((SearchNeedsActivity)mContext, mTablayout)
+                            .addItem(new ShareItem("发布者："+mDataset.get(position).PublisherName, Color.WHITE,0xff00bcd4))
+                            .addItem(new ShareItem("联系方式："+mDataset.get(position).PublisherPhone, Color.WHITE, 0xffea650b))
                             .addItem(new ShareItem("类型："+mDataset.get(position).TaskKindID, Color.WHITE, 0xffea650b))
                             .addItem(new ShareItem("描述："+mDataset.get(position).Remark, Color.WHITE, 0xff4999F0))
                             .addItem(new ShareItem("取件时间："+mDataset.get(position).FetchTime, Color.WHITE, 0xffD9392D))
