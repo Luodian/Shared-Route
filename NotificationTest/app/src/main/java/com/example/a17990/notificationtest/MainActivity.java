@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
     }
 
 
@@ -82,45 +83,43 @@ public class MainActivity extends AppCompatActivity {
 
             //测试子线程获取UI内的信息并发送给handler
 //            Message message = new Message();
-//            message.what=0;
+//            message.what=0x11;
 //            Bundle bundle = new Bundle();
 //            bundle.putString("msg",secondText.getText().toString());
 //            message.setData(bundle);
 //            handler.sendMessage(message);
 
 
-            //获取socket
-            ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
-            try {
-                appUtil.init();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            socket = appUtil.getSocket();
-            in = appUtil.getIn();
-            out = appUtil.getOut();
 
-            //从服务器获取通知
-            String line = null;
-            StringBuilder buffer = new StringBuilder();
             try {
-                while((line=in.readLine())!=null){
+                //获取socket
+                ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
+
+                //init()只做一次
+                appUtil.init();
+
+                socket = appUtil.getSocket();
+                in = appUtil.getIn();
+                out = appUtil.getOut();
+
+                //从服务器获取通知,由handler发送给主线程
+                String line = null;
+                StringBuilder buffer = new StringBuilder();
+                while ((line = in.readLine()) != null) {
                     buffer.append(line);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Message msg = new Message();
-            msg.what=0x11;
-            Bundle bundle = new Bundle();
-            bundle.putString("msg",buffer.toString());
-            msg.setData(bundle);
-            handler.sendMessage(msg);
+                Message msg = new Message();
+                msg.what = 0x11;
+                Bundle bundle = new Bundle();
+                bundle.putString("msg", buffer.toString());
+                msg.setData(bundle);
+                handler.sendMessage(msg);
 
-            //向服务器发送通知
-            try {
+                //向服务器发送通知
 //                out.write("这里是安卓客户端".getBytes("gbk"));
 
+                //向服务器发送UI中按钮上的请求
+                out.write(((Button) findViewById(R.id.android_text)).getText().toString().getBytes("gbk"));
                 out.flush();
             } catch (IOException e) {
                 e.printStackTrace();
