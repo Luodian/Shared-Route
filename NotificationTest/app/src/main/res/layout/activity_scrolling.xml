@@ -28,6 +28,11 @@
         android:text="返回主界面"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/power"
+        android:text="启动 "
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
