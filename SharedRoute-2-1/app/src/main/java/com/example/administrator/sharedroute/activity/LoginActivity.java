@@ -48,6 +48,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -66,6 +68,7 @@ import java.util.List;
 import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static java.net.SocketOptions.SO_TIMEOUT;
 
 /**
  * A login screen that offers login via email/password.
@@ -89,6 +92,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     };
 
     private static final int REQUEST_READ_CONTACTS = 0;
+    private static final int REQUEST_TIMEOUT = 5*1000;//设置请求超时5秒钟
+    private static final int SO_TIMEOUT = 10*1000;  //设置等待数据超时时间10秒钟
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -429,7 +434,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
-        private String url = "http://47.95.194.146:8080/sharedroot_server/Login";
+//        private String url = "http://47.95.194.146:8080/sharedroot_server/Login";
+//        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
+        private String url="http://hitschool.free.ngrok.cc/sharedroot_server/Login";
         private String result = null;
 
         UserLoginTask(String email, String password) {
@@ -442,7 +449,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             try {
-                HttpClient client = new DefaultHttpClient();
+                BasicHttpParams httpParams = new BasicHttpParams();
+                HttpConnectionParams.setConnectionTimeout(httpParams, REQUEST_TIMEOUT);
+                HttpConnectionParams.setSoTimeout(httpParams, SO_TIMEOUT);
+                HttpClient client = new DefaultHttpClient(httpParams);
                 HttpPost post = new HttpPost(url);
 
                 if (mEmail!=""&&mPassword!=""){
@@ -460,14 +470,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (resEntity != null) {
                     result = EntityUtils.toString(resEntity);
                 }
-                if (result.equals("success"))
-                {
-                    client.getConnectionManager().shutdown();
-                    return true;
+                if (result.equals("fail")){
+                    return false;
                 }
                 else
                 {
-                    return false;
+                    client.getConnectionManager().shutdown();
+                    return true;
                 }
             } catch (IOException e) {
                 return false;
@@ -485,6 +494,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
                 sp.edit().putString("now_stu_num",mEmailView.getText().toString()).commit();
+                String now_name = result.substring(result.indexOf("name:")+5,result.indexOf("phone"));
+                String now_phone = result.substring(result.indexOf("phone:")+6);
+                Log.e("name:",now_name);
+                Log.e("phone:",now_phone);
+                sp.edit().putString("now_name",now_name).commit();
+                sp.edit().putString("now_phone",now_phone).commit();
                 //启动接收命令的线程
                 new MyThread().start();
                 //开始新界面
@@ -512,9 +527,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 PrintStream out = new PrintStream(socket.getOutputStream());
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                //向服务器发送UI中按钮上的请求
-//                out.println((((Button) findViewById(R.id.android_text)).getText().toString()));
-//                out.flush();
+                //向服务器发送学号
+                out.println("action=login;UserID="+mEmailView.getText().toString());
+                out.flush();
 
                 //从服务器获取通知,由handler发送给主线程,之后保持这个线程贯穿程序始终
                 String line = null;
@@ -538,9 +553,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Notification notification = new NotificationCompat.Builder(this)
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.banner_1))
                 .setSmallIcon(R.drawable.banner_2)
-                .setTicker("You have a message")
-                .setContentTitle("title")
-                .setContentText("text:"+str)
+                .setTicker("您的订单已被接收")
+                .setContentTitle("恭喜您")
+                .setContentText("您编号为"+str+"已经被接收")
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
