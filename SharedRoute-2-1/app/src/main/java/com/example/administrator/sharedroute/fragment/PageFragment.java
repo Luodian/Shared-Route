@@ -347,6 +347,7 @@ public class PageFragment extends Fragment {
             default:
         }
     }
+    //
 
     private class RefreshTask extends AsyncTask<Void, Void, ArrayList<listItem>>
     {
@@ -357,6 +358,7 @@ public class PageFragment extends Fragment {
             HttpURLConnection con=null;
             InputStream in=null;
             ArrayList<listItem> InitTaskListItem = new ArrayList<>();
+            //
             try
             {
                 URL url=new URL(path);
