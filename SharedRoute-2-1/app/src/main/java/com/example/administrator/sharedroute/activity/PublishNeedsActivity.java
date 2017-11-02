@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -47,10 +46,10 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     private int requestCode;
     private BottomNavigationView navigation;
     private DrawerLayout mDrawerLayout;
-    private Button pickupLocationButton;
-    private TextView textViewName;
-    private TextView textViewPhoneNumber;
-    private Button sendLocation;
+    private Button pickupLocationButton = (Button)findViewById(R.id.pickupplace);
+    private TextView textViewName = (TextView)findViewById(R.id.nametext);
+    private TextView textViewPhoneNumber = (TextView)findViewById(R.id.phonetext);
+    private Button sendLocation = (Button)findViewById(R.id.delieverplace);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +63,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         /*
          *显示返回的收件地点信息
          */
-        pickupLocationButton = (Button)findViewById(R.id.pickupplace);
-        textViewName = (TextView)findViewById(R.id.nametext) ;
-        textViewPhoneNumber = (TextView)findViewById(R.id.phonetext) ;
-        sendLocation = (Button)findViewById(R.id.delieverplace);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -115,7 +110,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                         startActivity(intent5);
                         return true;
                     case R.id.nav_wallet:
-                        Intent intent6 = new Intent(PublishNeedsActivity.this,WaitingFutureActivity.class);
+                        Intent intent6 = new Intent(PublishNeedsActivity.this,BugSendActivity.class);
                         startActivity(intent6);
                         return true;
                     case R.id.nav_setting:
@@ -134,9 +129,12 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             }
         });
 
-        final TextView nameText = (TextView) findViewById(R.id.nametext);
-        final TextView phoneText = (TextView) findViewById(R.id.phonetext);
-        final Button pickupPlace = (Button) findViewById(R.id.pickupplace);
+        final TextView nameText;
+        nameText = (TextView) findViewById(R.id.nametext);
+        final TextView phoneText;
+        phoneText = (TextView) findViewById(R.id.phonetext);
+        final Button pickupPlace;
+        pickupPlace = (Button) findViewById(R.id.pickupplace);
 
         pickupPlace.setOnClickListener(new View.OnClickListener() {
             @Override

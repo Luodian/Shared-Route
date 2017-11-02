@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.os.AsyncTask;
@@ -143,7 +142,8 @@ public class PageFragment extends Fragment {
         mrc.setAdapter(adapter);
 
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.layout_swipe_refresh);
-        mRefreshLayout.setColorSchemeColors(Color.RED, Color.CYAN);
+        mRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
+                android.R.color.holo_orange_light, android.R.color.holo_green_light);
 
         viewFooter = view.findViewById(R.id.item_foot);
 

@@ -94,14 +94,14 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
                 public void onClick(View v) {
                     FlipShareView shareBottom = new FlipShareView.Builder((SearchNeedsActivity)mContext, mTablayout)
                             .addItem(new ShareItem("发布者："+mDataset.get(position).PublisherName, Color.WHITE,0xff00bcd4))
-                            .addItem(new ShareItem("联系方式："+mDataset.get(position).PublisherPhone, Color.WHITE, 0xffea650b))
-                            .addItem(new ShareItem("类型："+mDataset.get(position).TaskKindID, Color.WHITE, 0xffea650b))
-                            .addItem(new ShareItem("描述："+mDataset.get(position).Remark, Color.WHITE, 0xff4999F0))
-                            .addItem(new ShareItem("取件时间："+mDataset.get(position).FetchTime, Color.WHITE, 0xffD9392D))
-                            .addItem(new ShareItem("取件地点："+mDataset.get(position).FetchLocation, Color.WHITE, 0xff57708A))
-                            .addItem(new ShareItem("送件时间："+mDataset.get(position).SendTime, Color.WHITE, 0xffea0bb2))
-                            .addItem(new ShareItem("送件地点："+mDataset.get(position).SendLocation, Color.WHITE, 0xffea650b))
-                            .addItem(new ShareItem("价格："+mDataset.get(position).Money, Color.WHITE,0xff063e04))
+                            .addItem(new ShareItem("联系方式："+mDataset.get(position).PublisherPhone, Color.WHITE, 0xff00bcd4))
+                            .addItem(new ShareItem("类型："+mDataset.get(position).TaskKindID, Color.WHITE, 0xff00bcd4))
+                            .addItem(new ShareItem("描述："+mDataset.get(position).Remark, Color.WHITE, 0xff00bcd4))
+                            .addItem(new ShareItem("取件时间："+mDataset.get(position).FetchTime, Color.WHITE, 0xffff4081))
+                            .addItem(new ShareItem("取件地点："+mDataset.get(position).FetchLocation, Color.WHITE, 0xffff4081))
+                            .addItem(new ShareItem("送件时间："+mDataset.get(position).SendTime, Color.WHITE, 0xffff4081))
+                            .addItem(new ShareItem("送件地点："+mDataset.get(position).SendLocation, Color.WHITE, 0xffff4081))
+                            .addItem(new ShareItem("价格："+mDataset.get(position).Money, Color.WHITE,0xffff4081))
                             .setItemDuration(200)
                             .setBackgroundColor(0x60000000)
                             .setAnimType(FlipShareView.TYPE_SLIDE)
@@ -109,7 +109,6 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
                 }
             });
             int num = orderDao.getItemCount(mDataset.get(position).ID);
-            Log.e("???",String.valueOf(num));
             if (num != 0)  ((ItemViewHolder) holder).mImageView.setImageResource(R.drawable.trolley_pressed);
             else {
                 ((ItemViewHolder) holder).mImageView.setOnClickListener(new View.OnClickListener() {
