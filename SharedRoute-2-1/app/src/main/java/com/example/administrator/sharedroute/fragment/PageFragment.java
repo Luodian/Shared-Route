@@ -187,6 +187,8 @@ public class PageFragment extends Fragment {
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
                 mRefreshLayout.setRefreshing(true);
+                TaskListItem.clear();
+                adapter.notifyDataSetChanged();
                 new RefreshTask().execute();
             }
         });
@@ -195,6 +197,8 @@ public class PageFragment extends Fragment {
             @Override
             public void run() {
                 mRefreshLayout.setRefreshing(true);
+                TaskListItem.clear();
+                adapter.notifyDataSetChanged();
                 new RefreshTask().execute();
             }
         });

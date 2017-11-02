@@ -101,7 +101,9 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Bundle bundle = getIntent().getExtras();   //得到传过来的bundle
-        usrid = bundle.getString("ID");
+        if (bundle != null) {
+            usrid = bundle.getString("ID");
+        }
 
         orderDao = new OrderDao(this);
         /**
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
-            public boolean onNavigationItemSelected(MenuItem item){
+            public boolean onNavigationItemSelected(@NonNull MenuItem item){
                 switch (item.getItemId()){
                     case R.id.nav_shop:
                         select = "releaseOrder";
@@ -324,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 parameters.add(new BasicNameValuePair("action", "publishpost"));
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
                 String stuNum=sp.getString("now_stu_num",null);
-                parameters.add(new BasicNameValuePair("FetcherID", stuNum));
+                parameters.add(new BasicNameValuePair("PublisherID", stuNum));
                 UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                 post.setEntity(ent);
                 HttpResponse responsePOST = client.execute(post);
@@ -380,7 +382,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         @Override
         protected ArrayList<listItem> doInBackground(Void ... pa) {
             String result = null;
-            String path = "http://suc.free.ngrok.cc/sharedroot_server/Task";
+            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
             try
             {
                 HttpClient client = new DefaultHttpClient();
@@ -496,6 +498,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        LoginActivity.setStop();
                         finish();
                     }
                 }).show();
