@@ -523,7 +523,7 @@ public class PageFragment extends Fragment {
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject lan = arr.getJSONObject(i);
                         listItem item = new listItem();
-                        item.ID = lan.getInt("id");
+                        item.ID = lan.getInt("ID");
                         item.Money = lan.getDouble("Money");
                         item.PickID = lan.getString("PickID");
                         item.TaskKindID = lan.getString("TaskkindID");
