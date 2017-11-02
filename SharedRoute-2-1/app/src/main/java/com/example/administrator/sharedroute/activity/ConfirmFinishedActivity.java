@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +25,7 @@ import com.example.administrator.sharedroute.entity.DialogMenuItem;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.fragment.FailFragment;
 import com.example.administrator.sharedroute.fragment.SuccessFragment;
+import com.example.administrator.sharedroute.localdatabase.OrderDao;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,6 +79,7 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
                 return true;
             case R.id.back:
                 startActivity(new Intent(ConfirmFinishedActivity.this,MainActivity.class));
+                finish();
                 return true;
         }
         return true;
@@ -89,8 +92,9 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ConfirmFinishedActivity.this,MyFinishedActivity.class);
+                Intent intent =new Intent(ConfirmFinishedActivity.this,MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         Intent intent = getIntent();
@@ -119,6 +123,13 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
 
     }
 
+    private void clearTrolly(){
+        OrderDao orderDao =new OrderDao(this);
+        List<listItem> arrayList = orderDao.getAllDate();
+        for (listItem e:arrayList) {
+            orderDao.deleteOrder(e);
+        }
+    }
 
     class PagerAdapter extends FragmentPagerAdapter {
 
