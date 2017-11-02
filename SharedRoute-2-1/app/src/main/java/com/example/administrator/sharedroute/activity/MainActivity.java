@@ -1,9 +1,7 @@
 package com.example.administrator.sharedroute.activity;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +24,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
@@ -39,7 +37,6 @@ import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
-import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -82,44 +79,35 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     private List<listItem> itemPublishList = new ArrayList<>();
     private AcceptedOrderItemAdapter adapter2;
     private ReleaseOrderItemAdapter adapter1;
-    private int mMenuId;
+
     private OrderDao orderDao;
     private BottomNavigationView navigation;
     private SwipeRefreshLayout swipeRefresh1;
     private SwipeRefreshLayout swipeRefresh2;
-    private AnimationAdapter mAnimAdapter;
-    private int status;
-    private View view;
-    private ImageView userHeader;
-    private ImageView phoneImage;
-    private TextView userName;
-    private TextView userPhone;
-    private TextView releaseTime;
-    private TextView fetchLocation;
-    private ImageView statusImage;
-    private TextView statusText;
+
+    private FetchUserInfo mFetchTask;
+    public String usrid = "";
+    public String usrphone = "";
+    public double usraccount = 0;
+
+    private TextView UserID;
+    private TextView UserName;
+    private TextView UserAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Bundle bundle = getIntent().getExtras();   //得到传过来的bundle
+        usrid = bundle.getString("ID");
 
-//		view = mInflater.inflate(release_order_item_layout, null);
-//		userHeader = (ImageView)view.findViewById(R.id.user_header);
-//		phoneImage = (ImageView)view.findViewById(R.id.phone_image);
-//		userName = (TextView) view.findViewById(R.id.user_name);
-//		userPhone = (TextView) view.findViewById(R.id.user_phone);
-//		releaseTime = (TextView) view.findViewById(R.id.release_time);
-//		fetchLocation = (TextView) view.findViewById(R.id.fetch_location);
-//		statusImage = (ImageView) view.findViewById(R.id.status_image);
-//		statusText = (TextView) view.findViewById(R.id.status_text);
-//		Typeface typeFace = Typeface.createFromAsset(getAssets(),"fonts/youyuan.TTF");
-//		userName.setTypeface(typeFace);
-//		userPhone.setTypeface(typeFace);
-//		releaseTime.setTypeface(typeFace);
-//		fetchLocation.setTypeface(typeFace);
-//		statusText.setTypeface(typeFace);
         orderDao = new OrderDao(this);
+        /**
+         * 测试用的
+         **/
+        if (!orderDao.isDataExist())
+            orderDao.initTable();
+
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -127,8 +115,9 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_user);
         }
-
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+
+//        View nav_header_view = LayoutInflater.from(MainActivity.this).inflate(R.layout.nav_header,null);
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
@@ -165,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         startActivity(intent5);
                         return true;
                     case R.id.nav_wallet:
-                        Intent intent6 = new Intent(MainActivity.this,WaitingFutureActivity.class);
+                        Intent intent6 = new Intent(MainActivity.this,BugSendActivity.class);
                         startActivity(intent6);
                         return true;
                     case R.id.nav_setting:
@@ -176,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         Intent intent8 = new Intent(MainActivity.this,LoginActivity.class);
                         intent8.putExtra("from","homePage");
                         startActivity(intent8);
+                        finish();
                         return true;
                     default:
                 }
@@ -223,13 +213,13 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         mLinearLayout.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_vertical));
 
 
-
         navigation = (BottomNavigationView) findViewById(R.id.main_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
 
         swipeRefresh1 = (SwipeRefreshLayout) view1.findViewById(R.id.swipe_refresh_release);
-        swipeRefresh1.setColorSchemeColors(Color.RED, Color.CYAN);
+        swipeRefresh1.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
+                android.R.color.holo_orange_light, android.R.color.holo_green_light);
         swipeRefresh1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -247,7 +237,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         });
 
         swipeRefresh2 = (SwipeRefreshLayout) view2.findViewById(R.id.swipe_refresh_receive);
-        swipeRefresh2.setColorSchemeColors(Color.RED, Color.CYAN);
+        swipeRefresh2.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
+                android.R.color.holo_orange_light, android.R.color.holo_green_light);
         swipeRefresh2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -319,9 +310,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //                    System.out.println(json);
 //                    parameters.add(new BasicNameValuePair("name", json));
                 parameters.add(new BasicNameValuePair("action", "publishpost"));
-                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
-                String stuNum=sp.getString("now_stu_num",null);
-                parameters.add(new BasicNameValuePair("PublisherID", stuNum));
+                parameters.add(new BasicNameValuePair("PublisherID", "1"));
                 UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                 post.setEntity(ent);
                 HttpResponse responsePOST = client.execute(post);
@@ -350,10 +339,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     item.SendLocation = lan.getString("SendLocation");
                     item.PublisherID = lan.getString("PublisherID");
                     item.PromiseMoney = lan.getDouble("PromiseMoney");
-                    item.status = lan.getInt("Status");
                     itemPublishList.add(item);
                 }
-                Log.e("0-",String.valueOf(itemPublishList.size()));
                 return (ArrayList<listItem>) itemPublishList;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -395,9 +382,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //                    System.out.println(json);
 //                    parameters.add(new BasicNameValuePair("name", json));
                 parameters.add(new BasicNameValuePair("action", "acceptpost"));
-                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
-                String stuNum=sp.getString("now_stu_num",null);
-                parameters.add(new BasicNameValuePair("FetcherID", stuNum));
+                parameters.add(new BasicNameValuePair("FetcherID", "4"));
                 UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                 post.setEntity(ent);
                 HttpResponse responsePOST = client.execute(post);
@@ -426,10 +411,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     item.SendLocation = lan.getString("SendLocation");
                     item.PublisherID = lan.getString("PublisherID");
                     item.PromiseMoney = lan.getDouble("PromiseMoney");
-                    item.status = lan.getInt("Status");
                     itemAcceptList.add(item);
                 }
-                Log.e("0-",String.valueOf(itemAcceptList.size()));
                 return  (ArrayList<listItem>) itemAcceptList;
             }catch (Exception e){
                 e.printStackTrace();
@@ -486,10 +469,20 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         return true;
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        finish();
-//    }
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                .setTitle("退出1KM配送")
+                .setMessage("您真的要退出吗？")
+                .setNegativeButton("取消",null)
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).show();
+    }
 
     @Override
     public void onPause() {
@@ -497,10 +490,14 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         mDrawerLayout.closeDrawers();
     }
 
-
     public void JumpToActivity(Class activity){
         startActivity(new Intent(this,activity));
     }
 
+        @Override
+        protected void onCancelled() {
+            mFetchTask = null;
+        }
+    }
 
 }
