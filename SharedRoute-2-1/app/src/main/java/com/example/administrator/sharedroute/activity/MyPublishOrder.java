@@ -1,6 +1,7 @@
 package com.example.administrator.sharedroute.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,8 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -20,10 +19,8 @@ import android.widget.Toast;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.CardPagerAdapter;
 import com.example.administrator.sharedroute.adapter.ListViewAdapter;
-import com.example.administrator.sharedroute.adapter.ReleaseOrderItemAdapter;
 import com.example.administrator.sharedroute.entity.CardItem;
 import com.example.administrator.sharedroute.entity.listItem;
-import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.utils.ShadowTransformer;
 
 import org.apache.http.HttpEntity;
@@ -72,6 +69,16 @@ public class MyPublishOrder extends AppCompatActivity {
                 return true;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        JumpToActivity(MainActivity.class);
+        finish();
+    }
+
+    public void JumpToActivity(Class activity){
+        startActivity(new Intent(this,activity));
     }
 
     private class refreshKeep extends AsyncTask<Void, Void,ArrayList<listItem>> {
