@@ -350,6 +350,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     item.SendLocation = lan.getString("SendLocation");
                     item.PublisherID = lan.getString("PublisherID");
                     item.PromiseMoney = lan.getDouble("PromiseMoney");
+                    item.status = lan.getInt("Status");
                     itemPublishList.add(item);
                 }
                 Log.e("0-",String.valueOf(itemPublishList.size()));
@@ -425,6 +426,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     item.SendLocation = lan.getString("SendLocation");
                     item.PublisherID = lan.getString("PublisherID");
                     item.PromiseMoney = lan.getDouble("PromiseMoney");
+                    item.status = lan.getInt("Status");
                     itemAcceptList.add(item);
                 }
                 Log.e("0-",String.valueOf(itemAcceptList.size()));

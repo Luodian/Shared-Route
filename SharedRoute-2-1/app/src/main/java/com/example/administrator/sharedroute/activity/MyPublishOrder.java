@@ -127,6 +127,7 @@ public class MyPublishOrder extends AppCompatActivity {
                     item.SendLocation = lan.getString("SendLocation");
                     item.PublisherID = lan.getString("PublisherID");
                     item.PromiseMoney = lan.getDouble("PromiseMoney");
+                    item.status = lan.getInt("Status");
                     myOrders.add(item);
                 }
                 return (ArrayList<listItem>) myOrders;
