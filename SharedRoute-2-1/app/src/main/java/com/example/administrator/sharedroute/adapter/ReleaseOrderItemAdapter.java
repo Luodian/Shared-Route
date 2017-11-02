@@ -29,7 +29,6 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
 
     private Context mContext;
     private List<listItem> mItemList;
-    private OrderDao orderDao;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
@@ -65,7 +64,6 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
         if(mContext == null){
             mContext = parent.getContext();
         }
-        if (orderDao == null) orderDao = new OrderDao(mContext);
 
 
         View view = LayoutInflater.from(mContext).inflate(R.layout.release_order_item_layout,parent,false);

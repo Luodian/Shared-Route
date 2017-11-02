@@ -581,7 +581,6 @@ public class PageFragment extends Fragment {
             if (data == null || data.size() == 0) {
 //                adapter.setNoMoreData();
                 adapter.notifyItemRemoved(adapter.getItemCount());
-                Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
             } else {
                 TaskListItem.addAll(data);
                 adapter.notifyDataSetChanged();
