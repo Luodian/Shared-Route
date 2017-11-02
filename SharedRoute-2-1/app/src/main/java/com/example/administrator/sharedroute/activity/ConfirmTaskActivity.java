@@ -180,7 +180,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 //        params.add(new BasicNameValuePair(_queryKey, _queryValue));
 //        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, HTTP.UTF_8);
 //        post.setEntity(ent);
-        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Task";
+        private String url = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
 
         private String result = null;
 
