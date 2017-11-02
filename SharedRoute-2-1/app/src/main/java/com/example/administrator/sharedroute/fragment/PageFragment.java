@@ -347,6 +347,7 @@ public class PageFragment extends Fragment {
             default:
         }
     }
+    //
 
     private class RefreshTask extends AsyncTask<Void, Void, ArrayList<listItem>>
     {
