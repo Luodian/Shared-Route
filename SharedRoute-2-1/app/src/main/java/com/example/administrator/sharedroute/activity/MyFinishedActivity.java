@@ -76,7 +76,7 @@ public class MyFinishedActivity extends AppCompatActivity {
         @Override
         protected ArrayList<listItem> doInBackground(Void ... pa) {
             String result = null;
-            String path = "http://hitschool.suc.free.ngrok.cc/sharedroot_server/Task";
+            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
             try
             {
                 HttpClient client = new DefaultHttpClient();
@@ -121,6 +121,7 @@ public class MyFinishedActivity extends AppCompatActivity {
                     item.SendLocation = lan.getString("SendLocation");
                     item.PublisherID = lan.getString("PublisherID");
                     item.PromiseMoney = lan.getDouble("PromiseMoney");
+                    item.status = lan.getInt("Status");
                     myOrders.add(item);
                 }
                 return  (ArrayList<listItem>) myOrders;
