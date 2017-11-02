@@ -66,6 +66,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -76,6 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     //socket 的 host 和 port
     private static MyThread thread;
+
     public static Socket socket;
     public static BufferedReader in;
     public static PrintStream out;
@@ -84,6 +86,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //    public static void setStop(Boolean stop){
 //        LoginActivity.stop=stop;
 //    }
+
     private static final String HOST = "free.ngrok.cc";
     private static final int PORT = 12974;
     private Handler handler = new Handler(){
@@ -198,14 +201,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         Map.Entry<String, String> entry = iterator.next();
                         try {
                             object.put(entry.getKey(), entry.getValue());
-                        } catch (JSONException e) {
+                        } catch (JSONException ignored) {
 
                         }
                     }
                     mJsonArray.put(object);
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("login_info", mJsonArray.toString());
-                    editor.commit();
+                    editor.apply();
                 }
                 attemptLogin();
             }
@@ -327,18 +330,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
             cancel = true;
         }
 
@@ -374,32 +374,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
+        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        mProgressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     @Override
@@ -485,14 +478,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 HttpClient client = new DefaultHttpClient(httpParams);
                 HttpPost post = new HttpPost(url);
 
-                if (mEmail!=""&&mPassword!=""){
-                    List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-                    parameters.add(new BasicNameValuePair("UserID", mEmail));
-                    Log.e("userid",mEmail);
-                    parameters.add(new BasicNameValuePair("Password", mPassword));
-                    parameters.add(new BasicNameValuePair("action", "login"));
-                    UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
-                    post.setEntity(ent);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    if (!Objects.equals(mEmail, "") && !Objects.equals(mPassword, "")){
+                        List<NameValuePair> parameters = new ArrayList<>();
+                        parameters.add(new BasicNameValuePair("UserID", mEmail));
+                        parameters.add(new BasicNameValuePair("Password", mPassword));
+                        parameters.add(new BasicNameValuePair("action", "login"));
+                        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
+                        post.setEntity(ent);
+                    }
+
                 }
                 HttpResponse responsePOST = client.execute(post);
 
@@ -524,6 +520,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_SHORT).show();
 
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+
                 sp.edit().putString("now_stu_num",mEmailView.getText().toString()).commit();
 
                     String now_name = result.substring(result.indexOf("name:") + 5, result.indexOf(",phone"));
@@ -538,6 +535,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 thread = new MyThread();
                 thread.start();
 //                new MyThread().start();
+
                 //开始新界面
                 Bundle mBundle = new Bundle();
                 mBundle.putString("ID",mEmailView.getText().toString());//压入数据
@@ -573,8 +571,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 out.flush();
 
                 //从服务器获取通知,由handler发送给主线程,之后保持这个线程贯穿程序始终
+
                 String line = null;
                 while ((!(socket.isClosed()))&&(line = in.readLine()) != null) {
+
                     Log.e("line",line);
                     Message msg = new Message();
                     msg.what = 0x11;
@@ -613,6 +613,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 .setContentIntent(PendingIntent.getActivity(this, 1, new Intent(this, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT))
                 .build();
         NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        assert notificationManager != null;
         notificationManager.notify(1,notification);
     }
 }

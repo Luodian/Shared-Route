@@ -187,6 +187,8 @@ public class PageFragment extends Fragment {
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
                 mRefreshLayout.setRefreshing(true);
+                TaskListItem.clear();
+                adapter.notifyDataSetChanged();
                 new RefreshTask().execute();
             }
         });
@@ -195,6 +197,8 @@ public class PageFragment extends Fragment {
             @Override
             public void run() {
                 mRefreshLayout.setRefreshing(true);
+                TaskListItem.clear();
+                adapter.notifyDataSetChanged();
                 new RefreshTask().execute();
             }
         });
@@ -347,16 +351,18 @@ public class PageFragment extends Fragment {
             default:
         }
     }
+    //
 
     private class RefreshTask extends AsyncTask<Void, Void, ArrayList<listItem>>
     {
         @Override
         protected ArrayList<listItem> doInBackground(Void... params) {
             String result = null;
-            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=RefreshTask";
+            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task?action=RefreshTask";
             HttpURLConnection con=null;
             InputStream in=null;
             ArrayList<listItem> InitTaskListItem = new ArrayList<>();
+            //
             try
             {
                 URL url=new URL(path);
@@ -390,30 +396,23 @@ public class PageFragment extends Fragment {
                     //读取多个数据
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject lan = arr.getJSONObject(i);
-//                        System.out.println("money= " + lan.getInt("money") +
-//                                " name= " + lan.getString("name") +
-//                                " phone= " + lan.getString("phone") +
-//                                " num= " + lan.getString("num") +
-//                                " packsort= " + lan.getString("packsort") +
-//                                " pickplace= " + lan.getString("pickplace") +
-//                                " delivertime= " + lan.getString("delivertime") +
-//                                " paypath= " + lan.getString("paypath") +
-//                                " remark= " + lan.getString("remark"));
-//                        listItem item = new listItem();
-//                        item.setPrice(lan.getInt("money"));
-//                        item.setPickupCode(lan.getString("num"));
-//                        item.setExpressType(lan.getString("packsort"));
-//                        item.setInTimeStamp(lan.getString(""));
-//                        item.setInLocation(lan.getString("pickplace"));
-//                        item.setOutTimeStamp(lan.getString("delivertime"));
-//                        item.setOutLocation(lan.getString(""));
-//                        item.setID(lan.getInt(""));
-//                        item.setStatus(lan.getInt(""));
-//                        item.setPublisherID(lan.getString(""));
-//                        item.setCheckBoxElected(false);
-//                        item.setPublishTime(lan.getString(""));
-//                        item.setExpressSize(lan.getString(""));
-//                        if (item.getStatus()==1) InitTaskListItem.add(item);
+                        listItem item = new listItem();
+                        item.ID = lan.getInt("ID");
+                        item.Money = lan.getDouble("Money");
+                        item.PickID = lan.getString("PickID");
+                        item.TaskKindID = lan.getString("TaskkindID");
+                        item.PublisherName = lan.getString("PublisherName");
+                        item.PublisherPhone = lan.getString("PublisherPhone");
+                        item.FetchTime = lan.getString("FetchTime");
+                        item.FetchLocation = lan.getString("FetchLocation");
+                        item.FetcherPhone = lan.getString("FetcherPhone");
+                        item.FetcherName = lan.getString("FetcherName");
+                        item.FetcherID = lan.getString("FetcherID");
+                        item.SendTime = lan.getString("SendTime");
+                        item.SendLocation = lan.getString("SendLocation");
+                        item.PublisherID = lan.getString("PublisherID");
+                        item.PromiseMoney = lan.getDouble("PromiseMoney");
+                        InitTaskListItem.add(item);
                     }
                 }
             }
@@ -442,14 +441,6 @@ public class PageFragment extends Fragment {
                     //断开连接
                 }
             }
-            listItem item = new listItem();
-            item.SendLocation = "正心420";
-            item.SendTime = "18:00";
-            item.FetchLocation = "顺丰快递";
-            item.FetchTime = "12:00";
-            item.TaskKindID = "水果";
-            item.PickID = "AE86";
-            InitTaskListItem.add(item);
             return InitTaskListItem;
         }
 
@@ -486,10 +477,11 @@ public class PageFragment extends Fragment {
         @Override
         protected ArrayList<listItem> doInBackground(Integer... currrent) {
             String result = null;
-            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=MoreTask&CurrentID=" + String.valueOf(currrent);
+            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task?action=MoreTask&CurrentID=" + String.valueOf(lastID);
             HttpURLConnection con=null;
             InputStream in=null;
             ArrayList<listItem> InitTaskListItem = new ArrayList<>();
+
             try
             {
                 URL url=new URL(path);
@@ -534,30 +526,23 @@ public class PageFragment extends Fragment {
                     //读取多个数据
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject lan = arr.getJSONObject(i);
-//                        System.out.println("money= " + lan.getInt("money") +
-//                                " name= " + lan.getString("name") +
-//                                " phone= " + lan.getString("phone") +
-//                                " num= " + lan.getString("num") +
-//                                " packsort= " + lan.getString("packsort") +
-//                                " pickplace= " + lan.getString("pickplace") +
-//                                " delivertime= " + lan.getString("delivertime") +
-//                                " paypath= " + lan.getString("paypath") +
-//                                " remark= " + lan.getString("remark"));
-//                        listItem item = new listItem();
-//                        item.setPrice(lan.getInt("money"));
-//                        item.setPickupCode(lan.getString("num"));
-//                        item.setExpressType(lan.getString("packsort"));
-//                        item.setInTimeStamp(lan.getString(""));
-//                        item.setInLocation(lan.getString("pickplace"));
-//                        item.setOutTimeStamp(lan.getString("delivertime"));
-//                        item.setOutLocation(lan.getString(""));
-//                        item.setID(lan.getInt(""));
-//                        item.setStatus(lan.getInt(""));
-//                        item.setPublisherID(lan.getString(""));
-//                        item.setCheckBoxElected(false);
-//                        item.setPublishTime(lan.getString(""));
-//                        item.setExpressSize(lan.getString(""));
-//                        if (item.getStatus()==1) InitTaskListItem.add(item);
+                        listItem item = new listItem();
+                        item.ID = lan.getInt("ID");
+                        item.Money = lan.getDouble("Money");
+                        item.PickID = lan.getString("PickID");
+                        item.TaskKindID = lan.getString("TaskkindID");
+                        item.PublisherName = lan.getString("PublisherName");
+                        item.PublisherPhone = lan.getString("PublisherPhone");
+                        item.FetchTime = lan.getString("FetchTime");
+                        item.FetchLocation = lan.getString("FetchLocation");
+                        item.FetcherPhone = lan.getString("FetcherPhone");
+                        item.FetcherName = lan.getString("FetcherName");
+                        item.FetcherID = lan.getString("FetcherID");
+                        item.SendTime = lan.getString("SendTime");
+                        item.SendLocation = lan.getString("SendLocation");
+                        item.PublisherID = lan.getString("PublisherID");
+                        item.PromiseMoney = lan.getDouble("PromiseMoney");
+                        InitTaskListItem.add(item);
                     }
                 }
             }
