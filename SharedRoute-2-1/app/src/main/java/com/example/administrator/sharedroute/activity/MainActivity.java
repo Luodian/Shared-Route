@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.AcceptedOrderItemAdapter;
@@ -37,6 +39,26 @@ import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -225,8 +247,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             @Override
             public void run() {
                 swipeRefresh1.setRefreshing(true);
-                status = 1;
-                new refreshTask().execute();
+                new refreshKeep().execute();
             }
         });
 
@@ -236,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             @Override
             public void onRefresh() {
                 swipeRefresh2.setRefreshing(true);
-                new refreshKeep().execute();
+                new refreshKeepTwo().execute();
             }
         });
 
@@ -244,8 +265,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             @Override
             public void run() {
                 swipeRefresh1.setRefreshing(true);
-                status = 2;
-                new refreshTask().execute();
+                new refreshKeepTwo().execute();
             }
         });
     }
@@ -282,11 +302,60 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         }
     }
 
-    private class refreshKeep extends AsyncTask<Void, Void, Void> {
+    private class refreshKeep extends AsyncTask<Void, Void,ArrayList<listItem>> {
+
         @Override
-        protected Void doInBackground(Void... params) {
+        protected ArrayList<listItem> doInBackground(Void... pa) {
+            String result = null;
+            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
+            HttpURLConnection con = null;
+            InputStream in = null;
             try {
-                Thread.sleep(1000);
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(path);
+                List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+//                    String json = new String();
+//                    json += "[";
+//                    for (int i = 0; i < length; i++) {
+//                        json += "{\"id\":" + itemPublishList.get(i).ID + "}";
+//                        if (i != (length - 1)) json += ",";
+//                        else json += "]";
+//                    }
+//                    System.out.println(json);
+//                    parameters.add(new BasicNameValuePair("name", json));
+                parameters.add(new BasicNameValuePair("action", "publishpost"));
+                parameters.add(new BasicNameValuePair("PublisherID", "1"));
+                UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
+                post.setEntity(ent);
+                HttpResponse responsePOST = client.execute(post);
+                HttpEntity resEntity = responsePOST.getEntity();
+                if (resEntity != null) {
+                    result = EntityUtils.toString(resEntity);
+                }
+                JSONArray arr = new JSONArray(result.toString());
+                if (itemPublishList == null) itemPublishList = new ArrayList<listItem>();
+                else  itemPublishList.clear();
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject lan = arr.getJSONObject(i);
+                    listItem item = new listItem();
+                    item.ID = lan.getInt("ID");
+                    item.Money = lan.getDouble("Money");
+                    item.PickID = lan.getString("PickID");
+                    item.TaskKindID = lan.getString("TaskkindID");
+                    item.PublisherName = lan.getString("PublisherName");
+                    item.PublisherPhone = lan.getString("PublisherPhone");
+                    item.FetchTime = lan.getString("FetchTime");
+                    item.FetchLocation = lan.getString("FetchLocation");
+                    item.FetcherPhone = lan.getString("FetcherPhone");
+                    item.FetcherName = lan.getString("FetcherName");
+                    item.FetcherID = lan.getString("FetcherID");
+                    item.SendTime = lan.getString("SendTime");
+                    item.SendLocation = lan.getString("SendLocation");
+                    item.PublisherID = lan.getString("PublisherID");
+                    item.PromiseMoney = lan.getDouble("PromiseMoney");
+                    itemPublishList.add(item);
+                }
+                return (ArrayList<listItem>) itemPublishList;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -294,48 +363,90 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(ArrayList<listItem> data) {
+            super.onPostExecute(data);
             if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
-            if (swipeRefresh2 != null) swipeRefresh2.setRefreshing(false);
-        }
-    }
-
-    private class refreshTask extends AsyncTask<Void, Void, List<listItem>> {
-        @Override
-        protected List<listItem> doInBackground(Void... params) {
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            itemPublishList = new ArrayList<listItem>();//这里就等着连数据吧
-            itemAcceptList = orderDao.getAllDate();
-            return itemPublishList;
-        }
-
-        @Override
-        protected void onPostExecute(List<listItem> listItems) {
-            super.onPostExecute(listItems);
-            if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
-            if (swipeRefresh2 != null) swipeRefresh1.setRefreshing(false);
-            //if (status==1){
+            if (itemPublishList.size()==0) Toast.makeText(MainActivity.this,"无数据更新",Toast.LENGTH_SHORT).show();
             RecyclerView releaseOrder = (RecyclerView) view1.findViewById(R.id.release_order);
             GridLayoutManager layoutManager1 = new GridLayoutManager(MainActivity.this, 1);
             releaseOrder.setLayoutManager(layoutManager1);
             adapter1 = new ReleaseOrderItemAdapter(itemPublishList);
             releaseOrder.setAdapter(adapter1);
-            //	}
-            //if (status==2){
+        }
+    }
+
+    private class refreshKeepTwo extends AsyncTask<Void, Void,ArrayList<listItem>> {
+
+        @Override
+        protected ArrayList<listItem> doInBackground(Void ... pa) {
+            String result = null;
+            String path = "http://suc.free.ngrok.cc/sharedroot_server/Task";
+            try
+            {
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost(path);
+                List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+//                    String json = new String();
+//                    json += "[";
+//                    for (int i = 0; i < length; i++) {
+//                        json += "{\"id\":" + itemPublishList.get(i).ID + "}";
+//                        if (i != (length - 1)) json += ",";
+//                        else json += "]";
+//                    }
+//                    System.out.println(json);
+//                    parameters.add(new BasicNameValuePair("name", json));
+                parameters.add(new BasicNameValuePair("action", "acceptpost"));
+                parameters.add(new BasicNameValuePair("FetcherID", "4"));
+                UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
+                post.setEntity(ent);
+                HttpResponse responsePOST = client.execute(post);
+                HttpEntity resEntity = responsePOST.getEntity();
+                if (resEntity != null) {
+                    result = EntityUtils.toString(resEntity);
+                }
+                JSONArray arr = new JSONArray(result.toString());
+                if (itemAcceptList == null) itemAcceptList = new ArrayList<listItem>();
+                else itemAcceptList.clear();
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject lan = arr.getJSONObject(i);
+                    listItem item = new listItem();
+                    item.ID = lan.getInt("id");
+                    item.Money = lan.getDouble("Money");
+                    item.PickID = lan.getString("PickID");
+                    item.TaskKindID = lan.getString("TaskkindID");
+                    item.PublisherName = lan.getString("PublisherName");
+                    item.PublisherPhone = lan.getString("PublisherPhone");
+                    item.FetchTime = lan.getString("FetchTime");
+                    item.FetchLocation = lan.getString("FetchLocation");
+                    item.FetcherPhone = lan.getString("FetcherPhone");
+                    item.FetcherName = lan.getString("FetcherName");
+                    item.FetcherID = lan.getString("FetcherID");
+                    item.SendTime = lan.getString("SendTime");
+                    item.SendLocation = lan.getString("SendLocation");
+                    item.PublisherID = lan.getString("PublisherID");
+                    item.PromiseMoney = lan.getDouble("PromiseMoney");
+                    itemAcceptList.add(item);
+                }
+                return  (ArrayList<listItem>) itemAcceptList;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<listItem> data) {
+            super.onPostExecute(data);
+            if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
+            if (itemAcceptList.size()==0) Toast.makeText(MainActivity.this,"无数据更新",Toast.LENGTH_SHORT).show();
             RecyclerView receiveOrder = (RecyclerView) view2.findViewById(R.id.receive_order);
             GridLayoutManager layoutManager2 = new GridLayoutManager(MainActivity.this, 1);
             receiveOrder.setLayoutManager(layoutManager2);
             adapter2 = new AcceptedOrderItemAdapter(itemAcceptList);
             receiveOrder.setAdapter(adapter2);
-            //	}
-
         }
     }
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -363,49 +474,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         }
 
     };
-
-//	public void fixListViewHeight(ListView listView) {
-//		// 如果没有设置数据适配器，则ListView没有子项，返回。
-//		ListAdapter listAdapter = listView.getAdapter();
-//		int totalHeight = 0;
-//		if (listAdapter == null) {
-//			return;
-//		}
-//		for (int index = 0, len = listAdapter.getCount(); index < len; index++) {
-//			View listViewItem = listAdapter.getView(index , null, listView);
-//			// 计算子项View 的宽高
-//			listViewItem.measure(0, 0);
-//			// 计算所有子项的高度和
-//			totalHeight += listViewItem.getMeasuredHeight();
-//		}
-//
-//		ViewGroup.LayoutParams params = listView.getLayoutParams();
-//		// listView.getDividerHeight()获取子项间分隔符的高度
-//		// params.height设置ListView完全显示需要的高度
-//		params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-//		listView.setLayoutParams(params);
-//	}
-
-//	public boolean onCreateOptionsMenu(Menu menu){
-//		getMenuInflater().inflate(R.menu.toolbar,menu);
-//		return true;
-//	}
-//
-//	public boolean onMenuOpened(int featureId, Menu menu) {
-//		if (menu != null) {
-//			if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
-//				try {
-//					Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-//					method.setAccessible(true);
-//					method.invoke(menu, true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return super.onMenuOpened(featureId, menu);
-//	}
-
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
