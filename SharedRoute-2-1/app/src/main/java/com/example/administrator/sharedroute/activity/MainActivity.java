@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     private TextView UserID;
     private TextView UserName;
     private TextView UserAccount;
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
