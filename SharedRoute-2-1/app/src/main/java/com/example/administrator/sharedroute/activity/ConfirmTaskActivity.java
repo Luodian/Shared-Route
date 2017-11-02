@@ -1,7 +1,9 @@
 package com.example.administrator.sharedroute.activity;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -20,6 +22,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
@@ -62,8 +65,8 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
     private LinearLayout mInformation;
     private View mProgressView;
     private UserLoginTask mAuthTask;
-    private FrameLayout mButtonLayout;
-    private OrderDao orderDao;
+    private TextView name;
+    private TextView phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,9 +99,18 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 
 
     private void initView(){
+        name = (TextView) findViewById(R.id.textName);
+        phone = (TextView) findViewById(R.id.textPhoneNumber);
         listView=(ListView)findViewById(R.id.listViewFirmOrders);
         mInformation = (LinearLayout) findViewById(R.id.informationlayout);
-        orderDao = new OrderDao(this);
+        mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        SharedPreferences sp = getSharedPreferences("now_account",Context.MODE_PRIVATE);
+        String Name =sp.getString("now_name",null);
+        name.setText(Name);
+
+        String Phone = sp.getString("now_phone",null);
+        phone.setText(Phone);
+
         mProgressView = findViewById(R.id.login_progress);
         Intent intent = getIntent();
         Bundle bundle =intent.getExtras();
@@ -122,7 +134,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 List<listItem> listItemList = adapter.getItems();
-                FlipShareView shareBottom = new FlipShareView.Builder(ConfirmTaskActivity.this, mCardView)
+                FlipShareView shareBottom = new FlipShareView.Builder(ConfirmTaskActivity.this, mToolbar)
                         .addItem(new ShareItem("发布者：："+listItemList.get(position).PublisherName, Color.WHITE, 0xff43549C))
                         .addItem(new ShareItem("联系方式："+listItemList.get(position).PublisherName, Color.WHITE, 0xff43549C))
                         .addItem(new ShareItem("物品类型："+listItemList.get(position).TaskKindID, Color.WHITE, 0xff43549C))
@@ -204,7 +216,9 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
                     System.out.println(json);
                     parameters.add(new BasicNameValuePair("name", json));
                     parameters.add(new BasicNameValuePair("action","update"));
-                    parameters.add(new BasicNameValuePair("FetcherID","1153710308"));
+                    SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+                    String stuNum=sp.getString("now_stu_num",null);
+                    parameters.add(new BasicNameValuePair("FetcherID",stuNum));
                     UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                     post.setEntity(ent);
                 }
