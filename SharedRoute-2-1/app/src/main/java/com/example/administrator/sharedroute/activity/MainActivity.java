@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,7 +61,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,16 +130,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
-        View nav_header_view = navView.getHeaderView(0);
-
-        UserID = (TextView) nav_header_view.findViewById(R.id.nav_header_id);
-        UserName = (TextView) nav_header_view.findViewById(R.id.nav_header_name);
-        UserAccount = (TextView) nav_header_view.findViewById(R.id.nav_header_account);
-
-        UserID.setText(MessageFormat.format("学号：{0}", usrid));
-        mFetchTask = new FetchUserInfo(usrid);
-        mFetchTask.execute();
-
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
             public boolean onNavigationItemSelected(MenuItem item){
@@ -512,104 +502,5 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         startActivity(new Intent(this,activity));
     }
 
-    public class FetchUserInfo extends AsyncTask<String, Void, Boolean> {
 
-        private String id = null;
-        private String result = null;
-
-        FetchUserInfo(String UserID) {
-            id = UserID;
-        }
-
-        @Override
-        protected Boolean doInBackground(String... ID) {
-            String result = null;
-            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task?action=FetchUserID&ID=" + id;
-            HttpURLConnection con=null;
-            InputStream in=null;
-
-            try
-            {
-                URL url=new URL(path);
-                con= (HttpURLConnection) url.openConnection();
-                con.setConnectTimeout(5*1000);
-                con.setReadTimeout(5*1000);
-                /*
-                * http响应码：getResponseCode
-                  200：成功 404：未找到 500：发生错误
-              */
-                if (con.getResponseCode()==200)
-                {
-                    System.out.println("连接成功");
-                    in = con.getInputStream();
-                    InputStreamReader isr = new InputStreamReader(in);
-                    //InputStreamReader isr = new InputStreamReader(getAssets().open("get_data.json"),"UTF-8");
-                    BufferedReader br = new BufferedReader(isr);
-                    String line;
-                    //StringBuilder 缓存区 StringBuffer
-                    StringBuilder builder = new StringBuilder();
-                    while ((line = br.readLine()) != null) {
-                        builder.append(line);
-                    }
-                    br.close();
-                    isr.close();
-                    result = builder.toString();
-                    if (result != "fail")
-                    {
-                        System.out.println(builder.toString());
-                        JSONObject lan = new JSONObject(result);
-                        usrphone = lan.getString("Phone");
-                        usraccount = lan.getDouble("Account");
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-            }
-            finally
-            {
-                if (in!=null){
-                    try
-                    {
-                        in.close();
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-                if (con!=null){
-                    con.disconnect();
-                    //断开连接
-                }
-            }
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mFetchTask = null;
-            if (success) {
-                UserName.setText(MessageFormat.format("电话：{0}", usrphone));
-                UserAccount.setText(MessageFormat.format("余额：{0}", String.valueOf(usraccount)));
-            } else {
-                Toast.makeText(MainActivity.this, "获取用户信息失败", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mFetchTask = null;
-        }
-    }
 }

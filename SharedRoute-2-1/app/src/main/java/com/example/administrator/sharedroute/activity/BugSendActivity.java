@@ -88,7 +88,7 @@ public class BugSendActivity extends AppCompatActivity {
     private class PostTask extends AsyncTask<Void,Void,Boolean> {
 
         //        private String url = "http://47.95.194.146:8080/sharedroot_server/Task";
-        private String url = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
+        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Bugs";
         private String result = null;
 
         @Override
@@ -105,9 +105,9 @@ public class BugSendActivity extends AppCompatActivity {
 
                 parameters.add(new BasicNameValuePair("UserID",userID));
                 parameters.add(new BasicNameValuePair("ContactInfo",contact));
-                parameters.add(new BasicNameValuePair("BugsType",bugType));
-                parameters.add(new BasicNameValuePair("Comment",bugInfo));
-                parameters.add(new BasicNameValuePair("action", "submitBug"));
+                parameters.add(new BasicNameValuePair("BugType",bugType));
+                parameters.add(new BasicNameValuePair("BugInfo",bugInfo));
+                parameters.add(new BasicNameValuePair("action", "submit"));
 
                 UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                 post.setEntity(ent);
