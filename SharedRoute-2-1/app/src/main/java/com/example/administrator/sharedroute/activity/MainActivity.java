@@ -39,6 +39,10 @@ import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
 
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -54,12 +58,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.MessageFormat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +72,9 @@ import static com.example.administrator.sharedroute.R.layout.activity_receive_or
 import static com.example.administrator.sharedroute.R.layout.activity_release_order;
 
 public class MainActivity extends AppCompatActivity implements BannerClickListener {
+
+    private static final String HOST = "free.ngrok.cc";
+    private static final int PORT = 12974;
 
     private BannerPager mBanner;
     private DrawerLayout mDrawerLayout;
@@ -500,7 +508,28 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LoginActivity.setStop();
+
+                        Thread thread = new Thread() {
+                            public void run(){
+                                Socket anotherSocket = null;
+                                try {
+                                    anotherSocket = new Socket(HOST,PORT);
+                                    PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
+                                    out1.println("action=send;name="+getIntent().getExtras().getString("ID")+";msg=byebye");
+                                    out1.flush();
+                                    out1.close();
+                                    anotherSocket.close();
+
+                                    LoginActivity.in.close();
+                                    LoginActivity.out.close();
+                                    LoginActivity.socket.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        thread.start();
+
                         finish();
                     }
                 }).show();

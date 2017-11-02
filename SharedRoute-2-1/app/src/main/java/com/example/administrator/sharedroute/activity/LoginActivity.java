@@ -77,10 +77,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     //socket 的 host 和 port
     private static MyThread thread;
-    private static boolean stop;
-    public static void setStop(){
-        LoginActivity.stop= true;
-    }
+
+    public static Socket socket;
+    public static BufferedReader in;
+    public static PrintStream out;
+
+    //    private static boolean stop;
+//    public static void setStop(Boolean stop){
+//        LoginActivity.stop=stop;
+//    }
+
     private static final String HOST = "free.ngrok.cc";
     private static final int PORT = 12974;
     private Handler handler = new Handler(){
@@ -147,6 +153,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         final SharedPreferences sp = getSharedPreferences("logininfo", MODE_PRIVATE);
+
         String result = sp.getString("login_info", "");
         String logInName="";
         String loginPassword="";
@@ -173,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             e.printStackTrace();
         }
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        final Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,14 +226,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         //如果条件满足，就自动登录
-
-        if (!(getIntent().hasExtra("from"))||!(getIntent().getStringExtra("from").equals("homePage"))){
+        if (sp.contains("login_info")&&(!(getIntent().hasExtra("from"))||!(getIntent().getStringExtra("from").equals("homePage")))){
             if ((!mEmailView.getText().equals(""))&&(!mPasswordView.getText().equals(""))){
                 attemptLogin();
             }
-        }else
+        }else if((getIntent().hasExtra("from"))&&(getIntent().getStringExtra("from").equals("homePage")))
         {
-            stop=true;
+                Thread thread = new Thread() {
+                    public void run(){
+                        Socket anotherSocket = null;
+                        try {
+                            anotherSocket = new Socket(HOST,PORT);
+                            PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
+                            out1.println("action=send;name="+mEmailView.getText().toString()+";msg=byebye");
+                            out1.flush();
+                            out1.close();
+                            anotherSocket.close();
+
+                            in.close();
+                            out.close();
+                            socket.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                thread.start();
         }
     }
     @Override
@@ -453,6 +478,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 HttpClient client = new DefaultHttpClient(httpParams);
                 HttpPost post = new HttpPost(url);
 
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     if (!Objects.equals(mEmail, "") && !Objects.equals(mPassword, "")){
                         List<NameValuePair> parameters = new ArrayList<>();
@@ -462,6 +488,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                         post.setEntity(ent);
                     }
+
                 }
                 HttpResponse responsePOST = client.execute(post);
 
@@ -493,24 +520,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_SHORT).show();
 
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
-                sp.edit().putString("now_stu_num",mEmailView.getText().toString()).apply();
-                String now_name = result.substring(result.indexOf("name:") + 5, result.indexOf(",phone"));
-                String now_phone = result.substring(result.indexOf("phone:") + 6);
 
-                Log.e("name:", now_name);
-                Log.e("phone:", now_phone);
-                sp.edit().putString("now_name", now_name).apply();
-                sp.edit().putString("now_phone", now_phone).apply();
+                sp.edit().putString("now_stu_num",mEmailView.getText().toString()).commit();
+
+                    String now_name = result.substring(result.indexOf("name:") + 5, result.indexOf(",phone"));
+                    String now_phone = result.substring(result.indexOf("phone:") + 6);
+
+                    Log.e("name:", now_name);
+                    Log.e("phone:", now_phone);
+                    sp.edit().putString("now_name", now_name).commit();
+                    sp.edit().putString("now_phone", now_phone).commit();
+
                 //启动接收命令的线程
                 thread = new MyThread();
-                stop=false;
                 thread.start();
 //                new MyThread().start();
+
+                //开始新界面
                 Bundle mBundle = new Bundle();
                 mBundle.putString("ID",mEmailView.getText().toString());//压入数据
-                Intent intent2 = new Intent(LoginActivity.this,MainActivity.class);
-                intent2.putExtras(mBundle);
-                startActivity(intent2);
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                intent.putExtras(mBundle);
+                startActivity(intent);
+
                 finish();
             } else {
                 Toast.makeText(LoginActivity.this, "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
@@ -530,17 +562,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     class MyThread extends  Thread{
         public void run(){
             try {
-                Socket socket = new Socket(HOST,PORT);
-                PrintStream out = new PrintStream(socket.getOutputStream());
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                socket = new Socket(HOST,PORT);
+                out = new PrintStream(socket.getOutputStream());
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                 //向服务器发送学号
                 out.println("action=login;name="+mEmailView.getText().toString());
                 out.flush();
 
                 //从服务器获取通知,由handler发送给主线程,之后保持这个线程贯穿程序始终
-                String line;
-                while ((!stop)&&(line = in.readLine()) != null) {
+
+                String line = null;
+                while ((!(socket.isClosed()))&&(line = in.readLine()) != null) {
+
                     Log.e("line",line);
                     Message msg = new Message();
                     msg.what = 0x11;
@@ -549,14 +583,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     msg.setData(bundle);
                     handler.sendMessage(msg);
                 }
-                //停止监听线程
-                if (stop){
-                    out.println("action=login;name="+mEmailView.getText().toString()+";"+"msg:Bye bye!");
-                    out.flush();
-                    in.close();
-                    out.close();
-                    socket.close();
-                }
+//                //停止监听线程
+//                if (stop){
+//                    out.println("action=login;name="+mEmailView.getText().toString()+";"+"msg:Bye bye!");
+//                    out.flush();
+//                    in.close();
+//                    out.close();
+//                    socket.close();
+//                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
