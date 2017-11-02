@@ -395,7 +395,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //                    System.out.println(json);
 //                    parameters.add(new BasicNameValuePair("name", json));
                 //
-                parameters.add(new BasicNameValuePair("action", "acceptpost"));
+                parameters.add(new BasicNameValuePair("action", "fetchpost"));
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
                 String stuNum=sp.getString("now_stu_num",null);
                 parameters.add(new BasicNameValuePair("FetcherID", stuNum));
@@ -412,7 +412,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject lan = arr.getJSONObject(i);
                     listItem item = new listItem();
-                    item.ID = lan.getInt("id");
+                    item.ID = lan.getInt("ID");
                     item.Money = lan.getDouble("Money");
                     item.PickID = lan.getString("PickID");
                     item.TaskKindID = lan.getString("TaskkindID");
