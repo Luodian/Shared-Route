@@ -1,7 +1,5 @@
 package com.example.administrator.sharedroute.activity;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -78,7 +76,7 @@ public class MyFinishedActivity extends AppCompatActivity {
         @Override
         protected ArrayList<listItem> doInBackground(Void ... pa) {
             String result = null;
-            String path = "http://suc.free.ngrok.cc/sharedroot_server/Task";
+            String path = "http://hitschool.suc.free.ngrok.cc/sharedroot_server/Task";
             try
             {
                 HttpClient client = new DefaultHttpClient();
@@ -93,10 +91,8 @@ public class MyFinishedActivity extends AppCompatActivity {
 //                    }
 //                    System.out.println(json);
 //                    parameters.add(new BasicNameValuePair("name", json));
-                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
-                String stuNum=sp.getString("now_stu_num",null);
                 parameters.add(new BasicNameValuePair("action", "acceptpost"));
-                parameters.add(new BasicNameValuePair("FetcherID", stuNum));
+                parameters.add(new BasicNameValuePair("FetcherID", "4"));
                 UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                 post.setEntity(ent);
                 HttpResponse responsePOST = client.execute(post);
@@ -164,22 +160,8 @@ public class MyFinishedActivity extends AppCompatActivity {
                     cardItems.add(item4);
                     CardItem item5 = new CardItem("金额："+e.Money+"元", R.mipmap.ic_money);
                     cardItems.add(item5);
-                    if (e.status == 1){
-                        CardItem item6 = new CardItem("状态："+"未被接受", R.mipmap.ic_status);
-                        cardItems.add(item6);
-                    }
-                    else if (e.status == 2){
-                        CardItem item6 = new CardItem("状态："+"已被接受", R.mipmap.ic_status);
-                        cardItems.add(item6);
-                    }
-                    else if (e.status == 3){
-                        CardItem item6 = new CardItem("状态："+"已被完成", R.mipmap.ic_status);
-                        cardItems.add(item6);
-                    }
-                    else {
-                        CardItem item6 = new CardItem("状态："+"未知", R.mipmap.ic_status);
-                        cardItems.add(item6);
-                    }
+                    CardItem item6 = new CardItem("状态：", R.mipmap.ic_status);
+                    cardItems.add(item6);
                     ListView listViewCard = (ListView)viewCard.findViewById(R.id.list_view);
                     listViewCard.setAdapter(adapter);
                     mViewList.add(viewCard);
