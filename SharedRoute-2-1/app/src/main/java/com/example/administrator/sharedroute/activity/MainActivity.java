@@ -355,6 +355,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     item.SendLocation = lan.getString("SendLocation");
                     item.PublisherID = lan.getString("PublisherID");
                     item.PromiseMoney = lan.getDouble("PromiseMoney");
+                    item.status = lan.getInt("Status");
                     itemPublishList.add(item);
                 }
                 return (ArrayList<listItem>) itemPublishList;
@@ -430,6 +431,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     item.SendLocation = lan.getString("SendLocation");
                     item.PublisherID = lan.getString("PublisherID");
                     item.PromiseMoney = lan.getDouble("PromiseMoney");
+                    item.status = lan.getInt("Status");
                     itemAcceptList.add(item);
                 }
                 return  (ArrayList<listItem>) itemAcceptList;
@@ -442,7 +444,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         @Override
         protected void onPostExecute(ArrayList<listItem> data) {
             super.onPostExecute(data);
-            if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
+            if (swipeRefresh2 != null) swipeRefresh2.setRefreshing(false);
             if (itemAcceptList.size()==0) Toast.makeText(MainActivity.this,"无数据更新",Toast.LENGTH_SHORT).show();
             RecyclerView receiveOrder = (RecyclerView) view2.findViewById(R.id.receive_order);
             GridLayoutManager layoutManager2 = new GridLayoutManager(MainActivity.this, 1);
