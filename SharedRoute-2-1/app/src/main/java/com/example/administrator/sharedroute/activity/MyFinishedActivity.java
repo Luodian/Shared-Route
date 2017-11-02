@@ -1,5 +1,7 @@
 package com.example.administrator.sharedroute.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -91,8 +93,10 @@ public class MyFinishedActivity extends AppCompatActivity {
 //                    }
 //                    System.out.println(json);
 //                    parameters.add(new BasicNameValuePair("name", json));
-                parameters.add(new BasicNameValuePair("action", "acceptpost"));
-                parameters.add(new BasicNameValuePair("FetcherID", "4"));
+                parameters.add(new BasicNameValuePair("action", "fetchpost"));
+                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+                String stuNum=sp.getString("now_stu_num",null);
+                parameters.add(new BasicNameValuePair("FetcherID", stuNum));
                 UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                 post.setEntity(ent);
                 HttpResponse responsePOST = client.execute(post);
@@ -106,7 +110,7 @@ public class MyFinishedActivity extends AppCompatActivity {
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject lan = arr.getJSONObject(i);
                     listItem item = new listItem();
-                    item.ID = lan.getInt("id");
+                    item.ID = lan.getInt("ID");
                     item.Money = lan.getDouble("Money");
                     item.PickID = lan.getString("PickID");
                     item.TaskKindID = lan.getString("TaskkindID");
