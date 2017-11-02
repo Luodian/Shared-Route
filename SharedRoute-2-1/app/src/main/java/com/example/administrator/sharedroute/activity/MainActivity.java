@@ -1,7 +1,9 @@
 package com.example.administrator.sharedroute.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -320,7 +322,9 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //                    System.out.println(json);
 //                    parameters.add(new BasicNameValuePair("name", json));
                 parameters.add(new BasicNameValuePair("action", "publishpost"));
-                parameters.add(new BasicNameValuePair("PublisherID", "1"));
+                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+                String stuNum=sp.getString("now_stu_num",null);
+                parameters.add(new BasicNameValuePair("FetcherID", stuNum));
                 UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                 post.setEntity(ent);
                 HttpResponse responsePOST = client.execute(post);
