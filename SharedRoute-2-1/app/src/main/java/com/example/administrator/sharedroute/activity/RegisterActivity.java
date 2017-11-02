@@ -34,6 +34,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
@@ -48,6 +50,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
     private boolean isSuccess = false;
 
     private static final int REQUEST_READ_CONTACTS = 0;
+    private static final int REQUEST_TIMEOUT = 5*1000;//设置请求超时5秒钟
+    private static final int SO_TIMEOUT = 10*1000;  //设置等待数据超时时间10秒钟
     private PostTask mAuthTask = null;
 
     private View mProgressView;
@@ -262,7 +266,9 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
         private String inviteCode;
         private String password;
 
-        private String url = "http://47.95.194.146:8080/sharedroot_server/Login";
+//        private String url = "http://47.95.194.146:8080/sharedroot_server/Login";
+//        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
+private String url="http://hitschool.free.ngrok.cc/sharedroot_server/Login";
 
         private String result = null;
 
@@ -281,7 +287,10 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
 
             try {
 
-                HttpClient client = new DefaultHttpClient();
+                BasicHttpParams httpParams = new BasicHttpParams();
+                HttpConnectionParams.setConnectionTimeout(httpParams, REQUEST_TIMEOUT);
+                HttpConnectionParams.setSoTimeout(httpParams, SO_TIMEOUT);
+                HttpClient client = new DefaultHttpClient(httpParams);
                 HttpPost post = new HttpPost(url);
 
                 //参数
@@ -333,7 +342,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             }
             else
             {
-                Toast.makeText(RegisterActivity.this,"注册失败,详细信息为\n"+result.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this,"注册失败,详细信息为\n"+ result.toString(), Toast.LENGTH_SHORT).show();
+                isSuccess=false;
             }
         }
 

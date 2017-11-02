@@ -454,7 +454,7 @@ public class NormalListDialog extends BaseDialog {
         }
     }
     class ConfirmTask extends AsyncTask<Void,Void,Boolean>{
-        String path = "http://suc.free.ngrok.cc/sharedroot_server/Task";
+        String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
         HttpURLConnection con=null;
         InputStream in=null;
         String result = null;
@@ -491,8 +491,8 @@ public class NormalListDialog extends BaseDialog {
             super.onPostExecute(aBoolean);
             if (aBoolean.booleanValue()==false) dismiss();
             else{
-                String sql = "DELETE FROM client WHERE ID = "+itemId;
-                orderDao.execSQL(sql);
+//                String sql = "DELETE FROM client WHERE ID = "+itemId;
+//                orderDao.execSQL(sql);
                 dismiss();
             }
         }
