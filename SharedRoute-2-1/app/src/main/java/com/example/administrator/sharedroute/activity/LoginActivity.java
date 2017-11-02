@@ -68,7 +68,6 @@ import java.util.List;
 import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
-import static java.net.SocketOptions.SO_TIMEOUT;
 
 /**
  * A login screen that offers login via email/password.
