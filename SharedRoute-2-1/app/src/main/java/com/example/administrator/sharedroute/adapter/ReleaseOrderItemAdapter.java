@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.activity.BlurredActivity;
@@ -77,6 +78,10 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
                 BlurBehind.getInstance().execute((Activity) mContext, new OnBlurCompleteListener() {
                     @Override
                     public void onBlurComplete() {
+                        if (mItemList.get(position).status == 3) {
+                            Toast.makeText(mContext,"此订单已完成",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         Intent intent = new Intent(mContext, ConfirmBlurredActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         Bundle bundle = new Bundle();
