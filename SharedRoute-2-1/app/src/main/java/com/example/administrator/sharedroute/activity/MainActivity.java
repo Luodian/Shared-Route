@@ -39,10 +39,6 @@ import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.net.Socket;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -58,13 +54,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.HttpURLConnection;
+import java.net.Socket;
 import java.net.URL;
 import java.text.MessageFormat;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,6 +108,11 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         Bundle bundle = getIntent().getExtras();   //得到传过来的bundle
         if (bundle != null) {
             usrid = bundle.getString("ID");
+        }
+        else
+        {
+            SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+            usrid = sp.getString("now_stu_num",null);
         }
 
         orderDao = new OrderDao(this);
@@ -515,7 +517,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                                 try {
                                     anotherSocket = new Socket(HOST,PORT);
                                     PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
-                                    out1.println("action=send;name="+getIntent().getExtras().getString("ID")+";msg=byebye");
+                                    out1.println("action=send;name="+ usrid + ";msg=byebye");
                                     out1.flush();
                                     out1.close();
                                     anotherSocket.close();
