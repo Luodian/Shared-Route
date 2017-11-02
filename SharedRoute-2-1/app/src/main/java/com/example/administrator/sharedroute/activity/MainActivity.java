@@ -547,7 +547,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         startActivity(new Intent(this,activity));
     }
 
-    public class FetchUserInfo extends AsyncTask<String, Void, Boolean> {
+    private class FetchUserInfo extends AsyncTask<String, Void, Boolean> {
 
         private String id = null;
         private String result = null;
@@ -637,6 +637,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             if (success) {
                 UserName.setText(MessageFormat.format("电话：{0}", usrphone));
                 UserAccount.setText(MessageFormat.format("余额：{0}", String.valueOf(usraccount)));
+
+                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+
+                sp.edit().putString("now_account_money",String.valueOf(usraccount)).commit();
             } else {
                 Toast.makeText(MainActivity.this, "获取用户信息失败", Toast.LENGTH_SHORT).show();
             }
@@ -647,6 +651,4 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             mFetchTask = null;
         }
     }
-
-
 }

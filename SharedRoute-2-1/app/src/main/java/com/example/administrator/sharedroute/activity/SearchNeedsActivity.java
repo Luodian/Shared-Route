@@ -1,6 +1,8 @@
 package com.example.administrator.sharedroute.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.base.BaseDialog;
@@ -27,6 +30,7 @@ import com.example.administrator.sharedroute.fragment.PageFragment;
 import com.example.administrator.sharedroute.fragment.WaitingFutureFragment;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +54,10 @@ public class SearchNeedsActivity extends AppCompatActivity {
     private int curTab=0;
 
     public static ArrayList<listItem> selectedItem;
+
+    private TextView UserID;
+    private TextView UserName;
+    private TextView UserAccount;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,7 +99,19 @@ public class SearchNeedsActivity extends AppCompatActivity {
         navigation.getMenu().findItem(R.id.navigation_notifications).setChecked(true);
 
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
+
+        View nav_header_view = navView.getHeaderView(0);
+
+        UserID = (TextView) nav_header_view.findViewById(R.id.nav_header_id);
+        UserName = (TextView) nav_header_view.findViewById(R.id.nav_header_name);
+        UserAccount = (TextView) nav_header_view.findViewById(R.id.nav_header_account);
+        SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+        UserID.setText(MessageFormat.format("学号：{0}", sp.getString("now_stu_num",null)));
+        UserName.setText(MessageFormat.format("电话：{0}", sp.getString("now_phone",null)));
+        UserAccount.setText(MessageFormat.format("余额：{0}", sp.getString("now_account_money",null)));
+
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
             public boolean onNavigationItemSelected(MenuItem item){
