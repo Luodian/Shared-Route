@@ -61,7 +61,8 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
         mToolbar = (Toolbar) findViewById(R.id.toolbartaskview) ;
         mLinearLayout = (LinearLayout) findViewById(R.id.bottom_toolbar);
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_taskview);
-        swipeRefresh.setColorSchemeColors(Color.RED, Color.CYAN);
+        swipeRefresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
+                android.R.color.holo_orange_light, android.R.color.holo_green_light);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

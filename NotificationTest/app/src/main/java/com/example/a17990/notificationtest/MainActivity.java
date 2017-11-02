@@ -20,13 +20,15 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Socket socket;
+    public static MyThread thread;
+    public Socket socket;
     private BufferedReader in;
-    private OutputStream out;
+    private PrintStream out;
     Button btn;
     TextView mainText;
     TextView secondText;
@@ -36,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg){
             switch (msg.what){
                 case 0x11:
-                    mainText.setText(msg.getData().getString("msg"));
+                    noti(msg.getData().getString("msg"));
+//                    mainText.setText(msg.getData().getString("msg"));
                     break;
                 default:
                     break;
@@ -56,8 +59,9 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MyThread(MainActivity.this).start();
-            }
+//                new MyThread(MainActivity.this).start();
+                thread=new MyThread(MainActivity.this);
+            thread.start();}
         });
 
         //点击进入另一个界面
@@ -68,10 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
-
 
     class MyThread extends  Thread{
         Context  context;
@@ -80,97 +81,48 @@ public class MainActivity extends AppCompatActivity {
         }
         public void run(){
 
-            //测试子线程获取UI内的信息并发送给handler
-//            Message message = new Message();
-//            message.what=0;
-//            Bundle bundle = new Bundle();
-//            bundle.putString("msg",secondText.getText().toString());
-//            message.setData(bundle);
-//            handler.sendMessage(message);
-
-
-            //获取socket
-            ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
             try {
+                //获取socket
+                ApplicationUtil appUtil = (ApplicationUtil) MainActivity.this.getApplication();
+
+                //init()只做一次
                 appUtil.init();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            socket = appUtil.getSocket();
-            in = appUtil.getIn();
-            out = appUtil.getOut();
 
-            //从服务器获取通知
-            String line = null;
-            StringBuilder buffer = new StringBuilder();
-            try {
-                while((line=in.readLine())!=null){
-                    buffer.append(line);
+                socket = appUtil.getSocket();
+                in = appUtil.getIn();
+                out = appUtil.getOut();
+
+
+                //向服务器发送UI中按钮上的请求
+//                out.println((((Button) findViewById(R.id.android_text)).getText().toString()));
+//                out.flush();
+
+                //从服务器获取通知,由handler发送给主线程,之后保持这个线程贯穿程序始终
+                String line = null;
+                while ((line = in.readLine()) != null) {
+                    Log.e("line",line);
+                    Message msg = new Message();
+                    msg.what = 0x11;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("msg", line);
+                    msg.setData(bundle);
+                    handler.sendMessage(msg);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Message msg = new Message();
-            msg.what=0x11;
-            Bundle bundle = new Bundle();
-            bundle.putString("msg",buffer.toString());
-            msg.setData(bundle);
-            handler.sendMessage(msg);
-
-            //向服务器发送通知
-            try {
-//                out.write("这里是安卓客户端".getBytes("gbk"));
-
-                out.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
     }
-//
-//    public void myThread(){
-//        Thread thread = new Thread(new Runnable() {
-//            public boolean isRunning = true;
-//            @Override
-//            public void run() {
-//                while(isRunning){
-//                    try {
-//                        Thread.sleep(1000);
-//                        int r=in.available();
-//                        while (r==0){
-//                            r=in.available();
-//                        }
-//                        byte[] b=new byte[r];
-//                        in.read(b);
-//                        String content = new String(b,"utf-8");
-//                        //每当读到来自服务器的数据后，发送消息通知程序页面显示数据
-//                        Message msg = new Message();
-//                        msg.what = 0x123;
-//                        msg.obj = content;
-//                        Log.v("ho", content);
-//                        handler.sendMessage(msg);
-//
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
-//        thread.start();
-//    }
-//
 
-    public void noti(){
+    public void noti(String str){
 
         Notification notification = new NotificationCompat.Builder(this)
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.banner_1))
                 .setSmallIcon(R.drawable.banner_2)
                 .setTicker("You have a message")
                 .setContentTitle("title")
-                .setContentText("text:"+mainText.getText().toString())
+                .setContentText("text:"+str)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setAutoCancel(true)

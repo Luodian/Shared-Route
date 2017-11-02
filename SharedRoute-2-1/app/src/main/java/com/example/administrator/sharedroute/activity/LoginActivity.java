@@ -4,6 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -11,15 +14,20 @@ import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -46,7 +54,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -60,9 +72,22 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
+    //socket 的 host 和 port
+    private static final String HOST = "free.ngrok.cc";
+    private static final int PORT = 14123;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            switch (msg.what){
+                case 0x11:
+                    noti(msg.getData().getString("msg"));
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
@@ -72,17 +97,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
     private UserLoginTask mAuthTask = null;
-
-    // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
     private TextView mRegibtn;
     private static final int REQUEST_CODE_GO_TO_REGIST = 20;
     @Override
@@ -461,10 +480,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+
                 Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_SHORT).show();
+
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
                 sp.edit().putString("now_stu_num",mEmailView.getText().toString()).commit();
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                Bundle mBundle = new Bundle();
+                mBundle.putString("ID",mEmailView.getText().toString());//压入数据
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                intent.putExtras(mBundle);
+                
+                //启动接收命令的线程
+                new MyThread().start();
+                //开始新界面
+                startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(LoginActivity.this, "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
@@ -478,6 +507,54 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    //获取通知使用的线程
+    class MyThread extends  Thread{
+        public void run(){
+            try {
+                Socket socket = new Socket(HOST,PORT);
+                PrintStream out = new PrintStream(socket.getOutputStream());
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+                //向服务器发送UI中按钮上的请求
+//                out.println((((Button) findViewById(R.id.android_text)).getText().toString()));
+//                out.flush();
+
+                //从服务器获取通知,由handler发送给主线程,之后保持这个线程贯穿程序始终
+                String line = null;
+                while ((line = in.readLine()) != null) {
+                    Log.e("line",line);
+                    Message msg = new Message();
+                    msg.what = 0x11;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("msg", line);
+                    msg.setData(bundle);
+                    handler.sendMessage(msg);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+    public void noti(String str){
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.banner_1))
+                .setSmallIcon(R.drawable.banner_2)
+                .setTicker("You have a message")
+                .setContentTitle("title")
+                .setContentText("text:"+str)
+                .setWhen(System.currentTimeMillis())
+                .setPriority(Notification.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setOngoing(false)
+                .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
+                .setContentIntent(PendingIntent.getActivity(this, 1, new Intent(this, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT))
+                .build();
+        NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(1,notification);
     }
 }
 

@@ -25,4 +25,14 @@
         <item>中通快递</item>
     </string-array>
 
+    <string-array name="bugType">
+        <item>闪退</item>
+        <item>卡顿</item>
+        <item>乱码</item>
+        <item>跳转错误</item>
+        <item>显示错误</item>
+        <item>其他错误</item>
+        <item>宝贵意见</item>
+    </string-array>
+
 </resources>
