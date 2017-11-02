@@ -76,8 +76,13 @@ import static java.net.SocketOptions.SO_TIMEOUT;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     //socket 的 host 和 port
+    private static MyThread thread;
+    private static boolean stop;
+    public static void setStop(Boolean stop){
+        LoginActivity.stop=stop;
+    }
     private static final String HOST = "free.ngrok.cc";
-    private static final int PORT = 14123;
+    private static final int PORT = 12974;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg){
@@ -219,6 +224,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if ((!mEmailView.getText().equals(""))&&(!mPasswordView.getText().equals(""))){
                 attemptLogin();
             }
+        }else
+        {
+            stop=true;
         }
     }
     @Override
@@ -494,14 +502,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
                 sp.edit().putString("now_stu_num",mEmailView.getText().toString()).commit();
-                String now_name = result.substring(result.indexOf("name:")+5,result.indexOf("phone"));
-                String now_phone = result.substring(result.indexOf("phone:")+6);
-                Log.e("name:",now_name);
-                Log.e("phone:",now_phone);
-                sp.edit().putString("now_name",now_name).commit();
-                sp.edit().putString("now_phone",now_phone).commit();
+
+                    String now_name = result.substring(result.indexOf("name:") + 5, result.indexOf(",phone"));
+                    String now_phone = result.substring(result.indexOf("phone:") + 6);
+
+                    Log.e("name:", now_name);
+                    Log.e("phone:", now_phone);
+                    sp.edit().putString("now_name", now_name).commit();
+                    sp.edit().putString("now_phone", now_phone).commit();
                 //启动接收命令的线程
-                new MyThread().start();
+                thread = new MyThread();
+                stop=false;
+                thread.start();
+//                new MyThread().start();
                 //开始新界面
                 startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 finish();
@@ -528,12 +541,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                 //向服务器发送学号
-                out.println("action=login;UserID="+mEmailView.getText().toString());
+                out.println("action=login;name="+mEmailView.getText().toString());
                 out.flush();
 
                 //从服务器获取通知,由handler发送给主线程,之后保持这个线程贯穿程序始终
                 String line = null;
-                while ((line = in.readLine()) != null) {
+                while ((!stop)&&(line = in.readLine()) != null) {
                     Log.e("line",line);
                     Message msg = new Message();
                     msg.what = 0x11;
@@ -541,6 +554,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     bundle.putString("msg", line);
                     msg.setData(bundle);
                     handler.sendMessage(msg);
+                }
+                //停止监听线程
+                if (stop){
+                    out.println("action=login;name="+mEmailView.getText().toString()+";"+"msg:Bye bye!");
+                    out.flush();
+                    in.close();
+                    out.close();
+                    socket.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();

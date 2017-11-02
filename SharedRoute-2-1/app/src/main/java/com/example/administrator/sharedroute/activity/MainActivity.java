@@ -427,6 +427,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        LoginActivity.setStop(true);
                         finish();
                     }
                 }).show();
