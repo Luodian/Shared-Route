@@ -1,4 +1,4 @@
-# Shared-Route
+﻿# Shared-Route
 
 ### 介绍
 
@@ -76,11 +76,13 @@ Bug：
 
 接受订单的时候，为了确保货物安全，只能让账户（学号）拥有者接单，因此不能选择接单人的信息，接单的时候从本地取出学号，发给服务器即可。
 
-本地学号使用方法：
+本地学号、姓名、手机的使用方法：
 
 ```java
 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
 String stuNum=sp.getString("now_stu_num",null);
+String name=sp.getString("now_name",null);
+String phone=sp.getString("now_phone",null);
 ```
 
 
