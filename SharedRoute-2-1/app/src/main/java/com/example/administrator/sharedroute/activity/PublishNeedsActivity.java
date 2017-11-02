@@ -46,15 +46,19 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     private int requestCode;
     private BottomNavigationView navigation;
     private DrawerLayout mDrawerLayout;
-    private Button pickupLocationButton = (Button)findViewById(R.id.pickupplace);
-    private TextView textViewName = (TextView)findViewById(R.id.nametext);
-    private TextView textViewPhoneNumber = (TextView)findViewById(R.id.phonetext);
-    private Button sendLocation = (Button)findViewById(R.id.delieverplace);
+    private Button pickupLocationButton ;
+    private TextView textViewName ;
+    private TextView textViewPhoneNumber ;
+    private Button sendLocation ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_needs);
+        pickupLocationButton = (Button)findViewById(R.id.pickupplace);
+        textViewName = (TextView)findViewById(R.id.nametext);
+        textViewPhoneNumber = (TextView)findViewById(R.id.phonetext);
+        sendLocation = (Button)findViewById(R.id.delieverplace);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_publishneeds);
         setSupportActionBar(toolbar);
