@@ -161,8 +161,22 @@ public class MyFinishedActivity extends AppCompatActivity {
                     cardItems.add(item4);
                     CardItem item5 = new CardItem("金额："+e.Money+"元", R.mipmap.ic_money);
                     cardItems.add(item5);
-                    CardItem item6 = new CardItem("状态：", R.mipmap.ic_status);
-                    cardItems.add(item6);
+                    if (e.status == 1){
+                        CardItem item6 = new CardItem("状态："+"未被接受", R.mipmap.ic_status);
+                        cardItems.add(item6);
+                    }
+                    else if (e.status == 2){
+                        CardItem item6 = new CardItem("状态："+"已被接受", R.mipmap.ic_status);
+                        cardItems.add(item6);
+                    }
+                    else if (e.status == 3){
+                        CardItem item6 = new CardItem("状态："+"已被完成", R.mipmap.ic_status);
+                        cardItems.add(item6);
+                    }
+                    else {
+                        CardItem item6 = new CardItem("状态："+"未知", R.mipmap.ic_status);
+                        cardItems.add(item6);
+                    }
                     ListView listViewCard = (ListView)viewCard.findViewById(R.id.list_view);
                     listViewCard.setAdapter(adapter);
                     mViewList.add(viewCard);
