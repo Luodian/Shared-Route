@@ -315,7 +315,7 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
 
 //        private String url = "http://47.95.194.146:8080/sharedroot_server/Task";
 //        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Task";
-private String url="http://hitschool.free.ngrok.cc/sharedroot_server/Task";
+        private String url="http://47.95.194.146:8080/sharedroot_server/Task";
         private String result = null;
 
         //初始化
@@ -406,7 +406,7 @@ private String url="http://hitschool.free.ngrok.cc/sharedroot_server/Task";
             showProgress(false);
 
             if (success) {
-                Toast.makeText(PayBillActivity.this,"支付成功，即将返回主页!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"支付成功，即将返回主页!", Toast.LENGTH_SHORT).show();
                 Thread thread = new Thread() {
                     public void run(){
                         try {
@@ -422,7 +422,7 @@ private String url="http://hitschool.free.ngrok.cc/sharedroot_server/Task";
             }
             else
             {
-                Toast.makeText(PayBillActivity.this,result.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),result.toString(), Toast.LENGTH_SHORT).show();
             }
         }
 

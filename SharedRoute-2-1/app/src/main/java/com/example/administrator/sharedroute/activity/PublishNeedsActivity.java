@@ -98,8 +98,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         UserName.setText(MessageFormat.format("电话：{0}", sp.getString("now_phone",null)));
         UserAccount.setText(MessageFormat.format("余额：{0}", sp.getString("now_account_money",null)));
 
-
-
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
             public boolean onNavigationItemSelected(MenuItem item){

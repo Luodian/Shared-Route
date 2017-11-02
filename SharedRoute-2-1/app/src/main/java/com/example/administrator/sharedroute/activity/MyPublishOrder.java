@@ -86,7 +86,7 @@ public class MyPublishOrder extends AppCompatActivity {
         @Override
         protected ArrayList<listItem> doInBackground(Void... pa) {
             String result = null;
-            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
+            String path = "http://47.95.194.146:8080/sharedroot_server/Task";
             HttpURLConnection con = null;
             InputStream in = null;
             try {
@@ -210,7 +210,7 @@ public class MyPublishOrder extends AppCompatActivity {
                 mViewPager.setOffscreenPageLimit(1);
             }
             else {
-                Toast.makeText(MyPublishOrder.this,"当前无任务",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"当前无任务",Toast.LENGTH_SHORT).show();
             }
         }
     }

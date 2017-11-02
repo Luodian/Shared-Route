@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +27,6 @@ import android.widget.Toast;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.ConfirmTaskAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
-import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
@@ -180,7 +178,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 //        params.add(new BasicNameValuePair(_queryKey, _queryValue));
 //        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, HTTP.UTF_8);
 //        post.setEntity(ent);
-        private String url = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
+        private String url = "http://47.95.194.146:8080/sharedroot_server/Task";
 
         private String result = null;
 
@@ -249,7 +247,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
         @Override
         protected void onPostExecute(final ArrayList<Integer> integers) {
             if (integers == null) {
-                Toast.makeText(ConfirmTaskActivity.this,"接单失败",Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(),"接单失败",Toast.LENGTH_SHORT);
                 return;
             }
             ArrayList<listItem> failList = new ArrayList<listItem>();

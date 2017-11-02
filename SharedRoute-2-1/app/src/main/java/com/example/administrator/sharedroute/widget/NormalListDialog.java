@@ -36,12 +36,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -454,7 +450,7 @@ public class NormalListDialog extends BaseDialog {
         }
     }
     class ConfirmTask extends AsyncTask<Void,Void,Boolean>{
-        String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
+        String path = "http://47.95.194.146:8080/sharedroot_server/Task";
         HttpURLConnection con=null;
         InputStream in=null;
         String result = null;

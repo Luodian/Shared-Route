@@ -459,7 +459,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mPassword;
 //        private String url = "http://47.95.194.146:8080/sharedroot_server/Login";
 //        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
-        private String url="http://hitschool.free.ngrok.cc/sharedroot_server/Login";
+        private String url="http://47.95.194.146:8080/sharedroot_server/Login";
         private String result = null;
 
         UserLoginTask(String email, String password) {
@@ -517,19 +517,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
 
-                Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"登录成功", Toast.LENGTH_SHORT).show();
 
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
 
                 sp.edit().putString("now_stu_num",mEmailView.getText().toString()).commit();
 
-                    String now_name = result.substring(result.indexOf("name:") + 5, result.indexOf(",phone"));
-                    String now_phone = result.substring(result.indexOf("phone:") + 6);
+                String now_name = result.substring(result.indexOf("name:") + 5, result.indexOf(",phone"));
+                String now_phone = result.substring(result.indexOf("phone:") + 6);
 
-                    Log.e("name:", now_name);
-                    Log.e("phone:", now_phone);
-                    sp.edit().putString("now_name", now_name).commit();
-                    sp.edit().putString("now_phone", now_phone).commit();
+                Log.e("name:", now_name);
+                Log.e("phone:", now_phone);
+                sp.edit().putString("now_name", now_name).commit();
+                sp.edit().putString("now_phone", now_phone).commit();
 
                 //启动接收命令的线程
                 thread = new MyThread();
@@ -545,7 +545,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 finish();
             } else {
-                Toast.makeText(LoginActivity.this, "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }

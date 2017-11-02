@@ -181,11 +181,13 @@
             android:layout_height="wrap_content">
 
             <AutoCompleteTextView
+            android:shadowColor="@color/white"
             android:id="@+id/user_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入学号"
-            android:textColorHint="#b3ffffff"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:inputType="number"
             android:maxLines="1" android:background="@null"
             android:singleLine="true" />
@@ -219,7 +221,8 @@
             android:imeActionLabel="@string/action_sign_in_short"
             android:imeOptions="actionUnspecified"
             android:inputType="textPassword"
-            android:textColorHint="#b3ffffff"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:background="@null"
             android:maxLines="1"
             android:singleLine="true" />

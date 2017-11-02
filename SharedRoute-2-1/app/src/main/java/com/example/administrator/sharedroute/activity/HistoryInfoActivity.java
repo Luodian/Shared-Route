@@ -233,7 +233,7 @@ public class HistoryInfoActivity extends AppCompatActivity {
                     editor.putString("history_info", mJsonArray.toString());
                     editor.commit();
 
-                    Toast.makeText(HistoryInfoActivity.this,"delete",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"delete",Toast.LENGTH_LONG).show();
 //                    for (int i=0;i<listData.size()+1;i++){
 //                        myAdapter.remove(i);
 //                    }

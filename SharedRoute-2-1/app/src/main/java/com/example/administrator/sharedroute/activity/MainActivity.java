@@ -317,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         @Override
         protected ArrayList<listItem> doInBackground(Void... pa) {
             String result = null;
-            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
+            String path = "http://47.95.194.146:8080/sharedroot_server/Task";
             HttpURLConnection con = null;
             InputStream in = null;
             try {
@@ -379,9 +379,9 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         protected void onPostExecute(ArrayList<listItem> data) {
             super.onPostExecute(data);
             if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
-            if (itemPublishList.size()==0) Toast.makeText(MainActivity.this,"无数据更新",Toast.LENGTH_SHORT).show();
+            if (itemPublishList.size()==0) Toast.makeText(getApplicationContext(),"无数据更新",Toast.LENGTH_SHORT).show();
             RecyclerView releaseOrder = (RecyclerView) view1.findViewById(R.id.release_order);
-            GridLayoutManager layoutManager1 = new GridLayoutManager(MainActivity.this, 1);
+            GridLayoutManager layoutManager1 = new GridLayoutManager(getApplicationContext(), 1);
             releaseOrder.setLayoutManager(layoutManager1);
             adapter1 = new ReleaseOrderItemAdapter(itemPublishList);
             releaseOrder.setAdapter(adapter1);
@@ -455,7 +455,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         protected void onPostExecute(ArrayList<listItem> data) {
             super.onPostExecute(data);
             if (swipeRefresh2 != null) swipeRefresh2.setRefreshing(false);
-            if (itemAcceptList.size()==0) Toast.makeText(MainActivity.this,"无数据更新",Toast.LENGTH_SHORT).show();
+            if (itemAcceptList.size()==0) Toast.makeText(getApplicationContext(),"无数据更新",Toast.LENGTH_SHORT).show();
             RecyclerView receiveOrder = (RecyclerView) view2.findViewById(R.id.receive_order);
             GridLayoutManager layoutManager2 = new GridLayoutManager(MainActivity.this, 1);
             receiveOrder.setLayoutManager(layoutManager2);
@@ -559,7 +559,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         @Override
         protected Boolean doInBackground(String... ID) {
             String result = null;
-            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task?action=FetchUserID&ID=" + id;
+            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=FetchUserID&ID=" + id;
             HttpURLConnection con=null;
             InputStream in=null;
 
@@ -642,7 +642,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
                 sp.edit().putString("now_account_money",String.valueOf(usraccount)).commit();
             } else {
-                Toast.makeText(MainActivity.this, "获取用户信息失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "获取用户信息失败", Toast.LENGTH_SHORT).show();
             }
         }
 

@@ -40,4 +40,5 @@
     <string name="UserPassword">密码</string>
     <string name="LoginButtonText">登      录</string>
     <string name="RegisterButtonText">注 册</string>
+    <string name="confirm_password">确认密码</string>
 </resources>
