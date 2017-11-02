@@ -44,7 +44,7 @@
                 <item
                     android:id="@+id/nav_wallet"
                     android:icon="@mipmap/ic_wallet"
-                    android:title="绑定银行卡"/>
+                    android:title="提交错误信息"/>
 
                 <item
                     android:id="@+id/nav_setting"

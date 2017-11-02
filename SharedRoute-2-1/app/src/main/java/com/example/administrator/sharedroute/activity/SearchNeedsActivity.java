@@ -120,7 +120,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
                         startActivity(intent5);
                         return true;
                     case R.id.nav_wallet:
-                        Intent intent6 = new Intent(SearchNeedsActivity.this,WaitingFutureActivity.class);
+                        Intent intent6 = new Intent(SearchNeedsActivity.this,BugSendActivity.class);
                         startActivity(intent6);
                         return true;
                     case R.id.nav_setting:

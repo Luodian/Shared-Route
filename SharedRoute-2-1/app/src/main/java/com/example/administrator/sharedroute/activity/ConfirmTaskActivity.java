@@ -192,8 +192,6 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 
                 //參數
                 int length = arraylist.size();
-                arraylist.get(0).ID = 2;
-                arraylist.get(1).ID = 3;
                 if (length != 0){
                     List<NameValuePair> parameters = new ArrayList<NameValuePair>();
                     String json = new String();

@@ -107,5 +107,16 @@ String stuNum=sp.getString("now_stu_num",null);
   - 发送参数：无
   - 返回：**当前MAXID - 10 条任务状态为1的数据**，以及ID-1，ID-2，…..ID-9的数据，如果ID < 10，则返回MaxID~1的数据。
 
+  FetchUserData：
+
+  - 发送参数：UserID
+  - 描述：获取用户ID，电话号码，当前余额
+  - 返回：返回一个User实例的json对象
+
+  SendBugsInfo：
+
+  - 发送参数：UserID，ContactInfo，BugsType，Comment
+  - 描述：新建一张表Bugs，表中包含以上列，都是String即可，Comment长度小于100字，以上数据加入到这个表。
+
 
 

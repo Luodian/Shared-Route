@@ -108,11 +108,11 @@ public class AcceptedOrderItemAdapter extends RecyclerView.Adapter<AcceptedOrder
 //        holder.sendPlace.setText(item.getOutLocation());
         holder.userHeader.setImageResource(R.drawable.nav_icon);
         holder.phoneImage.setImageResource(R.drawable.mainpage_ringphone);
-        holder.userName.setText("王一二");
-        holder.userPhone.setText("123456789");
-        holder.releaseTime.setText("今天16:30");
-        holder.fetchLocation.setText("二区 四公寓");
-        holder.statusImage.setImageResource(R.drawable.mainpage_semimoon);
+        holder.userName.setText(mItemList.get(position).FetcherName);
+        holder.userPhone.setText(mItemList.get(position).FetcherPhone);
+        holder.releaseTime.setText(mItemList.get(position).SendTime);
+        holder.fetchLocation.setText(mItemList.get(position).SendLocation);
+        holder.statusImage.setImageResource(R.drawable.mainpage_semimoon);/**/
         holder.statusText.setText("已接单");
     }
 
