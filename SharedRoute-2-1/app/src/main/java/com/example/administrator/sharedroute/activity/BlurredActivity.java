@@ -38,7 +38,10 @@ public class BlurredActivity extends Activity {
 		testItems.add(new DialogMenuItem("类型："+info.TaskKindID, R.mipmap.ic_type));
 		testItems.add(new DialogMenuItem("取货码："+info.PickID, R.mipmap.ic_code));
 		testItems.add(new DialogMenuItem("金额："+info.Money+" 元", R.mipmap.ic_money));
-		testItems.add(new DialogMenuItem("状态：", R.mipmap.ic_status));
+		if (info.status == 1)testItems.add(new DialogMenuItem("状态：未接单", R.mipmap.ic_status));
+		else if (info.status == 2)testItems.add(new DialogMenuItem("状态：已接单", R.mipmap.ic_status));
+		else if (info.status == 3)testItems.add(new DialogMenuItem("状态：已完成", R.mipmap.ic_status));
+		else testItems.add(new DialogMenuItem("状态：未知", R.mipmap.ic_status));
 //		try {
 //			((BlurredActivity) context).setBaseIn((BaseAnimatorSet) ZoomInEnter.class.newInstance());
 //			((BlurredActivity) context).setBaseOut((BaseAnimatorSet) ZoomOutExit.class.newInstance());
@@ -52,7 +55,7 @@ public class BlurredActivity extends Activity {
 				.titleBgColor(Color.parseColor("#0097A8"))//
 				.itemPressColor(Color.parseColor("#85D3EF"))//
 				.itemTextColor(Color.parseColor("#303030"))//
-				.itemTextSize(20)//
+				.itemTextSize(12)//
 				.cornerRadius(0)//
 				.widthScale(0.8f)//
 				.show(R.style.myDialogAnim);
