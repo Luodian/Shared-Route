@@ -12,7 +12,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.sharedroute.R;
-import com.unstoppable.submitbuttonview.SubmitButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -182,7 +180,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             delieverPlace.setText(bundle.getString("delieverplaceInfo"));
         }
 
-        CardView cdv1 = (CardView) findViewById(R.id.cdv1);
+        LinearLayout cdv1 = (LinearLayout) findViewById(R.id.cdv1);
         cdv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -255,7 +253,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         final EditText numText = (EditText) findViewById(R.id.numtext);
         final EditText money = (EditText) findViewById(R.id.money);
 
-        final SubmitButton submitBtn = (SubmitButton) findViewById(R.id.submit_btn);
+        final Button submitBtn = (Button) findViewById(R.id.submit_btn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -288,11 +286,11 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 //                        return;
 //                        }
 //                }
-                submitBtn.doResult(true);
+//                submitBtn.doResult(true);
                 Thread thread = new Thread() {
                  public void run(){
                      try {
-                         Thread.sleep(1500);
+                         Thread.sleep(0);
                      } catch (InterruptedException e) {
                          e.printStackTrace();
                      }

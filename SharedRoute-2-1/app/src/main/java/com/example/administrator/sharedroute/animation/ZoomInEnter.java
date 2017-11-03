@@ -1,8 +1,9 @@
 package com.example.administrator.sharedroute.animation;
 
 import android.view.View;
-import com.nineoldandroids.animation.ObjectAnimator;
+
 import com.example.administrator.sharedroute.base.BaseAnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
 
 public class ZoomInEnter extends BaseAnimatorSet {
 	@Override

@@ -19,7 +19,6 @@ import com.example.administrator.sharedroute.activity.BlurredActivity;
 import com.example.administrator.sharedroute.activity.ConfirmBlurredActivity;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.listener.OnBlurCompleteListener;
-import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BlurBehind;
 
 import java.util.ArrayList;
