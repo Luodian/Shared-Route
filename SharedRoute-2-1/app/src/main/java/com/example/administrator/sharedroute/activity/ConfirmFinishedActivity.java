@@ -75,9 +75,12 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
+                clearTrolly();
+                startActivity(new Intent(ConfirmFinishedActivity.this,ConfirmTaskActivity.class));
                 finish();
                 return true;
             case R.id.back:
+                clearTrolly();
                 startActivity(new Intent(ConfirmFinishedActivity.this,MainActivity.class));
                 finish();
                 return true;
@@ -92,6 +95,7 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clearTrolly();
                 Intent intent =new Intent(ConfirmFinishedActivity.this,MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -99,8 +103,10 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         Bundle bundle =intent.getExtras();
-        successList= bundle.getParcelableArrayList("successList");
-        failList = bundle.getParcelableArrayList("failList");
+        if (bundle!=null ){
+            successList= bundle.getParcelableArrayList("successList");
+            failList = bundle.getParcelableArrayList("failList");
+        }
         if (successList == null) successList = new ArrayList<listItem>();
         if (failList == null) failList = new ArrayList<listItem>();
         mpagerAdapter = new PagerAdapter(getSupportFragmentManager(),ConfirmFinishedActivity.this);
@@ -119,7 +125,6 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {}
         });
         //注册PageViewr的Adapter
-
 
     }
 
