@@ -35,7 +35,7 @@ import java.util.List;
 import me.wangyuwei.flipshare.FlipShareView;
 import me.wangyuwei.flipshare.ShareItem;
 
-public class TaskViewActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener,OnDismissCallback{
+public class TaskViewActivity extends AppCompatActivity implements ListView.OnItemLongClickListener, AdapterView.OnItemClickListener,OnDismissCallback{
     private TaskViewAdapter trollyAdapter;
     private ListView listView;
     private List<listItem> listItemList;//这个表应该接收之前代选中加入购物车的项
@@ -56,6 +56,32 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
         orderDao = new OrderDao(this);
         initView();
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Toast.makeText(TaskViewActivity.this,"长按可看订单项详细信息",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        listItemList = trollyAdapter.getItems();
+        FlipShareView shareBottom = new FlipShareView.Builder(this, mToolbar)
+                .addItem(new ShareItem("发布者：："+listItemList.get(position).PublisherName, Color.WHITE, 0xff43549C))
+                .addItem(new ShareItem("联系方式："+listItemList.get(position).PublisherName, Color.WHITE, 0xff43549C))
+                .addItem(new ShareItem("物品类型："+listItemList.get(position).TaskKindID, Color.WHITE, 0xff43549C))
+                .addItem(new ShareItem("物品描述："+listItemList.get(position).Remark, Color.WHITE, 0xff4999F0))
+                .addItem(new ShareItem("取件时间："+listItemList.get(position).FetchTime, Color.WHITE, 0xffD9392D))
+                .addItem(new ShareItem("取件地点："+listItemList.get(position).FetchLocation, Color.WHITE, 0xff57708A))
+                .addItem(new ShareItem("送件时间："+listItemList.get(position).SendTime, Color.WHITE, 0xffea0bb2))
+                .addItem(new ShareItem("送件地点："+listItemList.get(position).SendLocation, Color.WHITE, 0xffea650b))
+                .addItem(new ShareItem("订单价格："+listItemList.get(position).Money, Color.WHITE,0xff063e04))
+                .setItemDuration(200)
+                .setBackgroundColor(0x60000000)
+                .setAnimType(FlipShareView.TYPE_SLIDE)
+                .create();
+        return true;
+    }
+
     private void initView() {
         listView = (ListView) findViewById(R.id.shoppingtrolly_listview);
         mToolbar = (Toolbar) findViewById(R.id.toolbartaskview) ;
@@ -119,6 +145,8 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
+
+
         getAll = (CheckBox)findViewById(R.id.checkbox_item_all);
         getAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,11 +180,11 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-                startActivity(new Intent(TaskViewActivity.this,MainActivity.class));
+                startActivity(new Intent(TaskViewActivity.this, SearchNeedsActivity.class));
                 finish();
                 return true;
             case R.id.back:
-                startActivity(new Intent(TaskViewActivity.this, SearchNeedsActivity.class));
+                startActivity(new Intent(TaskViewActivity.this,MainActivity.class));
                 finish();
                 return true;
         }
@@ -169,29 +197,6 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    @Override
-    public void onClick(View view) {
-
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        listItemList = trollyAdapter.getItems();
-        FlipShareView shareBottom = new FlipShareView.Builder(this, mToolbar)
-                .addItem(new ShareItem("发布者：："+listItemList.get(position).PublisherName, Color.WHITE, 0xff43549C))
-                .addItem(new ShareItem("联系方式："+listItemList.get(position).PublisherName, Color.WHITE, 0xff43549C))
-                .addItem(new ShareItem("物品类型："+listItemList.get(position).TaskKindID, Color.WHITE, 0xff43549C))
-                .addItem(new ShareItem("物品描述："+listItemList.get(position).Remark, Color.WHITE, 0xff4999F0))
-                .addItem(new ShareItem("取件时间："+listItemList.get(position).FetchTime, Color.WHITE, 0xffD9392D))
-                .addItem(new ShareItem("取件地点："+listItemList.get(position).FetchLocation, Color.WHITE, 0xff57708A))
-                .addItem(new ShareItem("送件时间："+listItemList.get(position).SendTime, Color.WHITE, 0xffea0bb2))
-                .addItem(new ShareItem("送件地点："+listItemList.get(position).SendLocation, Color.WHITE, 0xffea650b))
-                .addItem(new ShareItem("订单价格："+listItemList.get(position).Money, Color.WHITE,0xff063e04))
-                .setItemDuration(200)
-                .setBackgroundColor(0x60000000)
-                .setAnimType(FlipShareView.TYPE_SLIDE)
-                .create();
-    }
 
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.back_to_main,menu);
@@ -244,6 +249,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
             assert swingBottomInAnimationAdapter.getViewAnimator() != null;
             swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
             listView.setAdapter(swingBottomInAnimationAdapter);
+            listView.setOnItemLongClickListener(TaskViewActivity.this);
             listView.setOnItemClickListener(TaskViewActivity.this);
             if (mLinearLayout != null) mLinearLayout.setVisibility(View.VISIBLE);
         }

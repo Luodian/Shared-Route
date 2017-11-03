@@ -144,8 +144,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+
                 //本来是login
                 if (id == R.id.email_login_form || id == EditorInfo.IME_NULL) {
+
                     attemptLogin();
                     return true;
                 }
@@ -461,7 +463,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //        private String url = "http://47.95.194.146:8080/sharedroot_server/Login";
 //        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
         private String url="http://47.95.194.146:8080/sharedroot_server/Login";
+
 //private String url = "http://succ.free.ngrok.cc/sharedroot_server/Login";
+
         private String result = null;
 
         UserLoginTask(String email, String password) {
@@ -520,14 +524,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
 
 
-
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
 
                 sp.edit().putString("now_stu_num",mEmailView.getText().toString()).commit();
                 if (result.contains("name:") && result.contains("phone:"))
                 {
+
                     Toast.makeText(getApplicationContext(),"登录成功", Toast.LENGTH_SHORT).show();
-                    Log.e("yesorno","yes");
+
                     String now_name = result.substring(result.indexOf("name:") + 5, result.indexOf(",phone"));
                     String now_phone = result.substring(result.indexOf("phone:") + 6);
 
@@ -537,13 +541,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     sp.edit().putString("now_phone", now_phone).commit();
 
 
+
                 }
                 //启动接收命令的线程
                 thread = new MyThread();
                 thread.start();
+
 //                new MyThread().start();
 
-                //开始新界面
+                    //开始新界面
+                }
                 Bundle mBundle = new Bundle();
                 mBundle.putString("ID",mEmailView.getText().toString());//压入数据
                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);

@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         }
 
         orderDao = new OrderDao(this);
+        if (!orderDao.isDataExist()) orderDao.initTable();
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
