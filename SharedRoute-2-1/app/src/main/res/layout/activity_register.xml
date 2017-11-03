@@ -203,7 +203,6 @@
                         </android.support.design.widget.TextInputLayout>
                     </TableRow>
                 </TableLayout>
-
                 <Button
                     android:id="@+id/regi_ensure_btn"
                     style="?android:textAppearanceSmall"
