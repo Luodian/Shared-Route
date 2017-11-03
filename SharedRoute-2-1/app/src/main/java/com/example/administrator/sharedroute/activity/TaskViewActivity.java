@@ -227,7 +227,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
                 swipeRefresh.setRefreshing(false);
             }
             if (listItemList == null)
-                Toast.makeText(TaskViewActivity.this, "当前无预订任务", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "当前无预订任务", Toast.LENGTH_SHORT).show();
             trollyAdapter = new TaskViewAdapter(TaskViewActivity.this);
             //没有新的数据，提示消息
             if (listItemList != null) {

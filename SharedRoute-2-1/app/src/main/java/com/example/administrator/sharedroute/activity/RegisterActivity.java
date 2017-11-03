@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,9 +67,9 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.title_register);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+//        toolbar.setTitle(R.string.title_register);
+//        setSupportActionBar(toolbar);
 
         mName = (EditText)findViewById(R.id.regi_name);
         mPhone = (EditText)findViewById(R.id.regi_phone);
@@ -86,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
                 String password = mPassWord.getText().toString();
                 String verify = mVerifyPassword.getText().toString();
                 if (!(password.equals(verify))){
-                    Toast.makeText(RegisterActivity.this,"buyizhia",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"密码不一致",Toast.LENGTH_SHORT).show();
                     mVerifyPassword.setError("密码不一致");
                     mVerifyPassword.requestFocus();
                 }else {
@@ -259,7 +258,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
         private String inviteCode;
         private String password;
 
-        private String url="http://hitschool.free.ngrok.cc/sharedroot_server/Login";
+        private String url="http://47.95.194.146:8080/sharedroot_server/Login";
 
         private String result = null;
 
@@ -327,13 +326,13 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
 
             if (success) {
 
-                Toast.makeText(RegisterActivity.this,"注册成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"注册成功", Toast.LENGTH_SHORT).show();
                 isSuccess = true;
 //                finish();
             }
             else
             {
-                Toast.makeText(RegisterActivity.this,"注册失败,详细信息为\n"+ result.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"注册失败,详细信息为\n"+ result.toString(), Toast.LENGTH_SHORT).show();
                 isSuccess=false;
             }
         }

@@ -1,10 +1,7 @@
 package com.example.administrator.sharedroute.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +11,8 @@ import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.ConfirmFinishedAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
-import com.nhaarman.listviewanimations.appearance.simple.ScaleInAnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

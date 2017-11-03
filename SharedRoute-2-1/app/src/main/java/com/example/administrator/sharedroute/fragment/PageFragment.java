@@ -358,7 +358,7 @@ public class PageFragment extends Fragment {
         @Override
         protected ArrayList<listItem> doInBackground(Void... params) {
             String result = null;
-            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task?action=RefreshTask";
+            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=RefreshTask";
             HttpURLConnection con=null;
             InputStream in=null;
             ArrayList<listItem> InitTaskListItem = new ArrayList<>();
@@ -454,7 +454,7 @@ public class PageFragment extends Fragment {
             //没有新的数据，提示消息
             if (result == null || result.size() == 0) {
                 adapter.notifyItemRemoved(adapter.getItemCount());
-                Toast.makeText(mContext, R.string.check_network_status, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.check_network_status, Toast.LENGTH_SHORT).show();
             }
             else
             {

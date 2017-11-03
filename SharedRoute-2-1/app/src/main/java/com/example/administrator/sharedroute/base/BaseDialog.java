@@ -16,10 +16,7 @@ import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.widget.LinearLayout;
 
-import com.example.administrator.sharedroute.activity.BlurredActivity;
-import com.example.administrator.sharedroute.activity.ConfirmBlurredActivity;
 import com.example.administrator.sharedroute.activity.MainActivity;
-import com.example.administrator.sharedroute.activity.SearchNeedsActivity;
 import com.example.administrator.sharedroute.utils.StatusBarUtils;
 import com.nineoldandroids.animation.Animator;
 

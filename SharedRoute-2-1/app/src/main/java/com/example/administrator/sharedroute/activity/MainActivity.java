@@ -39,10 +39,6 @@ import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.net.Socket;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -58,13 +54,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.HttpURLConnection;
+import java.net.Socket;
 import java.net.URL;
 import java.text.MessageFormat;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,6 +109,11 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         if (bundle != null) {
             usrid = bundle.getString("ID");
         }
+        else
+        {
+            SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+            usrid = sp.getString("now_stu_num",null);
+        }
 
         orderDao = new OrderDao(this);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -144,30 +146,35 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         Intent intent1 = new Intent(MainActivity.this,TaskViewActivity.class);
                         intent1.putExtra("select_order",select);
                         startActivity(intent1);
+                        finish();
                         return true;
                     case R.id.nav_release:
                         select = "releaseOrder";
                         Intent intent2 = new Intent(MainActivity.this,MyPublishOrder.class);
                         intent2.putExtra("select_order",select);
                         startActivity(intent2);
+                        finish();
                         return true;
                     case R.id.nav_receive:
                         select = "receiveOrder";
                         Intent intent3 = new Intent(MainActivity.this,MyFinishedActivity.class);
                         intent3.putExtra("select_order",select);
                         startActivity(intent3);
+                        finish();
                         return true;
                     case R.id.release_rank:
                         select = "releaseRank";
                         Intent intent4 = new Intent(MainActivity.this,WaitingFutureActivity.class);
                         intent4.putExtra("select_order",select);
                         startActivity(intent4);
+                        finish();
                         return true;
                     case R.id.receive_rank:
 //                        select = "receiveRank";
                         Intent intent5 = new Intent(MainActivity.this,WaitingFutureActivity.class);
 //                        intent5.putExtra("select_order",select);
                         startActivity(intent5);
+                        finish();
                         return true;
                     case R.id.nav_wallet:
                         Intent intent6 = new Intent(MainActivity.this,BugSendActivity.class);
@@ -176,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     case R.id.nav_setting:
                         Intent intent7 = new Intent(MainActivity.this,WaitingFutureActivity.class);
                         startActivity(intent7);
+                        finish();
                         return true;
                     case R.id.nav_login:
                         Intent intent8 = new Intent(MainActivity.this,LoginActivity.class);
@@ -309,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         @Override
         protected ArrayList<listItem> doInBackground(Void... pa) {
             String result = null;
-            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
+            String path = "http://47.95.194.146:8080/sharedroot_server/Task";
             HttpURLConnection con = null;
             InputStream in = null;
             try {
@@ -371,9 +379,9 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         protected void onPostExecute(ArrayList<listItem> data) {
             super.onPostExecute(data);
             if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
-            if (itemPublishList.size()==0) Toast.makeText(MainActivity.this,"无数据更新",Toast.LENGTH_SHORT).show();
+            if (itemPublishList.size()==0) Toast.makeText(getApplicationContext(),"无数据更新",Toast.LENGTH_SHORT).show();
             RecyclerView releaseOrder = (RecyclerView) view1.findViewById(R.id.release_order);
-            GridLayoutManager layoutManager1 = new GridLayoutManager(MainActivity.this, 1);
+            GridLayoutManager layoutManager1 = new GridLayoutManager(getApplicationContext(), 1);
             releaseOrder.setLayoutManager(layoutManager1);
             adapter1 = new ReleaseOrderItemAdapter(itemPublishList);
             releaseOrder.setAdapter(adapter1);
@@ -447,7 +455,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         protected void onPostExecute(ArrayList<listItem> data) {
             super.onPostExecute(data);
             if (swipeRefresh2 != null) swipeRefresh2.setRefreshing(false);
-            if (itemAcceptList.size()==0) Toast.makeText(MainActivity.this,"无数据更新",Toast.LENGTH_SHORT).show();
+            if (itemAcceptList.size()==0) Toast.makeText(getApplicationContext(),"无数据更新",Toast.LENGTH_SHORT).show();
             RecyclerView receiveOrder = (RecyclerView) view2.findViewById(R.id.receive_order);
             GridLayoutManager layoutManager2 = new GridLayoutManager(MainActivity.this, 1);
             receiveOrder.setLayoutManager(layoutManager2);
@@ -509,7 +517,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                                 try {
                                     anotherSocket = new Socket(HOST,PORT);
                                     PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
-                                    out1.println("action=send;name="+getIntent().getExtras().getString("ID")+";msg=byebye");
+                                    out1.println("action=send;name="+ usrid + ";msg=byebye");
                                     out1.flush();
                                     out1.close();
                                     anotherSocket.close();
@@ -539,7 +547,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         startActivity(new Intent(this,activity));
     }
 
-    public class FetchUserInfo extends AsyncTask<String, Void, Boolean> {
+    private class FetchUserInfo extends AsyncTask<String, Void, Boolean> {
 
         private String id = null;
         private String result = null;
@@ -551,7 +559,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         @Override
         protected Boolean doInBackground(String... ID) {
             String result = null;
-            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task?action=FetchUserID&ID=" + id;
+            String path = "http://47.95.194.146:8080/sharedroot_server/Task?action=FetchUserID&ID=" + id;
             HttpURLConnection con=null;
             InputStream in=null;
 
@@ -629,8 +637,12 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             if (success) {
                 UserName.setText(MessageFormat.format("电话：{0}", usrphone));
                 UserAccount.setText(MessageFormat.format("余额：{0}", String.valueOf(usraccount)));
+
+                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+
+                sp.edit().putString("now_account_money",String.valueOf(usraccount)).commit();
             } else {
-                Toast.makeText(MainActivity.this, "获取用户信息失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "获取用户信息失败", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -639,6 +651,4 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             mFetchTask = null;
         }
     }
-
-
 }

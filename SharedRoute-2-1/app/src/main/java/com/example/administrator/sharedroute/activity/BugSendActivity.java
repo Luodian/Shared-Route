@@ -80,7 +80,7 @@ public class BugSendActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(BugSendActivity.this, "请输入您遇见的问题或您的意见", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "请输入您遇见的问题或您的意见", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -88,7 +88,7 @@ public class BugSendActivity extends AppCompatActivity {
     private class PostTask extends AsyncTask<Void,Void,Boolean> {
 
         //        private String url = "http://47.95.194.146:8080/sharedroot_server/Task";
-        private String url = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
+        private String url = "http://47.95.194.146:8080/sharedroot_server/Task";
         private String result = null;
 
         @Override
@@ -140,7 +140,7 @@ public class BugSendActivity extends AppCompatActivity {
             mPostTask = null;
 
             if (success) {
-                Toast.makeText(BugSendActivity.this,"感谢提交，我们会联系每位用户提供小礼品!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"感谢提交，我们会联系每位用户提供小礼品!", Toast.LENGTH_SHORT).show();
                 Thread thread = new Thread() {
                     public void run(){
                         try {
@@ -156,7 +156,7 @@ public class BugSendActivity extends AppCompatActivity {
             }
             else
             {
-                Toast.makeText(BugSendActivity.this,result.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),result.toString(), Toast.LENGTH_SHORT).show();
             }
         }
 
