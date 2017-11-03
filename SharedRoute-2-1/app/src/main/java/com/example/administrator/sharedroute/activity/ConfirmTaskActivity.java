@@ -85,10 +85,12 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
+                startActivity(new Intent(ConfirmTaskActivity.this,TaskViewActivity.class));
                 finish();
                 return true;
             case R.id.back:
                 startActivity(new Intent(ConfirmTaskActivity.this,MainActivity.class));
+                finish();
                 return true;
         }
         return true;
@@ -112,7 +114,8 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
         mProgressView = findViewById(R.id.login_progress);
         Intent intent = getIntent();
         Bundle bundle =intent.getExtras();
-        itemlists = bundle.getParcelableArrayList("listItemList");
+        if (bundle!=null)itemlists = bundle.getParcelableArrayList("listItemList");
+        else itemlists = new ArrayList<listItem>();
         mCardView = (CardView) findViewById(R.id.cardView2);
         mButton =(Button) findViewById(R.id.button);
         adapter = new ConfirmTaskAdapter(ConfirmTaskActivity.this);
@@ -131,6 +134,12 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(ConfirmTaskActivity.this,"长按可看订单项详细信息",Toast.LENGTH_SHORT).show();
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 List<listItem> listItemList = adapter.getItems();
                 FlipShareView shareBottom = new FlipShareView.Builder(ConfirmTaskActivity.this, mToolbar)
                         .addItem(new ShareItem("发布者：："+listItemList.get(position).PublisherName, Color.WHITE, 0xff43549C))
@@ -146,6 +155,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
                         .setBackgroundColor(0x60000000)
                         .setAnimType(FlipShareView.TYPE_SLIDE)
                         .create();
+                return true;
             }
         });
         mButton.setOnClickListener(new View.OnClickListener() {
