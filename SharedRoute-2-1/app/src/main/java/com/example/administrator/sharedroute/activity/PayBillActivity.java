@@ -426,7 +426,9 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
             }
             else
             {
+
                 Toast.makeText(getApplicationContext(),"支付失败:"+result.toString(), Toast.LENGTH_SHORT).show();
+
             }
         }
 

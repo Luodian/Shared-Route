@@ -88,10 +88,10 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
             ((ItemViewHolder) holder).fetchLocTextView.setText(mDataset.get(position).FetchLocation);
             ((ItemViewHolder) holder).sendLocTextView.setText(mDataset.get(position).SendLocation);
             ((ItemViewHolder) holder).priceTextView.setText(String.valueOf(mDataset.get(position).Money) + "元");
-
-            ((ItemViewHolder) holder).mCardView.setOnClickListener(new View.OnClickListener() {
+            ((ItemViewHolder) holder).name.setText(mDataset.get(position).PublisherName);
+            ((ItemViewHolder) holder).mCardView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v) {
+                public boolean onLongClick(View v) {
                     FlipShareView shareBottom = new FlipShareView.Builder((SearchNeedsActivity)mContext, mTablayout)
                             .addItem(new ShareItem("发布者："+mDataset.get(position).PublisherName, Color.WHITE,0xff00bcd4))
                             .addItem(new ShareItem("联系方式："+mDataset.get(position).PublisherPhone, Color.WHITE, 0xff00bcd4))
@@ -106,6 +106,7 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
                             .setBackgroundColor(0x60000000)
                             .setAnimType(FlipShareView.TYPE_SLIDE)
                             .create();
+                    return true;
                 }
             });
             int num = orderDao.getItemCount(mDataset.get(position).ID);
@@ -171,6 +172,7 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
         TextView sendLocTextView;
         TextView fetchLocTextView;
         ImageView mImageView;
+        TextView name;
         ItemViewHolder(View itemView) {
             super(itemView);
             mCardView = (CardView) itemView.findViewById(R.id.searchNeeds_card_view);
@@ -181,7 +183,7 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
             fetchTimeTextView = (TextView) itemView.findViewById(R.id.searchNeeds_fetch_time);
             sendLocTextView = (TextView) itemView.findViewById(R.id.searchNeeds_send_loc);
             fetchLocTextView = (TextView) itemView.findViewById(R.id.searchNeeds_fetch_loc);
-
+            name = (TextView)itemView.findViewById(R.id.searchneed_name);
             mImageView = (ImageView) itemView.findViewById(R.id.trolley_icon);
         }
     }
