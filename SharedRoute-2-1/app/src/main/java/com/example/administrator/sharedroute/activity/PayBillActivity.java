@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -317,6 +318,7 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
 //        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Task";
         private String url="http://47.95.194.146:8080/sharedroot_server/Task";
         private String result = null;
+//        private String url = "http://succ.free.ngrok.cc/sharedroot_server/Task";
 
         //初始化
         PostTask(String money,String name,String phone,String num,String packSort,
@@ -368,6 +370,7 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
                 }else {
                     whichPay=2;         //虚拟货币
                 }
+                Log.e("whichpay", String.valueOf(whichPay));
                 parameters.add(new BasicNameValuePair("WhichPay",String.valueOf(whichPay)));
                 parameters.add(new BasicNameValuePair("Remark",mRemark));
                 parameters.add(new BasicNameValuePair("PublisherID",mStuNum));
@@ -383,6 +386,7 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
 
                 if (resEntity != null) {
                     result = EntityUtils.toString(resEntity);
+                    Log.e("result",result);
                 }
                 if (result.toString().equals("success"))
                 {
@@ -422,7 +426,7 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
             }
             else
             {
-                Toast.makeText(getApplicationContext(),result.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"支付失败:"+result.toString(), Toast.LENGTH_SHORT).show();
             }
         }
 
