@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -67,6 +68,18 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        View decorView = getWindow().getDecorView();
+        if (Build.VERSION.SDK_INT >= 21) {
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+        else
+        {
+            int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(option);
+        }
 //        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 //        toolbar.setTitle(R.string.title_register);
 //        setSupportActionBar(toolbar);
@@ -259,7 +272,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
         private String password;
 
 //        private String url="http://47.95.194.146:8080/sharedroot_server/Login";
-private String url = getResources().getString(R.string.url)+"/Login";
+        private String url = getResources().getString(R.string.url)+"/Login";
         private String result = null;
 
         //初始化

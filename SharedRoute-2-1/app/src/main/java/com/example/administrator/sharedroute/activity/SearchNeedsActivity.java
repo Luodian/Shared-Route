@@ -3,9 +3,12 @@ package com.example.administrator.sharedroute.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -59,10 +62,23 @@ public class SearchNeedsActivity extends AppCompatActivity {
     private TextView UserName;
     private TextView UserAccount;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_search_needs);
+        View decorView = getWindow().getDecorView();
+        if (Build.VERSION.SDK_INT >= 21) {
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+        else
+        {
+            int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(option);
+        }
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 
         OrderDao orderDao = new OrderDao(this);
@@ -114,7 +130,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
-            public boolean onNavigationItemSelected(MenuItem item){
+            public boolean onNavigationItemSelected(@NonNull MenuItem item){
                 switch (item.getItemId()){
                     case R.id.nav_shop:
                         select = "releaseOrder";
