@@ -68,6 +68,7 @@
                         <EditText
                             android:backgroundTint="@color/whitesmoke"
                             android:id="@+id/regi_stu_num"
+                            android:textColor="@color/whitesmoke"
                             android:inputType="number"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -108,7 +109,7 @@
                     <TextView
                         android:textColor="@color/whitesmoke"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="邀请码"
                         android:textSize="18sp"/>
@@ -119,7 +120,7 @@
                         android:id="@+id/regi_invite_code"
                         android:inputType="number"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"/>
                 </LinearLayout>
 

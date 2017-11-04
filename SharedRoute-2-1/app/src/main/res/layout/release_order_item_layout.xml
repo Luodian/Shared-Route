@@ -148,18 +148,20 @@
 
             <TextView
                 android:id="@+id/release_time"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:text="今日16:30"
                 android:textColor="#b3000000"
                 android:textSize="10dp" />
 
             <TextView
                 android:id="@+id/fetch_location"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="二区 四公寓"
-                android:textSize="14sp"
+                android:textAlignment="center"
+                android:textSize="12sp"
                 android:textColor="#85000000"/>
 
         </LinearLayout>
@@ -174,15 +176,17 @@
 
             <ImageView
                 android:id="@+id/status_image"
-                android:layout_width="20sp"
-                android:layout_height="20sp"
+                android:layout_width="20dp"
+                android:cropToPadding="true"
+                android:layout_height="match_parent"
                 android:src="@drawable/mainpage_semimoon" />
 
             <TextView
                 android:id="@+id/status_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="已接单"
+                android:layout_gravity="center_vertical"
                 android:textColor="#0097BA"
                 android:textSize="16sp" />
 
