@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@drawable/nav_header_small"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/individual"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="2dp"
+            android:text="个人中心"
+            android:textColor="@android:color/background_light"
+            android:textSize="24dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nav_header_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/individual"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/icon_image"
+            android:layout_width="70dp"
+            android:layout_height="0dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_weight="6"
+            android:src="@drawable/nav_icon" />
+
+        <TextView
+            android:id="@+id/nav_header_id"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1.3"
+            android:fontFamily="sans-serif"
+            android:text="学号："
+            android:textColor="@color/whitesmoke"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/nav_header_name"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1.3"
+            android:fontFamily="sans-serif"
+            android:text="姓名："
+            android:textColor="@color/whitesmoke"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/nav_header_account"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="1.3"
+            android:fontFamily="sans-serif"
+            android:text="余额："
+            android:textColor="@color/whitesmoke"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

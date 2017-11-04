@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">1KM配送</string>
+    <string name="title_home">首页</string>
+    <string name="title_dashboard">发布需求</string>
+    <string name="title_notifications">寻找需求</string>
+    <string name="title_register">注册信息</string>
+    <string name="title_publishneeds">发布需求</string>
+    <string name="title_selectexpress">选择快递</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="other_transition_name">transition_reveal</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">请输入账号</string>
+    <string name="prompt_password">请输入密码</string>
+    <string name="action_sign_in">登陆</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string name="securitymoneytip">* 您可以为设置保证金，接单者付出保证金后方可接单（可选项）</string>
+
+    <!-- list 到了最底部 没有新数据了-->
+    <string name="list_more_data">更新了0条数据~</string>
+
+
+    <!-- list 到了最底部 没有新数据了-->
+    <string name="list_no_data">没有新的内容了哦~</string>
+
+    <string name="check_network_status">请检查网络状态</string>
+    <string name="title_activity_waiting_future">WaitingFutureActivity</string>
+    <string name="waitforTitle">敬请期待</string>
+    <string name="waitforText">这里还没有开放，但是未来值得期待~</string>
+    <string name="UserID">学号</string>
+    <string name="UserPassword">密码</string>
+    <string name="LoginButtonText">登      录</string>
+    <string name="RegisterButtonText">注 册</string>
+    <string name="confirm_password">确认密码</string>
+
+    <!--<string name="url">http://47.95.194.146:8080/sharedroot_server</string>-->
+    <string name="url">http://succ.free.ngrok.cc/sharedroot_server</string>
+</resources>
