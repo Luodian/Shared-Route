@@ -44,4 +44,5 @@
 
     <!--<string name="url">http://47.95.194.146:8080/sharedroot_server</string>-->
     <string name="url">http://succ.free.ngrok.cc/sharedroot_server</string>
+    <string name="counter">倒计时</string>
 </resources>

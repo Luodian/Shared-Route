@@ -13,7 +13,7 @@
         android:id="@+id/timer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="倒计时"
+        android:text="@string/counter"
         android:gravity="center"
         android:layout_margin="4dp" />
 
@@ -30,7 +30,7 @@
     android:fillViewport="true"
     android:layout_gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="0dp">
 <LinearLayout
         android:id="@+id/pay_form"
         android:layout_width="match_parent"
@@ -62,7 +62,8 @@
                     android:layout_marginLeft="8dp"
                     android:gravity="left|center"
                     android:inputType="textPersonName"
-                    android:text="总计" />
+                    android:text="总计"
+                    android:layout_marginStart="8dp" />
 
                 <EditText
                     android:id="@+id/textView3"
@@ -72,7 +73,8 @@
                     android:gravity="left|bottom"
                     android:text="￥ 2.0"
                     android:textColor="#ff7f24"
-                    android:textSize="24dp" />
+                    android:textSize="24sp"
+                    android:layout_marginStart="4dp" />
 
             </LinearLayout>
 
@@ -99,7 +101,7 @@
                         android:gravity="left|center"
                         android:text="张三"
                         android:textColor="#000010"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/textView7"
@@ -111,7 +113,7 @@
                         android:gravity="center|left"
                         android:text="12345678"
                         android:textColor="#000030"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         app:layout_constraintHorizontal_bias="0.766"
                         app:layout_constraintLeft_toRightOf="@+id/textView4"
                         app:layout_constraintRight_toRightOf="@+id/secondblock"
@@ -187,10 +189,11 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_width="10dp"
+                        android:layout_width="16dp"
                         android:layout_height="10dp"
-                        android:layout_margin="12dp"
-                        android:scaleType="centerCrop"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
                         android:src="@drawable/reddot" />
 
                     <Button
@@ -201,7 +204,7 @@
                         android:background="@android:color/transparent"
                         android:gravity="center|left"
                         android:text="一区顺丰速运"
-                        android:textSize="18dp" />
+                        android:textSize="18sp" />
 
                     <ImageView
                         android:id="@+id/imageView2"
