@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:background="@drawable/nav_header_small"
-    android:padding="10dp">
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_marginTop="2dp"
             android:text="个人中心"
             android:textColor="@android:color/background_light"
-            android:textSize="24dp" />
+            android:textSize="24sp" />
 
 
     </LinearLayout>

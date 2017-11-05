@@ -11,13 +11,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        <include
+            layout="@layout/back_layout"
+            android:title="@string/title_publishneeds"
+            android:elevation="4dp"/>
         <!--android:background="?attr/colorPrimary"-->
 
 
