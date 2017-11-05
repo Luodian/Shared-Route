@@ -7,6 +7,7 @@
 
     <include layout="@layout/back_layout"/>
 
+
     <LinearLayout
         android:id="@+id/nameblock"
         android:layout_margin="16dp"
@@ -22,6 +23,7 @@
             android:id="@+id/name"
             android:layout_margin="10dp"
             android:text=""
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -42,6 +44,7 @@
             android:id="@+id/phone"
             android:layout_margin="10dp"
             android:text=""
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -74,7 +77,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:buttonTextSize="23sp"
-        app:buttonColor="#7b68ee"
+        android:singleLine="true"
+        app:buttonColor="@color/colorPrimary"
         app:progressStyle="loading"
         app:buttonText="确认"/>
 
