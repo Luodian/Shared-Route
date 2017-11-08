@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         return true;
                     case R.id.release_rank:
 //                        select = "releaseRank";
-                        Intent intent4 = new Intent(MainActivity.this,WaitingFutureActivity.class);
+                        Intent intent4 = new Intent(MainActivity.this,MyRank.class);
 //                        intent4.putExtra("select_order",select);
                         startActivity(intent4);
                         return true;

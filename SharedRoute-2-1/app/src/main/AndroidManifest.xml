@@ -77,7 +77,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.ConfirmBlurredActivity"/>
+        <activity android:name=".activity.ConfirmBlurredActivity" />
     </application>
 
 </manifest>
