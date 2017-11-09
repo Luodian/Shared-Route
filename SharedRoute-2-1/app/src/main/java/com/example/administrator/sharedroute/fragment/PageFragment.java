@@ -443,6 +443,23 @@ public class PageFragment extends Fragment {
                     //断开连接
                 }
             }
+            listItem item = new listItem();
+            item.ID = 1;
+            item.Money = 2.0;
+            item.PickID = "1432";
+            item.TaskKindID = "电器";
+            item.PublisherName = "王烨臻";
+            item.PublisherPhone = "15389702320";
+            item.FetchTime = "2017年11月4日14:30";
+            item.FetchLocation = "一区-顺丰快递";
+            item.FetcherPhone = "17780524976";
+            item.FetcherName = "李博";
+            item.FetcherID = "1150310116";
+            item.SendTime = "2017年11月5日18:30";
+            item.SendLocation = "正心楼420教室";
+            item.PublisherID = "1153710206";
+            item.PromiseMoney = 20;
+            InitTaskListItem.add(item);
             return InitTaskListItem;
         }
 
