@@ -88,8 +88,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //        LoginActivity.stop=stop;
 //    }
 
-    private static final String HOST = "free.ngrok.cc";
-    private static final int PORT = 12974;
+    private static final String HOST = "47.95.194.146";
+    private static final int PORT = 9986;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg){
@@ -473,7 +473,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //        private String url = "http://47.95.194.146:8080/sharedroot_server/Login";
 //        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
 //        private String url="http://47.95.194.146:8080/sharedroot_server/Login";
-private String url=getResources().getString(R.string.url)+"/Login";
+        private String url=getResources().getString(R.string.url)+"/Login";
         private String result = null;
 
 
@@ -549,21 +549,19 @@ private String url=getResources().getString(R.string.url)+"/Login";
                     Log.e("phone:", now_phone);
                     sp.edit().putString("now_name", now_name).commit();
                     sp.edit().putString("now_phone", now_phone).commit();
-
-
-                }
-                //启动接收命令的线程
-                thread = new MyThread();
-                thread.start();
+                    //启动接收命令的线程
+                    thread = new MyThread();
+                    thread.start();
 //                new MyThread().start();
 
-                //开始新界面
-                Bundle mBundle = new Bundle();
-                mBundle.putString("ID",mEmailView.getText().toString());//压入数据
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                intent.putExtras(mBundle);
-                startActivity(intent);
-                finish();
+                    //开始新界面
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("ID",mEmailView.getText().toString());//压入数据
+                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                    finish();
+                }
             } else {
                 Toast.makeText(getApplicationContext(), "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
@@ -594,7 +592,6 @@ private String url=getResources().getString(R.string.url)+"/Login";
 
                 String line = null;
                 while ((!(socket.isClosed()))&&(line = in.readLine()) != null) {
-
                     Log.e("line",line);
                     Message msg = new Message();
                     msg.what = 0x11;

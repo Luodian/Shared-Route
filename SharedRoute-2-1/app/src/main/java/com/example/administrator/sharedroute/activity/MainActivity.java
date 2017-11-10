@@ -72,8 +72,8 @@ import static com.example.administrator.sharedroute.R.layout.activity_release_or
 
 public class MainActivity extends AppCompatActivity implements BannerClickListener {
 
-    private static final String HOST = "free.ngrok.cc";
-    private static final int PORT = 12974;
+    private static final String HOST = "47.95.194.146";
+    private static final int PORT = 9986;
 
     private BannerPager mBanner;
     private DrawerLayout mDrawerLayout;
