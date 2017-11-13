@@ -452,8 +452,8 @@ public class NormalListDialog extends BaseDialog {
     }
     class ConfirmTask extends AsyncTask<Void,Void,Boolean>{
 //        String path = "http://47.95.194.146:8080/sharedroot_server/Task";
-//String path = "http://47.95.194.146:8080/sharedroot_server"+"/Task";
-        String path = "http://succ.free.ngrok.cc/sharedroot_server"+"/Task";
+String path = "http://47.95.194.146:8080/sharedroot_server"+"/Task";
+//        String path = "http://succ.free.ngrok.cc/sharedroot_server"+"/Task";
 
 //attention to this place the url can not use string 这里的url用不了string
 
