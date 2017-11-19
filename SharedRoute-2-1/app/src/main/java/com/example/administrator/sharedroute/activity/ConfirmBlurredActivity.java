@@ -41,7 +41,7 @@ public class ConfirmBlurredActivity extends Activity {
 //			e.printStackTrace();
 //		}
         System.out.println(info.ID +"?");
-        final NormalListDialog dialog = new NormalListDialog(ConfirmBlurredActivity.this, testItems,info.ID );
+        final NormalListDialog dialog = new NormalListDialog(ConfirmBlurredActivity.this, testItems,info.ID,info.FetcherID );
         dialog.title("确认收货")//
                 .titleTextSize_SP(22)//
                 .titleBgColor(Color.parseColor("#0097A8"))//
