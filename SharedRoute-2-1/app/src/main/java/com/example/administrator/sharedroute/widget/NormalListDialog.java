@@ -117,12 +117,20 @@ public class NormalListDialog extends BaseDialog {
     private ArrayList<DialogMenuItem> contents = new ArrayList<>();
     private LayoutAnimationController lac;
     private int itemId;
+    private String accepterID;
+    private Context mContext;
 
-    public NormalListDialog(Context context, ArrayList<DialogMenuItem> baseItems , int id) {
+
+    public void setContext(Context mContext){
+        this.mContext=mContext;
+    }
+
+    public NormalListDialog(Context context, ArrayList<DialogMenuItem> baseItems , int id,String accepterID) {
         super(context);
         this.contents.addAll(baseItems);
         orderDao = new OrderDao(context);
         itemId = id;
+        this.accepterID = accepterID;
         init();
     }
 //
@@ -465,11 +473,13 @@ public class NormalListDialog extends BaseDialog {
         protected Boolean doInBackground(Void... voids) {
             try {
                 HttpClient client = new DefaultHttpClient();
-                HttpPost post = new HttpPost(path);
+                HttpPost post = new HttpPost(context.getResources().getString(R.string.url)+"/Task");
 
                 //參數
                     List<NameValuePair> parameters = new ArrayList<NameValuePair>();
                     parameters.add(new BasicNameValuePair("id", String.valueOf(itemId)));
+                    parameters.add(new BasicNameValuePair("accepter",String.valueOf(accepterID)));
+                System.out.println("accepterID="+accepterID);
                     parameters.add(new BasicNameValuePair("action","confirm"));
                     UrlEncodedFormEntity ent = new UrlEncodedFormEntity(parameters, HTTP.UTF_8);
                     post.setEntity(ent);
