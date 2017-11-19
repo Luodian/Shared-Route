@@ -170,8 +170,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
         }
         showProgress(true);
 
-        mAuthTask = new PostTask(mName.getText().toString(),mPhone.getText().toString(),
-                mStuNum.getText().toString(),mInviteCode.getText().toString(),mPassWord.getText().toString());
+        mAuthTask = new PostTask(mName.getText().toString(), mStuNum.getText().toString(),mPhone.getText().toString(),mInviteCode.getText().toString(),mPassWord.getText().toString());
         mAuthTask.execute((Void) null);
 
     }
@@ -301,7 +300,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
 
                 parameters.add(new BasicNameValuePair("Name",this.name));
                 parameters.add(new BasicNameValuePair("UserID",this.stuNum));
-                parameters.add(new BasicNameValuePair("Account",this.phone));
+                parameters.add(new BasicNameValuePair("Phone",this.phone));
                 parameters.add(new BasicNameValuePair("ID",this.inviteCode));
                 parameters.add(new BasicNameValuePair("Password",this.password));
                 parameters.add(new BasicNameValuePair("action", "registe"));           //数据库应该建表
