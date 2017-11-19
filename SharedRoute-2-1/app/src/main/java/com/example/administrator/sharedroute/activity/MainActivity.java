@@ -72,8 +72,8 @@ import static com.example.administrator.sharedroute.R.layout.activity_release_or
 
 public class MainActivity extends AppCompatActivity implements BannerClickListener {
 
-    private static final String HOST = "47.95.194.146";
-    private static final int PORT = 9986;
+//    private static final String HOST = "47.95.194.146";
+//    private static final int PORT = 9986;
 
     private BannerPager mBanner;
     private DrawerLayout mDrawerLayout;
@@ -532,7 +532,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                             public void run(){
                                 Socket anotherSocket = null;
                                 try {
-                                    anotherSocket = new Socket(HOST,PORT);
+                                    anotherSocket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
                                     PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
                                     out1.println("action=send;name="+ usrid + ";msg=byebye");
                                     out1.flush();

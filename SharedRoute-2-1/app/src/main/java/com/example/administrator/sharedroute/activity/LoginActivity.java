@@ -88,8 +88,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //        LoginActivity.stop=stop;
 //    }
 
-    private static final String HOST = "47.95.194.146";
-    private static final int PORT = 9986;
+//    private static final String HOST = "47.95.194.146";
+//    private static final int PORT = 9986;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg){
@@ -249,7 +249,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     public void run(){
                         Socket anotherSocket = null;
                         try {
-                            anotherSocket = new Socket(HOST,PORT);
+//                            anotherSocket = new Socket(HOST,PORT);
+                            anotherSocket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
                             PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
                             out1.println("action=send;name="+mEmailView.getText().toString()+";msg=byebye");
                             out1.flush();
@@ -580,7 +581,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     class MyThread extends  Thread{
         public void run(){
             try {
-                socket = new Socket(HOST,PORT);
+//                socket = new Socket(HOST,PORT);
+                socket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
                 out = new PrintStream(socket.getOutputStream());
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
