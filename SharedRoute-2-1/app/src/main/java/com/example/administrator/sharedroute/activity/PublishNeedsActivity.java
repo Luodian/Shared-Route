@@ -1,5 +1,6 @@
 package com.example.administrator.sharedroute.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -60,6 +61,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     private TextView UserAccount;
     private TextWatcher textWatcher;
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
