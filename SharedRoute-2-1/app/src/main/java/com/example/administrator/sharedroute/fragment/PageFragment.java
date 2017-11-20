@@ -355,6 +355,7 @@ public class PageFragment extends Fragment {
 
     private class RefreshTask extends AsyncTask<Void, Void, ArrayList<listItem>>
     {
+        boolean Network_Status = false;
         @Override
         protected ArrayList<listItem> doInBackground(Void... params) {
             String result = null;
@@ -378,6 +379,7 @@ public class PageFragment extends Fragment {
                 if (con.getResponseCode()==200)
                 {
                     System.out.println("连接成功");
+                    Network_Status = true;
                     in = con.getInputStream();
                     InputStreamReader isr = new InputStreamReader(in);
                     //InputStreamReader isr = new InputStreamReader(getAssets().open("get_data.json"),"UTF-8");
@@ -475,7 +477,14 @@ public class PageFragment extends Fragment {
             //没有新的数据，提示消息
             if (result == null || result.size() == 0) {
                 adapter.notifyItemRemoved(adapter.getItemCount());
-                Toast.makeText(getActivity(), R.string.check_network_status, Toast.LENGTH_SHORT).show();
+                if (Network_Status == false)
+                {
+                    Toast.makeText(getActivity(), R.string.check_network_status, Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), R.string.list_no_data, Toast.LENGTH_SHORT).show();
+                }
             }
             else
             {
