@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -97,9 +98,9 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_user);
         }
 
-//        navigation = (BottomNavigationView) findViewById(R.id.publish_navigation);
-//        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-//        navigation.getMenu().findItem(R.id.navigation_dashboard).setChecked(true);
+        navigation = (BottomNavigationView) findViewById(R.id.publish_navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.getMenu().findItem(R.id.navigation_dashboard).setChecked(true);
 
 
 
@@ -432,27 +433,27 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         }
     }
 
-//    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-//            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-//
-//        @Override
-//        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//            switch (item.getItemId()) {
-//                case R.id.navigation_home:
-//                    JumpToActivity(MainActivity.class);
-//                    finish();
-//                    return true;
-//                case R.id.navigation_dashboard:
-//                    return true;
-//                case R.id.navigation_notifications:
-//                    JumpToActivity(SearchNeedsActivity.class);
-//                    finish();
-//                    return true;
-//            }
-//            return false;
-//        }
-//
-//    };
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    JumpToActivity(MainActivity.class);
+                    finish();
+                    return true;
+                case R.id.navigation_dashboard:
+                    return true;
+                case R.id.navigation_notifications:
+                    JumpToActivity(SearchNeedsActivity.class);
+                    finish();
+                    return true;
+            }
+            return false;
+        }
+
+    };
 
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
@@ -462,6 +463,8 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         }
         return true;
     }
+
+
 
     @Override
     public void onPause(){

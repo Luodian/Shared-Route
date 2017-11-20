@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         }
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
-//        View nav_header_view = LayoutInflater.from(MainActivity.this).inflate(R.layout.nav_header,null);
+       // View nav_header_view = LayoutInflater.from(MainActivity.this).inflate(R.layout.nav_header,null);
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
         View nav_header_view = navView.getHeaderView(0);
 
@@ -226,73 +226,73 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         mBanner.setOnBannerListener(this);
         mBanner.start();
 
-        mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
-        mTabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
-        mInflater = LayoutInflater.from(this);
-        view1 = mInflater.inflate(activity_release_order, null);
-        view2 = mInflater.inflate(activity_receive_order, null);
-        //添加页卡视图
-        mViewList.add(view1);
-        mViewList.add(view2);
+//        mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
+//        mTabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
+//        mInflater = LayoutInflater.from(this);
+//        view1 = mInflater.inflate(activity_release_order, null);
+//        view2 = mInflater.inflate(activity_receive_order, null);
+//        //添加页卡视图
+//        mViewList.add(view1);
+//        mViewList.add(view2);
+//
+//        MyPagerAdapter mAdapter = new MyPagerAdapter(mViewList);
+//        //给ViewPager设置适配器
+//        mViewPager.setAdapter(mAdapter);
+//        //将TabLayout和ViewPager关联起来
+//        mTabLayout.setupWithViewPager(mViewPager);
+//        //给Tabs设置适配器
+//        mTabLayout.setTabsFromPagerAdapter(mAdapter);
 
-        MyPagerAdapter mAdapter = new MyPagerAdapter(mViewList);
-        //给ViewPager设置适配器
-        mViewPager.setAdapter(mAdapter);
-        //将TabLayout和ViewPager关联起来
-        mTabLayout.setupWithViewPager(mViewPager);
-        //给Tabs设置适配器
-        mTabLayout.setTabsFromPagerAdapter(mAdapter);
-
-        mLinearLayout = (LinearLayout) mTabLayout.getChildAt(0);
-        // 在所有子控件的中间显示分割线（还可能只显示顶部、尾部和不显示分割线）
-        mLinearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-        // 设置分割线的距离本身（LinearLayout）的内间距
-        mLinearLayout.setDividerPadding(50);
-        // 设置分割线的样式
-        mLinearLayout.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_vertical));
+//        mLinearLayout = (LinearLayout) mTabLayout.getChildAt(0);
+//        // 在所有子控件的中间显示分割线（还可能只显示顶部、尾部和不显示分割线）
+//        mLinearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+//        // 设置分割线的距离本身（LinearLayout）的内间距
+//        mLinearLayout.setDividerPadding(50);
+//        // 设置分割线的样式
+//        mLinearLayout.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_vertical));
 
 
         navigation = (BottomNavigationView) findViewById(R.id.main_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
 
-        swipeRefresh1 = (SwipeRefreshLayout) view1.findViewById(R.id.swipe_refresh_release);
-        swipeRefresh1.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
-                android.R.color.holo_orange_light, android.R.color.holo_green_light);
-        swipeRefresh1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeRefresh1.setRefreshing(true);
-                new refreshKeep().execute();
-            }
-        });
-
-        swipeRefresh1.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefresh1.setRefreshing(true);
-                new refreshKeep().execute();
-            }
-        });
-
-        swipeRefresh2 = (SwipeRefreshLayout) view2.findViewById(R.id.swipe_refresh_receive);
-        swipeRefresh2.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
-                android.R.color.holo_orange_light, android.R.color.holo_green_light);
-        swipeRefresh2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeRefresh2.setRefreshing(true);
-                new refreshKeepTwo().execute();
-            }
-        });
-
-        swipeRefresh2.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefresh1.setRefreshing(true);
-                new refreshKeepTwo().execute();
-            }
-        });
+//        swipeRefresh1 = (SwipeRefreshLayout) view1.findViewById(R.id.swipe_refresh_release);
+//        swipeRefresh1.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
+//                android.R.color.holo_orange_light, android.R.color.holo_green_light);
+//        swipeRefresh1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                swipeRefresh1.setRefreshing(true);
+//                new refreshKeep().execute();
+//            }
+//        });
+//
+//        swipeRefresh1.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                swipeRefresh1.setRefreshing(true);
+//                new refreshKeep().execute();
+//            }
+//        });
+//
+//        swipeRefresh2 = (SwipeRefreshLayout) view2.findViewById(R.id.swipe_refresh_receive);
+//        swipeRefresh2.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
+//                android.R.color.holo_orange_light, android.R.color.holo_green_light);
+//        swipeRefresh2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                swipeRefresh2.setRefreshing(true);
+//                new refreshKeepTwo().execute();
+//            }
+//        });
+//
+//        swipeRefresh2.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                swipeRefresh1.setRefreshing(true);
+//                new refreshKeepTwo().execute();
+//            }
+//        });
     }
 
     @Override
@@ -340,15 +340,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 HttpClient client = new DefaultHttpClient();
                 HttpPost post = new HttpPost(path);
                 List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-//                    String json = new String();
-//                    json += "[";
-//                    for (int i = 0; i < length; i++) {
-//                        json += "{\"id\":" + itemPublishList.get(i).ID + "}";
-//                        if (i != (length - 1)) json += ",";
-//                        else json += "]";
-//                    }
-//                    System.out.println(json);
-//                    parameters.add(new BasicNameValuePair("name", json));
                 parameters.add(new BasicNameValuePair("action", "publishpost"));
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
                 String stuNum=sp.getString("now_stu_num",null);
@@ -409,23 +400,12 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         @Override
         protected ArrayList<listItem> doInBackground(Void ... pa) {
             String result = null;
-//            String path = "http://hitschool.free.ngrok.cc/sharedroot_server/Task";
             String path = getResources().getString(R.string.url)+"/Task";
             try
             {
                 HttpClient client = new DefaultHttpClient();
                 HttpPost post = new HttpPost(path);
                 List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-//                    String json = new String();
-//                    json += "[";
-//                    for (int i = 0; i < length; i++) {
-//                        json += "{\"id\":" + itemPublishList.get(i).ID + "}";
-//                        if (i != (length - 1)) json += ",";
-//                        else json += "]";
-//                    }
-//                    System.out.println(json);
-//                    parameters.add(new BasicNameValuePair("name", json));
-                //
                 parameters.add(new BasicNameValuePair("action", "fetchpost"));
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
                 String stuNum=sp.getString("now_stu_num",null);
