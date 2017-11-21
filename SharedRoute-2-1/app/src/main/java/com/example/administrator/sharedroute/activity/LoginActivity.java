@@ -63,6 +63,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -558,8 +559,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     thread.start();
 //                new MyThread().start();
 
-                    if (notYet == false) {
+                    if (!notYet) {
                         Toast.makeText(getApplicationContext(), "该账户已经登录，请核实",Toast.LENGTH_SHORT).show();
+                        mEmailView.setError("该账户已被登录");
+                        mEmailView.requestFocus();
                     }
                     else {
                         //开始新界面
