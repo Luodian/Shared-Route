@@ -84,6 +84,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public static BufferedReader in;
     public static PrintStream out;
 
+    public boolean notYet = true;
+
     //    private static boolean stop;
 //    public static void setStop(Boolean stop){
 //        LoginActivity.stop=stop;
@@ -556,13 +558,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     thread.start();
 //                new MyThread().start();
 
-                    //开始新界面
-                    Bundle mBundle = new Bundle();
-                    mBundle.putString("ID",mEmailView.getText().toString());//压入数据
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    intent.putExtras(mBundle);
-                    startActivity(intent);
-                    finish();
+                    if (notYet == false) {
+                        Toast.makeText(getApplicationContext(), "该账户已经登录，请核实",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        //开始新界面
+                        Bundle mBundle = new Bundle();
+                        mBundle.putString("ID", mEmailView.getText().toString());//压入数据
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtras(mBundle);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             } else {
                 Toast.makeText(getApplicationContext(), "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
@@ -592,7 +599,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 out.flush();
 
                 //从服务器获取通知,由handler发送给主线程,之后保持这个线程贯穿程序始终
-
+                String notYetMsg = in.readLine();
+                if (notYetMsg.equals("outline")) {
+                    notYet = false;
+                }
                 String line = null;
                 while ((!(socket.isClosed()))&&(line = in.readLine()) != null) {
                     Log.e("line",line);
@@ -603,14 +613,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     msg.setData(bundle);
                     handler.sendMessage(msg);
                 }
-//                //停止监听线程
-//                if (stop){
-//                    out.println("action=login;name="+mEmailView.getText().toString()+";"+"msg:Bye bye!");
-//                    out.flush();
-//                    in.close();
-//                    out.close();
-//                    socket.close();
-//                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
