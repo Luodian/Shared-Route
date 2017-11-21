@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.AcceptedOrderItemAdapter;
+import com.example.administrator.sharedroute.adapter.MainPageReleaseAdapter;
 import com.example.administrator.sharedroute.adapter.MyPagerAdapter;
 import com.example.administrator.sharedroute.adapter.ReleaseOrderItemAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     private TextView UserID;
     private TextView UserName;
     private TextView UserAccount;
-
+    private RecyclerView mRecyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -225,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         mBanner.setImage(bannerArray);
         mBanner.setOnBannerListener(this);
         mBanner.start();
-
+        new refreshKeep().execute();
 //        mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
 //        mTabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
 //        mInflater = LayoutInflater.from(this);
@@ -385,14 +386,19 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         @Override
         protected void onPostExecute(ArrayList<listItem> data) {
             super.onPostExecute(data);
-            if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
+//            if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
             if (itemPublishList.size()==0) Toast.makeText(getApplicationContext(),"无数据更新",Toast.LENGTH_SHORT).show();
-            RecyclerView releaseOrder = (RecyclerView) view1.findViewById(R.id.release_order);
-            GridLayoutManager layoutManager1 = new GridLayoutManager(getApplicationContext(), 1);
-            releaseOrder.setLayoutManager(layoutManager1);
-            adapter1 = new ReleaseOrderItemAdapter(itemPublishList);
-            releaseOrder.setAdapter(adapter1);
-        }
+//            RecyclerView releaseOrder = (RecyclerView) view1.findViewById(R.id.release_order);
+//            GridLayoutManager layoutManager1 = new GridLayoutManager(getApplicationContext(), 1);
+//            releaseOrder.setLayoutManager(layoutManager1);
+//            adapter1 = new ReleaseOrderItemAdapter(itemPublishList);
+//            releaseOrder.setAdapter(adapter1);
+            mRecyclerView = (RecyclerView) findViewById(R.id.mainRecycler1);
+            MainPageReleaseAdapter mainPageReleaseAdapter = new MainPageReleaseAdapter(MainActivity.this,itemPublishList);
+            mRecyclerView.setAdapter(mainPageReleaseAdapter);
+             GridLayoutManager layoutManager1 = new GridLayoutManager(getApplicationContext(), 1);
+            mRecyclerView.setLayoutManager(layoutManager1);
+    }
     }
 
     private class refreshKeepTwo extends AsyncTask<Void, Void,ArrayList<listItem>> {

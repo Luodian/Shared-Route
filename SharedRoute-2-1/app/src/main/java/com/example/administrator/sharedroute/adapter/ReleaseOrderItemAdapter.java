@@ -128,7 +128,6 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
         holder.releaseTime.setText(mItemList.get(position).SendTime);
         holder.fetchLocation.setText(mItemList.get(position).SendLocation);
         holder.statusImage.setImageResource(R.drawable.mainpage_semimoon);/**/
-        Log.e("???",String.valueOf(mItemList.get(position).status));
         if (mItemList.get(position).status==1) holder.statusText.setText("未接单");
         else if (mItemList.get(position).status==2) holder.statusText.setText("已接单");
         else if (mItemList.get(position).status==3) holder.statusText.setText("已完成");
