@@ -94,7 +94,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/taskview" />
+                                app:srcCompat="@drawable/trollycar" />
 
                             <TextView
                                 android:id="@+id/textView11"
@@ -102,7 +102,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="0.5"
                                 android:gravity="center"
-                                android:text="任务栏" />
+                                android:text="购物车" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -116,7 +116,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/searchneed" />
+                                app:srcCompat="@drawable/cloudorange" />
 
                             <TextView
                                 android:id="@+id/textView12"
@@ -138,7 +138,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/publishneed" />
+                                app:srcCompat="@drawable/cloudred" />
 
                             <TextView
                                 android:id="@+id/textView13"
@@ -167,7 +167,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/publishrank" />
+                                app:srcCompat="@drawable/rankred" />
 
                             <TextView
                                 android:id="@+id/textView14"
@@ -189,7 +189,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/rank" />
+                                app:srcCompat="@drawable/rankorange" />
 
                             <TextView
                                 android:id="@+id/textView15"
@@ -211,7 +211,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/done" />
+                                app:srcCompat="@drawable/albule" />
 
                             <TextView
                                 android:id="@+id/textView16"
@@ -233,7 +233,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/history" />
+                                app:srcCompat="@drawable/circlegreen" />
 
                             <TextView
                                 android:id="@+id/textView17"
@@ -269,12 +269,13 @@
                         android:gravity="center_vertical"
                         android:text="记录我的订单"/>
                 </LinearLayout>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/mainRecycler1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                    </android.support.v7.widget.RecyclerView>
 
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white">
-                </android.support.v7.widget.RecyclerView>
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:background="@color/light_gray"

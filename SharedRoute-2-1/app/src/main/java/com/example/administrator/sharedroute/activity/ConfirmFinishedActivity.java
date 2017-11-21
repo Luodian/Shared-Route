@@ -131,9 +131,8 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
     private void clearTrolly(){
         OrderDao orderDao =new OrderDao(this);
         List<listItem> arrayList = orderDao.getAllDate();
-        for (listItem e:arrayList) {
-            orderDao.deleteOrder(e);
-        }
+        if (arrayList != null)
+        for (listItem e:arrayList) orderDao.deleteOrder(e);
     }
 
     class PagerAdapter extends FragmentPagerAdapter {
