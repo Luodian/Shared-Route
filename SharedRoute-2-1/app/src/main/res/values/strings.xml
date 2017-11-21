@@ -42,8 +42,8 @@
     <string name="RegisterButtonText">注 册</string>
     <string name="confirm_password">确认密码</string>
 
-    <!--<string name="url">http://47.95.194.146:8080/sharedroot_server</string>-->
-    <string name="url">http://suc.free.ngrok.cc/sharedroot_server</string>
+    <string name="url">http://47.95.194.146:8080/sharedroot_server</string>
+    <!--<string name="url">http://suc.free.ngrok.cc/sharedroot_server</string>-->
     <string name="HOST">free.ngrok.cc</string>
     <string name="PORT">12974</string>
     <string name="counter">倒计时</string>
