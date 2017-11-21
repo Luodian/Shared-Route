@@ -44,7 +44,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.TaskViewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".activity.WaitingFutureActivity"
             android:screenOrientation="portrait" />

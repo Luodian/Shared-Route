@@ -27,6 +27,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ import com.example.administrator.sharedroute.adapter.MainPageReleaseAdapter;
 import com.example.administrator.sharedroute.adapter.MyPagerAdapter;
 import com.example.administrator.sharedroute.adapter.ReleaseOrderItemAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
+import com.example.administrator.sharedroute.fragment.WaitingFutureFragment;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
@@ -71,7 +73,7 @@ import java.util.List;
 import static com.example.administrator.sharedroute.R.layout.activity_receive_order;
 import static com.example.administrator.sharedroute.R.layout.activity_release_order;
 
-public class MainActivity extends AppCompatActivity implements BannerClickListener {
+public class MainActivity extends AppCompatActivity implements BannerClickListener,View.OnClickListener {
 
 //    private static final String HOST = "47.95.194.146";
 //    private static final int PORT = 9986;
@@ -104,6 +106,13 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     private TextView UserName;
     private TextView UserAccount;
     private RecyclerView mRecyclerView;
+    private ImageView imageView6;
+    private ImageView imageView7;
+    private ImageView imageView8;
+    private ImageView imageView9;
+    private ImageView imageView10;
+    private ImageView imageView11;
+    private ImageView imageView12;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         Intent intent1 = new Intent(MainActivity.this,TaskViewActivity.class);
                         intent1.putExtra("select_order",select);
                         startActivity(intent1);
-                        finish();
                         return true;
                     case R.id.nav_release:
                         select = "releaseOrder";
@@ -212,7 +220,20 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 return true;
             }
         });
-
+        imageView6 = (ImageView)findViewById(R.id.imageView6);
+        imageView7 = (ImageView)findViewById(R.id.imageView7);
+        imageView8 = (ImageView)findViewById(R.id.imageView8);
+        imageView9 = (ImageView)findViewById(R.id.imageView9);
+        imageView10 = (ImageView)findViewById(R.id.imageView10);
+        imageView11 = (ImageView)findViewById(R.id.imageView11);
+        imageView12 = (ImageView)findViewById(R.id.imageView12);
+        imageView6.setOnClickListener(this);
+        imageView7.setOnClickListener(this);
+        imageView8.setOnClickListener(this);
+        imageView9.setOnClickListener(this);
+        imageView10.setOnClickListener(this);
+        imageView11.setOnClickListener(this);
+        imageView12.setOnClickListener(this);
         mBanner = (BannerPager) findViewById(R.id.banner_pager);
         LayoutParams params = (LayoutParams) mBanner.getLayoutParams();
         params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f / 640f);
@@ -325,6 +346,54 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 startActivity(intent5);
                 break;
             default:
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id){
+            case R.id.imageView6:{
+                Intent intent1 = new Intent(MainActivity.this,TaskViewActivity.class);
+                startActivity(intent1);
+                break;
+            }
+            case R.id.imageView7:{
+                Intent intent1 = new Intent(MainActivity.this,SearchNeedsActivity.class);
+                startActivity(intent1);
+                finish();
+                break;
+            }
+            case R.id.imageView8:{
+                Intent intent1 = new Intent(MainActivity.this,PublishNeedsActivity.class);
+                startActivity(intent1);
+                finish();
+                break;
+            }
+            case R.id.imageView9:{
+                Intent intent1 = new Intent(MainActivity.this, WaitingFutureActivity.class);
+                startActivity(intent1);
+                finish();
+                break;
+            }
+            case R.id.imageView10:{
+                Intent intent1 = new Intent(MainActivity.this, WaitingFutureActivity.class);
+                startActivity(intent1);
+                finish();
+                break;
+            }
+            case R.id.imageView11:{
+                Intent intent1 = new Intent(MainActivity.this,MyPublishOrder.class);
+                startActivity(intent1);
+                finish();
+                break;
+            }
+            case R.id.imageView12:{
+                Intent intent1 = new Intent(MainActivity.this,MyFinishedActivity.class);
+                startActivity(intent1);
+                finish();
+                break;
+            }
         }
     }
 

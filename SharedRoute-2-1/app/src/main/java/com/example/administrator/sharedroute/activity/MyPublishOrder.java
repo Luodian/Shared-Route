@@ -64,7 +64,8 @@ public class MyPublishOrder extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-                select = "";
+                Intent intent = new Intent(MyPublishOrder.this,MainActivity.class);
+                startActivity(intent);
                 finish();
                 return true;
         }

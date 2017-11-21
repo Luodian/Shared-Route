@@ -38,7 +38,7 @@ public class MainPageReleaseAdapter extends RecyclerView.Adapter<MainPageRelease
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView taskState;
-        TextView publishDate;
+//        TextView publishDate;
         TextView taskPrice;
         TextView expressCompany;
         TextView expressPicknum;
@@ -47,7 +47,7 @@ public class MainPageReleaseAdapter extends RecyclerView.Adapter<MainPageRelease
             super(view);
             cardView = (CardView)view.findViewById(R.id.card_bg);
             taskState = (TextView)view.findViewById(R.id.task_state);
-            publishDate = (TextView)view.findViewById(R.id.publish_date);
+//            publishDate = (TextView)view.findViewById(R.id.publish_date);
             taskPrice = (TextView)view.findViewById(R.id.task_price);
             expressCompany = (TextView)view.findViewById(R.id.express_company);
             expressPicknum = (TextView)view.findViewById(R.id.express_picknum);
@@ -105,14 +105,14 @@ public class MainPageReleaseAdapter extends RecyclerView.Adapter<MainPageRelease
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.publishname.setText(mItemList.get(position).PublisherName);
-        holder.publishDate.setText(mItemList.get(position).FetchTime);
+//        holder.publishDate.setText(mItemList.get(position).FetchTime);
         holder.expressPicknum.setText(mItemList.get(position).PickID);
         holder.expressCompany.setText(mItemList.get(position).FetchLocation);
         holder.taskPrice.setText(String.valueOf(mItemList.get(position).Money)+"元");
-        if (mItemList.get(position).status==1) holder.taskState.setText("订单状态：未接单");
-        else if (mItemList.get(position).status==2) holder.taskState.setText("订单状态：已接单");
-        else if (mItemList.get(position).status==3) holder.taskState.setText("订单状态：已完成");
-        else holder.taskState.setText("订单状态：未知");
+        if (mItemList.get(position).status==1) holder.taskState.setText("未接单");
+        else if (mItemList.get(position).status==2) holder.taskState.setText("已接单");
+        else if (mItemList.get(position).status==3) holder.taskState.setText("已完成");
+        else holder.taskState.setText("未知");
     }
 
     @Override
