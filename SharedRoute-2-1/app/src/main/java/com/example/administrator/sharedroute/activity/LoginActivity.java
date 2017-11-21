@@ -517,13 +517,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (resEntity != null) {
                     result = EntityUtils.toString(resEntity);
                 }
-                if (result.equals("fail")){
-                    return false;
-                }
-                else
-                {
-                    client.getConnectionManager().shutdown();
-                    return true;
+                switch (result) {
+                    case "outline":
+                        notYet = false;
+                        return false;
+                    case "fail":
+                        return false;
+                    default:
+                        client.getConnectionManager().shutdown();
+                        return true;
                 }
             } catch (IOException e) {
                 return false;
@@ -557,27 +559,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     //启动接收命令的线程
                     thread = new MyThread();
                     thread.start();
-//                new MyThread().start();
 
-                    if (!notYet) {
-                        Toast.makeText(getApplicationContext(), "该账户已经登录，请核实",Toast.LENGTH_SHORT).show();
-                        mEmailView.setError("该账户已被登录");
-                        mEmailView.requestFocus();
-                    }
-                    else {
-                        //开始新界面
-                        Bundle mBundle = new Bundle();
-                        mBundle.putString("ID", mEmailView.getText().toString());//压入数据
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtras(mBundle);
-                        startActivity(intent);
-                        finish();
-                    }
+                    //开始新界面
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("ID", mEmailView.getText().toString());//压入数据
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                    finish();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                if (!notYet) {
+                    Toast.makeText(getApplicationContext(), "该账户已经登录，请核实",Toast.LENGTH_SHORT).show();
+                    mEmailView.setError("该账户已被登录");
+                    mEmailView.requestFocus();
+                } else {
+                    Toast.makeText(getApplicationContext(), "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                }
             }
         }
 
@@ -602,10 +602,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 out.flush();
 
                 //从服务器获取通知,由handler发送给主线程,之后保持这个线程贯穿程序始终
-                String notYetMsg = in.readLine();
-                if (notYetMsg.equals("outline")) {
-                    notYet = false;
-                }
                 String line = null;
                 while ((!(socket.isClosed()))&&(line = in.readLine()) != null) {
                     Log.e("line",line);
