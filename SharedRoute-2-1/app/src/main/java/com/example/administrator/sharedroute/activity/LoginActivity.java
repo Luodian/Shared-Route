@@ -517,6 +517,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (resEntity != null) {
                     result = EntityUtils.toString(resEntity);
                 }
+                System.out.println("outline msg = "+result);
                 switch (result) {
                     case "outline":
                         notYet = false;
@@ -594,6 +595,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
 //                socket = new Socket(HOST,PORT);
                 socket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
+                System.out.println("HOST : " + getResources().getString(R.string.HOST));
+                System.out.println("PORT : "+ getResources().getString(R.string.PORT));
                 out = new PrintStream(socket.getOutputStream());
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -603,6 +606,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 //从服务器获取通知,由handler发送给主线程,之后保持这个线程贯穿程序始终
                 String line = null;
+
                 while ((!(socket.isClosed()))&&(line = in.readLine()) != null) {
                     Log.e("line",line);
                     Message msg = new Message();
