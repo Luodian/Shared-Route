@@ -63,7 +63,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.sql.Time;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -84,8 +84,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public static Socket socket;
     public static BufferedReader in;
     public static PrintStream out;
-
-    public boolean notYet = true;
 
     //    private static boolean stop;
 //    public static void setStop(Boolean stop){
@@ -480,7 +478,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //        private String url="http://47.95.194.146:8080/sharedroot_server/Login";
         private String url=getResources().getString(R.string.url)+"/Login";
         private String result = null;
-
+        private Boolean network_flag = false;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -513,21 +511,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 HttpResponse responsePOST = client.execute(post);
 
                 HttpEntity resEntity = responsePOST.getEntity();
+                network_flag = true;
 
                 if (resEntity != null) {
                     result = EntityUtils.toString(resEntity);
                 }
-                switch (result) {
-                    case "outline":
-                        notYet = false;
-                        return false;
-                    case "fail":
-                        return false;
-                    default:
-                        client.getConnectionManager().shutdown();
-                        return true;
+                if (result.equals("fail"))
+                {
+                    return false;
                 }
-            } catch (IOException e) {
+                else
+                {
+                    client.getConnectionManager().shutdown();
+                    return true;
+                }
+            }
+            catch (SocketTimeoutException e)
+            {
+                network_flag = false;
+                return false;
+            }
+            catch (IOException e)
+            {
                 return false;
             }
         }
@@ -559,24 +564,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     //启动接收命令的线程
                     thread = new MyThread();
                     thread.start();
+//                new MyThread().start();
 
                     //开始新界面
                     Bundle mBundle = new Bundle();
-                    mBundle.putString("ID", mEmailView.getText().toString());//压入数据
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    mBundle.putString("ID",mEmailView.getText().toString());//压入数据
+                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     intent.putExtras(mBundle);
                     startActivity(intent);
                     finish();
                 }
-            } else {
-                if (!notYet) {
-                    Toast.makeText(getApplicationContext(), "该账户已经登录，请核实",Toast.LENGTH_SHORT).show();
-                    mEmailView.setError("该账户已被登录");
-                    mEmailView.requestFocus();
-                } else {
+            }
+            else
+            {
+                if (network_flag)
+                {
                     Toast.makeText(getApplicationContext(), "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
                     mPasswordView.setError(getString(R.string.error_incorrect_password));
                     mPasswordView.requestFocus();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), R.string.check_network_status, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -602,6 +611,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 out.flush();
 
                 //从服务器获取通知,由handler发送给主线程,之后保持这个线程贯穿程序始终
+
                 String line = null;
                 while ((!(socket.isClosed()))&&(line = in.readLine()) != null) {
                     Log.e("line",line);
@@ -612,6 +622,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     msg.setData(bundle);
                     handler.sendMessage(msg);
                 }
+//                //停止监听线程
+//                if (stop){
+//                    out.println("action=login;name="+mEmailView.getText().toString()+";"+"msg:Bye bye!");
+//                    out.flush();
+//                    in.close();
+//                    out.close();
+//                    socket.close();
+//                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
