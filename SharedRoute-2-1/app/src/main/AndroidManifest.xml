@@ -19,15 +19,12 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BandCard"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MyPublishOrder"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.MyRank"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BlurredActivity"
@@ -44,8 +41,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.TaskViewActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.WaitingFutureActivity"
             android:screenOrientation="portrait" />
@@ -83,6 +80,7 @@
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.ConfirmBlurredActivity" />
         <activity android:name=".activity.MyFinishedActivity" />
+        <activity android:name=".activity.RankActivity"></activity>
     </application>
 
 </manifest>

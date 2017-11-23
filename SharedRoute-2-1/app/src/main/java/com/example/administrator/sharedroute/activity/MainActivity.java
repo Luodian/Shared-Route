@@ -371,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 break;
             }
             case R.id.imageView9:{
-                Intent intent1 = new Intent(MainActivity.this, WaitingFutureActivity.class);
+                Intent intent1 = new Intent(MainActivity.this, RankActivity.class);
                 startActivity(intent1);
                 finish();
                 break;
