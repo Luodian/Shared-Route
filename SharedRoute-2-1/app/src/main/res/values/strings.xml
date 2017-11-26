@@ -45,7 +45,7 @@
     <string name="url">http://47.95.194.146:8080/sharedroot_server</string>
     <!--<string name="url">http://suc.free.ngrok.cc/sharedroot_server</string>-->
     <string name="HOST">47.95.194.146</string>
-    <string name="PORT">10036</string>
+    <string name="PORT">10006</string>
     <string name="counter">倒计时</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">
