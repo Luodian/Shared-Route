@@ -344,8 +344,17 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             }
             else
             {
-                Toast.makeText(getApplicationContext(),"注册失败,详细信息为\n"+ result.toString(), Toast.LENGTH_SHORT).show();
-                isSuccess=false;
+                if (result.toString() == "exist")
+                {
+                    Toast.makeText(getApplicationContext(),"注册失败,该账户已经存在", Toast.LENGTH_SHORT).show();
+                    isSuccess=false;
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"注册失败,详细信息为\n"+ result.toString(), Toast.LENGTH_SHORT).show();
+                    isSuccess=false;
+                }
+
             }
         }
 
@@ -354,7 +363,6 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             mAuthTask = null;
             showProgress(false);
         }
-
     }
 
 }
