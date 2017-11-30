@@ -336,8 +336,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_marginLeft="6dp"
                                 android:layout_marginBottom="2dp"
-                                android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
                                 android:layout_marginTop="12dp"
                                 android:background="@android:color/transparent"
@@ -349,7 +350,9 @@
                                 android:id="@+id/pick_time_block"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="left"
                                 android:padding="6dp">
+
 
 
                                 <TextView
@@ -357,7 +360,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="8dp"
-                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginLeft="6dp"
                                     android:layout_marginRight="8dp"
                                     android:layout_marginTop="2dp"
                                     android:hint="时    间"
@@ -367,7 +370,7 @@
                         </LinearLayout>
 
                         <ImageView
-                            android:src="@drawable/banmaxian"
+                            android:src="@color/transparent"
                             android:layout_marginTop = "10dp"
                             android:layout_marginBottom = "10dp"
                             android:layout_weight="1"
@@ -450,7 +453,7 @@
                             android:layout_marginLeft="8dp"
                             android:text="设定金额"
                             android:textSize="12sp"
-                            android:textColor="#eead0e" />
+                            android:textColor="#ff6a6a" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -519,14 +522,14 @@
                                 android:layout_marginLeft="8dp"
                                 android:text="设定保证金"
                                 android:textSize="12sp"
-                                android:textColor="#eead0e" />
+                                android:textColor="#ff6a6a" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:text="￥"
-                                android:textColor="#ff3030" />
+                                android:textColor="#ff6a6a" />
 
                             <EditText
                                 android:id="@+id/securitymoney"
@@ -551,7 +554,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="22dp"
                 android:gravity="left|center"
                 android:text="已优惠 ￥0"
                 android:layout_width="0dp"
@@ -559,7 +562,7 @@
                 android:layout_height="match_parent" />
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:layout_height="wrap_content">
                 <TextView
                     android:text="总计"
@@ -578,7 +581,7 @@
                 <Button
                     android:id="@+id/submit_btn"
                     android:text="确认发布"
-                    android:background="#ffeb3b"
+                    android:background="@color/colorPrimary"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
