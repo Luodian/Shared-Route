@@ -20,6 +20,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -69,16 +71,17 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         View decorView = getWindow().getDecorView();
-        if (Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
-        else
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
-            int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(option);
+            Window window = getWindow();
+            // Translucent status bar
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
+                    .LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 //        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
 //        toolbar.setTitle(R.string.title_register);

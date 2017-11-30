@@ -21,6 +21,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -69,16 +71,17 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_needs);
         View decorView = getWindow().getDecorView();
-        if (Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
-        else
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
-            int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(option);
+            Window window = getWindow();
+            // Translucent status bar
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
+                    .LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
         pickupLocationButton = (Button)findViewById(R.id.pickupplace);
         textViewName = (TextView)findViewById(R.id.nametext);
@@ -114,7 +117,9 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         UserName = (TextView) nav_header_view.findViewById(R.id.nav_header_name);
         UserAccount = (TextView) nav_header_view.findViewById(R.id.nav_header_account);
         SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
-        UserID.setText(MessageFormat.format("学号：{0}", sp.getString("now_stu_num",null)));
+        if (sp.getString("now_stu_num", null) != null) {
+            UserID.setText(MessageFormat.format("学号：{0}", sp.getString("now_stu_num", null)));
+        }
         UserName.setText(MessageFormat.format("电话：{0}", sp.getString("now_phone",null)));
         UserAccount.setText(MessageFormat.format("余额：{0}", sp.getString("now_account_money",null)));
 

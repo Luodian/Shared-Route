@@ -6,6 +6,10 @@
     android:orientation="vertical"
     tools:context="com.example.administrator.sharedroute.activity.BugSendActivity">
 
+    <include
+        layout="@layout/back_layout"
+        android:title="接单排行"
+        android:elevation="4dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

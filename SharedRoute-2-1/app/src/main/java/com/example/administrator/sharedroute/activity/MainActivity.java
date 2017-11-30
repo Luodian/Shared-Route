@@ -13,7 +13,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -27,6 +26,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -36,11 +37,10 @@ import android.widget.Toast;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.AcceptedOrderItemAdapter;
 import com.example.administrator.sharedroute.adapter.MainPageReleaseAdapter;
-import com.example.administrator.sharedroute.adapter.MyPagerAdapter;
 import com.example.administrator.sharedroute.adapter.ReleaseOrderItemAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
-import com.example.administrator.sharedroute.fragment.WaitingFutureFragment;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
+import com.example.administrator.sharedroute.utils.DisplayUtil;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
 
@@ -69,9 +69,6 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.administrator.sharedroute.R.layout.activity_receive_order;
-import static com.example.administrator.sharedroute.R.layout.activity_release_order;
 
 public class MainActivity extends AppCompatActivity implements BannerClickListener,View.OnClickListener {
 
@@ -118,16 +115,17 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         View decorView = getWindow().getDecorView();
-        if (Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
-        else
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
-            int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(option);
+            Window window = getWindow();
+            // Translucent status bar
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
+                    .LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
         Bundle bundle = getIntent().getExtras();   //得到传过来的bundle
         if (bundle != null) {
@@ -154,13 +152,15 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
         View nav_header_view = navView.getHeaderView(0);
 
-        UserID = (TextView) nav_header_view.findViewById(R.id.nav_header_id);
-        UserName = (TextView) nav_header_view.findViewById(R.id.nav_header_name);
-        UserAccount = (TextView) nav_header_view.findViewById(R.id.nav_header_account);
+        UserID = nav_header_view.findViewById(R.id.nav_header_id);
+        UserName = nav_header_view.findViewById(R.id.nav_header_name);
+        UserAccount = nav_header_view.findViewById(R.id.nav_header_account);
 
-        UserID.setText(MessageFormat.format("学号：{0}", usrid));
-        mFetchTask = new FetchUserInfo(usrid);
-        mFetchTask.execute();
+        if (usrid != null) {
+            UserID.setText(MessageFormat.format("学号：{0}", usrid));
+            mFetchTask = new FetchUserInfo(usrid);
+            mFetchTask.execute();
+        }
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
             @Override
@@ -214,13 +214,13 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 return true;
             }
         });
-        imageView6 = (ImageView)findViewById(R.id.imageView6);
-        imageView7 = (ImageView)findViewById(R.id.imageView7);
-        imageView8 = (ImageView)findViewById(R.id.imageView8);
-        imageView9 = (ImageView)findViewById(R.id.imageView9);
-        imageView10 = (ImageView)findViewById(R.id.imageView10);
-        imageView11 = (ImageView)findViewById(R.id.imageView11);
-        imageView12 = (ImageView)findViewById(R.id.imageView12);
+        imageView6 = findViewById(R.id.imageView6);
+        imageView7 = findViewById(R.id.imageView7);
+        imageView8 = findViewById(R.id.imageView8);
+        imageView9 = findViewById(R.id.imageView9);
+        imageView10 = findViewById(R.id.imageView10);
+        imageView11 = findViewById(R.id.imageView11);
+        imageView12 = findViewById(R.id.imageView12);
         imageView6.setOnClickListener(this);
         imageView7.setOnClickListener(this);
         imageView8.setOnClickListener(this);
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         imageView12.setOnClickListener(this);
         mBanner = (BannerPager) findViewById(R.id.banner_pager);
         LayoutParams params = (LayoutParams) mBanner.getLayoutParams();
-        params.height = (int) (com.example.administrator.sharedroute.utils.DisplayUtil.getSreenWidth(this) * 250f / 640f);
+        params.height = (int) (DisplayUtil.getSreenWidth(this) * 250f / 640f);
         mBanner.setLayoutParams(params);
         ArrayList<Integer> bannerArray = new ArrayList<>();
         bannerArray.add(R.drawable.banner_1);
@@ -595,6 +595,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                             }
                         };
                         thread.start();
+                        finish();
                     }
                 }).show();
     }

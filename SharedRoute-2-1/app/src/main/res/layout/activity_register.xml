@@ -89,7 +89,7 @@
                             android:textColor="@color/whitesmoke"
                             android:textColorHint="@color/white"
                             android:id="@+id/regi_phone"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"/>
@@ -210,7 +210,7 @@
                     android:layout_marginLeft="72dp"
                     android:layout_marginBottom="36dp"
                     android:background="@drawable/shapeblue"
-                    android:text="注             册"
+                    android:text="注   册"
                     android:textColor="@color/whitesmoke"
                     android:textSize="16sp"
                     android:textStyle="bold" />

@@ -6,18 +6,17 @@
     android:layout_height="match_parent"
     tools:context="com.example.administrator.sharedroute.activity.TaskViewActivity"
     android:background="@color/white"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbartaskview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/colorPrimary"
         android:title="任务栏"
         android:layout_alignParentTop="true"
+        android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_taskview"
         android:layout_width="match_parent"

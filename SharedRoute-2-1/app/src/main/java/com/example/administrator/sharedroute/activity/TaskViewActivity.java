@@ -3,6 +3,7 @@ package com.example.administrator.sharedroute.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -54,6 +57,18 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
+        View decorView = getWindow().getDecorView();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            // Translucent status bar
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
+                    .LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         Intent intent = getIntent();
         lastActivity =  intent.getExtras().getString("lastActivity");
         orderDao = new OrderDao(this);
@@ -86,10 +101,10 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
     }
 
     private void initView() {
-        listView = (ListView) findViewById(R.id.shoppingtrolly_listview);
-        mToolbar = (Toolbar) findViewById(R.id.toolbartaskview) ;
-        mLinearLayout = (LinearLayout) findViewById(R.id.bottom_toolbar);
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_taskview);
+        listView = findViewById(R.id.shoppingtrolly_listview);
+        mToolbar = findViewById(R.id.toolbartaskview);
+        mLinearLayout = findViewById(R.id.bottom_toolbar);
+        swipeRefresh = findViewById(R.id.swipe_refresh_taskview);
         swipeRefresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
                 android.R.color.holo_orange_light, android.R.color.holo_green_light);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -110,7 +125,7 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
         });
 
 
-        deleteOrders=(Button)findViewById(R.id.deleteItems);
+        deleteOrders = findViewById(R.id.deleteItems);
         deleteOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,8 +200,6 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-//                if (lastActivity.equals("main"))  startActivity(new Intent(TaskViewActivity.this, MainActivity.class));
-//                else startActivity(new Intent(TaskViewActivity.this, SearchNeedsActivity.class));
                 finish();
                 return true;
             case R.id.back:
@@ -218,12 +231,6 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
             trollyAdapter.remove(position);
         }
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        new refreshTask().execute();
-//    }
 
     private class refreshTask extends AsyncTask<Void, Void, List<listItem>> {
         @Override
