@@ -74,11 +74,6 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
-            case android.R.id.home:
-                clearTrolly();
-                startActivity(new Intent(ConfirmFinishedActivity.this,ConfirmTaskActivity.class));
-                finish();
-                return true;
             case R.id.back:
                 clearTrolly();
                 startActivity(new Intent(ConfirmFinishedActivity.this,MainActivity.class));
@@ -86,6 +81,12 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
                 return true;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ConfirmFinishedActivity.this,MainActivity.class));
+        finish();
     }
 
     private void initView(){
