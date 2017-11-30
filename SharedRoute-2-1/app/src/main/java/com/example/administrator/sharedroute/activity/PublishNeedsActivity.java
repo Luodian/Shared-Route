@@ -179,8 +179,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 
         final TextView nameText;
         nameText = (TextView) findViewById(R.id.nametext);
-        final TextView phoneText;
-        phoneText = (TextView) findViewById(R.id.phonetext);
         final Button pickupPlace;
         pickupPlace = (Button) findViewById(R.id.pickupplace);
 
@@ -203,7 +201,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 
         if (bundle != null && bundle.containsKey("nameInfo")) {
             nameText.setText(bundle.getString("nameInfo"));
-            phoneText.setText(bundle.getString("phoneInfo"));
             delieverPlace.setText(bundle.getString("delieverplaceInfo"));
         }
 
@@ -284,73 +281,22 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //验证是否是合法输入
-//                if (nameText.getText().toString().equals("")||phoneText.getText().toString().equals("")||numText.getText().toString().equals("")
-//                        ||delieverPlace.getText().toString().equals("送件地点")||pickupPlace.getText().toString().equals("取件地点")||
-//                        ((TextView) findViewById(R.id.qujiantext)).getText().toString().equals("选择时间")||
-//                        ((TextView) findViewById(R.id.songjiantext)).getText().toString().equals("选择时间")||
-//                        money.getText().toString().equals("")){
-//                    Toast.makeText(PublishNeedsActivity.this,"请将信息填写完整",Toast.LENGTH_LONG).show();
-//                    return;
-//                }
-//                String str = phoneText.getText().toString();
-//                for (int i=0;i<str.length();++i){
-//                    if (str.charAt(i)<'0' || str.charAt(i)>'9') {
-//                        Toast.makeText(PublishNeedsActivity.this,"请输入正确的手机号码",Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
-//                }
-//                str = money.getText().toString();
-//                boolean hasDotYet = false;
-//                for (int i=0;i<str.length();++i) {
-//                    if(str.charAt(i)=='.'&&(!hasDotYet)){
-//                        hasDotYet=true;
-//                    }else  if ((str.charAt(i)=='.'&&hasDotYet)) {
-//                        Toast.makeText(PublishNeedsActivity.this,"请输入正确的金额",Toast.LENGTH_LONG).show();
-//                        return;
-//                    } else if (str.charAt(i)!='.'&&(str.charAt(i)<'0'||str.charAt(i)>'9')) {
-//                        Toast.makeText(PublishNeedsActivity.this,"请输入正确的金额",Toast.LENGTH_LONG).show();
-//                        return;
-//                        }
-//                }
-//                submitBtn.doResult(true);
-//
-//                Thread thread = new Thread() {
-//                 public void run(){
-//                     try {
-//                         Thread.sleep(1500);
-//                     } catch (InterruptedException e) {
-//                         e.printStackTrace();
-//                     }
-//                     Intent intent1 = new Intent(PublishNeedsActivity.this, PayBillActivity.class);
-//                     Bundle bundle = new Bundle();
-//                     bundle.putCharSequence("remark",remarkText.getText().toString());
-//                     bundle.putCharSequence("name", nameText.getText().toString());
-//                     bundle.putCharSequence("phone", phoneText.getText().toString());
-//                     bundle.putCharSequence("packsort", niceSpinner.getText().toString());
-//                     bundle.putCharSequence("remark", remarkText.getText().toString());
-//                     bundle.putCharSequence("num", numText.getText().toString());
-//                     bundle.putCharSequence("pickupplace", pickupPlace.getText().toString());
-//                     bundle.putCharSequence("delieverplace", delieverPlace.getText().toString());
-//                     bundle.putCharSequence("pickuptime", qujiantext.getText().toString());
-//                     bundle.putCharSequence("delievertime", songjianText.getText().toString());
-//                     bundle.putCharSequence("money", money.getText().toString());
-//                     bundle.putCharSequence("securitymoney",((EditText)findViewById(R.id.securitymoney)).getText().toString());
-//                     intent1.putExtras(bundle);
-//                     startActivity(intent1);
-//                 }
-//                };
-//                thread.start();
-
-                if (nameText.getText().toString().equals("")||phoneText.getText().toString().equals("")||numText.getText().toString().equals("")
-                        ||delieverPlace.getText().toString().equals("送件地点")||pickupPlace.getText().toString().equals("取件地点")||
-                        ((TextView) findViewById(R.id.qujiantext)).getText().toString().equals("选择时间")||
-                        ((TextView) findViewById(R.id.songjiantext)).getText().toString().equals("选择时间")||
+                int indexOfDivide = nameText.getText().toString().indexOf('/');
+                String testName = "";
+                String testPhone = "";
+                if (indexOfDivide > 1 && nameText.getText().toString().length() > indexOfDivide + 2) {
+                    testName = nameText.getText().toString().substring(0, indexOfDivide - 1);
+                    testPhone = nameText.getText().toString().substring(indexOfDivide + 2);
+                }
+                if (testName.equals("")||testPhone.equals("")||numText.getText().toString().equals("")
+                        ||delieverPlace.getText().toString().equals("请选择")||pickupPlace.getText().toString().equals("请选择")||
+                        ((TextView) findViewById(R.id.qujiantext)).getText().toString().equals("时间")||
+                        ((TextView) findViewById(R.id.songjiantext)).getText().toString().equals("时间")||
                         money.getText().toString().equals("")){
                     Toast.makeText(PublishNeedsActivity.this,"请将信息填写完整",Toast.LENGTH_LONG).show();
                     return;
                 }
-                String str = phoneText.getText().toString();
+                String str = testPhone;
                 for (int i=0;i<str.length();++i){
                     if (str.charAt(i)<'0' || str.charAt(i)>'9') {
                         Toast.makeText(PublishNeedsActivity.this,"请输入正确的手机号码",Toast.LENGTH_LONG).show();
@@ -373,9 +319,10 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 
                 Intent intent1 = new Intent(PublishNeedsActivity.this, PayBillActivity.class);
                 Bundle bundle = new Bundle();
+                int divideindex = nameText.getText().toString().indexOf('/');
                 bundle.putCharSequence("remark",remarkText.getText().toString());
-                bundle.putCharSequence("name", nameText.getText().toString());
-                bundle.putCharSequence("phone", phoneText.getText().toString());
+                bundle.putCharSequence("name", testName);
+                bundle.putCharSequence("phone", testPhone);
                 bundle.putCharSequence("packsort", niceSpinner.getText().toString());
                 bundle.putCharSequence("remark", remarkText.getText().toString());
                 bundle.putCharSequence("num", numText.getText().toString());
