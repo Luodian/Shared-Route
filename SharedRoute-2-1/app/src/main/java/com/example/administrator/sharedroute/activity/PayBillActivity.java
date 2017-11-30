@@ -49,6 +49,8 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -76,6 +78,15 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
         public void onFinish() {
             vertifyView.setEnabled(true);
             vertifyView.setText("时间已到");
+            Toast.makeText(PayBillActivity.this,"时间已到，订单取消，即将返回",Toast.LENGTH_SHORT).show();
+            Timer curTimer = new Timer();
+            TimerTask timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            };
+            curTimer.schedule(timerTask,2000);  //时间到了之后,2s后返回发布订单的页面
         }
     };
 
