@@ -30,23 +30,23 @@
                     android:id="@+id/cdv1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginRight="14dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/shadow">
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp">
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_weight="8"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="16dp"
+                        <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="0dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight="1">
+
                             <ImageView
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
@@ -57,7 +57,8 @@
                                 android:scaleType="centerInside"
                                 android:src="@drawable/reddot"/>
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginTop="4dp"
@@ -67,20 +68,25 @@
 
                             <TextView
                                 android:id="@+id/nametext"
-                                android:layout_width="80dp"
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="36dp"
-                                android:layout_marginRight="36dp"
-                                android:layout_gravity="bottom"
+                                android:layout_marginLeft="50dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="4dp"
                                 android:textColorHint="#ff6a6a"
                                 android:textSize="12sp"
                                 android:hint="请选择" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_marginLeft="16dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
 
+                            <TextView
+                                android:id="@+id/phonetext"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="16dp"
+                                android:layout_gravity="bottom"
+                                android:textSize="12sp" />
+                        </TableRow>
+                        <TableRow>
                             <View
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
@@ -89,41 +95,40 @@
                             <TextView
                                 android:text="收件地址"
                                 android:layout_marginLeft="4dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginBottom="6dp"
                                 android:textSize="12sp"
-                                android:layout_width="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content" />
-                            <Button
+                            <TextView
                                 android:id="@+id/delieverplace"
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_weight="2"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="2dp"
-                                android:layout_marginLeft="24dp"
+                                android:layout_marginLeft="42dp"
+                                android:layout_marginBottom="6dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_gravity="center"
                                 android:background="@android:color/transparent"
                                 android:text="请选择"
-                                android:gravity="left|center"
                                 android:textColor="#ff6a6a"
                                 android:textSize="12sp" />
-                            <TextView
-                                android:id="@+id/phonetext"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:layout_marginLeft="4dp"
-                                android:textSize="12sp"
-                                android:hint="手机" />
-                        </LinearLayout>
-                    </LinearLayout>
-                    <!--<LinearLayout-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="match_parent">-->
+                        </TableRow>
+                    </TableLayout>
 
-                        <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_width="20dp"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_height="20dp"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:scaleType="centerInside"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:src="@mipmap/leftarrow" />&ndash;&gt;-->
+                    <!--<LinearLayout-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent">-->
+
+                    <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="20dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="20dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:scaleType="centerInside"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:src="@mipmap/leftarrow" />&ndash;&gt;-->
                     <!--</LinearLayout>-->
 
                 </LinearLayout>
@@ -134,15 +139,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     app:cardCornerRadius="10dp">
 
                     <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp">
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -153,8 +158,8 @@
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_marginLeft="8dp"
-                                android:layout_marginBottom="8dp"
-                                android:layout_marginTop="13dp"
+                                android:layout_marginBottom="6dp"
+                                android:layout_marginTop="16dp"
                                 android:layout_marginRight="8dp"
                                 android:scaleType="centerInside"
                                 android:src="@drawable/bluedot"/>
@@ -162,8 +167,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="4dp"
                                 android:layout_marginTop="0dp"
                                 android:layout_marginBottom="3dp"
                                 android:text="取件地点"
@@ -201,8 +206,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="4dp"
                                 android:layout_marginBottom="3dp"
                                 android:text="包裹类型"
                                 android:textSize="12sp" />
@@ -236,8 +241,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="提货号码"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="4dp"
                                 android:layout_marginBottom="8dp"
                                 android:textSize="12sp" />
 
@@ -249,7 +254,7 @@
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
                                 android:layout_marginBottom="8dp"
-                                android:paddingLeft="23dp"
+                                android:paddingLeft="24dp"
                                 android:hint="请输入"
                                 android:textSize="12sp"
                                 android:inputType="number"/>
@@ -273,10 +278,10 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginRight="8dp"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="4dp"
                                 android:layout_marginBottom="3dp"
-                                android:text="备注"
+                                android:text="提示/备注"
                                 android:textSize="12sp" />
 
                             <EditText
@@ -287,7 +292,7 @@
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
                                 android:layout_marginBottom="3dp"
-                                android:paddingLeft="23dp"
+                                android:paddingLeft="24dp"
                                 android:textSize="12sp"
                                 android:hint="例如：小件/易碎品" />
                         </TableRow>
@@ -302,8 +307,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/shadow"
                     app:cardCornerRadius="10dp">
 
@@ -315,9 +320,9 @@
                             android:layout_width="15dp"
                             android:layout_height="15dp"
                             android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="23dp"
+                            android:layout_marginLeft="16dp"
                             android:layout_marginRight="8dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="12dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/greendot" />
 
@@ -325,6 +330,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
                             <TextView
@@ -337,13 +343,13 @@
                                 android:background="@android:color/transparent"
                                 android:text="最晚取件"
                                 android:textColor="#ff6a6a"
-                                android:textSize="12sp" />
+                                android:textSize="13sp" />
 
                             <LinearLayout
                                 android:id="@+id/pick_time_block"
-                                android:padding="8dp"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:padding="6dp">
 
 
                                 <TextView
@@ -354,16 +360,16 @@
                                     android:layout_marginLeft="8dp"
                                     android:layout_marginRight="8dp"
                                     android:layout_marginTop="2dp"
-                                    android:textSize="12sp"
-                                    android:hint="时    间" />
+                                    android:hint="时    间"
+                                    android:textSize="12sp" />
 
                             </LinearLayout>
                         </LinearLayout>
 
                         <ImageView
                             android:src="@drawable/banmaxian"
-                            android:layout_marginTop = "16dp"
-                            android:layout_marginBottom = "16dp"
+                            android:layout_marginTop = "10dp"
+                            android:layout_marginBottom = "10dp"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"/>
@@ -373,6 +379,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="4dp"
+                            android:gravity="center"
                             android:orientation="vertical">
                             <TextView
                                 android:layout_width="wrap_content"
@@ -384,11 +391,11 @@
                                 android:background="@android:color/transparent"
                                 android:text="最晚送件"
                                 android:textColor="#ff6a6a"
-                                android:textSize="12sp" />
+                                android:textSize="13sp" />
 
                             <LinearLayout
                                 android:id="@+id/deliever_time_block"
-                                android:padding="8dp"
+                                android:padding="6dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
 
@@ -417,8 +424,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shadow"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
                     app:cardCornerRadius="10dp">
 
@@ -434,7 +441,7 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginRight="8dp"
                             android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="16dp"
+                            android:layout_marginLeft="8dp"
                             android:src="@drawable/yellowdot"/>
                         <TextView
                             android:layout_width="0dp"
@@ -457,8 +464,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:hint="请输入金额(元)"
                             android:inputType="number"
                             android:textSize="12sp" />
@@ -471,8 +478,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shadow"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     app:cardCornerRadius="10dp">
                     <LinearLayout
                         android:orientation="vertical"
@@ -503,12 +510,12 @@
                                 android:layout_marginTop="8dp"
                                 android:layout_marginRight="8dp"
                                 android:layout_marginBottom="8dp"
-                                android:layout_marginLeft="16dp"
+                                android:layout_marginLeft="10dp"
                                 android:src="@drawable/greendot"/>
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="5"
+                                android:layout_weight="4"
                                 android:layout_marginLeft="8dp"
                                 android:text="设定保证金"
                                 android:textSize="12sp"
@@ -526,8 +533,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="7"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginRight="16dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
                                 android:hint="请输入金额(元)"
                                 android:inputType="number"
                                 android:textSize="12sp" />
