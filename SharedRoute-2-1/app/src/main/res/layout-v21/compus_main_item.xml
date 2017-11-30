@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:background="@color/light_gray"
+    android:elevation="2dp">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/card_bg"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="@drawable/roundedcorner1"
         android:layout_margin="10dp"
+        android:background="@drawable/roundedcorner3"
         android:elevation="2dp">
 
         <LinearLayout
@@ -13,43 +18,48 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.5">
+                android:layout_weight="0.4">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:src="@drawable/book" />
 
                 <TextView
                     android:id="@+id/task_state"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_weight="0.8"
+                    android:gravity="center"
                     android:text="订单状态"
                     android:textColor="@color/black"
-                    android:textSize="12dp" />
+                    android:textSize="15dp" />
 
-                <TextView
-                    android:id="@+id/publish_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/task_state"
-                    android:layout_below="@id/task_state"
-                    android:text="发布日期：2017/11/21"
-                    android:textSize="10dp" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:src="@drawable/ic_bookmark_24dp" />
+            </LinearLayout>
 
-            </RelativeLayout>
 
             <TextView
                 android:id="@+id/task_price"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.35"
+                android:layout_weight="0.3"
                 android:gravity="center"
                 android:text="2.0元"
                 android:textColor="@color/black"
-                android:textSize="22dp" />
+                android:textSize="18dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,8 +76,8 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.3"
-                        android:gravity="center"
+                        android:layout_weight="0.5"
+                        android:gravity="center|right"
                         android:text="快递公司："
                         android:textColor="@color/black" />
 
@@ -75,8 +85,8 @@
                         android:id="@+id/express_company"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
+                        android:layout_weight="0.5"
+                        android:gravity="center|left"
                         android:text="顺丰快递" />
                 </LinearLayout>
 
@@ -88,8 +98,8 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.3"
-                        android:gravity="center"
+                        android:layout_weight="0.5"
+                        android:gravity="center|right"
                         android:text="提货号码："
                         android:textColor="@color/black" />
 
@@ -97,8 +107,8 @@
                         android:id="@+id/express_picknum"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
+                        android:layout_weight="0.5"
+                        android:gravity="center|left"
                         android:text="202" />
                 </LinearLayout>
 
@@ -110,8 +120,8 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.3"
-                        android:gravity="center"
+                        android:layout_weight="0.5"
+                        android:gravity="center|right"
                         android:text="发布用户："
                         android:textColor="@color/black" />
 
@@ -119,8 +129,8 @@
                         android:id="@+id/publish_name"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
+                        android:layout_weight="0.5"
+                        android:gravity="center|left"
                         android:text="王烨臻" />
                 </LinearLayout>
 
@@ -129,18 +139,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.3">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="0.6"
-                    android:gravity="center|right"
-                    android:text="哈尔滨雷行科技有限公司" />
+                android:layout_weight="0.2">
+                <!--<TextView-->
+                <!--android:id="@+id/publish_date"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_alignLeft="@id/task_state"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_marginRight="15dp"-->
+                <!--android:layout_marginEnd="15dp"-->
+                <!--android:text="2017/11/21" />-->
             </LinearLayout>
 
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
+</LinearLayout>
