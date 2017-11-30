@@ -85,7 +85,6 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-                startActivity(new Intent(ConfirmTaskActivity.this,TaskViewActivity.class));
                 finish();
                 return true;
             case R.id.back:
@@ -160,20 +159,8 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
         });
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //mButton.doResult(true);
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            mAuthTask = new UserLoginTask(itemlists);
-                            mAuthTask.execute();
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                thread.start();
+            public void onClick(View view) {
+                new UserLoginTask(itemlists).execute();
             }
         });
     }
@@ -249,6 +236,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
                 return  array;
             } catch (Exception e) {
                 // TODO: handle exception
+                Toast.makeText(ConfirmTaskActivity.this,"未选订单或服务器异常，接单失败",Toast.LENGTH_SHORT).show();
                 e.getMessage();
             }
             return null;

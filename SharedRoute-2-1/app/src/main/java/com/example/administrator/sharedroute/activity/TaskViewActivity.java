@@ -49,10 +49,13 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
     private OrderDao orderDao;
     private SwipeRefreshLayout swipeRefresh;
     private LinearLayout mLinearLayout;
+    private String lastActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
+        Intent intent = getIntent();
+        lastActivity =  intent.getExtras().getString("lastActivity");
         orderDao = new OrderDao(this);
         initView();
     }
@@ -182,7 +185,8 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-                startActivity(new Intent(TaskViewActivity.this, SearchNeedsActivity.class));
+//                if (lastActivity.equals("main"))  startActivity(new Intent(TaskViewActivity.this, MainActivity.class));
+//                else startActivity(new Intent(TaskViewActivity.this, SearchNeedsActivity.class));
                 finish();
                 return true;
             case R.id.back:
@@ -214,6 +218,12 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
             trollyAdapter.remove(position);
         }
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        new refreshTask().execute();
+//    }
 
     private class refreshTask extends AsyncTask<Void, Void, List<listItem>> {
         @Override

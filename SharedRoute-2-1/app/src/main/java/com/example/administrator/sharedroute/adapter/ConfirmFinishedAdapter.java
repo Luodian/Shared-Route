@@ -43,6 +43,7 @@ public class ConfirmFinishedAdapter extends ArrayAdapter<listItem> {
         viewHolder.outTimeStamp.setText(listItems.get(position).SendTime);
         viewHolder.outLocation.setText(listItems.get(position).SendLocation);
         viewHolder.price.setText(String.valueOf(listItems.get(position).Money)+"元");
+        viewHolder.name.setText(listItems.get(position).PublisherName);
         return view;
     }
     final static class ViewHolder{//这是每个Item的tag信息
@@ -53,6 +54,7 @@ public class ConfirmFinishedAdapter extends ArrayAdapter<listItem> {
         TextView outTimeStamp;//送件时间
         TextView outLocation;//送件地点
         TextView price;//价格
+        TextView name;
         LinearLayout item_bg;
         ViewHolder(View view){
             expressType = (TextView)view.findViewById(R.id.confirmtask_item_kinds);
@@ -62,6 +64,7 @@ public class ConfirmFinishedAdapter extends ArrayAdapter<listItem> {
             outTimeStamp = (TextView)view.findViewById(R.id.confirmtask_send_time);
             outLocation = (TextView)view.findViewById(R.id.confirmtask_send_loc);
             price = (TextView)view.findViewById(R.id.confirmtask_item_price);
+            name = (TextView)view.findViewById(R.id.confirmtask_name);
             item_bg=(LinearLayout)view.findViewById(R.id.item_bg);
         }
     }
