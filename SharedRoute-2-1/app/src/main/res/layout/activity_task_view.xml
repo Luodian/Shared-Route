@@ -66,13 +66,6 @@
             android:textColor="@color/black"
             android:background="#00FFA54F"
             />
-        <!--</FrameLayout>-->
-        <!--<FrameLayout-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="fill"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@drawable/roundedcorner3">-->
 
         <Button
             android:layout_weight="1.3"
