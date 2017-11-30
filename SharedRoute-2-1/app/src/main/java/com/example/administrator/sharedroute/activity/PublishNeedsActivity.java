@@ -57,8 +57,8 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     private DrawerLayout mDrawerLayout;
     private Button pickupLocationButton ;
     private TextView textViewName ;
-    private TextView textViewPhoneNumber ;
-    private Button sendLocation ;
+//    private TextView textViewPhoneNumber ;
+    private TextView sendLocation ;
 
     private TextView UserID;
     private TextView UserName;
@@ -85,8 +85,8 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         }
         pickupLocationButton = (Button)findViewById(R.id.pickupplace);
         textViewName = (TextView)findViewById(R.id.nametext);
-        textViewPhoneNumber = (TextView)findViewById(R.id.phonetext);
-        sendLocation = (Button)findViewById(R.id.delieverplace);
+//        textViewPhoneNumber = (TextView)findViewById(R.id.phonetext);
+        sendLocation = (TextView)findViewById(R.id.delieverplace);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_publishneeds);
         setSupportActionBar(toolbar);
@@ -193,7 +193,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             }
         });
 
-        final Button delieverPlace = (Button) findViewById(R.id.delieverplace);
+        final TextView delieverPlace = (TextView) findViewById(R.id.delieverplace);
 
         final TextView qujiantext = (TextView) findViewById(R.id.qujiantext);
 //        LinearLayout qujianshijan = (LinearLayout) findViewById(R.id.qujianshijian);
@@ -423,8 +423,8 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                 String textName = data.getStringExtra("textName");
                 String textPhone = data.getStringExtra("textPhone");
                 String textDeliverPlace = data.getStringExtra("textDeliverPlace");
-                textViewName.setText(textName);
-                textViewPhoneNumber.setText(textPhone);
+                textViewName.setText(textName + " / " + textPhone);
+//                textViewPhoneNumber.setText(textPhone);
                 sendLocation.setText(textDeliverPlace);
                 break;
             }
