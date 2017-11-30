@@ -74,7 +74,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="接单"
-            android:background="@color/orange"
+            android:textColor="@color/whitesmoke"
+            android:background="@color/colorPrimary"
             android:textSize="18dp" />
         <!--</FrameLayout>-->
 

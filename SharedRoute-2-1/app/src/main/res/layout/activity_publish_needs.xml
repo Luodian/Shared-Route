@@ -581,6 +581,7 @@
                 <Button
                     android:id="@+id/submit_btn"
                     android:text="确认发布"
+                    android:textColor="@color/whitesmoke"
                     android:background="@color/colorPrimary"
                     android:layout_width="0dp"
                     android:layout_weight="1"
