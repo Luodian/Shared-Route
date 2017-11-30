@@ -388,10 +388,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         }
     }
 
-    private class refreshKeep extends AsyncTask<Void, Void,ArrayList<listItem>> {
+    private class refreshKeep extends AsyncTask<Void, Void,Void> {
 
         @Override
-        protected ArrayList<listItem> doInBackground(Void... pa) {
+        protected Void doInBackground(Void...voids) {
             String result = null;
 //            String path = "http://47.95.194.146:8080/sharedroot_server/Task";
             String path = getResources().getString(R.string.url)+"/Task";
@@ -400,6 +400,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpPost post = new HttpPost(path);
+
+
                 List<NameValuePair> parameters = new ArrayList<NameValuePair>();
                 parameters.add(new BasicNameValuePair("action", "publishpost"));
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
@@ -436,37 +438,9 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     item.status = lan.getInt("Status");
                     itemPublishList.add(item);
                 }
-                return (ArrayList<listItem>) itemPublishList;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<listItem> data) {
-            super.onPostExecute(data);
-//            if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
-            if (itemPublishList.size()==0) Toast.makeText(getApplicationContext(),"无数据更新",Toast.LENGTH_SHORT).show();
-//            RecyclerView releaseOrder = (RecyclerView) view1.findViewById(R.id.release_order);
-//            GridLayoutManager layoutManager1 = new GridLayoutManager(getApplicationContext(), 1);
-//            releaseOrder.setLayoutManager(layoutManager1);
-//            adapter1 = new ReleaseOrderItemAdapter(itemPublishList);
-//            releaseOrder.setAdapter(adapter1);
-            mRecyclerView = (RecyclerView) findViewById(R.id.mainRecycler1);
-            MainPageReleaseAdapter mainPageReleaseAdapter = new MainPageReleaseAdapter(MainActivity.this,itemPublishList);
-            mRecyclerView.setAdapter(mainPageReleaseAdapter);
-             GridLayoutManager layoutManager1 = new GridLayoutManager(getApplicationContext(), 1);
-            mRecyclerView.setLayoutManager(layoutManager1);
-    }
-    }
-
-    private class refreshKeepTwo extends AsyncTask<Void, Void,ArrayList<listItem>> {
-
-        @Override
-        protected ArrayList<listItem> doInBackground(Void ... pa) {
-            String result = null;
-            String path = getResources().getString(R.string.url)+"/Task";
             try
             {
                 HttpClient client = new DefaultHttpClient();
@@ -507,7 +481,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     item.status = lan.getInt("Status");
                     itemAcceptList.add(item);
                 }
-                return  (ArrayList<listItem>) itemAcceptList;
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -515,16 +488,27 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         }
 
         @Override
-        protected void onPostExecute(ArrayList<listItem> data) {
-            super.onPostExecute(data);
-            if (swipeRefresh2 != null) swipeRefresh2.setRefreshing(false);
-            if (itemAcceptList.size()==0) Toast.makeText(getApplicationContext(),"无数据更新",Toast.LENGTH_SHORT).show();
-            RecyclerView receiveOrder = (RecyclerView) view2.findViewById(R.id.receive_order);
-            GridLayoutManager layoutManager2 = new GridLayoutManager(MainActivity.this, 1);
-            receiveOrder.setLayoutManager(layoutManager2);
-            adapter2 = new AcceptedOrderItemAdapter(itemAcceptList);
-            receiveOrder.setAdapter(adapter2);
-        }
+        protected void onPostExecute(Void e) {
+            super.onPostExecute(e);
+//            if (swipeRefresh1 != null) swipeRefresh1.setRefreshing(false);
+            if (itemPublishList.size()==0) Toast.makeText(getApplicationContext(),"无数据更新",Toast.LENGTH_SHORT).show();
+//            RecyclerView releaseOrder = (RecyclerView) view1.findViewById(R.id.release_order);
+//            GridLayoutManager layoutManager1 = new GridLayoutManager(getApplicationContext(), 1);
+//            releaseOrder.setLayoutManager(layoutManager1);
+//            adapter1 = new ReleaseOrderItemAdapter(itemPublishList);
+//            releaseOrder.setAdapter(adapter1);
+            mRecyclerView = findViewById(R.id.mainRecycler1);
+            MainPageReleaseAdapter mainPageReleaseAdapter = new MainPageReleaseAdapter(MainActivity.this,itemPublishList,1);
+            mRecyclerView.setAdapter(mainPageReleaseAdapter);
+             GridLayoutManager layoutManager1 = new GridLayoutManager(getApplicationContext(), 1);
+            mRecyclerView.setLayoutManager(layoutManager1);
+
+            mRecyclerView = findViewById(R.id.mainRecycler2);
+            MainPageReleaseAdapter mainPageReleaseAdapter2 = new MainPageReleaseAdapter(MainActivity.this,itemAcceptList,0);
+            mRecyclerView.setAdapter(mainPageReleaseAdapter2);
+            GridLayoutManager layoutManager2 = new GridLayoutManager(getApplicationContext(), 1);
+            mRecyclerView.setLayoutManager(layoutManager2);
+    }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

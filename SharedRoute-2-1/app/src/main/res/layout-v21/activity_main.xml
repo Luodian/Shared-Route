@@ -16,8 +16,6 @@
             android:title="@string/title_publishneeds"
             android:elevation="4dp"/>
         <!--android:background="?attr/colorPrimary"-->
-
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,8 +45,8 @@
                     android:layout_height="120dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="12dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@color/white"
@@ -94,7 +92,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/taskview" />
+                                app:srcCompat="@drawable/trollycar" />
 
                             <TextView
                                 android:id="@+id/textView11"
@@ -102,7 +100,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="0.5"
                                 android:gravity="center"
-                                android:text="任务栏" />
+                                android:text="购物车" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -116,7 +114,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/searchneed" />
+                                app:srcCompat="@drawable/cloudorange" />
 
                             <TextView
                                 android:id="@+id/textView12"
@@ -138,7 +136,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/publishneed" />
+                                app:srcCompat="@drawable/cloudred" />
 
                             <TextView
                                 android:id="@+id/textView13"
@@ -167,7 +165,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/publishrank" />
+                                app:srcCompat="@drawable/rankred" />
 
                             <TextView
                                 android:id="@+id/textView14"
@@ -189,7 +187,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/rank" />
+                                app:srcCompat="@drawable/rankorange" />
 
                             <TextView
                                 android:id="@+id/textView15"
@@ -211,7 +209,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/done" />
+                                app:srcCompat="@drawable/albule" />
 
                             <TextView
                                 android:id="@+id/textView16"
@@ -233,7 +231,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/history" />
+                                app:srcCompat="@drawable/circlegreen" />
 
                             <TextView
                                 android:id="@+id/textView17"
@@ -247,6 +245,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:elevation="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -266,14 +265,14 @@
                         android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="记录我的订单"/>
+                        android:text="我发布的订单"/>
                 </LinearLayout>
-
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/mainRecycler1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"></android.support.v7.widget.RecyclerView>
+                    >
+                </android.support.v7.widget.RecyclerView>
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:background="@color/light_gray"
@@ -281,13 +280,52 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-----我也是有底线的,(￢︿̫̿￢☆)-----"
+                        android:text="-----你好，我是底线,o(*￣▽￣*)ブ-----"
+                        android:layout_gravity="center"/>
+                </FrameLayout>
+                <LinearLayout
+                    android:elevation="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/infoview1"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.2"
+                        android:layout_height="40dp"
+                        android:src="@drawable/nav_icon"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="我接受的订单"/>
+                </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/mainRecycler2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                </android.support.v7.widget.RecyclerView>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:background="@color/light_gray"
+                    android:layout_height="150dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-----你好，我是底线,╮(╯-╰)╭-----"
                         android:layout_gravity="center"/>
                 </FrameLayout>
             </LinearLayout>
 
-        </ScrollView>
 
+        </ScrollView>
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/main_navigation"
             android:layout_width="match_parent"
@@ -295,6 +333,10 @@
             android:layout_gravity="bottom"
             android:background="?android:attr/windowBackground"
             app:menu="@menu/navigation" />
+
+
+
+
 
     </LinearLayout>
     <android.support.design.widget.NavigationView
