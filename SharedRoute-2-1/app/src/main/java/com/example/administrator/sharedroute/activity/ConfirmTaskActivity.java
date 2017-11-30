@@ -276,6 +276,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
             bundle.putParcelableArrayList("failList",failList);
             intent.putExtras(bundle);
             startActivity(intent);
+            finish();
         }
 
         @Override
