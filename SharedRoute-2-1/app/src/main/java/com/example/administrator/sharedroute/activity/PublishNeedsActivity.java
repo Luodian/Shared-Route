@@ -70,6 +70,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_needs);
+        if (!MainActivity.activityList.contains(PublishNeedsActivity.this)) MainActivity.activityList.add(PublishNeedsActivity.this);
         View decorView = getWindow().getDecorView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN

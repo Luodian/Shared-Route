@@ -63,7 +63,7 @@ public class MainPageReleaseAdapter extends RecyclerView.Adapter<MainPageRelease
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.compus_main_item,null,false);
         final ViewHolder holder = new ViewHolder(view);
-        holder.cardView.setOnClickListener(new View.OnClickListener(){
+        if (PorA == 1) holder.cardView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 final int position = holder.getAdapterPosition();
@@ -85,6 +85,7 @@ public class MainPageReleaseAdapter extends RecyclerView.Adapter<MainPageRelease
                 });
             }
         });
+        else  Toast.makeText(mContext,"长按可看详细信息",Toast.LENGTH_SHORT).show();
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v){
