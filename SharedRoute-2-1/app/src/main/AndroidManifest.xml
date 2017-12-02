@@ -40,9 +40,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ConfirmFinishedActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".activity.ConfirmTaskActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.TaskViewActivity"

@@ -69,6 +69,7 @@ public class SearchNeedsActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_search_needs);
+        if (!MainActivity.activityList.contains(SearchNeedsActivity.this)) MainActivity.activityList.add(SearchNeedsActivity.this);
         View decorView = getWindow().getDecorView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN

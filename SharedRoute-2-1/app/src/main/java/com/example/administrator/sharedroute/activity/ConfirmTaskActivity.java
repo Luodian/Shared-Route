@@ -72,6 +72,7 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
         super.onCreate(savedInstanceState);
         setTitle(null);
         setContentView(R.layout.activity_confirm_task);
+        if (!MainActivity.activityList.contains(ConfirmTaskActivity.this)) MainActivity.activityList.add(ConfirmTaskActivity.this);
         View decorView = getWindow().getDecorView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -239,7 +240,6 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
                 if (resEntity != null) {
                     result = EntityUtils.toString(resEntity);
                 }
-
                 JSONArray arr = new JSONArray(result.toString());
                 ArrayList<Integer> array = new ArrayList<Integer>();
                 for (int i = 0; i < arr.length(); i++) {
@@ -249,7 +249,6 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
                 return  array;
             } catch (Exception e) {
                 // TODO: handle exception
-                Toast.makeText(ConfirmTaskActivity.this,"未选订单或服务器异常，接单失败",Toast.LENGTH_SHORT).show();
                 e.getMessage();
             }
             return null;
@@ -257,10 +256,6 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 
         @Override
         protected void onPostExecute(final ArrayList<Integer> integers) {
-            if (integers == null) {
-                Toast.makeText(getApplicationContext(),"接单失败",Toast.LENGTH_SHORT);
-                return;
-            }
             ArrayList<listItem> failList = new ArrayList<listItem>();
             ArrayList<listItem> successList = new ArrayList<listItem>();
             for (listItem e:itemlists){

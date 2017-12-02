@@ -1,5 +1,6 @@
 package com.example.administrator.sharedroute.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     private List<listItem> itemPublishList = new ArrayList<>();
     private AcceptedOrderItemAdapter adapter2;
     private ReleaseOrderItemAdapter adapter1;
-
+    public static List<Activity> activityList = new ArrayList<Activity>();
     private OrderDao orderDao;
     private BottomNavigationView navigation;
     private SwipeRefreshLayout swipeRefresh1;
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!activityList.contains(MainActivity.this)) activityList.add(MainActivity.this);
         setContentView(R.layout.activity_main);
         View decorView = getWindow().getDecorView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -186,13 +188,13 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         return true;
                     case R.id.release_rank:
                         select = "releaseRank";
-                        Intent intent4 = new Intent(MainActivity.this,WaitingFutureActivity.class);
+                        Intent intent4 = new Intent(MainActivity.this,RankActivity.class);
                         intent4.putExtra("select_order",select);
                         startActivity(intent4);
                         return true;
                     case R.id.receive_rank:
 //                        select = "receiveRank";
-                        Intent intent5 = new Intent(MainActivity.this,WaitingFutureActivity.class);
+                        Intent intent5 = new Intent(MainActivity.this,RankActivity.class);
 //                        intent5.putExtra("select_order",select);
                         startActivity(intent5);
                         return true;
@@ -371,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 break;
             }
             case R.id.imageView10:{
-                Intent intent1 = new Intent(MainActivity.this, WaitingFutureActivity.class);
+                Intent intent1 = new Intent(MainActivity.this, RankActivity.class);
                 startActivity(intent1);
                 break;
             }
@@ -579,7 +581,9 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                             }
                         };
                         thread.start();
-                        finish();
+                        for (Activity a:activityList){
+                            if (a != null) a.finish();
+                        }
                     }
                 }).show();
     }
