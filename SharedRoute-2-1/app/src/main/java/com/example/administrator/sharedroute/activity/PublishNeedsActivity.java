@@ -318,6 +318,13 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                     }
                 }
 
+                String fetchTime = qujiantext.getText().toString();
+                int index1 = fetchTime.indexOf('日');
+                fetchTime = fetchTime.substring(1,index1+2)+fetchTime.substring(index1+3);
+                String delieverTime = songjianText.getText().toString();
+                int index2 = delieverTime.indexOf('日');
+                delieverTime = delieverTime.substring(1,index2+2)+delieverTime.substring(index2+3);
+
                 Intent intent1 = new Intent(PublishNeedsActivity.this, PayBillActivity.class);
                 Bundle bundle = new Bundle();
                 int divideindex = nameText.getText().toString().indexOf('/');
@@ -329,8 +336,8 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                 bundle.putCharSequence("num", numText.getText().toString());
                 bundle.putCharSequence("pickupplace", pickupPlace.getText().toString());
                 bundle.putCharSequence("delieverplace", delieverPlace.getText().toString());
-                bundle.putCharSequence("pickuptime", qujiantext.getText().toString());
-                bundle.putCharSequence("delievertime", songjianText.getText().toString());
+                bundle.putCharSequence("pickuptime", fetchTime);
+                bundle.putCharSequence("delievertime", delieverTime);
                 bundle.putCharSequence("money", money.getText().toString());
                 bundle.putCharSequence("securitymoney",((EditText)findViewById(R.id.securitymoney)).getText().toString());
                 intent1.putExtras(bundle);
@@ -440,7 +447,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = "" + year + "年\n" + (++monthOfYear) + "月" + dayOfMonth+"日";
+        String date = " " + year + "年\n" + (++monthOfYear) + "月" + dayOfMonth+"日";
 
         if (left) {
             leftDate = date;
@@ -473,7 +480,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
         String minuteString = minute < 10 ? "0" + minute : "" + minute;
         String secondString = second < 10 ? "0" + second : "" + second;
-        String time = "" + hourString + " : " + minuteString;
+        String time = " " + hourString + " : " + minuteString;
         if (left == true) {
             leftTime = time;
             ((TextView) findViewById(R.id.qujiantext)).setText(leftDate + "\n" + leftTime);

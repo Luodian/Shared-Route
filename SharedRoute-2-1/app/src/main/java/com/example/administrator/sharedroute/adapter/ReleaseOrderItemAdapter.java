@@ -121,11 +121,18 @@ public class ReleaseOrderItemAdapter extends RecyclerView.Adapter<ReleaseOrderIt
 //        holder.releaseType.setText(item.getExpressType());
 //        holder.ItemStatus.setImageResource(R.mipmap.ic_none_receive_status);
 //        holder.sendPlace.setText(item.getOutLocation());
+        String fetchTime =mItemList.get(position).FetcherName;
+        String sendTime = mItemList.get(position).SendTime;
+        int index1 = fetchTime.indexOf('日');
+        fetchTime = fetchTime.substring(0,index1+1)+'\n'+fetchTime.substring(index1+1);
+        int index2 = sendTime.indexOf('日');
+        sendTime = sendTime.substring(0,index2+1)+'\n'+sendTime.substring(index2+1);
+
         holder.userHeader.setImageResource(R.drawable.nav_icon);
         holder.phoneImage.setImageResource(R.drawable.mainpage_ringphone);
-        holder.userName.setText(mItemList.get(position).FetcherName);
+        holder.userName.setText(fetchTime);
         holder.userPhone.setText(mItemList.get(position).FetcherPhone);
-        holder.releaseTime.setText(mItemList.get(position).SendTime);
+        holder.releaseTime.setText(sendTime);
         holder.fetchLocation.setText(mItemList.get(position).SendLocation);
         holder.statusImage.setImageResource(R.drawable.mainpage_semimoon);/**/
         if (mItemList.get(position).status==1) holder.statusText.setText("未接单");

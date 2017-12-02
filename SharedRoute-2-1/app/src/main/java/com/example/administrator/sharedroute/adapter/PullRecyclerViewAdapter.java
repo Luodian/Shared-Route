@@ -82,9 +82,16 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         if (holder instanceof ItemViewHolder) {
             //holder.tv.setText(data.get(position));
+            String fetchTime = mDataset.get(position).FetchTime;
+            String sendTime = mDataset.get(position).SendTime;
+            int index1 = fetchTime.indexOf('日');
+            fetchTime = fetchTime.substring(0,index1+1)+'\n'+fetchTime.substring(index1+1);
+            int index2 = sendTime.indexOf('日');
+            sendTime = sendTime.substring(0,index2+1)+'\n'+sendTime.substring(index2+1);
+
             ((ItemViewHolder) holder).kindsTextView.setText(mDataset.get(position).TaskKindID);
-            ((ItemViewHolder) holder).fetchTimeTextView.setText(mDataset.get(position).FetchTime);
-            ((ItemViewHolder) holder).sendTimeTextView.setText(mDataset.get(position).SendTime);
+            ((ItemViewHolder) holder).fetchTimeTextView.setText(fetchTime);
+            ((ItemViewHolder) holder).sendTimeTextView.setText(sendTime);
             ((ItemViewHolder) holder).fetchLocTextView.setText(mDataset.get(position).FetchLocation);
             ((ItemViewHolder) holder).sendLocTextView.setText(mDataset.get(position).SendLocation);
             ((ItemViewHolder) holder).priceTextView.setText(String.valueOf(mDataset.get(position).Money) + "元");

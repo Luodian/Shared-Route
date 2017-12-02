@@ -135,6 +135,13 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
 
         total.setKeyListener(null);
 
+        String fetchTime = bundle.getString("pickuptime");
+        int index1 = fetchTime.indexOf('日');
+        fetchTime = "\t\t\t\t"+fetchTime.substring(0,index1+1)+" "+fetchTime.substring(index1+2);
+        String sendTime = bundle.getString("delievertime");
+        int index2 = sendTime.indexOf('日');
+        sendTime = "\t\t\t\t"+sendTime.substring(0,index2+1)+" "+sendTime.substring(index2+2);
+
         if(bundle!=null){
             money.setText("￥ "+bundle.getString("money"));
             name.setText(bundle.getString("name"));
@@ -143,8 +150,8 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
             pickNum.setText(bundle.getString("num"));
             pickPlace.setText(bundle.getString("pickupplace"));
             delieverPlace.setText(bundle.getString("delieverplace"));
-            pickTime.setText(bundle.getString("pickuptime"));
-            delieverTime.setText(bundle.getString("delievertime"));
+            pickTime.setText(fetchTime);
+            delieverTime.setText(sendTime);
             ensureBillBtn.setText("确认支付 ￥ "+bundle.getString("money"));
         }
 
