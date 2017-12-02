@@ -54,11 +54,19 @@ public class TaskViewAdapter extends ArrayAdapter<listItem> {
             viewHolder = (ViewHolder) view.getTag();
         }
         Log.e("???0",String.valueOf(count++));
+
+        String fetchTime =listItems.get(position).FetchTime;
+        String sendTime = listItems.get(position).SendTime;
+        int index1 = fetchTime.indexOf('日');
+        fetchTime = fetchTime.substring(0,index1+1)+'\n'+fetchTime.substring(index1+1);
+        int index2 = sendTime.indexOf('日');
+        sendTime = sendTime.substring(0,index2+1)+'\n'+sendTime.substring(index2+1);
+
         viewHolder.expressType.setText(listItems.get(position).TaskKindID);
         viewHolder.expressSize.setText(listItems.get(position).Remark);
-        viewHolder.inTimeStamp.setText(listItems.get(position).FetchTime);
+        viewHolder.inTimeStamp.setText(fetchTime);
         viewHolder.inLocation.setText(listItems.get(position).FetchLocation);
-        viewHolder.outTimeStamp.setText(listItems.get(position).SendTime);
+        viewHolder.outTimeStamp.setText(sendTime);
         viewHolder.outLocation.setText(listItems.get(position).SendLocation);
         viewHolder.price.setText(String.valueOf(listItems.get(position).Money)+"元");
         viewHolder.name.setText(listItems.get(position).PublisherName);
