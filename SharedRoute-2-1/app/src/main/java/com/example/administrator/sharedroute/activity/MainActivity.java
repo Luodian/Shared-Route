@@ -319,27 +319,27 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         switch (position+1){
             case 1:
                 Intent intent1 = new Intent(Intent.ACTION_VIEW);
-                intent1.setData(Uri.parse("https://github.com/Luodian/Shared-Route"));
+                intent1.setData(Uri.parse("https://fir.im/luodian1km"));
                 startActivity(intent1);
                 break;
             case 2:
                 Intent intent2 = new Intent(Intent.ACTION_VIEW);
-                intent2.setData(Uri.parse("https://github.com/Luodian/Shared-Route"));
+                intent2.setData(Uri.parse("https://fir.im/luodian1km"));
                 startActivity(intent2);
                 break;
             case 3:
                 Intent intent3 = new Intent(Intent.ACTION_VIEW);
-                intent3.setData(Uri.parse("https://github.com/Luodian/Shared-Route"));
+                intent3.setData(Uri.parse("https://fir.im/luodian1km"));
                 startActivity(intent3);
                 break;
             case 4:
                 Intent intent4 = new Intent(Intent.ACTION_VIEW);
-                intent4.setData(Uri.parse("https://github.com/Luodian/Shared-Route"));
+                intent4.setData(Uri.parse("https://fir.im/luodian1km"));
                 startActivity(intent4);
                 break;
             case 5:
                 Intent intent5 = new Intent(Intent.ACTION_VIEW);
-                intent5.setData(Uri.parse("https://github.com/Luodian/Shared-Route"));
+                intent5.setData(Uri.parse("https://fir.im/luodian1km"));
                 startActivity(intent5);
                 break;
             default:

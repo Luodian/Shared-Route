@@ -5,9 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -174,25 +172,25 @@ public class Fragment2 extends Fragment {
         sortListView.setAdapter(adapter);//将适配器加入listView，SourceDataList中的内容将显示在sortListView中
 
 
-        mClearEditText = (ClearEditText) getView().findViewById(R.id.filter_edit);
-
-        mClearEditText.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterData(s.toString());
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+//        mClearEditText = (ClearEditText) getView().findViewById(R.id.filter_edit);
+//
+//        mClearEditText.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                filterData(s.toString());
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count,
+//                                          int after) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
     }
 
 
