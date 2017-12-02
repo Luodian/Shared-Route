@@ -47,11 +47,10 @@ public class MyPublishOrder extends AppCompatActivity {
  */
     private ViewPager mViewPager;
     private LayoutInflater mInflater;
-    private CardView view1, view2, view3,viewCard;//页卡视图
+    private CardView viewCard;//页卡视图
     private List<CardView> mViewList = new ArrayList<>();//页卡视图集合
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
-    private String select;
     private List<listItem> myOrders;
     private int count = 0;
     @Override
@@ -92,7 +91,7 @@ public class MyPublishOrder extends AppCompatActivity {
             try {
                 HttpClient client = new DefaultHttpClient();
                 HttpPost post = new HttpPost(path);
-                List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+                List<NameValuePair> parameters = new ArrayList<>();
 //                    String json = new String();
 //                    json += "[";
 //                    for (int i = 0; i < length; i++) {
@@ -114,7 +113,7 @@ public class MyPublishOrder extends AppCompatActivity {
                     result = EntityUtils.toString(resEntity);
                 }
                 JSONArray arr = new JSONArray(result.toString());
-                if (myOrders == null) myOrders = new ArrayList<listItem>();
+                if (myOrders == null) myOrders = new ArrayList<>();
                 else  myOrders.clear();
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject lan = arr.getJSONObject(i);
@@ -147,7 +146,7 @@ public class MyPublishOrder extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<listItem> data) {
             super.onPostExecute(data);
-            Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             toolbar.setTitle("我发布的订单");
             setSupportActionBar(toolbar);
             ActionBar actionBar = getSupportActionBar();
@@ -155,7 +154,7 @@ public class MyPublishOrder extends AppCompatActivity {
                 actionBar.setDisplayHomeAsUpEnabled(true);
             }
 
-            mViewPager = (ViewPager) findViewById(R.id.viewPager);
+            mViewPager = findViewById(R.id.viewPager);
             mInflater = LayoutInflater.from(MyPublishOrder.this);
 
 
@@ -190,7 +189,7 @@ public class MyPublishOrder extends AppCompatActivity {
                         CardItem item6 = new CardItem("状态："+"未知", R.mipmap.ic_status);
                         cardItems.add(item6);
                     }
-                    ListView listViewCard = (ListView)viewCard.findViewById(R.id.list_view);
+                    ListView listViewCard = viewCard.findViewById(R.id.list_view);
                     listViewCard.setAdapter(adapter);
                     mViewList.add(viewCard);
                     viewCard.setOnClickListener(new ViewPager.OnClickListener(){

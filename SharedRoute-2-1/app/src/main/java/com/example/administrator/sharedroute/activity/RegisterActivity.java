@@ -340,14 +340,13 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             showProgress(false);
 
             if (success) {
-
                 Toast.makeText(getApplicationContext(),"注册成功", Toast.LENGTH_SHORT).show();
                 isSuccess = true;
                 finish();
             }
             else
             {
-                if (result.toString() == "exist")
+                if (result == "exist")
                 {
                     Toast.makeText(getApplicationContext(),"注册失败,该账户已经存在", Toast.LENGTH_SHORT).show();
                     isSuccess=false;
