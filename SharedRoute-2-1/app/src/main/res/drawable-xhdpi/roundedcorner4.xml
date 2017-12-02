@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/red" />
+    <solid android:color="@color/colorAccent" />
     <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <item android:drawable="@color/crimson" android:state_pressed="true"></item>
-        <item android:drawable="@color/crimson" android:state_focused="true"></item>
-        <item android:drawable="@color/crimson" android:state_selected="true"></item>
-        <item android:drawable="@color/red" android:state_enabled="true"></item>
-        <item android:drawable="@color/red" android:state_enabled="false"></item>
+        <item
+            android:drawable="@color/colorAccent"
+            android:state_pressed="true"></item>
+        <item
+            android:drawable="@color/colorAccent"
+            android:state_focused="true"></item>
+        <item
+            android:drawable="@color/colorAccent"
+            android:state_selected="true"></item>
+        <item
+            android:drawable="@color/colorAccent"
+            android:state_enabled="true"></item>
+        <item
+            android:drawable="@color/colorAccent"
+            android:state_enabled="false"></item>
 
     </selector>
-    <corners android:topLeftRadius="13dp"
-        android:bottomLeftRadius="13dp"
-        android:bottomRightRadius="13dp"
-        android:topRightRadius="13dp" />
+    <corners
+        android:topLeftRadius="30dp"
+        android:bottomLeftRadius="30dp"
+        android:bottomRightRadius="30dp"
+        android:topRightRadius="30dp" />
 </shape>

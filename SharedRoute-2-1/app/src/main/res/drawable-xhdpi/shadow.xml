@@ -31,11 +31,7 @@
                 android:endColor="#FFFFFF"
                 android:startColor="#FFFFFF" />
 
-            <corners
-                android:bottomLeftRadius="6dip"
-                android:bottomRightRadius="6dip"
-                android:topLeftRadius="6dip"
-                android:topRightRadius="6dip" />
+            <corners android:radius="20dp" />
         </shape>
     </item>
 </layer-list>

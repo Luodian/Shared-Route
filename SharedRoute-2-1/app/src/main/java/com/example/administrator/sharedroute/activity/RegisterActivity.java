@@ -272,11 +272,9 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
         private String phone;
         private String inviteCode;
         private String password;
-
 //        private String url="http://47.95.194.146:8080/sharedroot_server/Login";
         private String url = getResources().getString(R.string.url)+"/Login";
         private String result = null;
-
         //初始化
         PostTask(String name,String stuNum,String phone,String inviteCode,String password){
             this.name=name;
@@ -285,13 +283,10 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             this.inviteCode=inviteCode;
             this.password=password;
         }
-
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
             try {
-
                 BasicHttpParams httpParams = new BasicHttpParams();
                 HttpConnectionParams.setConnectionTimeout(httpParams, REQUEST_TIMEOUT);
                 HttpConnectionParams.setSoTimeout(httpParams, SO_TIMEOUT);
@@ -333,12 +328,10 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             }
             return false;
         }
-
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
             if (success) {
                 Toast.makeText(getApplicationContext(),"注册成功", Toast.LENGTH_SHORT).show();
                 isSuccess = true;
@@ -356,10 +349,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
                     Toast.makeText(getApplicationContext(),"注册失败,详细信息为\n"+ result.toString(), Toast.LENGTH_SHORT).show();
                     isSuccess=false;
                 }
-
             }
         }
-
         @Override
         protected void onCancelled() {
             mAuthTask = null;
