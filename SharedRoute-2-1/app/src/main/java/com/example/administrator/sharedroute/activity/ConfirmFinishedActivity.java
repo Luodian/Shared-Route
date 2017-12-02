@@ -85,6 +85,7 @@ public class ConfirmFinishedActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        clearTrolly();
         startActivity(new Intent(ConfirmFinishedActivity.this,MainActivity.class));
         finish();
     }

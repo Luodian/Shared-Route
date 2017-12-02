@@ -29,10 +29,12 @@ import java.util.List;
 public class MainPageReleaseAdapter extends RecyclerView.Adapter<MainPageReleaseAdapter.ViewHolder> {
     Context mContext;
     List<listItem> mItemList;
+    private int PorA;
 
-    public MainPageReleaseAdapter(Context mContext, List<listItem> mItemList) {
+    public MainPageReleaseAdapter(Context mContext, List<listItem> mItemList ,int PorA) {//判断是接受列表还是发布列表
         this.mContext = mContext;
         this.mItemList = mItemList;
+        this.PorA = PorA;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -43,6 +45,7 @@ public class MainPageReleaseAdapter extends RecyclerView.Adapter<MainPageRelease
         TextView expressCompany;
         TextView expressPicknum;
         TextView publishname;
+        TextView PorA;
         public ViewHolder(View view){
             super(view);
             cardView = (CardView)view.findViewById(R.id.card_bg);
@@ -52,6 +55,7 @@ public class MainPageReleaseAdapter extends RecyclerView.Adapter<MainPageRelease
             expressCompany = (TextView)view.findViewById(R.id.express_company);
             expressPicknum = (TextView)view.findViewById(R.id.express_picknum);
             publishname = (TextView)view.findViewById(R.id.publish_name);
+            PorA = view.findViewById(R.id.PorA);
         }
     }
 
@@ -104,7 +108,14 @@ public class MainPageReleaseAdapter extends RecyclerView.Adapter<MainPageRelease
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.publishname.setText(mItemList.get(position).PublisherName);
+        if (this.PorA == 0){
+            holder.PorA.setText("发布用户：");
+            holder.publishname.setText(mItemList.get(position).PublisherName);
+        }
+        else if (this.PorA == 1){
+            holder.PorA.setText("接单用户：");
+            holder.publishname.setText(mItemList.get(position).FetcherName);
+        }
 //        holder.publishDate.setText(mItemList.get(position).FetchTime);
         holder.expressPicknum.setText(mItemList.get(position).PickID);
         holder.expressCompany.setText(mItemList.get(position).FetchLocation);

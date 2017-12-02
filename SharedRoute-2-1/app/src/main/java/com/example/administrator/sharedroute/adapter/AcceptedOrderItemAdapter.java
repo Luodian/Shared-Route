@@ -28,6 +28,7 @@ public class AcceptedOrderItemAdapter extends RecyclerView.Adapter<AcceptedOrder
 
     private Context mContext;
     private List<listItem> mItemList;
+    private int state;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
@@ -39,23 +40,26 @@ public class AcceptedOrderItemAdapter extends RecyclerView.Adapter<AcceptedOrder
         TextView fetchLocation;
         ImageView statusImage;
         TextView statusText;
+        TextView sta;
         public ViewHolder(View view){
             super(view);
             cardView = (CardView)view;
-            userHeader = (ImageView)view.findViewById(R.id.user_header);
-            phoneImage = (ImageView)view.findViewById(R.id.phone_image);
-            userName = (TextView) view.findViewById(R.id.user_name);
-            userPhone = (TextView) view.findViewById(R.id.user_phone);
-            releaseTime = (TextView) view.findViewById(R.id.release_time);
-            fetchLocation = (TextView) view.findViewById(R.id.fetch_location);
-            statusImage = (ImageView) view.findViewById(R.id.status_image);
-            statusText = (TextView) view.findViewById(R.id.status_text);
+            userHeader = view.findViewById(R.id.user_header);
+            phoneImage = view.findViewById(R.id.phone_image);
+            userName =  view.findViewById(R.id.user_name);
+            userPhone = view.findViewById(R.id.user_phone);
+            releaseTime =  view.findViewById(R.id.release_time);
+            fetchLocation =view.findViewById(R.id.fetch_location);
+            statusImage = view.findViewById(R.id.status_image);
+            statusText = view.findViewById(R.id.status_text);
+            sta = view.findViewById(R.id.PorA);
         }
     }
 
-    public AcceptedOrderItemAdapter(List<listItem> ItemList) {
+    public AcceptedOrderItemAdapter(List<listItem> ItemList,int state) {//判断是接受列表0还是发布列表1
         if (ItemList == null) mItemList = new ArrayList<>();
         else mItemList = ItemList;
+        this.state = state;
     }
 
     @Override
@@ -106,8 +110,9 @@ public class AcceptedOrderItemAdapter extends RecyclerView.Adapter<AcceptedOrder
 //        holder.sendPlace.setText(item.getOutLocation());
         holder.userHeader.setImageResource(R.drawable.nav_icon);
         holder.phoneImage.setImageResource(R.drawable.mainpage_ringphone);
-        holder.userName.setText(mItemList.get(position).FetcherName);
-        holder.userPhone.setText(mItemList.get(position).FetcherPhone);
+            holder.sta.setText("发布人");
+            holder.userName.setText(mItemList.get(position).FetcherName);
+            holder.userPhone.setText(mItemList.get(position).FetcherPhone);
         holder.releaseTime.setText(mItemList.get(position).SendTime);
         holder.fetchLocation.setText(mItemList.get(position).SendLocation);
         holder.statusImage.setImageResource(R.drawable.mainpage_semimoon);/**/
