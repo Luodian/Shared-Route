@@ -26,7 +26,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -122,10 +121,12 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
-            Window window = getWindow();
-            // Translucent status bar
-            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
-                    .LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // 透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // 透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            // 设置状态栏颜色
+            getWindow().setBackgroundDrawableResource(R.color.colorPrimary);
         }
         Bundle bundle = getIntent().getExtras();   //得到传过来的bundle
         if (bundle != null) {
@@ -268,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //        mLinearLayout.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_vertical));
 
 
-        navigation = (BottomNavigationView) findViewById(R.id.main_navigation);
+        navigation = findViewById(R.id.main_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
 

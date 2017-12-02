@@ -343,7 +343,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
 
                 Toast.makeText(getApplicationContext(),"注册成功", Toast.LENGTH_SHORT).show();
                 isSuccess = true;
-//                finish();
+                finish();
             }
             else
             {

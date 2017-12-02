@@ -557,10 +557,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 sp.edit().putString("now_stu_num",mEmailView.getText().toString()).commit();
                 if (result.contains("name:") && result.contains("phone:"))
                 {
-
                     Toast.makeText(getApplicationContext(),"登录成功", Toast.LENGTH_SHORT).show();
-
-
                     String now_name = result.substring(result.indexOf("name:") + 5, result.indexOf(",phone"));
                     String now_phone = result.substring(result.indexOf("phone:") + 6);
 
@@ -586,9 +583,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             {
                 if (network_flag)
                 {
-                    Toast.makeText(getApplicationContext(), "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
+                    if (result != "outline") {
+                        Toast.makeText(getApplicationContext(), "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
+                        mPasswordView.setError(getString(R.string.error_incorrect_password));
+                        mPasswordView.requestFocus();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "用户已在别的设备在线", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else
                 {
