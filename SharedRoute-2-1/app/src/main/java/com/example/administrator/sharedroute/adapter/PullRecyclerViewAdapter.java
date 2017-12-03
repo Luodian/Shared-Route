@@ -182,16 +182,16 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
         TextView name;
         ItemViewHolder(View itemView) {
             super(itemView);
-            mCardView = (CardView) itemView.findViewById(R.id.searchNeeds_card_view);
+            mCardView = itemView.findViewById(R.id.searchNeeds_card_view);
 
-            kindsTextView = (TextView) itemView.findViewById(R.id.searchNeeds_item_kinds);
-            priceTextView = (TextView) itemView.findViewById(R.id.searchNeeds_item_price);
-            sendTimeTextView = (TextView) itemView.findViewById(R.id.searchNeeds_send_time);
-            fetchTimeTextView = (TextView) itemView.findViewById(R.id.searchNeeds_fetch_time);
-            sendLocTextView = (TextView) itemView.findViewById(R.id.searchNeeds_send_loc);
-            fetchLocTextView = (TextView) itemView.findViewById(R.id.searchNeeds_fetch_loc);
-            name = (TextView)itemView.findViewById(R.id.searchneed_name);
-            mImageView = (ImageView) itemView.findViewById(R.id.trolley_icon);
+            kindsTextView = itemView.findViewById(R.id.searchNeeds_item_kinds);
+            priceTextView = itemView.findViewById(R.id.searchNeeds_item_price);
+            sendTimeTextView = itemView.findViewById(R.id.searchNeeds_send_time);
+            fetchTimeTextView = itemView.findViewById(R.id.searchNeeds_fetch_time);
+            sendLocTextView = itemView.findViewById(R.id.searchNeeds_send_loc);
+            fetchLocTextView = itemView.findViewById(R.id.searchNeeds_fetch_loc);
+            name = itemView.findViewById(R.id.searchneed_name);
+            mImageView = itemView.findViewById(R.id.trolley_icon);
         }
     }
 
@@ -200,8 +200,8 @@ public class PullRecyclerViewAdapter extends Adapter<ViewHolder> {
         ProgressBar pb;
         FootViewHolder(View view) {
             super(view);
-            pb = (ProgressBar) view.findViewById(R.id.progress);
-            tips = (TextView) view.findViewById(R.id.text_footer);
+            pb = view.findViewById(R.id.progress);
+            tips = view.findViewById(R.id.text_footer);
         }
     }
 }
