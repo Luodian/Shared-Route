@@ -45,9 +45,11 @@
     <string name="url">http://47.95.194.146:8080/sharedroot_server</string>
     <!--<string name="url">http://suc.free.ngrok.cc/sharedroot_server</string>-->
     <string name="HOST">47.95.194.146</string>
-    <string name="PORT">10046</string>
+    <string name="PORT">10056</string>
     <string name="counter">倒计时</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -35,7 +37,15 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.angmarch.views.NiceSpinner;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -47,7 +57,6 @@ import static com.example.administrator.sharedroute.activity.MainActivity.select
 
 public class PublishNeedsActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     boolean left = true;        //标志选择的是左边的时间还是右边的时间
-    int leftStatus = 0;       //标志左边选择的
     String leftDate;
     String leftTime;
     String rightDate;
@@ -59,11 +68,37 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
     private TextView textViewName ;
 //    private TextView textViewPhoneNumber ;
     private TextView sendLocation ;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     private TextView UserID;
     private TextView UserName;
     private TextView UserAccount;
     private TextWatcher textWatcher;
+    private FetchUserInfo mFetchTask;
+    private String usrid = "";
+    private String usrphone = "";
+    private double usraccount = 0;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    JumpToActivity(MainActivity.class);
+                    finish();
+                    return true;
+                case R.id.navigation_dashboard:
+                    return true;
+                case R.id.navigation_notifications:
+                    JumpToActivity(SearchNeedsActivity.class);
+                    finish();
+                    return true;
+            }
+            return false;
+        }
+
+    };
 
     @SuppressLint("CutPasteId")
     @Override
@@ -77,8 +112,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-        {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
             // Translucent status bar
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
@@ -107,16 +141,42 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         navigation.getMenu().findItem(R.id.navigation_dashboard).setChecked(true);
 
 
-
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            /**
+             * Called when a drawer has settled in a completely closed state.
+             */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
 
-        NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
+            /**
+             * Called when a drawer has settled in a completely open state.
+             */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {// drawer滑动的回调
+                if (usrid != null) {
+                    UserID.setText(MessageFormat.format("学号：{0}", usrid));
+                    mFetchTask = new FetchUserInfo(usrid);
+                    mFetchTask.execute();
+                }
+            }
+        };
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+
+        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
 
         View nav_header_view = navView.getHeaderView(0);
 
-        UserID = (TextView) nav_header_view.findViewById(R.id.nav_header_id);
-        UserName = (TextView) nav_header_view.findViewById(R.id.nav_header_name);
-        UserAccount = (TextView) nav_header_view.findViewById(R.id.nav_header_account);
+        UserID = nav_header_view.findViewById(R.id.nav_header_id);
+        UserName = nav_header_view.findViewById(R.id.nav_header_name);
+        UserAccount = nav_header_view.findViewById(R.id.nav_header_account);
         SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
         if (sp.getString("now_stu_num", null) != null) {
             UserID.setText(MessageFormat.format("学号：{0}", sp.getString("now_stu_num", null)));
@@ -187,17 +247,17 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PublishNeedsActivity.this, sendLocationActivity.class);
-                requestCode=1;
-                startActivityForResult(intent,requestCode);
+                requestCode = 1;
+                startActivityForResult(intent, requestCode);
             }
         });
 
-        final TextView delieverPlace = (TextView) findViewById(R.id.delieverplace);
+        final TextView delieverPlace = findViewById(R.id.delieverplace);
 
-        final TextView qujiantext = (TextView) findViewById(R.id.qujiantext);
+        final TextView qujiantext = findViewById(R.id.qujiantext);
 //        LinearLayout qujianshijan = (LinearLayout) findViewById(R.id.qujianshijian);
 
-        final TextView songjianText = (TextView) findViewById(R.id.songjiantext);
+        final TextView songjianText = findViewById(R.id.songjiantext);
 //        LinearLayout songjianshijian = (LinearLayout) findViewById(R.id.songjianshijian);
 
         if (bundle != null && bundle.containsKey("nameInfo")) {
@@ -205,7 +265,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             delieverPlace.setText(bundle.getString("delieverplaceInfo"));
         }
 
-        LinearLayout cdv1 = (LinearLayout) findViewById(R.id.cdv1);
+        LinearLayout cdv1 = findViewById(R.id.cdv1);
         cdv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,7 +287,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             delieverPlace.setText("送件地点");
         }
 
-        final NiceSpinner niceSpinner = (NiceSpinner) findViewById(R.id.nice_spinner);
+        final NiceSpinner niceSpinner = findViewById(R.id.nice_spinner);
         List<String> dataset = new LinkedList<>(Arrays.asList("书籍", "玩具", "化妆品",
                 "电器","水果","零食","文具","日常用品","其他"));
         niceSpinner.attachDataSource(dataset);
@@ -236,7 +296,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //        niceSpinner.setAdapter(adapter);
 
-        ((LinearLayout)findViewById(R.id.pick_time_block)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.pick_time_block).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 left = true;
@@ -255,7 +315,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             }
         });
 
-        ((LinearLayout)findViewById(R.id.deliever_time_block)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.deliever_time_block).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 left = false;
@@ -274,11 +334,11 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             }
         });
 
-        final EditText remarkText = (EditText) findViewById(R.id.remarktext);
-        final EditText numText = (EditText) findViewById(R.id.numtext);
-        final EditText money = (EditText) findViewById(R.id.money);
+        final EditText remarkText = findViewById(R.id.remarktext);
+        final EditText numText = findViewById(R.id.numtext);
+        final EditText money = findViewById(R.id.money);
 
-        final Button submitBtn = (Button) findViewById(R.id.submit_btn);
+        final Button submitBtn = findViewById(R.id.submit_btn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,7 +358,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                     return;
                 }
                 String str = testPhone;
-                for (int i=0;i<str.length();++i){
+                for (int i=0; i<str.length(); ++i){
                     if (str.charAt(i)<'0' || str.charAt(i)>'9') {
                         Toast.makeText(PublishNeedsActivity.this,"请输入正确的手机号码",Toast.LENGTH_LONG).show();
                         return;
@@ -306,7 +366,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                 }
                 str = money.getText().toString();
                 boolean hasDotYet = false;
-                for (int i=0;i<str.length();++i) {
+                for (int i=0; i<str.length(); ++i) {
                     if(str.charAt(i)=='.'&&(!hasDotYet)){
                         hasDotYet=true;
                     }else  if ((str.charAt(i)=='.'&&hasDotYet)) {
@@ -358,10 +418,17 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
 
             @Override
             public void afterTextChanged(Editable s) {
-                ((TextView)findViewById(R.id.monitor_money)).setText("￥ "+money.getText().toString());
+                ((TextView)findViewById(R.id.monitor_money)).setText("￥ " + money.getText().toString());
             }
         };
         money.addTextChangedListener(textWatcher);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
     }
 
     @Override
@@ -392,28 +459,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             default:break;
         }
     }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    JumpToActivity(MainActivity.class);
-                    finish();
-                    return true;
-                case R.id.navigation_dashboard:
-                    return true;
-                case R.id.navigation_notifications:
-                    JumpToActivity(SearchNeedsActivity.class);
-                    finish();
-                    return true;
-            }
-            return false;
-        }
-
-    };
 
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
@@ -489,6 +534,97 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             rightTime = time;
             ((TextView) findViewById(R.id.songjiantext)).setText(rightDate + "\n" + rightTime);
             ((TextView) findViewById(R.id.songjiantext)).setTextSize(12);
+        }
+    }
+
+    private class FetchUserInfo extends AsyncTask<String, Void, Boolean> {
+
+        private String id = null;
+        private String result = null;
+
+        FetchUserInfo(String UserID) {
+            id = UserID;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... ID) {
+            String result = null;
+            String path = getResources().getString(R.string.url) + "/Task?action=FetchUserID&ID=" + id;
+            HttpURLConnection con = null;
+            InputStream in = null;
+
+            try {
+                URL url = new URL(path);
+                con = (HttpURLConnection) url.openConnection();
+                con.setConnectTimeout(5 * 1000);
+                con.setReadTimeout(5 * 1000);
+                /*
+                * http响应码：getResponseCode
+                  200：成功 404：未找到 500：发生错误
+              */
+                if (con.getResponseCode() == 200) {
+                    System.out.println("连接成功");
+                    in = con.getInputStream();
+                    InputStreamReader isr = new InputStreamReader(in);
+                    //InputStreamReader isr = new InputStreamReader(getAssets().open("get_data.json"),"UTF-8");
+                    BufferedReader br = new BufferedReader(isr);
+                    String line;
+                    //StringBuilder 缓存区 StringBuffer
+                    StringBuilder builder = new StringBuilder();
+                    while ((line = br.readLine()) != null) {
+                        builder.append(line);
+                    }
+                    br.close();
+                    isr.close();
+                    result = builder.toString();
+                    if (result != "fail") {
+                        System.out.println(builder.toString());
+                        JSONObject lan = new JSONObject(result);
+                        usrphone = lan.getString("Phone");
+                        usraccount = lan.getDouble("Account");
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (con != null) {
+                    con.disconnect();
+                    //断开连接
+                }
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            mFetchTask = null;
+            if (success) {
+                UserName.setText(MessageFormat.format("电话：{0}", usrphone));
+                UserAccount.setText(MessageFormat.format("余额：{0}", String.valueOf(usraccount)));
+
+                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+
+                sp.edit().putString("now_account_money", String.valueOf(usraccount)).commit();
+            } else {
+                Toast.makeText(getApplicationContext(), "获取用户信息失败", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mFetchTask = null;
         }
     }
 }
