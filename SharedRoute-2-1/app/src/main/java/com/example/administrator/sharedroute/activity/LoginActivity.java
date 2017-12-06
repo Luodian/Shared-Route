@@ -583,7 +583,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             {
                 if (network_flag)
                 {
-                    if (result != "outline") {
+                    if (!result .equals("outline")) {
                         Toast.makeText(getApplicationContext(), "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
                         mPasswordView.setError(getString(R.string.error_incorrect_password));
                         mPasswordView.requestFocus();
@@ -661,7 +661,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 .build();
         NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         assert notificationManager != null;
-        notificationManager.notify(1,notification);
+        //这里notify的id改为当前时间戳，实现多个notification排列显示，如果为一个常数，就是覆盖显示
+        notificationManager.notify((int)System.currentTimeMillis(), notification);
     }
 }
 
