@@ -645,13 +645,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
     public void noti(String str){
-
+        String ticker = "";
+        String content = "";
+        if (str.contains("接收")) {
+            ticker = "您发布的订单已被接收";
+            int index = str.indexOf(',');
+            content = str.substring(0, index);
+        } else {
+            ticker = "订单已成功送达";
+            content = "您接收的订单已经被成功送达";
+        }
         Notification notification = new NotificationCompat.Builder(this)
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.banner_1))
-                .setSmallIcon(R.drawable.banner_2)
-                .setTicker("您的订单已被接收")
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.share_icon_withrectangle_background))
+                .setSmallIcon(R.drawable.albule)
+                .setTicker(ticker)
                 .setContentTitle("恭喜您")
-                .setContentText("您编号为"+str+"的订单已经被接收")
+                .setContentText(content)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
