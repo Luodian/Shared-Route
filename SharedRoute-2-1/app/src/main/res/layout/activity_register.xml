@@ -118,7 +118,7 @@
                         android:textColor="@color/whitesmoke"
                         android:textColorHint="@color/white"
                         android:id="@+id/regi_invite_code"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"/>
