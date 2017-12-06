@@ -6,20 +6,20 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="vertical"
-
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <include
             layout="@layout/back_layout"
-            android:title="@string/title_publishneeds"
-            android:elevation="4dp"/>
+            android:elevation="4dp"
+            android:title="@string/title_publishneeds" />
 
         <ScrollView
-            android:layout_weight="1"
-            android:fillViewport="true"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -30,16 +30,16 @@
                     android:id="@+id/cdv1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/shadow">
                     <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp">
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -50,40 +50,40 @@
                             <ImageView
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginLeft="8dp"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginRight="8dp"
                                 android:layout_gravity="bottom"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_marginTop="8dp"
                                 android:scaleType="centerInside"
                                 android:src="@drawable/reddot"/>
                             <TextView
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginTop="4dp"
-                                android:layout_gravity="center"
+                                android:layout_weight="1"
                                 android:text="收件人"
                                 android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/nametext"
                                 android:layout_width="0dp"
-                                android:layout_weight="2"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="50dp"
                                 android:layout_gravity="center"
+                                android:layout_marginLeft="50dp"
                                 android:layout_marginTop="4dp"
+                                android:layout_weight="2"
+                                android:hint="请选择"
                                 android:textColorHint="#ff6a6a"
-                                android:textSize="12sp"
-                                android:hint="请选择" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/phonetext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="16dp"
                                 android:layout_gravity="bottom"
+                                android:layout_marginLeft="16dp"
                                 android:textSize="12sp" />
                         </TableRow>
                         <TableRow>
@@ -93,24 +93,24 @@
                                 android:layout_margin="8dp"/>
 
                             <TextView
-                                android:text="收件地址"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="6dp"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginTop="4dp"
-                                android:layout_marginBottom="6dp"
-                                android:textSize="12sp"
-                                android:layout_gravity="center"
-                                android:layout_width="0dp"
                                 android:layout_weight="1"
-                                android:layout_height="wrap_content" />
+                                android:text="收件地址"
+                                android:textSize="12sp" />
                             <TextView
                                 android:id="@+id/delieverplace"
                                 android:layout_width="0dp"
-                                android:layout_weight="2"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="42dp"
-                                android:layout_marginBottom="6dp"
-                                android:layout_marginTop="4dp"
                                 android:layout_gravity="center"
+                                android:layout_marginBottom="6dp"
+                                android:layout_marginLeft="42dp"
+                                android:layout_marginTop="4dp"
+                                android:layout_weight="2"
                                 android:background="@android:color/transparent"
                                 android:text="请选择"
                                 android:textColor="#ff6a6a"
@@ -135,19 +135,19 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cdv2"
-                    android:background="@drawable/shadow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:background="@drawable/shadow"
                     app:cardCornerRadius="20dp">
 
                     <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp">
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp">
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -157,36 +157,36 @@
                             <ImageView
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginLeft="8dp"
                                 android:layout_marginBottom="6dp"
-                                android:layout_marginTop="16dp"
+                                android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
+                                android:layout_marginTop="16dp"
                                 android:scaleType="centerInside"
                                 android:src="@drawable/bluedot"/>
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_marginBottom="3dp"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginRight="4dp"
                                 android:layout_marginTop="0dp"
-                                android:layout_marginBottom="3dp"
+                                android:layout_weight="1"
                                 android:text="取件地点"
                                 android:textSize="12sp" />
                             <Button
                                 android:id="@+id/pickupplace"
                                 android:layout_width="0dp"
-                                android:layout_weight="2"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
+                                android:layout_weight="2"
                                 android:background="@android:color/transparent"
-                                android:text="请选择"
-                                android:paddingLeft="23dp"
                                 android:gravity="left|center"
+                                android:paddingLeft="23dp"
+                                android:paddingStart="23dp"
+                                android:text="请选择"
                                 android:textColor="#ff6a6a"
-                                android:textSize="12sp"
-                                android:paddingStart="23dp" />
+                                android:textSize="12sp" />
 
                         </TableRow>
                         <TableRow
@@ -198,17 +198,17 @@
                             <View
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginTop="3dp"
+                                android:layout_marginBottom="3dp"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
-                                android:layout_marginBottom="3dp"/>
+                                android:layout_marginTop="3dp" />
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_marginBottom="3dp"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginRight="4dp"
-                                android:layout_marginBottom="3dp"
+                                android:layout_weight="1"
                                 android:text="包裹类型"
                                 android:textSize="12sp" />
 
@@ -216,12 +216,12 @@
                                 android:id="@+id/nice_spinner"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="2"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
-                                app:arrowTint="#ff6a6a"
+                                android:layout_weight="2"
+                                android:hint="请选择"
                                 android:textSize="12sp"
-                                android:hint="请选择" />
+                                app:arrowTint="#ff6a6a" />
                         </TableRow>
                         <TableRow
                             android:layout_width="match_parent"
@@ -231,33 +231,33 @@
                             <View
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginTop="3dp"
+                                android:layout_marginBottom="8dp"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
-                                android:layout_marginBottom="8dp"/>
+                                android:layout_marginTop="3dp" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="提货号码"
+                                android:layout_marginBottom="8dp"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginRight="4dp"
-                                android:layout_marginBottom="8dp"
+                                android:layout_weight="1"
+                                android:text="提货号码"
                                 android:textSize="12sp" />
 
                             <EditText
                                 android:id="@+id/numtext"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="2"
+                                android:layout_marginBottom="8dp"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
-                                android:layout_marginBottom="8dp"
-                                android:paddingLeft="24dp"
+                                android:layout_weight="2"
                                 android:hint="请输入"
-                                android:textSize="12sp"
-                                android:inputType="number"/>
+                                android:inputType="text"
+                                android:paddingLeft="24dp"
+                                android:textSize="12sp" />
                         </TableRow>
                         <TableRow
                             android:layout_width="match_parent"
@@ -269,18 +269,18 @@
                             <View
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginTop="3dp"
+                                android:layout_marginBottom="3dp"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
-                                android:layout_marginBottom="3dp"/>
+                                android:layout_marginTop="3dp" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_marginBottom="3dp"
                                 android:layout_marginLeft="4dp"
                                 android:layout_marginRight="4dp"
-                                android:layout_marginBottom="3dp"
+                                android:layout_weight="1"
                                 android:text="提示/备注"
                                 android:textSize="12sp" />
 
@@ -288,13 +288,13 @@
                                 android:id="@+id/remarktext"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="2"
+                                android:layout_marginBottom="3dp"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="8dp"
-                                android:layout_marginBottom="3dp"
+                                android:layout_weight="2"
+                                android:hint="例如：小件/易碎品"
                                 android:paddingLeft="24dp"
-                                android:textSize="12sp"
-                                android:hint="例如：小件/易碎品" />
+                                android:textSize="12sp" />
                         </TableRow>
 
 
@@ -337,8 +337,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="left"
-                                android:layout_marginLeft="6dp"
                                 android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="6dp"
                                 android:layout_marginRight="8dp"
                                 android:layout_marginTop="12dp"
                                 android:background="@android:color/transparent"
@@ -370,18 +370,18 @@
                         </LinearLayout>
 
                         <ImageView
-                            android:src="@color/transparent"
-                            android:layout_marginTop = "10dp"
-                            android:layout_marginBottom = "10dp"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom = "10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:src="@color/transparent" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginLeft="4dp"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
                             <TextView
@@ -398,9 +398,9 @@
 
                             <LinearLayout
                                 android:id="@+id/deliever_time_block"
-                                android:padding="6dp"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:padding="6dp">
 
                                 <TextView
                                     android:id="@+id/songjiantext"
@@ -410,8 +410,8 @@
                                     android:layout_marginLeft="8dp"
                                     android:layout_marginRight="8dp"
                                     android:layout_marginTop="2dp"
-                                    android:textSize="12sp"
-                                    android:hint="时    间" />
+                                    android:hint="时    间"
+                                    android:textSize="12sp" />
 
                             </LinearLayout>
 
@@ -426,34 +426,34 @@
                     android:id="@+id/cdv4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shadow"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shadow"
                     app:cardCornerRadius="20dp">
 
                     <LinearLayout
-                        android:padding="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="8dp">
 
                         <ImageView
                             android:layout_width="15dp"
                             android:layout_height="15dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginRight="8dp"
                             android:layout_marginBottom="8dp"
                             android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
                             android:src="@drawable/yellowdot"/>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="4"
                             android:layout_marginLeft="8dp"
+                            android:layout_weight="4"
                             android:text="设定金额"
-                            android:textSize="12sp"
-                            android:textColor="#ff6a6a" />
+                            android:textColor="#ff6a6a"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -466,9 +466,9 @@
                             android:id="@+id/money"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="7"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
+                            android:layout_weight="7"
                             android:hint="请输入金额(元)"
                             android:inputType="number"
                             android:textSize="12sp" />
@@ -477,52 +477,52 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cdv5"
-                    android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shadow"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:background="@drawable/shadow"
                     app:cardCornerRadius="20dp">
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
                         <LinearLayout
-                            android:padding="4dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:text="@string/securitymoneytip"
-                                android:textColor="@color/red"
-                                android:layout_marginLeft="4dp"
-                                android:textSize="12sp"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:padding="4dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:padding="4dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:text="@string/securitymoneytip"
+                                android:textColor="@color/red"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="4dp">
 
                             <ImageView
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginRight="8dp"
                                 android:layout_marginBottom="8dp"
                                 android:layout_marginLeft="10dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_marginTop="8dp"
                                 android:src="@drawable/greendot"/>
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="4"
                                 android:layout_marginLeft="8dp"
+                                android:layout_weight="4"
                                 android:text="设定保证金"
-                                android:textSize="12sp"
-                                android:textColor="#ff6a6a" />
+                                android:textColor="#ff6a6a"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -535,9 +535,9 @@
                                 android:id="@+id/securitymoney"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="7"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
+                                android:layout_weight="7"
                                 android:hint="请输入金额(元)"
                                 android:inputType="number"
                                 android:textSize="12sp" />
@@ -554,41 +554,41 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_marginLeft="22dp"
-                android:gravity="left|center"
-                android:text="已优惠 ￥0"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="22dp"
                 android:layout_weight="1"
-                android:layout_height="match_parent" />
+                android:gravity="left|center"
+                android:text="已优惠 ￥0" />
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1.5"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5">
                 <TextView
-                    android:text="总计"
-                    android:gravity="center"
-                    android:layout_weight="0.4"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:gravity="center"
+                    android:text="总计" />
                 <TextView
                     android:id="@+id/monitor_money"
-                    android:text="￥ 0"
-                    android:textColor="#fbc02d"
-                    android:gravity="center"
-                    android:layout_weight="0.6"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:gravity="center"
+                    android:text="￥ 0"
+                    android:textColor="#fbc02d" />
                 <Button
                     android:id="@+id/submit_btn"
-                    android:text="确认发布"
-                    android:textColor="@color/whitesmoke"
-                    android:background="@color/colorPrimary"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
                     android:padding="4dp"
-                    android:layout_margin="8dp" />
+                    android:text="确认发布"
+                    android:textColor="@color/whitesmoke" />
             </LinearLayout>
 
 
@@ -609,7 +609,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/nav_menu"
-        app:headerLayout="@layout/nav_header"/>
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu" />
 
 </android.support.v4.widget.DrawerLayout>
