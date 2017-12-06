@@ -3,12 +3,16 @@ package com.example.administrator.sharedroute.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
@@ -34,6 +38,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -85,6 +90,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public static Socket socket;
     public static BufferedReader in;
     public static PrintStream out;
+
+    public static List<Activity> activityList = new ArrayList<Activity>();
 
     //    private static boolean stop;
 //    public static void setStop(Boolean stop){
@@ -622,13 +629,45 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 String line = null;
                 while ((!(socket.isClosed()))&&(line = in.readLine()) != null) {
-                    Log.e("line",line);
-                    Message msg = new Message();
-                    msg.what = 0x11;
-                    Bundle bundle = new Bundle();
-                    bundle.putString("msg", line);
-                    msg.setData(bundle);
-                    handler.sendMessage(msg);
+                    if (line.equals("offline")) {
+                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getBaseContext());
+
+                                builder.setIcon(R.drawable.share_icon_with_background);//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                                builder.setTitle("强制下线");
+                                builder.setMessage("您的账号在别处登录");
+                                builder.setNeutralButton("确认", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Thread thread = new Thread() {
+                                            public void run(){
+                                                Socket anotherSocket = null;
+                                                try {
+                                                    LoginActivity.in.close();
+                                                    LoginActivity.out.close();
+                                                    LoginActivity.socket.close();
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        };
+                                        thread.start();
+                                        for (Activity a:activityList){
+                                            if (a != null) a.finish();
+                                        }
+                                    }
+                                });
+                                builder.show();
+
+
+                    } else {
+                        Log.e("line", line);
+                        Message msg = new Message();
+                        msg.what = 0x11;
+                        Bundle bundle = new Bundle();
+                        bundle.putString("msg", line);
+                        msg.setData(bundle);
+                        handler.sendMessage(msg);
+                    }
                 }
 //                //停止监听线程
 //                if (stop){
