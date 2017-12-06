@@ -189,12 +189,14 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         return true;
                     case R.id.release_rank:
                         select = "releaseRank";
+                        RankActivity.PorA = "submit";
                         Intent intent4 = new Intent(MainActivity.this,RankActivity.class);
                         intent4.putExtra("select_order",select);
                         startActivity(intent4);
                         return true;
                     case R.id.receive_rank:
 //                        select = "receiveRank";
+                        RankActivity.PorA = "fetch";
                         Intent intent5 = new Intent(MainActivity.this,RankActivity.class);
 //                        intent5.putExtra("select_order",select);
                         startActivity(intent5);
@@ -369,12 +371,15 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 break;
             }
             case R.id.imageView9:{
+                RankActivity.PorA = "submit";
                 Intent intent1 = new Intent(MainActivity.this, RankActivity.class);
                 startActivity(intent1);
                 break;
             }
             case R.id.imageView10:{
+                RankActivity.PorA = "fetch";
                 Intent intent1 = new Intent(MainActivity.this, RankActivity.class);
+
                 startActivity(intent1);
                 break;
             }
