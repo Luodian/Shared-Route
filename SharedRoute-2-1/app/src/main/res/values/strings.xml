@@ -138,4 +138,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_rank2">RankActivity2</string>
 </resources>
