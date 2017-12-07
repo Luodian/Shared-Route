@@ -244,15 +244,15 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         return true;
                     case R.id.release_rank:
                         select = "releaseRank";
-                        RankActivity.PorA = "submit";
-                        Intent intent4 = new Intent(MainActivity.this,RankActivity.class);
+                        MyRank.PorA = "submit";
+                        Intent intent4 = new Intent(MainActivity.this,MyRank.class);
                         intent4.putExtra("select_order",select);
                         startActivity(intent4);
                         return true;
                     case R.id.receive_rank:
 //                        select = "receiveRank";
-                        RankActivity.PorA = "fetch";
-                        Intent intent5 = new Intent(MainActivity.this,RankActivity.class);
+                        MyRank.PorA = "fetch";
+                        Intent intent5 = new Intent(MainActivity.this,MyRank.class);
 //                        intent5.putExtra("select_order",select);
                         startActivity(intent5);
                         return true;
@@ -265,9 +265,43 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         startActivity(intent7);
                         return true;
                     case R.id.nav_login:
-                        Intent intent8 = new Intent(MainActivity.this,LoginActivity.class);
-                        intent8.putExtra("from","homePage");
-                        startActivity(intent8);
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                                .setTitle("退出1KM配送")
+                                .setMessage("您真的要退出吗？")
+                                .setNegativeButton("取消", null)
+                                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        Thread thread = new Thread() {
+                                            public void run() {
+                                                Socket anotherSocket = null;
+                                                try {
+                                                    anotherSocket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
+                                                    PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
+                                                    out1.println("action=send;name=" + usrid + ";msg=byebye");
+                                                    out1.flush();
+                                                    out1.close();
+                                                    anotherSocket.close();
+                                                    Intent intent8 = new Intent(MainActivity.this,LoginActivity.class);
+                                                    intent8.putExtra("from","homePage");
+                                                    startActivity(intent8);
+                                                    LoginActivity.in.close();
+                                                    LoginActivity.out.close();
+                                                    LoginActivity.socket.close();
+
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        };
+                                        thread.start();
+                                        for (Activity a : activityList) {
+                                            if (a != null) a.finish();
+                                        }
+                                    }
+                                }).show();
                         return true;
                     default:
                 }
@@ -302,73 +336,12 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         mBanner.setOnBannerListener(this);
         mBanner.start();
         new refreshKeep().execute();
-//        mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
-//        mTabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
-//        mInflater = LayoutInflater.from(this);
-//        view1 = mInflater.inflate(activity_release_order, null);
-//        view2 = mInflater.inflate(activity_receive_order, null);
-//        //添加页卡视图
-//        mViewList.add(view1);
-//        mViewList.add(view2);
-//
-//        MyPagerAdapter mAdapter = new MyPagerAdapter(mViewList);
-//        //给ViewPager设置适配器
-//        mViewPager.setAdapter(mAdapter);
-//        //将TabLayout和ViewPager关联起来
-//        mTabLayout.setupWithViewPager(mViewPager);
-//        //给Tabs设置适配器
-//        mTabLayout.setTabsFromPagerAdapter(mAdapter);
 
-//        mLinearLayout = (LinearLayout) mTabLayout.getChildAt(0);
-//        // 在所有子控件的中间显示分割线（还可能只显示顶部、尾部和不显示分割线）
-//        mLinearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-//        // 设置分割线的距离本身（LinearLayout）的内间距
-//        mLinearLayout.setDividerPadding(50);
-//        // 设置分割线的样式
-//        mLinearLayout.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_vertical));
 
 
         navigation = findViewById(R.id.main_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
-
-//        swipeRefresh1 = (SwipeRefreshLayout) view1.findViewById(R.id.swipe_refresh_release);
-//        swipeRefresh1.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
-//                android.R.color.holo_orange_light, android.R.color.holo_green_light);
-//        swipeRefresh1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                swipeRefresh1.setRefreshing(true);
-//                new refreshKeep().execute();
-//            }
-//        });
-//
-//        swipeRefresh1.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                swipeRefresh1.setRefreshing(true);
-//                new refreshKeep().execute();
-//            }
-//        });
-//
-//        swipeRefresh2 = (SwipeRefreshLayout) view2.findViewById(R.id.swipe_refresh_receive);
-//        swipeRefresh2.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
-//                android.R.color.holo_orange_light, android.R.color.holo_green_light);
-//        swipeRefresh2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                swipeRefresh2.setRefreshing(true);
-//                new refreshKeepTwo().execute();
-//            }
-//        });
-//
-//        swipeRefresh2.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                swipeRefresh1.setRefreshing(true);
-//                new refreshKeepTwo().execute();
-//            }
-//        });
     }
 
     @Override
@@ -433,14 +406,14 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 break;
             }
             case R.id.imageView9:{
-                RankActivity.PorA = "submit";
-                Intent intent1 = new Intent(MainActivity.this, RankActivity.class);
+                MyRank.PorA = "submit";
+                Intent intent1 = new Intent(MainActivity.this, MyRank.class);
                 startActivity(intent1);
                 break;
             }
             case R.id.imageView10:{
-                RankActivity.PorA = "fetch";
-                Intent intent1 = new Intent(MainActivity.this, RankActivity.class);
+                MyRank.PorA = "fetch";
+                Intent intent1 = new Intent(MainActivity.this, MyRank .class);
 
                 startActivity(intent1);
                 break;
