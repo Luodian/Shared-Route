@@ -48,6 +48,7 @@ dependencies {
     implementation 'com.wdullaer:materialdatetimepicker:2.5.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.pnikosis:materialish-progress:1.7'
+    compile 'org.zackratos:ultimatebar:1.0.3'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
