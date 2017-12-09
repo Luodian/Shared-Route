@@ -4,8 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -38,7 +36,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -84,20 +81,21 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    //socket 的 host 和 port
-    private static MyThread thread;
-
+    private static final int REQUEST_READ_CONTACTS = 0;
+    private static final int REQUEST_TIMEOUT = 5 * 1000;//设置请求超时5秒钟
+    private static final int SO_TIMEOUT = 10 * 1000;  //设置等待数据超时时间10秒钟
+    private static final int REQUEST_CODE_GO_TO_REGIST = 20;
     public static Socket socket;
-    public static BufferedReader in;
-    public static PrintStream out;
-
-    public static List<Activity> activityList = new ArrayList<Activity>();
 
     //    private static boolean stop;
 //    public static void setStop(Boolean stop){
 //        LoginActivity.stop=stop;
 //    }
-
+    public static BufferedReader in;
+    public static PrintStream out;
+    public static List<Activity> activityList = new ArrayList<Activity>();
+    //socket 的 host 和 port
+    private static MyThread thread;
 //    private static final String HOST = "47.95.194.146";
 //    private static final int PORT = 9986;
     private Handler handler = new Handler(){
@@ -112,25 +110,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         }
     };
-
-    private static final int REQUEST_READ_CONTACTS = 0;
-    private static final int REQUEST_TIMEOUT = 5*1000;//设置请求超时5秒钟
-    private static final int SO_TIMEOUT = 10*1000;  //设置等待数据超时时间10秒钟
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
     private UserLoginTask mAuthTask = null;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
     private TextView mRegibtn;
-    private static final int REQUEST_CODE_GO_TO_REGIST = 20;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,11 +146,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //        passEditText.setTypeface(typeFace);
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.user_edit_text);
+        mEmailView = findViewById(R.id.user_edit_text);
 //        mEmailView.setFocusable(false);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.pass_edit_text);
+        mPasswordView = findViewById(R.id.pass_edit_text);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -204,7 +190,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             e.printStackTrace();
         }
 
-        final Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        final Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -240,7 +226,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        mRegibtn = (TextView)findViewById(R.id.regi_text);
+        mRegibtn = findViewById(R.id.regi_text);
         mRegibtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -468,6 +454,35 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setAdapter(adapter);
     }
 
+    public void noti(String str) {
+        String ticker = "";
+        String content = "";
+        if (str.contains("接收")) {
+            ticker = "您发布的订单已被接收";
+            int index = str.indexOf(',');
+            content = str.substring(0, index);
+        } else {
+            ticker = "订单已成功送达";
+            content = "您接收的订单已经被成功送达";
+        }
+        Notification notification = new NotificationCompat.Builder(this)
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.share_icon_withrectangle_background))
+                .setSmallIcon(R.drawable.albule)
+                .setTicker(ticker)
+                .setContentTitle("恭喜您")
+                .setContentText(content)
+                .setWhen(System.currentTimeMillis())
+                .setPriority(Notification.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setOngoing(false)
+                .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
+                .setContentIntent(PendingIntent.getActivity(this, 1, new Intent(this, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT))
+                .build();
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        assert notificationManager != null;
+        //这里notify的id改为当前时间戳，实现多个notification排列显示，如果为一个常数，就是覆盖显示
+        notificationManager.notify((int) System.currentTimeMillis(), notification);
+    }
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -682,35 +697,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
         }
-    }
-    public void noti(String str){
-        String ticker = "";
-        String content = "";
-        if (str.contains("接收")) {
-            ticker = "您发布的订单已被接收";
-            int index = str.indexOf(',');
-            content = str.substring(0, index);
-        } else {
-            ticker = "订单已成功送达";
-            content = "您接收的订单已经被成功送达";
-        }
-        Notification notification = new NotificationCompat.Builder(this)
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.share_icon_withrectangle_background))
-                .setSmallIcon(R.drawable.albule)
-                .setTicker(ticker)
-                .setContentTitle("恭喜您")
-                .setContentText(content)
-                .setWhen(System.currentTimeMillis())
-                .setPriority(Notification.PRIORITY_DEFAULT)
-                .setAutoCancel(true)
-                .setOngoing(false)
-                .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
-                .setContentIntent(PendingIntent.getActivity(this, 1, new Intent(this, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT))
-                .build();
-        NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        assert notificationManager != null;
-        //这里notify的id改为当前时间戳，实现多个notification排列显示，如果为一个常数，就是覆盖显示
-        notificationManager.notify((int)System.currentTimeMillis(), notification);
     }
 }
 
