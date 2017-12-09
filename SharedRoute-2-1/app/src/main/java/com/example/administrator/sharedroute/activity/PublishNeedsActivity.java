@@ -21,10 +21,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -54,13 +56,64 @@ import java.util.List;
 
 import static com.example.administrator.sharedroute.activity.MainActivity.select;
 
+class NaiveDate{
+    private int year;
+    private int month;
+    private int day;
+    private String str;
+    public NaiveDate(int year,int month, int day){
+        this.year = year;
+        this.month = month;
+        this.day = day;
+        str =  " " + year + "年\n" + (month) + "月" + day+"日";
+    }
 
+    public String getStr() {
+        return str;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+}
+class NaiveTime {
+    private int hour;
+    private int minute;
+    private String str;
+    public NaiveTime(int hour, int minute) {
+        this.hour = hour;
+        this.minute = minute;
+        str =   " " + hour + " : " + minute;;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+}
 public class PublishNeedsActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     boolean left = true;        //标志选择的是左边的时间还是右边的时间
     String leftDate;
     String leftTime;
     String rightDate;
     String rightTime;
+    private NaiveTime naiveTimeLeft = null;
+    private NaiveTime naiveTimeRight = null;
+    private NaiveDate naiveDateLeft = null;
+    private NaiveDate naiveDateRight = null;
+
     private int requestCode;
     private BottomNavigationView navigation;
     private DrawerLayout mDrawerLayout;
@@ -334,6 +387,23 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         final EditText remarkText = findViewById(R.id.remarktext);
         final EditText numText = findViewById(R.id.numtext);
         final EditText money = findViewById(R.id.money);
+//        money.setFocusable(true);
+        money.setFocusableInTouchMode(true);
+        money.requestFocus();
+        money.requestFocusFromTouch();
+        InputMethodManager inputManager =
+                (InputMethodManager)money.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(money, 0);
+        money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(PublishNeedsActivity.this, "试运营期间，" +
+                        "我们会安排专人为您代取派送快递，建议您设置金额为1-2元，如果您的任务紧急，" +
+                        "可以适当提高金额，更高金额的任务会得到优先处理。",Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 50);
+                toast.show();
+            }
+        });
 
         final Button submitBtn = findViewById(R.id.submit_btn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -373,6 +443,11 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                         Toast.makeText(PublishNeedsActivity.this,"请输入正确的金额",Toast.LENGTH_LONG).show();
                         return;
                     }
+                }
+                ////////////////////////////
+                if (!checkTime()) {
+                    Toast.makeText(PublishNeedsActivity.this,"取件时间应早于送件时间",Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 String fetchTime = qujiantext.getText().toString();
@@ -492,8 +567,10 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         String date = " " + year + "年\n" + (++monthOfYear) + "月" + dayOfMonth+"日";
 
         if (left) {
+            naiveDateLeft = new NaiveDate(year, ++monthOfYear, dayOfMonth);
             leftDate = date;
         } else {
+            naiveDateRight = new NaiveDate(year, ++monthOfYear, dayOfMonth);
             rightDate = date;
         }
 
@@ -523,12 +600,15 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         String minuteString = minute < 10 ? "0" + minute : "" + minute;
         String secondString = second < 10 ? "0" + second : "" + second;
         String time = " " + hourString + " : " + minuteString;
+
         if (left == true) {
             leftTime = time;
+            naiveTimeLeft = new NaiveTime(Integer.valueOf(hourString),Integer.valueOf(minuteString));
             ((TextView) findViewById(R.id.qujiantext)).setText(leftDate + "\n" + leftTime);
             ((TextView) findViewById(R.id.qujiantext)).setTextSize(12);
         } else {
             rightTime = time;
+            naiveTimeRight = new NaiveTime(Integer.valueOf(hourString),Integer.valueOf(minuteString));
             ((TextView) findViewById(R.id.songjiantext)).setText(rightDate + "\n" + rightTime);
             ((TextView) findViewById(R.id.songjiantext)).setTextSize(12);
         }
@@ -623,5 +703,12 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         protected void onCancelled() {
             mFetchTask = null;
         }
+    }
+    private boolean checkTime() {
+        if ((naiveDateLeft.getYear() <= naiveDateRight.getYear())&&(naiveDateLeft.getMonth() <=
+        naiveDateRight.getMonth())&&(naiveDateLeft.getDay() <= naiveDateRight.getDay())&&(naiveTimeLeft.getHour()
+        <= naiveTimeRight.getHour())&&(naiveTimeLeft.getMinute() <= naiveTimeRight.getMinute()))
+            return true;
+        return false;
     }
 }

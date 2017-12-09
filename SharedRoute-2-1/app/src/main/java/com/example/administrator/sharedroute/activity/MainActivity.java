@@ -434,6 +434,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
     @Override
     public void onBackPressed() {
+//        Intent intent = new Intent("com.example.administrator.sharedroute.activity.FORCE_OFFLINE");
+//        //发送广播--标准广播
+//        sendBroadcast(intent);
+
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
                 .setTitle("退出1KM配送")
