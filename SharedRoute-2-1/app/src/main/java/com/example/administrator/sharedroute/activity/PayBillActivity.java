@@ -3,9 +3,11 @@ package com.example.administrator.sharedroute.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
@@ -20,6 +22,7 @@ import android.os.CountDownTimer;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -47,6 +50,8 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -439,19 +444,30 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
             showProgress(false);
 
             if (success) {
-                Toast.makeText(getApplicationContext(),"支付成功，即将返回主页!", Toast.LENGTH_SHORT).show();
-                Thread thread = new Thread() {
-                    public void run(){
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        startActivity(new Intent(PayBillActivity.this,MainActivity.class));
-                        finish();
-                    }
-                };
-                thread.start();
+                new AlertDialog.Builder(PayBillActivity.this)
+                        .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                        .setTitle("支付成功")
+                        .setMessage("即将返回主页")
+                        .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(PayBillActivity.this, MainActivity.class));
+                                finish();
+                            }
+                        }).show();
+//                Toast.makeText(getApplicationContext(),"支付成功，即将返回主页!", Toast.LENGTH_SHORT).show();
+//                Thread thread = new Thread() {
+//                    public void run(){
+//                        try {
+//                            Thread.sleep(2000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                        startActivity(new Intent(PayBillActivity.this,MainActivity.class));
+//                        finish();
+//                    }
+//                };
+//                thread.start();
             }
             else
             {
