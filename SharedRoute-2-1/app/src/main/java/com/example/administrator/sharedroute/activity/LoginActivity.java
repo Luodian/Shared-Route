@@ -336,7 +336,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
-        View focusView = null;
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
@@ -626,10 +625,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
-
-    //获取通知使用的线程
     class MyThread extends  Thread{
-        public void run(){
+        public void run() {
             try {
 //                socket = new Socket(HOST,PORT);
                 socket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
@@ -670,10 +667,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                             if (a != null) a.finish();
                                         }
                                     }
-                                });
+                                        }
+                                );
                                 builder.show();
-
-
                     } else {
                         Log.e("line", line);
                         Message msg = new Message();
@@ -684,14 +680,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         handler.sendMessage(msg);
                     }
                 }
-//                //停止监听线程
-//                if (stop){
-//                    out.println("action=login;name="+mEmailView.getText().toString()+";"+"msg:Bye bye!");
-//                    out.flush();
-//                    in.close();
-//                    out.close();
-//                    socket.close();
-//                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
