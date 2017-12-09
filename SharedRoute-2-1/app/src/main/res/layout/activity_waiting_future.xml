@@ -16,17 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
-
             <include
                 layout="@layout/back_layout"
-                android:title="接单排行"
-                android:elevation="4dp" />
+                android:elevation="4dp"
+                android:title="接单排行" />
 
         </android.support.design.widget.AppBarLayout>
 
         <RelativeLayout
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
             <TextView
                 android:id="@+id/waitfutureText"
                 android:layout_width="wrap_content"
@@ -37,13 +36,13 @@
                 android:textColor="@color/gray"
                 android:textSize="22sp" />
             <ImageView
-                android:layout_marginTop="100dp"
-                android:layout_marginBottom="20dp"
                 android:id="@+id/cuteBot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/waitfutureText"
                 android:layout_centerInParent="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="100dp"
                 android:src="@drawable/cutebot"/>
             <TextView
                 android:id="@+id/someWords"

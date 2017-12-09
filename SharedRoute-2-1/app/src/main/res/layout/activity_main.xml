@@ -66,11 +66,11 @@
                                     android:orientation="vertical">
 
                                     <ImageView
-                                        android:id="@+id/imageView5"
+                                        android:id="@+id/imageView9"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
                                         android:layout_weight="1"
-                                        app:srcCompat="@drawable/identity" />
+                                        app:srcCompat="@drawable/rankred" />
 
                                     <TextView
                                         android:id="@+id/textView10"
@@ -78,7 +78,7 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.5"
                                         android:gravity="center"
-                                        android:text="个人中心" />
+                                        android:text="发单排行" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -88,11 +88,11 @@
                                     android:orientation="vertical">
 
                                     <ImageView
-                                        android:id="@+id/imageView6"
+                                        android:id="@+id/imageView10"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
                                         android:layout_weight="1"
-                                        app:srcCompat="@drawable/trollycar" />
+                                        app:srcCompat="@drawable/rankorange" />
 
                                     <TextView
                                         android:id="@+id/textView11"
@@ -100,7 +100,7 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.5"
                                         android:gravity="center"
-                                        android:text="购物车" />
+                                        android:text="接单排行" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -161,50 +161,6 @@
                                     android:orientation="vertical">
 
                                     <ImageView
-                                        android:id="@+id/imageView9"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="1"
-                                        app:srcCompat="@drawable/rankred" />
-
-                                    <TextView
-                                        android:id="@+id/textView14"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="0.5"
-                                        android:gravity="center"
-                                        android:text="发单排行" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/imageView10"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="1"
-                                        app:srcCompat="@drawable/rankorange" />
-
-                                    <TextView
-                                        android:id="@+id/textView15"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="0.5"
-                                        android:gravity="center"
-                                        android:text="接单排行" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
-
-                                    <ImageView
                                         android:id="@+id/imageView11"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
@@ -212,7 +168,7 @@
                                         app:srcCompat="@drawable/albule" />
 
                                     <TextView
-                                        android:id="@+id/textView16"
+                                        android:id="@+id/textView14"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
                                         android:layout_weight="0.5"
@@ -234,12 +190,56 @@
                                         app:srcCompat="@drawable/circlegreen" />
 
                                     <TextView
-                                        android:id="@+id/textView17"
+                                        android:id="@+id/textView15"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
                                         android:layout_weight="0.5"
                                         android:gravity="center"
                                         android:text="接受历史" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/imageView5"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        app:srcCompat="@drawable/trollycar" />
+
+                                    <TextView
+                                        android:id="@+id/textView16"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.5"
+                                        android:gravity="center"
+                                        android:text="发布历史" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <ImageView
+                                        android:id="@+id/imageView6"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        app:srcCompat="@drawable/identity" />
+
+                                    <TextView
+                                        android:id="@+id/textView17"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="0.5"
+                                        android:gravity="center"
+                                        android:text="联系我们" />
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>

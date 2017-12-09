@@ -85,5 +85,4 @@
         <activity android:name=".activity.MyRank" />
         <activity android:name=".ContactUsActivity"></activity>
     </application>
-
 </manifest>

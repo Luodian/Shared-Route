@@ -13,15 +13,15 @@
 
         <include
             layout="@layout/back_layout"
-            android:title="@string/title_publishneeds"
-            android:elevation="4dp"/>
+            android:elevation="4dp"
+            android:title="@string/title_publishneeds" />
         <!--android:background="?attr/colorPrimary"-->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fillViewport="true"
+            android:layout_weight="1"
             android:background="@color/light_gray"
-            android:layout_weight="1">
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,15 +43,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="12dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
                     android:background="@color/white"
                     android:elevation="2dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="12dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -66,11 +66,11 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:id="@+id/imageView5"
+                                android:id="@+id/imageView9"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/identity" />
+                                app:srcCompat="@drawable/rankred" />
 
                             <TextView
                                 android:id="@+id/textView10"
@@ -78,7 +78,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="0.5"
                                 android:gravity="center"
-                                android:text="个人中心" />
+                                android:text="发单排行" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -88,11 +88,11 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:id="@+id/imageView6"
+                                android:id="@+id/imageView10"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/trollycar" />
+                                app:srcCompat="@drawable/rankorange" />
 
                             <TextView
                                 android:id="@+id/textView11"
@@ -100,7 +100,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="0.5"
                                 android:gravity="center"
-                                android:text="购物车" />
+                                android:text="接单排行" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -161,50 +161,6 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:id="@+id/imageView9"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                app:srcCompat="@drawable/rankred" />
-
-                            <TextView
-                                android:id="@+id/textView14"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.5"
-                                android:gravity="center"
-                                android:text="发单排行" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/imageView10"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                app:srcCompat="@drawable/rankorange" />
-
-                            <TextView
-                                android:id="@+id/textView15"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.5"
-                                android:gravity="center"
-                                android:text="接单排行" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <ImageView
                                 android:id="@+id/imageView11"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
@@ -212,7 +168,7 @@
                                 app:srcCompat="@drawable/albule" />
 
                             <TextView
-                                android:id="@+id/textView16"
+                                android:id="@+id/textView14"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="0.5"
@@ -234,36 +190,79 @@
                                 app:srcCompat="@drawable/circlegreen" />
 
                             <TextView
-                                android:id="@+id/textView17"
+                                android:id="@+id/textView15"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="0.5"
                                 android:gravity="center"
                                 android:text="接受历史" />
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imageView5"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/trollycar" />
+
+                            <TextView
+                                android:id="@+id/textView16"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.5"
+                                android:gravity="center"
+                                android:text="发布历史" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imageView6"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/identity" />
+
+                            <TextView
+                                android:id="@+id/textView17"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.5"
+                                android:gravity="center"
+                                android:text="联系我们" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:elevation="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:elevation="2dp"
                     android:orientation="horizontal">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/infoview"
                         android:layout_width="0dp"
-                        android:layout_weight="0.2"
                         android:layout_height="40dp"
-                        android:src="@drawable/nav_icon"
                         android:layout_marginLeft="20dp"
                         android:layout_marginStart="20dp"
-                        />
+                        android:layout_weight="0.2"
+                        android:src="@drawable/nav_icon" />
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="我发布的订单"/>
                 </LinearLayout>
@@ -275,34 +274,34 @@
                 </android.support.v7.widget.RecyclerView>
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:background="@color/light_gray"
-                    android:layout_height="150dp">
+                    android:layout_height="150dp"
+                    android:background="@color/light_gray">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-----你好，我是底线,o(*￣▽￣*)ブ-----"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:text="-----你好，我是底线,o(*￣▽￣*)ブ-----" />
                 </FrameLayout>
                 <LinearLayout
-                    android:elevation="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:elevation="2dp"
                     android:orientation="horizontal">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/infoview1"
                         android:layout_width="0dp"
-                        android:layout_weight="0.2"
                         android:layout_height="40dp"
-                        android:src="@drawable/nav_icon"
                         android:layout_marginLeft="20dp"
                         android:layout_marginStart="20dp"
+                        android:layout_weight="0.2"
+                        android:src="@drawable/nav_icon"
                         />
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="我接受的订单"/>
                 </LinearLayout>
@@ -314,13 +313,13 @@
                 </android.support.v7.widget.RecyclerView>
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:background="@color/light_gray"
-                    android:layout_height="150dp">
+                    android:layout_height="150dp"
+                    android:background="@color/light_gray">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-----你好，我是底线,╮(╯-╰)╭-----"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:text="-----你好，我是底线,╮(╯-╰)╭-----" />
                 </FrameLayout>
             </LinearLayout>
 

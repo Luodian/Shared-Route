@@ -21,7 +21,7 @@
             <include
                 layout="@layout/back_layout"
                 android:elevation="4dp"
-                android:title="联系我们" />
+                android:title="@string/contact_us" />
 
         </android.support.design.widget.AppBarLayout>
 
