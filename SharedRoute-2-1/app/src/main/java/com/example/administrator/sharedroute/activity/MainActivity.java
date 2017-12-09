@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -22,8 +23,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
@@ -91,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     private TextView UserName;
     private TextView UserAccount;
     private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView1;
+    private ImageView imageView5;
     private ImageView imageView6;
     private ImageView imageView7;
     private ImageView imageView8;
@@ -291,6 +296,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             }
         });
         imageView6 = findViewById(R.id.imageView6);
+        imageView5 = findViewById(R.id.imageView5);
         imageView7 = findViewById(R.id.imageView7);
         imageView8 = findViewById(R.id.imageView8);
         imageView9 = findViewById(R.id.imageView9);
@@ -298,6 +304,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         imageView11 = findViewById(R.id.imageView11);
         imageView12 = findViewById(R.id.imageView12);
         imageView6.setOnClickListener(this);
+        imageView5.setOnClickListener(this);
         imageView7.setOnClickListener(this);
         imageView8.setOnClickListener(this);
         imageView9.setOnClickListener(this);
@@ -374,16 +381,22 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     @Override
     public void onClick(View view) {
         int id = view.getId();
+        Log.e("??????????????",String.valueOf(id));
         switch (id){
             case R.id.infoview: {
                 new refreshKeep().execute();
                 break;
             }
-            case R.id.imageView6:{
-                Intent intent1 = new Intent(MainActivity.this, ContactUsActivity.class);
+            case R.id.imageView5:{
+                Intent intent1 = new Intent(MainActivity.this, TaskViewActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("lastActivity","main");
                 intent1.putExtras(bundle);
+                startActivity(intent1);
+                break;
+            }
+            case R.id.imageView6:{
+                Intent intent1 = new Intent(MainActivity.this, ContactUsActivity.class);
                 startActivity(intent1);
                 break;
             }
@@ -406,7 +419,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             case R.id.imageView10:{
                 MyRank.PorA = "fetch";
                 Intent intent1 = new Intent(MainActivity.this, MyRank .class);
-
                 startActivity(intent1);
                 break;
             }
@@ -597,14 +609,14 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             mRecyclerView = findViewById(R.id.mainRecycler1);
             MainPageReleaseAdapter mainPageReleaseAdapter = new MainPageReleaseAdapter(MainActivity.this,itemPublishList,1);
             mRecyclerView.setAdapter(mainPageReleaseAdapter);
-             GridLayoutManager layoutManager1 = new GridLayoutManager(getApplicationContext(), 1);
+            GridLayoutManager layoutManager1 = new GridLayoutManager(getApplicationContext(), 1);
             mRecyclerView.setLayoutManager(layoutManager1);
 
-            mRecyclerView = findViewById(R.id.mainRecycler2);
+            mRecyclerView1 = findViewById(R.id.mainRecycler2);
             MainPageReleaseAdapter mainPageReleaseAdapter2 = new MainPageReleaseAdapter(MainActivity.this,itemAcceptList,0);
-            mRecyclerView.setAdapter(mainPageReleaseAdapter2);
+            mRecyclerView1.setAdapter(mainPageReleaseAdapter2);
             GridLayoutManager layoutManager2 = new GridLayoutManager(getApplicationContext(), 1);
-            mRecyclerView.setLayoutManager(layoutManager2);
+            mRecyclerView1.setLayoutManager(layoutManager2);
     }
     }
 
@@ -710,6 +722,122 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         @Override
         protected void onCancelled() {
             mFetchTask = null;
+        }
+    }
+}
+class WrappableGridLayoutManager extends GridLayoutManager {
+    public WrappableGridLayoutManager(Context context, int spanCount) {
+        super(context, spanCount);
+    }
+    private int[] mMeasuredDimension = new int[2];
+
+    @Override
+    public boolean canScrollVertically() {
+        return false;
+    }
+
+    @Override
+    public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state, int widthSpec, int heightSpec) {
+        final int widthMode = View.MeasureSpec.getMode(widthSpec);
+        final int heightMode = View.MeasureSpec.getMode(heightSpec);
+        final int widthSize = View.MeasureSpec.getSize(widthSpec);
+        final int heightSize = View.MeasureSpec.getSize(heightSpec);
+
+        int spanWidth = 0;
+        int spanHeight = 0;
+        int viewWidth = 0;
+        int viewHeight = 0;
+
+        int spanCount = getSpanCount();
+        System.out.println(getItemCount());
+        for (int i = 0; i < getItemCount(); i++) {
+            measureScrapChild(recycler, i, View.MeasureSpec.makeMeasureSpec(i, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(i, View.MeasureSpec.UNSPECIFIED), mMeasuredDimension);
+
+            if(i%spanCount==0){
+                spanWidth=mMeasuredDimension[0];
+                spanHeight=mMeasuredDimension[1];
+            }else{
+                if(getOrientation()==VERTICAL){
+                    spanWidth+=mMeasuredDimension[0];
+                    spanHeight=Math.max(spanHeight,mMeasuredDimension[1]);
+                }else{
+                    spanWidth=Math.max(spanWidth,mMeasuredDimension[0]);
+                    spanHeight+=mMeasuredDimension[1];
+                }
+            }
+
+            if(i%spanCount==spanCount-1||i==getItemCount()-1){
+                if(getOrientation()==VERTICAL){
+                    viewWidth=Math.max(viewWidth,spanWidth);
+                    viewHeight+=spanHeight;
+                }else{
+                    viewWidth+=spanWidth;
+                    viewHeight=Math.max(viewHeight,spanHeight);
+                }
+            }
+        }
+
+        int finalHeight;
+        int finalWidth;
+
+        switch (widthMode){
+            case View.MeasureSpec.EXACTLY:
+                finalWidth=widthSize;
+                break;
+            case View.MeasureSpec.AT_MOST:
+                finalWidth=Math.min(widthSize,viewWidth);
+                break;
+            case View.MeasureSpec.UNSPECIFIED:
+                finalWidth=viewWidth;
+                break;
+            default:
+                finalWidth=widthSize;
+                break;
+        }
+
+        switch (heightMode){
+            case View.MeasureSpec.EXACTLY:
+                finalHeight=heightSize;
+                break;
+            case View.MeasureSpec.AT_MOST:
+                finalHeight=Math.min(heightSize,viewHeight);
+                break;
+            case View.MeasureSpec.UNSPECIFIED:
+                finalHeight=viewHeight;
+                break;
+            default:
+                finalHeight=heightSize;
+                break;
+        }
+        setMeasuredDimension(finalWidth,finalHeight);
+    }
+
+    private void measureScrapChild(RecyclerView.Recycler recycler, int position, int widthSpec, int heightSpec, int[] measuredDimension) {
+
+        View view = recycler.getViewForPosition(0);
+
+        if (view != null) {
+
+            RecyclerView.LayoutParams p = (RecyclerView.LayoutParams) view.getLayoutParams();
+
+            int childWidthSpec = ViewGroup.getChildMeasureSpec(widthSpec,
+                    getPaddingLeft() + getPaddingRight(), p.width);
+            int childHeightSpec = ViewGroup.getChildMeasureSpec(heightSpec,
+                    getPaddingTop() + getPaddingBottom(), p.height);
+
+            view.measure(childWidthSpec, childHeightSpec);
+
+            measuredDimension[0] = view.getMeasuredWidth() + p.leftMargin + p.rightMargin;
+            measuredDimension[1] = view.getMeasuredHeight() + p.bottomMargin + p.topMargin;
+
+            Rect decoratorRect=new Rect();
+            calculateItemDecorationsForChild(view,decoratorRect);
+            measuredDimension[0]+=decoratorRect.left;
+            measuredDimension[0]+=decoratorRect.right;
+            measuredDimension[1]+=decoratorRect.top;
+            measuredDimension[1]+=decoratorRect.bottom;
+
+            recycler.recycleView(view);
         }
     }
 }
