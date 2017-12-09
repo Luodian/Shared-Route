@@ -3,12 +3,16 @@ package com.example.administrator.sharedroute.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
@@ -34,6 +38,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -85,6 +90,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public static Socket socket;
     public static BufferedReader in;
     public static PrintStream out;
+
+    public static List<Activity> activityList = new ArrayList<Activity>();
 
     //    private static boolean stop;
 //    public static void setStop(Boolean stop){
@@ -583,7 +590,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             {
                 if (network_flag)
                 {
-                    if (result != "outline") {
+                    if (!result .equals("outline")) {
                         Toast.makeText(getApplicationContext(), "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
                         mPasswordView.setError(getString(R.string.error_incorrect_password));
                         mPasswordView.requestFocus();
@@ -622,13 +629,45 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 String line = null;
                 while ((!(socket.isClosed()))&&(line = in.readLine()) != null) {
-                    Log.e("line",line);
-                    Message msg = new Message();
-                    msg.what = 0x11;
-                    Bundle bundle = new Bundle();
-                    bundle.putString("msg", line);
-                    msg.setData(bundle);
-                    handler.sendMessage(msg);
+                    if (line.equals("offline")) {
+                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getBaseContext());
+
+                                builder.setIcon(R.drawable.share_icon_with_background);//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                                builder.setTitle("强制下线");
+                                builder.setMessage("您的账号在别处登录");
+                                builder.setNeutralButton("确认", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Thread thread = new Thread() {
+                                            public void run(){
+                                                Socket anotherSocket = null;
+                                                try {
+                                                    LoginActivity.in.close();
+                                                    LoginActivity.out.close();
+                                                    LoginActivity.socket.close();
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        };
+                                        thread.start();
+                                        for (Activity a:activityList){
+                                            if (a != null) a.finish();
+                                        }
+                                    }
+                                });
+                                builder.show();
+
+
+                    } else {
+                        Log.e("line", line);
+                        Message msg = new Message();
+                        msg.what = 0x11;
+                        Bundle bundle = new Bundle();
+                        bundle.putString("msg", line);
+                        msg.setData(bundle);
+                        handler.sendMessage(msg);
+                    }
                 }
 //                //停止监听线程
 //                if (stop){
@@ -645,13 +684,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
     public void noti(String str){
-
+        String ticker = "";
+        String content = "";
+        if (str.contains("接收")) {
+            ticker = "您发布的订单已被接收";
+            int index = str.indexOf(',');
+            content = str.substring(0, index);
+        } else {
+            ticker = "订单已成功送达";
+            content = "您接收的订单已经被成功送达";
+        }
         Notification notification = new NotificationCompat.Builder(this)
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.banner_1))
-                .setSmallIcon(R.drawable.banner_2)
-                .setTicker("您的订单已被接收")
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.share_icon_withrectangle_background))
+                .setSmallIcon(R.drawable.albule)
+                .setTicker(ticker)
                 .setContentTitle("恭喜您")
-                .setContentText("您编号为"+str+"的订单已经被接收")
+                .setContentText(content)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
@@ -661,7 +709,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 .build();
         NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         assert notificationManager != null;
-        notificationManager.notify(1,notification);
+        //这里notify的id改为当前时间戳，实现多个notification排列显示，如果为一个常数，就是覆盖显示
+        notificationManager.notify((int)System.currentTimeMillis(), notification);
     }
 }
 
