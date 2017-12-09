@@ -100,7 +100,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
     private static final int REQUEST_TIMEOUT = 5 * 1000;//设置请求超时5秒钟
     private static final int SO_TIMEOUT = 10 * 1000;  //设置等待数据超时时间10秒钟
-    private static final int REQUEST_CODE_GO_TO_REGIST = 20;
+    private int REQUEST_CODE_GO_TO_REGIST = 20;
+    private int resultCodeFromRegister = 21;
     public static Socket socket;
     List<NotTime> datas=new ArrayList<>();
     private List<NotTime> listData= new ArrayList<>();
@@ -276,8 +277,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==REQUEST_CODE_GO_TO_REGIST && data != null){
-            mEmailView.setText(data.getStringExtra("name"));
+        if(requestCode==REQUEST_CODE_GO_TO_REGIST && resultCode == resultCodeFromRegister){
+            mEmailView.setText(data.getStringExtra("stuNum"));
             mPasswordView.setText(data.getStringExtra("password"));
         }
     }

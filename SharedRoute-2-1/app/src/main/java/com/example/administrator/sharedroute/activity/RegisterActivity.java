@@ -50,7 +50,8 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class RegisterActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private boolean isSuccess = false;
-
+    private int REQUEST_CODE_GO_TO_REGIST = 20;
+    private int resultCodeFromRegister = 21;
     private static final int REQUEST_READ_CONTACTS = 0;
     private static final int REQUEST_TIMEOUT = 5*1000;//设置请求超时5秒钟
     private static final int SO_TIMEOUT = 10*1000;  //设置等待数据超时时间10秒钟
@@ -83,10 +84,6 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
                     .LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-//        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-//        toolbar.setTitle(R.string.title_register);
-//        setSupportActionBar(toolbar);
-
         mName = (EditText)findViewById(R.id.regi_name);
         mPhone = (EditText)findViewById(R.id.regi_phone);
         mStuNum = (EditText)findViewById(R.id.regi_stu_num);
@@ -115,17 +112,17 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                                Intent data = new Intent();
-                                data.putExtra("name", mName.getText().toString());
-                                data.putExtra("phone", mPhone.getText().toString());
-                                data.putExtra("stuNum", mStuNum.getText().toString());
-                                data.putExtra("inviteCode", mInviteCode.getText().toString());
-                                data.putExtra("password", mPassWord.getText().toString());
-                                RegisterActivity.this.setResult(RESULT_OK, data);
-                                RegisterActivity.this.finish();
                             }
                         };
                         thread.start();
+                        Intent data = new Intent();
+                        data.putExtra("name", mName.getText().toString());
+                        data.putExtra("phone", mPhone.getText().toString());
+                        data.putExtra("stuNum", mStuNum.getText().toString());
+                        data.putExtra("inviteCode", mInviteCode.getText().toString());
+                        data.putExtra("password", mPassWord.getText().toString());
+                        setResult(resultCodeFromRegister, data);
+                        finish();
                     }
                 }
             }
@@ -335,7 +332,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             if (success) {
                 Toast.makeText(getApplicationContext(),"注册成功", Toast.LENGTH_SHORT).show();
                 isSuccess = true;
-                finish();
+//                finish();
             }
             else
             {
