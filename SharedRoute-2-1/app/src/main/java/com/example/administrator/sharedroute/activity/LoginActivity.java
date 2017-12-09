@@ -473,6 +473,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         assert notificationManager != null;
         //这里notify的id改为当前时间戳，实现多个notification排列显示，如果为一个常数，就是覆盖显示
         notificationManager.notify((int) System.currentTimeMillis(), notification);
+
     }
 
     private interface ProfileQuery {
