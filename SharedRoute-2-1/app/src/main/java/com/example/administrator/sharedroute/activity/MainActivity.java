@@ -19,6 +19,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -75,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 //    private static final String HOST = "47.95.194.146";
 //    private static final int PORT = 9986;
 
+    public static String select = "releaseOrder";
+    public static List<Activity> activityList = new ArrayList<Activity>();
     private BannerPager mBanner;
     private DrawerLayout mDrawerLayout;
     private TabLayout mTabLayout;
@@ -82,22 +85,20 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     private LinearLayout mLinearLayout;
     private LayoutInflater mInflater;
     private View view1, view2;//页卡视图
-    private List<View> mViewList = new ArrayList<>();//页卡视图集合
-    public static String select = "releaseOrder";
     private List<listItem> itemAcceptList = new ArrayList<>();
     private List<listItem> itemPublishList = new ArrayList<>();
     private AcceptedOrderItemAdapter adapter2;
     private ReleaseOrderItemAdapter adapter1;
-    public static List<Activity> activityList = new ArrayList<Activity>();
     private OrderDao orderDao;
     private BottomNavigationView navigation;
     private SwipeRefreshLayout swipeRefresh1;
     private SwipeRefreshLayout swipeRefresh2;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     private FetchUserInfo mFetchTask;
-    public String usrid = "";
-    public String usrphone = "";
-    public double usraccount = 0;
+    private String usrid = "";
+    private String usrphone = "";
+    private double usraccount = 0;
 
     private TextView UserID;
     private TextView UserName;
@@ -110,6 +111,37 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     private ImageView imageView10;
     private ImageView imageView11;
     private ImageView imageView12;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//			mMenuId = item.getItemId();
+//			for (int i = 0; i < navigation.getMenu().size(); i++) {
+//				MenuItem menuItem = navigation.getMenu().getItem(i);
+//				boolean isChecked = menuItem.getItemId() == item.getItemId();
+//				menuItem.setChecked(isChecked);
+//			}
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    return true;
+                case R.id.navigation_dashboard:
+                    JumpToActivity(PublishNeedsActivity.class);
+                    finish();
+                    return true;
+                case R.id.navigation_notifications:
+                    JumpToActivity(SearchNeedsActivity.class);
+                    finish();
+                    return true;
+            }
+            return false;
+        }
+
+    };
+
+    public MainActivity() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,8 +153,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-        {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             // 透明导航栏
@@ -133,9 +164,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         Bundle bundle = getIntent().getExtras();   //得到传过来的bundle
         if (bundle != null) {
             usrid = bundle.getString("ID");
-        }
-        else
-        {
+        } else {
             SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
             usrid = sp.getString("now_stu_num",null);
         }
@@ -149,10 +178,36 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_user);
         }
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            /**
+             * Called when a drawer has settled in a completely closed state.
+             */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
 
-       // View nav_header_view = LayoutInflater.from(MainActivity.this).inflate(R.layout.nav_header,null);
-        NavigationView navView = (NavigationView)findViewById(R.id.nav_view);
+            /**
+             * Called when a drawer has settled in a completely open state.
+             */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {// drawer滑动的回调
+                if (usrid != null) {
+                    UserID.setText(MessageFormat.format("学号：{0}", usrid));
+                    mFetchTask = new FetchUserInfo(usrid);
+                    mFetchTask.execute();
+                }
+            }
+        };
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+       /* View nav_header_view = LayoutInflater.from(MainActivity.this).inflate(R.layout.nav_header,null); */
+        NavigationView navView = findViewById(R.id.nav_view);
         View nav_header_view = navView.getHeaderView(0);
 
         UserID = nav_header_view.findViewById(R.id.nav_header_id);
@@ -189,13 +244,15 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         return true;
                     case R.id.release_rank:
                         select = "releaseRank";
-                        Intent intent4 = new Intent(MainActivity.this,RankActivity.class);
+                        MyRank.PorA = "submit";
+                        Intent intent4 = new Intent(MainActivity.this,MyRank.class);
                         intent4.putExtra("select_order",select);
                         startActivity(intent4);
                         return true;
                     case R.id.receive_rank:
 //                        select = "receiveRank";
-                        Intent intent5 = new Intent(MainActivity.this,RankActivity.class);
+                        MyRank.PorA = "fetch";
+                        Intent intent5 = new Intent(MainActivity.this,MyRank.class);
 //                        intent5.putExtra("select_order",select);
                         startActivity(intent5);
                         return true;
@@ -208,9 +265,43 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         startActivity(intent7);
                         return true;
                     case R.id.nav_login:
-                        Intent intent8 = new Intent(MainActivity.this,LoginActivity.class);
-                        intent8.putExtra("from","homePage");
-                        startActivity(intent8);
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                                .setTitle("退出1KM配送")
+                                .setMessage("您真的要退出吗？")
+                                .setNegativeButton("取消", null)
+                                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        Thread thread = new Thread() {
+                                            public void run() {
+                                                Socket anotherSocket = null;
+                                                try {
+                                                    anotherSocket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
+                                                    PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
+                                                    out1.println("action=send;name=" + usrid + ";msg=byebye");
+                                                    out1.flush();
+                                                    out1.close();
+                                                    anotherSocket.close();
+                                                    Intent intent8 = new Intent(MainActivity.this,LoginActivity.class);
+                                                    intent8.putExtra("from","homePage");
+                                                    startActivity(intent8);
+                                                    LoginActivity.in.close();
+                                                    LoginActivity.out.close();
+                                                    LoginActivity.socket.close();
+
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        };
+                                        thread.start();
+                                        for (Activity a : activityList) {
+                                            if (a != null) a.finish();
+                                        }
+                                    }
+                                }).show();
                         return true;
                     default:
                 }
@@ -245,73 +336,19 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         mBanner.setOnBannerListener(this);
         mBanner.start();
         new refreshKeep().execute();
-//        mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
-//        mTabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
-//        mInflater = LayoutInflater.from(this);
-//        view1 = mInflater.inflate(activity_release_order, null);
-//        view2 = mInflater.inflate(activity_receive_order, null);
-//        //添加页卡视图
-//        mViewList.add(view1);
-//        mViewList.add(view2);
-//
-//        MyPagerAdapter mAdapter = new MyPagerAdapter(mViewList);
-//        //给ViewPager设置适配器
-//        mViewPager.setAdapter(mAdapter);
-//        //将TabLayout和ViewPager关联起来
-//        mTabLayout.setupWithViewPager(mViewPager);
-//        //给Tabs设置适配器
-//        mTabLayout.setTabsFromPagerAdapter(mAdapter);
 
-//        mLinearLayout = (LinearLayout) mTabLayout.getChildAt(0);
-//        // 在所有子控件的中间显示分割线（还可能只显示顶部、尾部和不显示分割线）
-//        mLinearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
-//        // 设置分割线的距离本身（LinearLayout）的内间距
-//        mLinearLayout.setDividerPadding(50);
-//        // 设置分割线的样式
-//        mLinearLayout.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_vertical));
 
 
         navigation = findViewById(R.id.main_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
+    }
 
-//        swipeRefresh1 = (SwipeRefreshLayout) view1.findViewById(R.id.swipe_refresh_release);
-//        swipeRefresh1.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
-//                android.R.color.holo_orange_light, android.R.color.holo_green_light);
-//        swipeRefresh1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                swipeRefresh1.setRefreshing(true);
-//                new refreshKeep().execute();
-//            }
-//        });
-//
-//        swipeRefresh1.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                swipeRefresh1.setRefreshing(true);
-//                new refreshKeep().execute();
-//            }
-//        });
-//
-//        swipeRefresh2 = (SwipeRefreshLayout) view2.findViewById(R.id.swipe_refresh_receive);
-//        swipeRefresh2.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
-//                android.R.color.holo_orange_light, android.R.color.holo_green_light);
-//        swipeRefresh2.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                swipeRefresh2.setRefreshing(true);
-//                new refreshKeepTwo().execute();
-//            }
-//        });
-//
-//        swipeRefresh2.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                swipeRefresh1.setRefreshing(true);
-//                new refreshKeepTwo().execute();
-//            }
-//        });
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
     }
 
     @Override
@@ -369,12 +406,15 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 break;
             }
             case R.id.imageView9:{
-                Intent intent1 = new Intent(MainActivity.this, RankActivity.class);
+                MyRank.PorA = "submit";
+                Intent intent1 = new Intent(MainActivity.this, MyRank.class);
                 startActivity(intent1);
                 break;
             }
             case R.id.imageView10:{
-                Intent intent1 = new Intent(MainActivity.this, RankActivity.class);
+                MyRank.PorA = "fetch";
+                Intent intent1 = new Intent(MainActivity.this, MyRank .class);
+
                 startActivity(intent1);
                 break;
             }
@@ -389,6 +429,64 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 break;
             }
         }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                .setTitle("退出1KM配送")
+                .setMessage("您真的要退出吗？")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Thread thread = new Thread() {
+                            public void run() {
+                                Socket anotherSocket = null;
+                                try {
+                                    anotherSocket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
+                                    PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
+                                    out1.println("action=send;name=" + usrid + ";msg=byebye");
+                                    out1.flush();
+                                    out1.close();
+                                    anotherSocket.close();
+
+                                    LoginActivity.in.close();
+                                    LoginActivity.out.close();
+                                    LoginActivity.socket.close();
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        thread.start();
+                        for (Activity a : activityList) {
+                            if (a != null) a.finish();
+                        }
+                    }
+                }).show();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mDrawerLayout.closeDrawers();
+    }
+
+    public void JumpToActivity(Class activity){
+        startActivity(new Intent(this,activity));
     }
 
     private class refreshKeep extends AsyncTask<Void, Void,Void> {
@@ -514,92 +612,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     }
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//			mMenuId = item.getItemId();
-//			for (int i = 0; i < navigation.getMenu().size(); i++) {
-//				MenuItem menuItem = navigation.getMenu().getItem(i);
-//				boolean isChecked = menuItem.getItemId() == item.getItemId();
-//				menuItem.setChecked(isChecked);
-//			}
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    return true;
-                case R.id.navigation_dashboard:
-                    JumpToActivity(PublishNeedsActivity.class);
-                    finish();
-                    return true;
-                case R.id.navigation_notifications:
-                    JumpToActivity(SearchNeedsActivity.class);
-                    finish();
-                    return true;
-            }
-            return false;
-        }
-
-    };
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                break;
-        }
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
-                .setTitle("退出1KM配送")
-                .setMessage("您真的要退出吗？")
-                .setNegativeButton("取消",null)
-                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        Thread thread = new Thread() {
-                            public void run(){
-                                Socket anotherSocket = null;
-                                try {
-                                    anotherSocket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
-                                    PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
-                                    out1.println("action=send;name="+ usrid + ";msg=byebye");
-                                    out1.flush();
-                                    out1.close();
-                                    anotherSocket.close();
-
-                                    LoginActivity.in.close();
-                                    LoginActivity.out.close();
-                                    LoginActivity.socket.close();
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        };
-                        thread.start();
-                        for (Activity a:activityList){
-                            if (a != null) a.finish();
-                        }
-                    }
-                }).show();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mDrawerLayout.closeDrawers();
-    }
-
-    public void JumpToActivity(Class activity){
-        startActivity(new Intent(this,activity));
-    }
-
-    private class FetchUserInfo extends AsyncTask<String, Void, Boolean> {
+    public class FetchUserInfo extends AsyncTask<String, Void, Boolean> {
 
         private String id = null;
         private String result = null;

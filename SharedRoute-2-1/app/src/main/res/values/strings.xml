@@ -37,7 +37,7 @@
     <string name="waitforTitle">敬请期待</string>
     <string name="waitforText">这里还没有开放，但是未来值得期待~</string>
     <string name="UserID">学号</string>
-    <string name="UserPassword">密码</string>
+    <string name="UserPassword">密码</string>1
     <string name="LoginButtonText">登      录</string>
     <string name="RegisterButtonText">注 册</string>
     <string name="confirm_password">确认密码</string>
@@ -48,6 +48,8 @@
     <string name="PORT">10056</string>
     <string name="counter">倒计时</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -138,4 +140,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_rank2">RankActivity2</string>
 </resources>

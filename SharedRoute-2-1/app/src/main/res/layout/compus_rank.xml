@@ -91,7 +91,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_bookmark_24dp" />
+                        android:src="@drawable/rank_1" />
 
                 </LinearLayout>
 
@@ -140,7 +140,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center|right"
-                            android:text="完成数目："
+                            android:text="发单数目："
 
                             android:textColor="@color/black"
                             android:textSize="15dp" />
