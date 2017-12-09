@@ -30,6 +30,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.sharedroute.ContactUsActivity;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.MainPageReleaseAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
         orderDao = new OrderDao(this);
 //        if (!orderDao.isDataExist()) orderDao.initTable();
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
@@ -303,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         imageView10.setOnClickListener(this);
         imageView11.setOnClickListener(this);
         imageView12.setOnClickListener(this);
-        mBanner = (BannerPager) findViewById(R.id.banner_pager);
+        mBanner = findViewById(R.id.banner_pager);
         LayoutParams params = (LayoutParams) mBanner.getLayoutParams();
         params.height = (int) (DisplayUtil.getSreenWidth(this) * 250f / 640f);
         mBanner.setLayoutParams(params);
@@ -379,7 +380,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 break;
             }
             case R.id.imageView6:{
-                Intent intent1 = new Intent(MainActivity.this,TaskViewActivity.class);
+                Intent intent1 = new Intent(MainActivity.this, ContactUsActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("lastActivity","main");
                 intent1.putExtras(bundle);

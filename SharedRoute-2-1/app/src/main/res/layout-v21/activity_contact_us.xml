@@ -12,29 +12,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
+
             <include
                 layout="@layout/back_layout"
                 android:elevation="4dp"
-                android:title="接单排行" />
+                android:title="@string/contact_us" />
 
         </android.support.design.widget.AppBarLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/waitfutureText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="这里还没有开放\n但是未来值得期待~"
+                android:text="需要帮助？"
                 android:textAlignment="center"
                 android:textColor="@color/gray"
-                android:textSize="22sp" />
+                android:textSize="32sp" />
+
             <ImageView
                 android:id="@+id/cuteBot"
                 android:layout_width="wrap_content"
@@ -43,18 +47,50 @@
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="100dp"
-                android:src="@drawable/cutebot"/>
-            <TextView
-                android:id="@+id/someWords"
+                android:src="@drawable/share_icon_with_background" />
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/waitfutureText"
                 android:layout_centerInParent="true"
-                android:layout_marginBottom="20dp"
-                android:text="我们的程序员正在拼命开发中..."
-                android:textAlignment="center"
-                android:textColor="@color/gray"
-                android:textSize="12sp" />
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/luodian_qq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:text="QQ : 1121058986(李博)"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/prac_qq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/luodian_qq"
+                    android:layout_marginTop="10dp"
+                    android:text="QQ : 1799022371(武德浩)"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/bk_qq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/prac_qq"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:text="QQ : 309426989(王烨臻)"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp" />
+            </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
 
@@ -62,7 +98,11 @@
         android:id="@+id/nav_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_gravity="start"
+        android:layout_marginEnd="111dp"
+        android:layout_marginRight="111dp"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu" />
 

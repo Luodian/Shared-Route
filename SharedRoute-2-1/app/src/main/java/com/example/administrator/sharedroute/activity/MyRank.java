@@ -53,6 +53,7 @@ public class MyRank extends AppCompatActivity {
     private List<View> mViewList = new ArrayList<>();//页卡视图集合
     private String select;
     private List<Client> itemList = new ArrayList<>();
+    private List<Client> itemListOthers = new ArrayList<>();
     private LayoutAnimationController lac;
     public static String PorA = "submit";
     @Override
@@ -111,6 +112,7 @@ public class MyRank extends AppCompatActivity {
                 }
                 JSONArray arr = new JSONArray(result.toString());
                 itemList = new ArrayList<Client>();
+                itemListOthers = new ArrayList<Client>();
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject lan = arr.getJSONObject(i);
 
@@ -119,7 +121,9 @@ public class MyRank extends AppCompatActivity {
                     int publishtasknum = lan.getInt("PublishTaskNum");
                     int fetchtasknum = lan.getInt("FetchTaskNum");
                     Client client1 = new Client(id,name,fetchtasknum,publishtasknum);
-                    itemList.add(client1);
+                    client1.rank = i + 1;
+                    if (i<=2) itemList.add(client1);
+                    else itemListOthers.add(client1);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -145,6 +149,13 @@ public class MyRank extends AppCompatActivity {
             lac = new LayoutAnimationController(animation, 0.12f);
             lac.setInterpolator(new DecelerateInterpolator());
             rankList.setLayoutAnimation(lac);
+
+            RecyclerView ranklist1 = findViewById(R.id.rank_list1);
+            ReleaseRankItemAdapter adapter1 = new ReleaseRankItemAdapter(itemListOthers);
+            GridLayoutManager layoutManager1 = new GridLayoutManager(MyRank.this,1);
+            ranklist1.setLayoutManager(layoutManager1);
+            ranklist1.setAdapter(adapter1);
+            ranklist1.setLayoutAnimation(lac);
         }
     }
 }
