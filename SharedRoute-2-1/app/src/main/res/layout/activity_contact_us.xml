@@ -33,14 +33,14 @@
                 android:id="@+id/cuteBot"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:layout_above="@id/relativeLayout"
-                android:layout_centerInParent="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="40dp"
                 android:src="@drawable/share_icon_with_background" />
 
             <RelativeLayout
-                android:id="@+id/relativeLayout"
+                android:id="@+id/contact_us_rela"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
