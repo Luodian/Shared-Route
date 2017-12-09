@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.example.administrator.sharedroute.activity.RankActivity">
+    tools:context="com.example.administrator.sharedroute.activity.MyRank">
 
 
 
@@ -27,5 +27,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:text="Others"
+        android:textSize="26dp"
+        android:textStyle="bold" />
 
 </LinearLayout>
