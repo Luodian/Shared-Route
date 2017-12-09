@@ -12,6 +12,7 @@ public class Client {
     public int pickOrderNum;
     public int completeOrderNum;
     public ImageView icno;
+    public int rank;
 
     public Client(String studentID, String name, int pickOrderNum, int completeOrderNum, ImageView icno) {
         this.studentID = studentID;

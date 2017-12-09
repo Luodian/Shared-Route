@@ -1,5 +1,6 @@
 package com.example.administrator.sharedroute.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -27,6 +29,7 @@ import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.TaskViewAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
+import com.example.administrator.sharedroute.utils.CheckFetcherUtil;
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
@@ -151,18 +154,28 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
         getOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listItemList = trollyAdapter.getItems();
-                ArrayList<listItem> listElected = new ArrayList<>();
-                for (listItem e:listItemList) {
-                    if (e.isCheckBoxElected()) listElected.add(e);
-                }
+                CheckFetcherUtil checkFetcherUtil = new CheckFetcherUtil(TaskViewActivity.this);
+                if (checkFetcherUtil.isTheFetcherIlligal()) {
+                    listItemList = trollyAdapter.getItems();
+                    ArrayList<listItem> listElected = new ArrayList<>();
+                    for (listItem e : listItemList) {
+                        if (e.isCheckBoxElected()) listElected.add(e);
+                    }
 
-                //将这个listElected传给下一个
-                Intent intent =new Intent(TaskViewActivity.this,ConfirmTaskActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("listItemList",listElected);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                    //将这个listElected传给下一个
+                    Intent intent = new Intent(TaskViewActivity.this, ConfirmTaskActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("listItemList", listElected);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                else{
+                    new AlertDialog.Builder(TaskViewActivity.this)
+                            .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                            .setTitle("温馨提示")
+                            .setMessage("试运营期间，为了安全起见，暂不开放代取功能，我们会安排专人为您派送，请耐心等待，您的快递下刻就到~")
+                            .setPositiveButton("确认", null).show();
+                }
             }
         });
 
