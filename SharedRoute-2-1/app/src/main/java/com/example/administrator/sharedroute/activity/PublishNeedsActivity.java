@@ -387,9 +387,9 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         final EditText remarkText = findViewById(R.id.remarktext);
         final EditText numText = findViewById(R.id.numtext);
         final EditText money = findViewById(R.id.money);
-//        money.setFocusable(true);
+        money.setFocusable(true);
         money.setFocusableInTouchMode(true);
-        money.requestFocus();
+//        money.requestFocus();
         money.requestFocusFromTouch();
         InputMethodManager inputManager =
                 (InputMethodManager)money.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
