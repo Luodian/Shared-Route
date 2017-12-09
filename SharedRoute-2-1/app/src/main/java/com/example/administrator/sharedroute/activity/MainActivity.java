@@ -433,41 +433,45 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
-                .setTitle("退出1KM配送")
-                .setMessage("您真的要退出吗？")
-                .setNegativeButton("取消", null)
-                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        Intent intent = new Intent("com.example.administrator.sharedroute.activity.FORCE_OFFLINE");
+        //发送广播--标准广播
+        sendBroadcast(intent);
 
-                        Thread thread = new Thread() {
-                            public void run() {
-                                Socket anotherSocket = null;
-                                try {
-                                    anotherSocket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
-                                    PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
-                                    out1.println("action=send;name=" + usrid + ";msg=byebye");
-                                    out1.flush();
-                                    out1.close();
-                                    anotherSocket.close();
-
-                                    LoginActivity.in.close();
-                                    LoginActivity.out.close();
-                                    LoginActivity.socket.close();
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        };
-                        thread.start();
-                        for (Activity a : activityList) {
-                            if (a != null) a.finish();
-                        }
-                    }
-                }).show();
+//        new AlertDialog.Builder(this)
+//                .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+//                .setTitle("退出1KM配送")
+//                .setMessage("您真的要退出吗？")
+//                .setNegativeButton("取消", null)
+//                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        Thread thread = new Thread() {
+//                            public void run() {
+//                                Socket anotherSocket = null;
+//                                try {
+//                                    anotherSocket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
+//                                    PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
+//                                    out1.println("action=send;name=" + usrid + ";msg=byebye");
+//                                    out1.flush();
+//                                    out1.close();
+//                                    anotherSocket.close();
+//
+//                                    LoginActivity.in.close();
+//                                    LoginActivity.out.close();
+//                                    LoginActivity.socket.close();
+//
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        };
+//                        thread.start();
+//                        for (Activity a : activityList) {
+//                            if (a != null) a.finish();
+//                        }
+//                    }
+//                }).show();
     }
 
     @Override

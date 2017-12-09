@@ -645,6 +645,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String line = null;
                 while ((!(socket.isClosed()))&&(line = in.readLine()) != null) {
                     if (line.equals("offline")) {
+                        Intent intent = new Intent("com.example.administrator.sharedroute.activity.FORCE_OFFLINE");
+                        //发送广播--标准广播
+                        sendBroadcast(intent);
                         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getBaseContext());
 
                                 builder.setIcon(R.drawable.share_icon_with_background);//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
