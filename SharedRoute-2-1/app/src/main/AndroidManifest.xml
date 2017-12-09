@@ -84,11 +84,7 @@
         <activity android:name=".activity.ConfirmBlurredActivity" />
         <activity android:name=".activity.MyFinishedActivity" />
         <activity android:name=".activity.MyRank" />
-        <activity
-            android:name=".activity.RankActivity"
-            android:label="@string/title_activity_rank2"
-            android:theme="@style/AppTheme"></activity>
-
+        <activity android:name=".activity.ContactUsActivity" />
         <receiver
             android:name=".activity.ForceOfflineBroadCastReceiver"
 

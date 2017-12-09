@@ -33,7 +33,6 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.administrator.sharedroute.ContactUsActivity;
 import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.MainPageReleaseAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
@@ -726,10 +725,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     }
 }
 class WrappableGridLayoutManager extends GridLayoutManager {
+    private int[] mMeasuredDimension = new int[2];
     public WrappableGridLayoutManager(Context context, int spanCount) {
         super(context, spanCount);
     }
-    private int[] mMeasuredDimension = new int[2];
 
     @Override
     public boolean canScrollVertically() {

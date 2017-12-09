@@ -1,7 +1,5 @@
 package com.example.administrator.sharedroute.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,14 +8,6 @@ import android.view.ViewGroup;
 
 import com.example.administrator.sharedroute.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link WaitingFutureFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link WaitingFutureFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class WaitingFutureFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
