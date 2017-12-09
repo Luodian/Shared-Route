@@ -1,5 +1,6 @@
 package com.example.administrator.sharedroute.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -41,6 +42,11 @@ public class ForceOfflineBroadCastReceiver extends BroadcastReceiver {
                         //在广播中启动活动，需要添加如下代码
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
+                        for (Activity a : MainActivity.activityList) {
+                            if (a != null) {
+                                a.finish();
+                            }
+                        }
                     }
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();

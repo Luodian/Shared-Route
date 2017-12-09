@@ -21,10 +21,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -334,6 +337,23 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         final EditText remarkText = findViewById(R.id.remarktext);
         final EditText numText = findViewById(R.id.numtext);
         final EditText money = findViewById(R.id.money);
+//        money.setFocusable(true);
+        money.setFocusableInTouchMode(true);
+        money.requestFocus();
+        money.requestFocusFromTouch();
+        InputMethodManager inputManager =
+                (InputMethodManager)money.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(money, 0);
+        money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(PublishNeedsActivity.this, "试运营期间，" +
+                        "我们会安排专人为您代取派送快递，建议您设置金额为1-2元，如果您的任务紧急，" +
+                        "可以适当提高金额，更高金额的任务会得到优先处理。",Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 50);
+                toast.show();
+            }
+        });
 
         final Button submitBtn = findViewById(R.id.submit_btn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -374,6 +394,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                         return;
                     }
                 }
+                ////////////////////////////
 
                 String fetchTime = qujiantext.getText().toString();
                 int index1 = fetchTime.indexOf('日');
@@ -623,5 +644,10 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         protected void onCancelled() {
             mFetchTask = null;
         }
+    }
+    private boolean checkTime(String left, String right) {
+        int indexofleftkong = left.indexOf(' ');
+        int indexofleftnian = left.indexOf('年');
+        return false;
     }
 }

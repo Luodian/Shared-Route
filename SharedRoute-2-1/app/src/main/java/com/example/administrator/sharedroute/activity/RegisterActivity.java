@@ -107,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
                 }else {
                     attemptRegister();
                     if (isSuccess) {
-//                        Toast.makeText(RegisterActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
                         Thread thread = new Thread() {
                             public void run(){
                                 try {
@@ -121,8 +121,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
                                 data.putExtra("stuNum", mStuNum.getText().toString());
                                 data.putExtra("inviteCode", mInviteCode.getText().toString());
                                 data.putExtra("password", mPassWord.getText().toString());
-                                setResult(RESULT_OK, data);
-                                finish();
+                                RegisterActivity.this.setResult(RESULT_OK, data);
+                                RegisterActivity.this.finish();
                             }
                         };
                         thread.start();

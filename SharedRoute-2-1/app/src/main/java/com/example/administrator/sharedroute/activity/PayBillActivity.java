@@ -48,10 +48,18 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.HttpURLConnection;
 import java.net.Socket;
+import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -65,7 +73,10 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
     //测试使用，真实情况的时候，登录时缓存到本地，然后使用本地的学号
     private String stuNum;
 
-
+    private String usrid = "";
+    private String usrphone = "";
+    private double usraccount = 0;
+    private FetchUserInfo mFetchTask;
     private static final int REQUEST_READ_CONTACTS = 0;
     private PostTask mAuthTask = null;
 
@@ -112,10 +123,10 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
                     .LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        final Bundle bundle = intent.getExtras();
 
         vertifyView=(TextView)findViewById(R.id.timer);
-        TextView money = (TextView)findViewById(R.id.textView3);
+        final TextView money = (TextView)findViewById(R.id.textView3);
         TextView name=(TextView)findViewById(R.id.textView4);
         TextView phone = (TextView)findViewById(R.id.textView7);
         TextView packSort= (TextView)findViewById(R.id.textView8);
@@ -167,12 +178,29 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
         ensureBillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postInfo();
+                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+                String stuNum = sp.getString("now_stu_num", null);
+                FetchUserInfo fetchUserInfo = new FetchUserInfo(stuNum);
+                fetchUserInfo.execute();
+                if (usraccount < Double.valueOf(bundle.getString("money"))) {
+                    new AlertDialog.Builder(PayBillActivity.this)
+                            .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                            .setTitle("余额不足")
+                            .setMessage("请充值")
+                            .setCancelable(false)
+                            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+//                                    startActivity();
+                                    //跳转到扫二维码充值的页面
+
+                                }
+                            }).show();
+                } else
+                    postInfo();
             }
         });
-
     }
-
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
@@ -483,4 +511,105 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
 
     }
 
+    public class FetchUserInfo extends AsyncTask<String, Void, Boolean> {
+
+        private String id = null;
+        private String result = null;
+
+        FetchUserInfo(String UserID) {
+            id = UserID;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... ID) {
+            String result = null;
+            String path = getResources().getString(R.string.url)+"/Task?action=FetchUserID&ID=" + id;
+            HttpURLConnection con=null;
+            InputStream in=null;
+
+            try
+            {
+                URL url=new URL(path);
+                con= (HttpURLConnection) url.openConnection();
+                con.setConnectTimeout(5*1000);
+                con.setReadTimeout(5*1000);
+                /*
+                * http响应码：getResponseCode
+                  200：成功 404：未找到 500：发生错误
+              */
+                if (con.getResponseCode()==200)
+                {
+                    System.out.println("连接成功");
+                    in = con.getInputStream();
+                    InputStreamReader isr = new InputStreamReader(in);
+                    //InputStreamReader isr = new InputStreamReader(getAssets().open("get_data.json"),"UTF-8");
+                    BufferedReader br = new BufferedReader(isr);
+                    String line;
+                    //StringBuilder 缓存区 StringBuffer
+                    StringBuilder builder = new StringBuilder();
+                    while ((line = br.readLine()) != null) {
+                        builder.append(line);
+                    }
+                    br.close();
+                    isr.close();
+                    result = builder.toString();
+                    if (result != "fail")
+                    {
+                        System.out.println(builder.toString());
+                        JSONObject lan = new JSONObject(result);
+                        usrphone = lan.getString("Phone");
+                        usraccount = lan.getDouble("Account");
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                if (in!=null){
+                    try
+                    {
+                        in.close();
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                if (con!=null){
+                    con.disconnect();
+                    //断开连接
+                }
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            mFetchTask = null;
+            if (success) {
+                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+
+                sp.edit().putString("now_account_money",String.valueOf(usraccount)).commit();
+            } else {
+                Toast.makeText(getApplicationContext(), "获取用户信息失败", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mFetchTask = null;
+        }
+    }
 }

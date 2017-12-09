@@ -134,16 +134,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
                     .LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-//
-//        TextView userText = (TextView)findViewById(R.id.user_text);
-//        TextView passText = (TextView)findViewById(R.id.pass_text);
-//        EditText userEditText = (EditText)findViewById(R.id.user_edit_text);
-//        EditText passEditText = (EditText)findViewById(R.id.pass_edit_text);
-//        Typeface typeFace = Typeface.createFromAsset(getAssets(),"fonts/youyuan.TTF");
-//        userText.setTypeface(typeFace);
-//        passText.setTypeface(typeFace);
-//        userEditText.setTypeface(typeFace);
-//        passEditText.setTypeface(typeFace);
+
 
         // Set up the login form.
         mEmailView = findViewById(R.id.user_edit_text);
@@ -266,8 +257,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
     @Override
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
-        if(requestCode==REQUEST_CODE_GO_TO_REGIST && resultCode==RESULT_OK){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==REQUEST_CODE_GO_TO_REGIST && data != null){
             mEmailView.setText(data.getStringExtra("name"));
             mPasswordView.setText(data.getStringExtra("password"));
         }
@@ -605,13 +596,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             {
                 if (network_flag)
                 {
-                    if (!result .equals("outline")) {
                         Toast.makeText(getApplicationContext(), "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
                         mPasswordView.setError(getString(R.string.error_incorrect_password));
                         mPasswordView.requestFocus();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "用户已在别的设备在线", Toast.LENGTH_SHORT).show();
-                    }
                 }
                 else
                 {
@@ -648,35 +635,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         Intent intent = new Intent("com.example.administrator.sharedroute.activity.FORCE_OFFLINE");
                         //发送广播--标准广播
                         sendBroadcast(intent);
-                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getBaseContext());
-
-                                builder.setIcon(R.drawable.share_icon_with_background);//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
-                                builder.setTitle("强制下线");
-                                builder.setMessage("您的账号在别处登录");
-                                builder.setNeutralButton("确认", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Thread thread = new Thread() {
-                                            public void run(){
-                                                Socket anotherSocket = null;
-                                                try {
-                                                    LoginActivity.in.close();
-                                                    LoginActivity.out.close();
-                                                    LoginActivity.socket.close();
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        };
-                                        thread.start();
-                                        for (Activity a:activityList){
-                                            if (a != null) a.finish();
-                                        }
-                                    }
-                                });
-                                builder.show();
-
-
+//                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getBaseContext());
+//
+//                                builder.setIcon(R.drawable.share_icon_with_background);//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+//                                builder.setTitle("强制下线");
+//                                builder.setMessage("您的账号在别处登录");
+//                                builder.setNeutralButton("确认", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        Thread thread = new Thread() {
+//                                            public void run(){
+//                                                Socket anotherSocket = null;
+//                                                try {
+//                                                    LoginActivity.in.close();
+//                                                    LoginActivity.out.close();
+//                                                    LoginActivity.socket.close();
+//                                                } catch (IOException e) {
+//                                                    e.printStackTrace();
+//                                                }
+//                                            }
+//                                        };
+//                                        thread.start();
+//                                        for (Activity a:activityList){
+//                                            if (a != null) a.finish();
+//                                        }
+//                                    }
+//                                });
+//                                builder.show();
+//
                     } else {
                         Log.e("line", line);
                         Message msg = new Message();
