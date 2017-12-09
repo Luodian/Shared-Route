@@ -13,11 +13,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -25,20 +22,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
-import com.example.administrator.sharedroute.adapter.AcceptedOrderItemAdapter;
 import com.example.administrator.sharedroute.adapter.MainPageReleaseAdapter;
-import com.example.administrator.sharedroute.adapter.ReleaseOrderItemAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
 import com.example.administrator.sharedroute.utils.DisplayUtil;
@@ -71,6 +64,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity implements BannerClickListener,View.OnClickListener {
 
 //    private static final String HOST = "47.95.194.146";
@@ -80,19 +75,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     public static List<Activity> activityList = new ArrayList<Activity>();
     private BannerPager mBanner;
     private DrawerLayout mDrawerLayout;
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
-    private LinearLayout mLinearLayout;
-    private LayoutInflater mInflater;
-    private View view1, view2;//页卡视图
     private List<listItem> itemAcceptList = new ArrayList<>();
     private List<listItem> itemPublishList = new ArrayList<>();
-    private AcceptedOrderItemAdapter adapter2;
-    private ReleaseOrderItemAdapter adapter1;
     private OrderDao orderDao;
     private BottomNavigationView navigation;
-    private SwipeRefreshLayout swipeRefresh1;
-    private SwipeRefreshLayout swipeRefresh2;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private FetchUserInfo mFetchTask;
@@ -111,17 +97,12 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     private ImageView imageView10;
     private ImageView imageView11;
     private ImageView imageView12;
+    private CircleImageView circleImageView;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//			mMenuId = item.getItemId();
-//			for (int i = 0; i < navigation.getMenu().size(); i++) {
-//				MenuItem menuItem = navigation.getMenu().getItem(i);
-//				boolean isChecked = menuItem.getItemId() == item.getItemId();
-//				menuItem.setChecked(isChecked);
-//			}
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     return true;
@@ -178,6 +159,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_user);
         }
+
+        circleImageView = findViewById(R.id.infoview);
+        circleImageView.setOnClickListener(this);
+
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
@@ -193,10 +178,6 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
              */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-            }
-
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {// drawer滑动的回调
                 if (usrid != null) {
                     UserID.setText(MessageFormat.format("学号：{0}", usrid));
                     mFetchTask = new FetchUserInfo(usrid);
@@ -344,6 +325,12 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
         navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
     }
 
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        onCreate(savedInstanceState);
+//    }
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -387,6 +374,10 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     public void onClick(View view) {
         int id = view.getId();
         switch (id){
+            case R.id.infoview: {
+                new refreshKeep().execute();
+                break;
+            }
             case R.id.imageView6:{
                 Intent intent1 = new Intent(MainActivity.this,TaskViewActivity.class);
                 Bundle bundle = new Bundle();

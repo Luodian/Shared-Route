@@ -152,6 +152,9 @@ public class SearchNeedsActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().findItem(R.id.navigation_notifications).setChecked(true);
 
+        SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+        usrid = sp.getString("now_stu_num", null);
+
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -168,10 +171,6 @@ public class SearchNeedsActivity extends AppCompatActivity {
              */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-            }
-
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {// drawer滑动的回调
                 if (usrid != null) {
                     UserID.setText(MessageFormat.format("学号：{0}", usrid));
                     mFetchTask = new FetchUserInfo(usrid);
@@ -189,7 +188,6 @@ public class SearchNeedsActivity extends AppCompatActivity {
         UserID = nav_header_view.findViewById(R.id.nav_header_id);
         UserName = nav_header_view.findViewById(R.id.nav_header_name);
         UserAccount = nav_header_view.findViewById(R.id.nav_header_account);
-        SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
         if (sp.getString("now_stu_num", null) != null) {
             UserID.setText(MessageFormat.format("学号：{0}", sp.getString("now_stu_num", null)));
         }

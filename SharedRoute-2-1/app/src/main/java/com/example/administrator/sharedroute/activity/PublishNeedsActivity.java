@@ -118,11 +118,11 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
                     .LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        pickupLocationButton = (Button)findViewById(R.id.pickupplace);
-        textViewName = (TextView)findViewById(R.id.nametext);
+        pickupLocationButton = findViewById(R.id.pickupplace);
+        textViewName = findViewById(R.id.nametext);
 //        textViewPhoneNumber = (TextView)findViewById(R.id.phonetext);
-        sendLocation = (TextView)findViewById(R.id.delieverplace);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        sendLocation = findViewById(R.id.delieverplace);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_publishneeds);
         setSupportActionBar(toolbar);
         final Intent intent = getIntent();
@@ -130,18 +130,20 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         /*
          *显示返回的收件地点信息
          */
+        SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+        usrid = sp.getString("now_stu_num", null);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_user);
         }
 
-        navigation = (BottomNavigationView) findViewById(R.id.publish_navigation);
+        navigation = findViewById(R.id.publish_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().findItem(R.id.navigation_dashboard).setChecked(true);
 
 
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             /**
@@ -156,10 +158,6 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
              */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-            }
-
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {// drawer滑动的回调
                 if (usrid != null) {
                     UserID.setText(MessageFormat.format("学号：{0}", usrid));
                     mFetchTask = new FetchUserInfo(usrid);
@@ -170,14 +168,13 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
-        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navView = findViewById(R.id.nav_view);
 
         View nav_header_view = navView.getHeaderView(0);
 
         UserID = nav_header_view.findViewById(R.id.nav_header_id);
         UserName = nav_header_view.findViewById(R.id.nav_header_name);
         UserAccount = nav_header_view.findViewById(R.id.nav_header_account);
-        SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
         if (sp.getString("now_stu_num", null) != null) {
             UserID.setText(MessageFormat.format("学号：{0}", sp.getString("now_stu_num", null)));
         }
@@ -239,9 +236,9 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         });
 
         final TextView nameText;
-        nameText = (TextView) findViewById(R.id.nametext);
+        nameText = findViewById(R.id.nametext);
         final Button pickupPlace;
-        pickupPlace = (Button) findViewById(R.id.pickupplace);
+        pickupPlace = findViewById(R.id.pickupplace);
 
         pickupPlace.setOnClickListener(new View.OnClickListener() {
             @Override

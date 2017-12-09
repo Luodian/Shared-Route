@@ -3,13 +3,13 @@ package com.example.administrator.sharedroute.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +21,7 @@ import com.example.administrator.sharedroute.listener.OnBlurCompleteListener;
 import com.example.administrator.sharedroute.widget.BlurBehind;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by 王烨臻 on 2017/11/21.
@@ -35,28 +36,6 @@ public class MainPageReleaseAdapter extends RecyclerView.Adapter<MainPageRelease
         this.mContext = mContext;
         this.mItemList = mItemList;
         this.PorA = PorA;
-    }
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        CardView cardView;
-        TextView taskState;
-//        TextView publishDate;
-        TextView taskPrice;
-        TextView expressCompany;
-        TextView expressPicknum;
-        TextView publishname;
-        TextView PorA;
-        public ViewHolder(View view){
-            super(view);
-            cardView = (CardView)view.findViewById(R.id.card_bg);
-            taskState = (TextView)view.findViewById(R.id.task_state);
-//            publishDate = (TextView)view.findViewById(R.id.publish_date);
-            taskPrice = (TextView)view.findViewById(R.id.task_price);
-            expressCompany = (TextView)view.findViewById(R.id.express_company);
-            expressPicknum = (TextView)view.findViewById(R.id.express_picknum);
-            publishname = (TextView)view.findViewById(R.id.publish_name);
-            PorA = view.findViewById(R.id.PorA);
-        }
     }
 
     @Override
@@ -111,11 +90,24 @@ public class MainPageReleaseAdapter extends RecyclerView.Adapter<MainPageRelease
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (this.PorA == 0){
             holder.PorA.setText("发布用户：");
-            holder.publishname.setText(mItemList.get(position).PublisherName);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (!Objects.equals(mItemList.get(position).PublisherName, "null")) {
+                    holder.publishname.setText(mItemList.get(position).PublisherName);
+                } else {
+                    holder.publishname.setText("暂无");
+                }
+            }
+
         }
         else if (this.PorA == 1){
             holder.PorA.setText("接单用户：");
-            holder.publishname.setText(mItemList.get(position).FetcherName);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (!Objects.equals(mItemList.get(position).FetcherName, "null")) {
+                    holder.publishname.setText(mItemList.get(position).FetcherName);
+                } else {
+                    holder.publishname.setText("暂无");
+                }
+            }
         }
 //        holder.publishDate.setText(mItemList.get(position).FetchTime);
         holder.expressPicknum.setText(mItemList.get(position).PickID);
@@ -131,5 +123,28 @@ public class MainPageReleaseAdapter extends RecyclerView.Adapter<MainPageRelease
     public int getItemCount() {
         if (mItemList != null) return mItemList.size();
         else return -1;
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        CardView cardView;
+        TextView taskState;
+        //        TextView publishDate;
+        TextView taskPrice;
+        TextView expressCompany;
+        TextView expressPicknum;
+        TextView publishname;
+        TextView PorA;
+
+        public ViewHolder(View view) {
+            super(view);
+            cardView = (CardView) view.findViewById(R.id.card_bg);
+            taskState = (TextView) view.findViewById(R.id.task_state);
+//            publishDate = (TextView)view.findViewById(R.id.publish_date);
+            taskPrice = (TextView) view.findViewById(R.id.task_price);
+            expressCompany = (TextView) view.findViewById(R.id.express_company);
+            expressPicknum = (TextView) view.findViewById(R.id.express_picknum);
+            publishname = (TextView) view.findViewById(R.id.publish_name);
+            PorA = view.findViewById(R.id.PorA);
+        }
     }
 }
