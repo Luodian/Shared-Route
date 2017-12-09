@@ -84,6 +84,14 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
     private View mProgressView;
     private View mPostInfoFormView;
 
+    @Override
+    protected void onDestroy() {
+        timer.cancel();
+        super.onDestroy();
+        //没有测试，如果这样不可以的话，可以尝试ontick中发一个消息，然后handler进行timer.cancel()
+        //测试成功
+    }
+
     private CountDownTimer timer = new CountDownTimer(180000,1000) {
         @Override
         public void onTick(long millisUntilFinished) {
