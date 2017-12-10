@@ -378,6 +378,12 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        new refreshKeep().execute();
+    }
+
+    @Override
     public void onClick(View view) {
         int id = view.getId();
         Log.e("??????????????",String.valueOf(id));

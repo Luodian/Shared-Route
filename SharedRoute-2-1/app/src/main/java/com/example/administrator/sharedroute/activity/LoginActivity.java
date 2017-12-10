@@ -157,14 +157,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Set up the login form.
         mEmailView = findViewById(R.id.user_edit_text);
-//        mEmailView.setFocusable(false);
         populateAutoComplete();
 
         mPasswordView = findViewById(R.id.pass_edit_text);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login_form || id == EditorInfo.IME_NULL) {
+                if (id == R.id.login || id == EditorInfo.IME_NULL) {
                     attemptLogin();
                     return true;
                 }
@@ -173,7 +172,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         final SharedPreferences sp = getSharedPreferences("logininfo", MODE_PRIVATE);
-
         String result = sp.getString("login_info", "");
         String logInName="";
         String loginPassword="";
@@ -200,7 +198,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             e.printStackTrace();
         }
 
-        final Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -236,7 +234,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        mRegibtn = findViewById(R.id.regi_text);
+        mRegibtn = (TextView) findViewById(R.id.regi_text);
         mRegibtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -247,32 +245,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         //如果条件满足，就自动登录
         if (sp.contains("login_info")&&(!(getIntent().hasExtra("from"))||!(getIntent().getStringExtra("from").equals("homePage")))){
-            if ((!mEmailView.getText().equals(""))&&(!mPasswordView.getText().equals(""))){
+            if ((!mEmailView.getText().toString().equals(""))&&(!mPasswordView.getText().toString().equals(""))){
                 attemptLogin();
             }
         }else if((getIntent().hasExtra("from"))&&(getIntent().getStringExtra("from").equals("homePage")))
         {
-                Thread thread = new Thread() {
-                    public void run(){
-                        Socket anotherSocket = null;
-                        try {
-//                            anotherSocket = new Socket(HOST,PORT);
-                            anotherSocket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
-                            PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
-                            out1.println("action=send;name="+mEmailView.getText().toString()+";msg=byebye");
-                            out1.flush();
-                            out1.close();
-                            anotherSocket.close();
+            Thread thread = new Thread() {
+                public void run(){
+                Socket anotherSocket = null;
+                try {
+                    anotherSocket = new Socket(getResources().getString(R.string.HOST), Integer.parseInt(getResources().getString(R.string.PORT)));
+                    PrintStream out1 = new PrintStream(anotherSocket.getOutputStream());
+                    out1.println("action=send;name="+mEmailView.getText().toString()+";msg=byebye");
+                    out1.flush();
+                    out1.close();
+                    anotherSocket.close();
 
-                            in.close();
-                            out.close();
-                            socket.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                thread.start();
+                    in.close();
+                    out.close();
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                }
+            };
+            thread.start();
         }
     }
     @Override
@@ -351,22 +348,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
             cancel = true;
         }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
-//            focusView.requestFocus();
+            focusView.requestFocus();
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
@@ -395,25 +395,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
 
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        mProgressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 
     @Override
@@ -446,7 +453,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
             cursor.moveToNext();
         }
-
         addEmailsToAutoComplete(emails);
     }
 
@@ -534,7 +540,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             ticker = "您发布的订单已被接收";
             int index = str.indexOf(',');
             content = str.substring(0, index);
-        } else {
+        } else if(str.contains("送达")){
             ticker = "订单已成功送达";
             content = "您接收的订单已经被成功送达";
         }
@@ -576,9 +582,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
-//        private String url = "http://47.95.194.146:8080/sharedroot_server/Login";
-//        private String url = "http://suc.free.ngrok.cc/sharedroot_server/Login";
-//        private String url="http://47.95.194.146:8080/sharedroot_server/Login";
         private String url=getResources().getString(R.string.url)+"/Login";
         private String result = null;
         private Boolean network_flag = false;
@@ -646,19 +649,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-
-
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
-
                 sp.edit().putString("now_stu_num",mEmailView.getText().toString()).commit();
                 if (result.contains("name:") && result.contains("phone:"))
                 {
                     Toast.makeText(getApplicationContext(),"登录成功", Toast.LENGTH_SHORT).show();
                     String now_name = result.substring(result.indexOf("name:") + 5, result.indexOf(",phone"));
                     String now_phone = result.substring(result.indexOf("phone:") + 6);
-
-                    Log.e("name:", now_name);
-                    Log.e("phone:", now_phone);
                     sp.edit().putString("now_name", now_name).commit();
                     sp.edit().putString("now_phone", now_phone).commit();
                     //启动接收命令的线程
@@ -679,7 +676,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             {
                 if (network_flag)
                 {
-                        Toast.makeText(getApplicationContext(), "登录失败，用户名和密码错误", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "登录失败，用户名或密码错误", Toast.LENGTH_SHORT).show();
                         mPasswordView.setError(getString(R.string.error_incorrect_password));
                         mPasswordView.requestFocus();
                 }
@@ -733,35 +730,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             }
                         };
                         thread.start();
-
-//                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getBaseContext());
-//
-//                                builder.setIcon(R.drawable.share_icon_with_background);//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
-//                                builder.setTitle("强制下线");
-//                                builder.setMessage("您的账号在别处登录");
-//                                builder.setNeutralButton("确认", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        Thread thread = new Thread() {
-//                                            public void run(){
-//                                                Socket anotherSocket = null;
-//                                                try {
-//                                                    LoginActivity.in.close();
-//                                                    LoginActivity.out.close();
-//                                                    LoginActivity.socket.close();
-//                                                } catch (IOException e) {
-//                                                    e.printStackTrace();
-//                                                }
-//                                            }
-//                                        };
-//                                        thread.start();
-//                                        for (Activity a:activityList){
-//                                            if (a != null) a.finish();
-//                                        }
-//                                    }
-//                                });
-//                                builder.show();
-//
                     } else {
                         Log.e("line", line);
                         Message msg = new Message();
@@ -772,14 +740,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         handler.sendMessage(msg);
                     }
                 }
-//                //停止监听线程
-//                if (stop){
-//                    out.println("action=login;name="+mEmailView.getText().toString()+";"+"msg:Bye bye!");
-//                    out.flush();
-//                    in.close();
-//                    out.close();
-//                    socket.close();
-//                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
