@@ -246,7 +246,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         //如果条件满足，就自动登录
-        if (sp.contains("login_info")&&(!(getIntent().hasExtra("from"))||!(getIntent().getStringExtra("from").equals("homePage")))){
+        if (sp.contains("login_info")&&(!(getIntent().hasExtra("from"))||(!(getIntent().getStringExtra("from").equals("homePage"))&&!(getIntent().getStringExtra("from").equals("forceOffline"))))){
             if ((!mEmailView.getText().toString().equals(""))&&(!mPasswordView.getText().toString().equals(""))){
                 attemptLogin();
             }
