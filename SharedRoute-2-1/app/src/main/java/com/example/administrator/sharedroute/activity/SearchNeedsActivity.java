@@ -23,7 +23,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +50,6 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.example.administrator.sharedroute.activity.MainActivity.select;
 
@@ -144,27 +141,28 @@ public class SearchNeedsActivity extends AppCompatActivity {
         mfab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
-                String stuNum=sp.getString("now_stu_num",null);
-                String regex=".*[a-zA-Z]+.*";
-                Matcher m= Pattern.compile(regex).matcher(stuNum);
-                boolean goToFetch = false;
-                if (! m.matches()) {
-                    long curNum = Long.valueOf(stuNum);
-                    if (curNum<=10100 && curNum>=10000){
-                        goToFetch = true;
-                    }
-                }
-                if (goToFetch) {
-                    Intent intent = new Intent(SearchNeedsActivity.this, TaskViewActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList("listItemList", selectedItem);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }else{
-                    Toast toast  =Toast.makeText(SearchNeedsActivity.this, "运营期间，为了安全起见，暂不开放代取功能，目前由专人派送~",Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+                Intent intent = new Intent(SearchNeedsActivity.this, TaskViewActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("listItemList", selectedItem);
+                intent.putExtras(bundle);
+                startActivity(intent);
+//                SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+//                String stuNum=sp.getString("now_stu_num",null);
+//                String regex=".*[a-zA-Z]+.*";
+//                Matcher m= Pattern.compile(regex).matcher(stuNum);
+//                boolean goToFetch = false;
+//                if (! m.matches()) {
+//                    long curNum = Long.valueOf(stuNum);
+//                    if (curNum<=10100 && curNum>=10000){
+//                        goToFetch = true;
+//                    }
+//                }
+//                if (goToFetch) {
+//
+//                }else{
+//                    Toast toast  =Toast.makeText(SearchNeedsActivity.this, "运营期间，为了安全起见，暂不开放代取功能，目前由专人派送~",Toast.LENGTH_SHORT);
+//                    toast.show();
+//                }
             }
         });
         navigation = findViewById(R.id.search_navigation);

@@ -18,7 +18,6 @@
             android:text="个人中心"
             android:textColor="@android:color/background_light"
             android:textSize="24sp" />
-
     </LinearLayout>
 
     <LinearLayout

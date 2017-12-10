@@ -1,6 +1,5 @@
 package com.example.administrator.sharedroute.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -42,6 +41,7 @@ import me.wangyuwei.flipshare.FlipShareView;
 import me.wangyuwei.flipshare.ShareItem;
 
 public class TaskViewActivity extends AppCompatActivity implements ListView.OnItemLongClickListener, AdapterView.OnItemClickListener,OnDismissCallback{
+    private static final int INITIAL_DELAY_MILLIS = 100;
     private TaskViewAdapter trollyAdapter;
     private ListView listView;
     private List<listItem> listItemList;//这个表应该接收之前代选中加入购物车的项
@@ -51,7 +51,6 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
     private boolean lastCheckBoxStatus = false;
     private  Toolbar mToolbar;
     private AnimationAdapter mAnimAdapter ;
-    private static final int INITIAL_DELAY_MILLIS = 100;
     private OrderDao orderDao;
     private SwipeRefreshLayout swipeRefresh;
     private LinearLayout mLinearLayout;
@@ -150,12 +149,12 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
         });
 
 
-        getOrders = (Button)findViewById(R.id.jiedan);
+        getOrders = findViewById(R.id.jiedan);
         getOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CheckFetcherUtil checkFetcherUtil = new CheckFetcherUtil(TaskViewActivity.this);
-//                if (checkFetcherUtil.isTheFetcherIlligal()) {
+                if (checkFetcherUtil.isTheFetcherIlligal()) {
                     listItemList = trollyAdapter.getItems();
                     ArrayList<listItem> listElected = new ArrayList<>();
                     for (listItem e : listItemList) {
@@ -168,20 +167,18 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
                     bundle.putParcelableArrayList("listItemList", listElected);
                     intent.putExtras(bundle);
                     startActivity(intent);
-//                }
-//                else{
-//                    new AlertDialog.Builder(TaskViewActivity.this)
-//                            .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
-//                            .setTitle("温馨提示")
-//                            .setMessage("试运营期间，为了安全起见，暂不开放代取功能，我们会安排专人为您派送，请耐心等待，您的快递下刻就到~")
-//                            .setPositiveButton("确认", null).show();
-//                }
+                } else {
+                    new AlertDialog.Builder(TaskViewActivity.this)
+                            .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                            .setTitle("温馨提示")
+                            .setMessage("运营期间，为了安全起见，暂不开放代取功能，目前由专人派送~")
+                            .setPositiveButton("确认", null).show();
+                }
             }
         });
 
 
-
-        getAll = (CheckBox)findViewById(R.id.checkbox_item_all);
+        getAll = findViewById(R.id.checkbox_item_all);
         getAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
