@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                         startActivity(intent6);
                         return true;
                     case R.id.nav_setting:
-                        Intent intent7 = new Intent(MainActivity.this,WaitingFutureActivity.class);
+                        Intent intent7 = new Intent(MainActivity.this, ContactUsActivity.class);
                         startActivity(intent7);
                         return true;
                     case R.id.nav_login:
