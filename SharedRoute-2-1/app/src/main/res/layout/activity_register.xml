@@ -69,7 +69,7 @@
                             android:backgroundTint="@color/whitesmoke"
                             android:id="@+id/regi_stu_num"
                             android:textColor="@color/whitesmoke"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"/>
@@ -89,7 +89,7 @@
                             android:textColor="@color/whitesmoke"
                             android:textColorHint="@color/white"
                             android:id="@+id/regi_phone"
-                            android:inputType="text"
+                            android:inputType="number"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"/>

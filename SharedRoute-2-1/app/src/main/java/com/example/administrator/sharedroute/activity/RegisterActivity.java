@@ -44,6 +44,8 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -97,11 +99,28 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             public void onClick(View view) {
                 String password = mPassWord.getText().toString();
                 String verify = mVerifyPassword.getText().toString();
-                if (!(password.equals(verify))){
+                String  curStuNum = mStuNum.getText().toString();
+                String regex=".*[a-zA-Z]+.*";
+                Matcher m= Pattern.compile(regex).matcher(curStuNum);
+                if ( mName.getText().toString().equals("")||mPhone.getText().toString().equals("")||mStuNum.getText().toString().equals("")||
+                        mInviteCode.getText().toString().equals("")||mPassWord.getText().toString().equals("")||
+                        mVerifyPassword.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),"请将信息填写完整",Toast.LENGTH_SHORT).show();
+                }else if (! m.matches()) {
+                    long curNum = Long.valueOf(curStuNum);
+                    if (curNum<=10100 && curNum>=10000){
+                        //专用账号注册
+                        attemptRegister();
+                    }
+                }else if (curStuNum.length() != 10) {
+                    Toast.makeText(getApplicationContext(),"普通用户的密码必须为10位哦",Toast.LENGTH_SHORT).show();
+                }else if (!(password.equals(verify))){
                     Toast.makeText(getApplicationContext(),"密码不一致",Toast.LENGTH_SHORT).show();
                     mVerifyPassword.setError("密码不一致");
                     mVerifyPassword.requestFocus();
-                }else {
+                }
+                else {
+                    //普通用户注册
                     attemptRegister();
 //                    if (isSuccess) {
 //                        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
