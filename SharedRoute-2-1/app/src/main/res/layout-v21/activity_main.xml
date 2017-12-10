@@ -264,7 +264,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="我发布的订单"/>
+                        android:text="我发布的订单（点击头像刷新）" />
                 </LinearLayout>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/mainRecycler1"
@@ -305,7 +305,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="我接受的订单"/>
+                        android:text="我接受的订单（点击头像刷新）" />
                 </LinearLayout>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/mainRecycler2"
@@ -323,7 +323,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="-----你好，我是底线,╮(╯-╰)╭-----" />
+                        android:text="-----你好，我是底线╮(╯-╰)╭-----" />
                 </FrameLayout>
             </LinearLayout>
 

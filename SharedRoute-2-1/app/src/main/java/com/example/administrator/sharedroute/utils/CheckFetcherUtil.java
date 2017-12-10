@@ -10,11 +10,18 @@ import android.content.SharedPreferences;
 
 
 public class CheckFetcherUtil {
-    private static String[] allowID = {"10001", "10002", "10003", "10004", "10005", "10006", "10007", "10008", "10009", "10010", "10011", "10012", "10013", "10014", "10015", "10016", "10017", "10018", "10019", "10020"};
+    private static String[] allowID = {"10000", "10001", "10002", "10003", "10004", "10005", "10006", "10007", "10008", "10009", "10010", "10011", "10012", "10013", "10014", "10015", "10016", "10017", "10018", "10019", "10020"};
     private Context mContext;
     public CheckFetcherUtil(Context mContext) {
         this.mContext = mContext;
     }
+
+    public static boolean isTheIDValid(String e) {
+        for (String b : allowID)
+            if (b.equals(e)) return true;
+        return false;
+    }
+
     public boolean isTheFetcherIlligal(){
         SharedPreferences sp = mContext.getSharedPreferences("now_account", Context.MODE_PRIVATE);
         String curID = sp.getString("now_stu_num",null);

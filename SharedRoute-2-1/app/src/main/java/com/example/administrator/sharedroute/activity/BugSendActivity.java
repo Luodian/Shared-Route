@@ -65,7 +65,7 @@ public class BugSendActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        Spinner spinner = (Spinner) findViewById(R.id.bug_type);
+        Spinner spinner = findViewById(R.id.bug_type);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -83,7 +83,7 @@ public class BugSendActivity extends AppCompatActivity {
         });
         SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
         userID = sp.getString("now_stu_num",null);
-        Button send_info = (Button)findViewById(R.id.bug_send_info);
+        Button send_info = findViewById(R.id.bug_send_info);
         send_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +135,7 @@ public class BugSendActivity extends AppCompatActivity {
                 if (resEntity != null) {
                     result = EntityUtils.toString(resEntity);
                 }
-                if (result.toString().equals("success"))
+                if (result.equals("success"))
                 {
                     client.getConnectionManager().shutdown();
                     return true;
@@ -172,7 +172,7 @@ public class BugSendActivity extends AppCompatActivity {
             }
             else
             {
-                Toast.makeText(getApplicationContext(),result.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
             }
         }
 

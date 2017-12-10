@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.administrator.sharedroute.R;
+import com.example.administrator.sharedroute.utils.CheckFetcherUtil;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -51,12 +52,12 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 public class RegisterActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private boolean isSuccess = false;
-    private int REQUEST_CODE_GO_TO_REGIST = 20;
-    private int resultCodeFromRegister = 21;
     private static final int REQUEST_READ_CONTACTS = 0;
     private static final int REQUEST_TIMEOUT = 5*1000;//设置请求超时5秒钟
     private static final int SO_TIMEOUT = 10*1000;  //设置等待数据超时时间10秒钟
+    private boolean isSuccess = false;
+    private int REQUEST_CODE_GO_TO_REGIST = 20;
+    private int resultCodeFromRegister = 21;
     private PostTask mAuthTask = null;
 
     private View mProgressView;
@@ -86,63 +87,55 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
                     .LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        mName = (EditText)findViewById(R.id.regi_name);
-        mPhone = (EditText)findViewById(R.id.regi_phone);
-        mStuNum = (EditText)findViewById(R.id.regi_stu_num);
-        mInviteCode = (EditText)findViewById(R.id.regi_invite_code);
-        mPassWord = (EditText)findViewById(R.id.regi_password);
-        mVerifyPassword = (EditText)findViewById(R.id.verify_password);
+        mName = findViewById(R.id.regi_name);
+        mPhone = findViewById(R.id.regi_phone);
+        mStuNum = findViewById(R.id.regi_stu_num);
+        mInviteCode = findViewById(R.id.regi_invite_code);
+        mPassWord = findViewById(R.id.regi_password);
+        mVerifyPassword = findViewById(R.id.verify_password);
 
-        mRegisterBtn = (Button)findViewById(R.id.regi_ensure_btn);
+        mRegisterBtn = findViewById(R.id.regi_ensure_btn);
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String password = mPassWord.getText().toString();
                 String verify = mVerifyPassword.getText().toString();
                 String  curStuNum = mStuNum.getText().toString();
+                String name = mName.getText().toString();
+                String phone = mPhone.getText().toString();
+                String stu_num = mStuNum.getText().toString();
+                String invite_num = mInviteCode.getText().toString();
+                String verify_pass = mVerifyPassword.getText().toString();
                 String regex=".*[a-zA-Z]+.*";
                 Matcher m= Pattern.compile(regex).matcher(curStuNum);
-                if ( mName.getText().toString().equals("")||mPhone.getText().toString().equals("")||mStuNum.getText().toString().equals("")||
-                        mInviteCode.getText().toString().equals("")||mPassWord.getText().toString().equals("")||
-                        mVerifyPassword.getText().toString().equals("")){
+                if (name.equals("") || phone.equals("") || stu_num.equals("") || invite_num.equals("") || password.equals("") || verify_pass.equals("")) {
                     Toast.makeText(getApplicationContext(),"请将信息填写完整",Toast.LENGTH_SHORT).show();
-                }else if (! m.matches()) {
-                    long curNum = Long.valueOf(curStuNum);
-                    if (curNum<=10100 && curNum>=10000){
-                        //专用账号注册
+                } else if (!m.matches()) {
+                    if (CheckFetcherUtil.isTheIDValid(curStuNum)) {
+                        attemptRegister();
+                    } else if (curStuNum.length() != 10) {
+                        Toast.makeText(getApplicationContext(), "请验证您的学号是否输入正确~", Toast.LENGTH_SHORT).show();
+                    } else if (!(password.equals(verify))) {
+                        Toast.makeText(getApplicationContext(), "密码不一致", Toast.LENGTH_SHORT).show();
+                        mVerifyPassword.setError("密码不一致");
+                        mVerifyPassword.requestFocus();
+                    }
+                    //普通用户注册
+                    else {
                         attemptRegister();
                     }
-                }else if (curStuNum.length() != 10) {
-                    Toast.makeText(getApplicationContext(),"普通用户的密码必须为10位哦",Toast.LENGTH_SHORT).show();
-                }else if (!(password.equals(verify))){
-                    Toast.makeText(getApplicationContext(),"密码不一致",Toast.LENGTH_SHORT).show();
-                    mVerifyPassword.setError("密码不一致");
-                    mVerifyPassword.requestFocus();
-                }
-                else {
+                } else {
+                    if (curStuNum.length() != 10) {
+                        Toast.makeText(getApplicationContext(), "请验证您的学号是否输入正确~", Toast.LENGTH_SHORT).show();
+                    } else if (!(password.equals(verify))) {
+                        Toast.makeText(getApplicationContext(), "密码不一致", Toast.LENGTH_SHORT).show();
+                        mVerifyPassword.setError("密码不一致");
+                        mVerifyPassword.requestFocus();
+                    }
                     //普通用户注册
-                    attemptRegister();
-//                    if (isSuccess) {
-//                        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-//                        Thread thread = new Thread() {
-//                            public void run() {
-//                                try {
-//                                    Thread.sleep(1500);
-//                                } catch (InterruptedException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        };
-//                        thread.start();
-//                        Intent data = new Intent();
-//                        data.putExtra("name", mName.getText().toString());
-//                        data.putExtra("phone", mPhone.getText().toString());
-//                        data.putExtra("stuNum", mStuNum.getText().toString());
-//                        data.putExtra("inviteCode", mInviteCode.getText().toString());
-//                        data.putExtra("password", mPassWord.getText().toString());
-//                        setResult(resultCodeFromRegister, data);
-//                        finish();
-//                    }
+                    else {
+                        attemptRegister();
+                    }
                 }
             }
         });
@@ -163,10 +156,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
         }
-        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-        return false;
+        return checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
     }
 
     /**
@@ -253,17 +243,6 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
 
     }
 
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
-    }
-
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.back_to_main,menu);
         return true;
@@ -280,6 +259,16 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
                 return true;
         }
         return true;
+    }
+
+    private interface ProfileQuery {
+        String[] PROJECTION = {
+                ContactsContract.CommonDataKinds.Email.ADDRESS,
+                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
+        };
+
+        int ADDRESS = 0;
+        int IS_PRIMARY = 1;
     }
 
     private class PostTask extends AsyncTask<Void,Void,Boolean> {
@@ -374,7 +363,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             }
             else
             {
-                if (result == "exist")
+                if (result.equals("exist"))
                 {
                     Toast.makeText(getApplicationContext(),"注册失败,该账户已经存在", Toast.LENGTH_SHORT).show();
                     isSuccess=false;

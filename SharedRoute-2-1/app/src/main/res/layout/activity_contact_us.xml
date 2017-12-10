@@ -76,7 +76,7 @@
                     android:layout_below="@id/contact_us"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="10dp"
-                    android:text="QQ : 1121058986(李博)"
+                    android:text="QQ : 1121058986"
                     android:textColor="@color/gray"
                     android:textSize="16sp" />
 
@@ -86,22 +86,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/luodian_qq"
                     android:layout_marginTop="10dp"
-                    android:text="QQ : 1799022371(武德浩)"
+                    android:text="QQ : 798306319"
                     android:textColor="@color/gray"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/bk_qq"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/prac_qq"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="10dp"
-                    android:text="QQ : 309426989(王烨臻)"
-                    android:textAlignment="center"
-                    android:textColor="@color/gray"
-                    android:textSize="16sp" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
