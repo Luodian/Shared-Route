@@ -190,22 +190,7 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
                 String stuNum = sp.getString("now_stu_num", null);
                 FetchUserInfo fetchUserInfo = new FetchUserInfo(stuNum);
                 fetchUserInfo.execute();
-                if (usraccount < Double.valueOf(bundle.getString("money"))) {
-                    new AlertDialog.Builder(PayBillActivity.this)
-                            .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
-                            .setTitle("余额不足")
-                            .setMessage("试运营期间，暂不支持直接充值，如有需要请联系我们~")
-                            .setNegativeButton("取消",null)
-                            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    startActivity(new Intent(PayBillActivity.this, ContactUsActivity.class));
-                                    //跳转到扫二维码充值的页面
 
-                                }
-                            }).show();
-                } else
-                    postInfo();
             }
         });
     }
@@ -610,6 +595,24 @@ public class PayBillActivity extends AppCompatActivity implements LoaderCallback
                 SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
 
                 sp.edit().putString("now_account_money",String.valueOf(usraccount)).commit();
+                String moneyStr = ((EditText)findViewById(R.id.textView3)).getText().toString();
+                moneyStr = moneyStr.substring(2);
+                if (usraccount < Double.valueOf(moneyStr)) {
+                    new AlertDialog.Builder(PayBillActivity.this)
+                            .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                            .setTitle("余额不足")
+                            .setMessage("试运营期间，暂不支持直接充值，如有需要请联系我们~")
+                            .setNegativeButton("取消",null)
+                            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startActivity(new Intent(PayBillActivity.this, ContactUsActivity.class));
+                                    //跳转到扫二维码充值的页面
+
+                                }
+                            }).show();
+                } else
+                    postInfo();
             } else {
                 Toast.makeText(getApplicationContext(), "获取用户信息失败", Toast.LENGTH_SHORT).show();
             }
