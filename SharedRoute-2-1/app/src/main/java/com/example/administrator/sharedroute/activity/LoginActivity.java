@@ -122,7 +122,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         public void handleMessage(Message msg){
             switch (msg.what){
                 case 0x11:
-                    noti(msg.getData().getString("msg"));
+                    String str = msg.getData().getString("msg");
+                    if(str.contains("接收,请注意查收") || str.contains("您已成功送达"))
+                        noti(str);
                     break;
                 default:
                     break;
@@ -503,7 +505,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //写数据
         long time = System.currentTimeMillis();
         int kind;
-        if (str.contains("接收"))
+        if (str.contains("接收,请注意查收"))
             kind = 0;
         else
             kind = 1;
@@ -536,11 +538,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         editor.putString("notihistory", mJsonArray.toString());
         editor.commit();
 
-        if (str.contains("接收")) {
+        if (str.contains("接收,请注意查收")) {
             ticker = "您发布的订单已被接收";
-            int index = str.indexOf(',');
-            content = str.substring(0, index);
-        } else if(str.contains("送达")){
+//            int index = str.indexOf(',');
+//            content = str.substring(0, index);
+            content = str;
+        } else if(str.contains("您已成功送达")){
             ticker = "订单已成功送达";
             content = "您接收的订单已经被成功送达";
         }
