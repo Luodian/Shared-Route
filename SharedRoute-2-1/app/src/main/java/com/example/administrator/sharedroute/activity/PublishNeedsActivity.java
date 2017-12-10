@@ -389,8 +389,8 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         final EditText money = findViewById(R.id.money);
 //        money.setFocusable(true);
         money.setFocusableInTouchMode(true);
-        money.requestFocus();
-        money.requestFocusFromTouch();
+//        money.requestFocus();
+//        money.requestFocusFromTouch();
         InputMethodManager inputManager =
                 (InputMethodManager)money.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.showSoftInput(money, 0);
@@ -400,7 +400,7 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
                 Toast toast = Toast.makeText(PublishNeedsActivity.this, "试运营期间，" +
                         "我们会安排专人为您代取派送快递，建议您设置金额为1-2元，如果您的任务紧急，" +
                         "可以适当提高金额，更高金额的任务会得到优先处理。",Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.TOP, 0, 50);
+                toast.setGravity(Gravity.TOP, 0, 120);
                 toast.show();
             }
         });
@@ -705,10 +705,11 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         }
     }
     private boolean checkTime() {
-        if ((naiveDateLeft.getYear() <= naiveDateRight.getYear())&&(naiveDateLeft.getMonth() <=
-        naiveDateRight.getMonth())&&(naiveDateLeft.getDay() <= naiveDateRight.getDay())&&(naiveTimeLeft.getHour()
-        <= naiveTimeRight.getHour())&&(naiveTimeLeft.getMinute() <= naiveTimeRight.getMinute()))
-            return true;
-        return false;
+
+        if ((naiveDateLeft.getYear() > naiveDateRight.getYear())||(naiveDateLeft.getMonth() >
+        naiveDateRight.getMonth())||(naiveDateLeft.getDay() > naiveDateRight.getDay())||(naiveTimeLeft.getHour()
+        > naiveTimeRight.getHour())||(naiveTimeLeft.getMinute() >= naiveTimeRight.getMinute()))
+            return false;
+        return true;
     }
 }

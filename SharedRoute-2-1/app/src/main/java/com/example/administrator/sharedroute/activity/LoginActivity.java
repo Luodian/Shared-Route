@@ -79,13 +79,32 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
+class NotTime{
+    public NotTime(int kind, long time) {
+        this.time = time;
+        this.kind = kind;
+    }
+    private int kind; //0是发单，1是接单
+    private long time;
+
+    public long getTime() {
+        return time;
+    }
+
+    public int getKind() {
+        return kind;
+    }
+}
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     private static final int REQUEST_READ_CONTACTS = 0;
     private static final int REQUEST_TIMEOUT = 5 * 1000;//设置请求超时5秒钟
     private static final int SO_TIMEOUT = 10 * 1000;  //设置等待数据超时时间10秒钟
-    private static final int REQUEST_CODE_GO_TO_REGIST = 20;
+    private int REQUEST_CODE_GO_TO_REGIST = 20;
+    private int resultCodeFromRegister = 21;
     public static Socket socket;
+    List<NotTime> datas=new ArrayList<>();
+    private List<NotTime> listData= new ArrayList<>();
 
     //    private static boolean stop;
 //    public static void setStop(Boolean stop){
@@ -258,8 +277,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==REQUEST_CODE_GO_TO_REGIST && data != null){
-            mEmailView.setText(data.getStringExtra("name"));
+        if(requestCode==REQUEST_CODE_GO_TO_REGIST && resultCode == resultCodeFromRegister){
+            mEmailView.setText(data.getStringExtra("stuNum"));
             mPasswordView.setText(data.getStringExtra("password"));
         }
     }
@@ -448,6 +467,69 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void noti(String str) {
         String ticker = "";
         String content = "";
+
+        SharedPreferences sp = getSharedPreferences("notihistoryfinals", MODE_PRIVATE);
+        //读取数据
+        String result = sp.getString("notihistory", "");
+        try {
+            JSONArray array = new JSONArray(result);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject itemObject = array.getJSONObject(i);
+                JSONArray names = itemObject.names();
+                if (names!= null) {
+                    Map<String,String> itemMap = new HashMap<>();
+                    for (int j = 0; j < names.length(); j++) {
+                        String name = names.getString(j);
+                        String value = itemObject.getString(name);
+                        itemMap.put(name,value);
+                    }
+                    int kind = Integer.valueOf(itemMap.get("kind"));
+                    long time = Long.valueOf(itemMap.get("time"));
+                    NotTime notTime =  new NotTime(kind, time);
+                    datas.add(notTime);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        listData=datas;
+
+        //写数据
+        long time = System.currentTimeMillis();
+        int kind;
+        if (str.contains("接收"))
+            kind = 0;
+        else
+            kind = 1;
+        NotTime notTime = new NotTime(kind, time);
+        listData.add(notTime);
+        JSONArray mJsonArray = new JSONArray();
+        for (int i = 0; i < listData.size(); i++) {
+            String kindStr = String.valueOf(listData.get(i).getKind());
+            String timeStr = String.valueOf(listData.get(i).getTime());
+            Map<String, String> itemMap = new HashMap<>();
+
+            itemMap.put("kind",kindStr);
+            itemMap.put("time",timeStr);
+            Iterator<Map.Entry<String, String>> iterator = itemMap.entrySet().iterator();
+
+            JSONObject object = new JSONObject();
+
+            while (iterator.hasNext()) {
+                Map.Entry<String, String> entry = iterator.next();
+                try {
+                    object.put(entry.getKey(), entry.getValue());
+                } catch (JSONException e) {
+
+                }
+            }
+            mJsonArray.put(object);
+        }
+
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("notihistory", mJsonArray.toString());
+        editor.commit();
+
         if (str.contains("接收")) {
             ticker = "您发布的订单已被接收";
             int index = str.indexOf(',');
@@ -633,9 +715,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String line = null;
                 while ((!(socket.isClosed()))&&(line = in.readLine()) != null) {
                     if (line.equals("offline")) {
+
+                        //不知为何，这里发送的广播会闪退
                         Intent intent = new Intent("com.example.administrator.sharedroute.activity.FORCE_OFFLINE");
                         //发送广播--标准广播
                         sendBroadcast(intent);
+                        Thread thread = new Thread() {
+                            public void run() {
+                                Socket anotherSocket = null;
+                                try {
+                                    LoginActivity.in.close();
+                                    LoginActivity.out.close();
+                                    LoginActivity.socket.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        thread.start();
+
 //                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getBaseContext());
 //
 //                                builder.setIcon(R.drawable.share_icon_with_background);//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标

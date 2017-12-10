@@ -94,7 +94,12 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.ContactUsActivity"></activity>
+        <activity android:name=".activity.ContactUsActivity" />
+        <activity
+            android:name=".activity.WelcomeActivity">
+
+
+        </activity>
     </application>
 
 </manifest>

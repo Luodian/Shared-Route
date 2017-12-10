@@ -44,13 +44,16 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class RegisterActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private boolean isSuccess = false;
-
+    private int REQUEST_CODE_GO_TO_REGIST = 20;
+    private int resultCodeFromRegister = 21;
     private static final int REQUEST_READ_CONTACTS = 0;
     private static final int REQUEST_TIMEOUT = 5*1000;//设置请求超时5秒钟
     private static final int SO_TIMEOUT = 10*1000;  //设置等待数据超时时间10秒钟
@@ -83,10 +86,6 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
                     .LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-//        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-//        toolbar.setTitle(R.string.title_register);
-//        setSupportActionBar(toolbar);
-
         mName = (EditText)findViewById(R.id.regi_name);
         mPhone = (EditText)findViewById(R.id.regi_phone);
         mStuNum = (EditText)findViewById(R.id.regi_stu_num);
@@ -100,33 +99,50 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             public void onClick(View view) {
                 String password = mPassWord.getText().toString();
                 String verify = mVerifyPassword.getText().toString();
-                if (!(password.equals(verify))){
+                String  curStuNum = mStuNum.getText().toString();
+                String regex=".*[a-zA-Z]+.*";
+                Matcher m= Pattern.compile(regex).matcher(curStuNum);
+                if ( mName.getText().toString().equals("")||mPhone.getText().toString().equals("")||mStuNum.getText().toString().equals("")||
+                        mInviteCode.getText().toString().equals("")||mPassWord.getText().toString().equals("")||
+                        mVerifyPassword.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),"请将信息填写完整",Toast.LENGTH_SHORT).show();
+                }else if (! m.matches()) {
+                    long curNum = Long.valueOf(curStuNum);
+                    if (curNum<=10100 && curNum>=10000){
+                        //专用账号注册
+                        attemptRegister();
+                    }
+                }else if (curStuNum.length() != 10) {
+                    Toast.makeText(getApplicationContext(),"普通用户的密码必须为10位哦",Toast.LENGTH_SHORT).show();
+                }else if (!(password.equals(verify))){
                     Toast.makeText(getApplicationContext(),"密码不一致",Toast.LENGTH_SHORT).show();
                     mVerifyPassword.setError("密码不一致");
                     mVerifyPassword.requestFocus();
-                }else {
+                }
+                else {
+                    //普通用户注册
                     attemptRegister();
-                    if (isSuccess) {
-                        Toast.makeText(RegisterActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
-                        Thread thread = new Thread() {
-                            public void run(){
-                                try {
-                                    Thread.sleep(1500);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                Intent data = new Intent();
-                                data.putExtra("name", mName.getText().toString());
-                                data.putExtra("phone", mPhone.getText().toString());
-                                data.putExtra("stuNum", mStuNum.getText().toString());
-                                data.putExtra("inviteCode", mInviteCode.getText().toString());
-                                data.putExtra("password", mPassWord.getText().toString());
-                                RegisterActivity.this.setResult(RESULT_OK, data);
-                                RegisterActivity.this.finish();
-                            }
-                        };
-                        thread.start();
-                    }
+//                    if (isSuccess) {
+//                        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                        Thread thread = new Thread() {
+//                            public void run() {
+//                                try {
+//                                    Thread.sleep(1500);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        };
+//                        thread.start();
+//                        Intent data = new Intent();
+//                        data.putExtra("name", mName.getText().toString());
+//                        data.putExtra("phone", mPhone.getText().toString());
+//                        data.putExtra("stuNum", mStuNum.getText().toString());
+//                        data.putExtra("inviteCode", mInviteCode.getText().toString());
+//                        data.putExtra("password", mPassWord.getText().toString());
+//                        setResult(resultCodeFromRegister, data);
+//                        finish();
+//                    }
                 }
             }
         });
@@ -335,6 +351,25 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
             if (success) {
                 Toast.makeText(getApplicationContext(),"注册成功", Toast.LENGTH_SHORT).show();
                 isSuccess = true;
+//                finish();
+                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                Thread thread = new Thread() {
+                    public void run() {
+                        try {
+                            Thread.sleep(1500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                thread.start();
+                Intent data = new Intent();
+                data.putExtra("name", mName.getText().toString());
+                data.putExtra("phone", mPhone.getText().toString());
+                data.putExtra("stuNum", mStuNum.getText().toString());
+                data.putExtra("inviteCode", mInviteCode.getText().toString());
+                data.putExtra("password", mPassWord.getText().toString());
+                setResult(resultCodeFromRegister, data);
                 finish();
             }
             else
