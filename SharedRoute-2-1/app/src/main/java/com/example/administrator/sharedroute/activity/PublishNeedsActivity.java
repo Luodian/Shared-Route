@@ -567,10 +567,10 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         String date = " " + year + "年\n" + (++monthOfYear) + "月" + dayOfMonth+"日";
 
         if (left) {
-            naiveDateLeft = new NaiveDate(year, ++monthOfYear, dayOfMonth);
+            naiveDateLeft = new NaiveDate(year, monthOfYear, dayOfMonth);
             leftDate = date;
         } else {
-            naiveDateRight = new NaiveDate(year, ++monthOfYear, dayOfMonth);
+            naiveDateRight = new NaiveDate(year, monthOfYear, dayOfMonth);
             rightDate = date;
         }
 
@@ -705,11 +705,17 @@ public class PublishNeedsActivity extends AppCompatActivity implements TimePicke
         }
     }
     private boolean checkTime() {
-
-        if ((naiveDateLeft.getYear() > naiveDateRight.getYear())||(naiveDateLeft.getMonth() >
-        naiveDateRight.getMonth())||(naiveDateLeft.getDay() > naiveDateRight.getDay())||(naiveTimeLeft.getHour()
-        > naiveTimeRight.getHour())||(naiveTimeLeft.getMinute() >= naiveTimeRight.getMinute()))
-            return false;
-        return true;
+        int[] lTime = {naiveDateLeft.getYear(), naiveDateLeft.getMonth(), naiveDateLeft.getDay(),
+                naiveTimeLeft.getHour(), naiveTimeLeft.getMinute()};
+        int[] rTime = {naiveDateRight.getYear(), naiveDateRight.getMonth(), naiveDateRight.getDay(),
+                naiveTimeRight.getHour(), naiveTimeRight.getMinute()};
+        for (int i = 0; i < 5; i++) {
+            if (lTime[i] < rTime[i]) {
+                return true;
+            } else if (lTime[i] > rTime[i]) {
+                return false;
+            }
+        }
+        return false;
     }
 }

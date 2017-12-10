@@ -206,15 +206,7 @@
                         android:text="一区顺丰速运"
                         android:textSize="18sp" />
 
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="0dp"
-                        android:layout_height="25dp"
-                        android:layout_weight="2.5"
-                        android:layout_marginTop="13dp"
-                        android:layout_marginRight="4dp"
-                        android:scaleType="centerInside"
-                        app:srcCompat="@mipmap/dizhi" />
+
 
                     <Button
                         android:id="@+id/button2"
@@ -240,8 +232,8 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="14"
                         android:layout_height="wrap_content"
+                        android:layout_weight="14.6"
                         android:orientation="vertical">
 
                         <TextView
@@ -256,10 +248,10 @@
                             android:id="@+id/pick_time"
                             android:layout_width="117dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="8dp"
                             android:layout_marginLeft="4dp"
                             android:layout_marginRight="4dp"
-                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="4dp"
                             android:gravity="top|left"
                             android:text="8月14日 12:30"
                             android:textColor="#9fb6cd"
@@ -291,10 +283,10 @@
                             android:id="@+id/deliever_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="8dp"
                             android:layout_marginLeft="4dp"
                             android:layout_marginRight="4dp"
-                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="4dp"
                             android:gravity="top|left"
                             android:text="8月15日 17:00"
                             android:textColor="#9fb6cd"
