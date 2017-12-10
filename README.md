@@ -77,7 +77,7 @@ Bug：
 本地学号、姓名、手机的使用方法：
 
 ```java
-SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+``````SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
 String stuNum=sp.getString("now_stu_num",null);
 String name=sp.getString("now_name",null);
 String phone=sp.getString("now_phone",null);
@@ -151,9 +151,9 @@ String phone=sp.getString("now_phone",null);
 
 - [ ] 在寻找需求页面提示Diag，只有指定的10名管理员才能够接单。——阿臻
 - [ ] 轮播图选择适合团队宣传的图片。
-- [ ] notification 在本地缓存，加入发单排行，接单排行。——浩哥
-- [ ] 发单排行，第一名显示卡片，第二名之后的用一鸣做的排行榜。——阿臻
-- [ ] 取件时间在时序上应该小于派件时间。——浩哥
+- [x] notification 在本地缓存，加入发单排行，接单排行。——浩哥
+- [x] 发单排行，第一名显示卡片，第二名之后的用一鸣做的排行榜。——阿臻
+- [x] 取件时间在时序上应该小于派件时间。——浩哥
 - [x] 清理各个地方的null——博博
 - [ ] 余额不足时提示充值，跳转到充值提示页面，使用扫二维码付款的形式。——博博
 - [ ] 增加『联系我们』页面。——博博
