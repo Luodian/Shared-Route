@@ -253,8 +253,8 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     case R.id.nav_login:
                         new AlertDialog.Builder(MainActivity.this)
                                 .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
-                                .setTitle("退出1KM配送")
-                                .setMessage("您真的要退出吗？")
+                                .setTitle("退出当前用户")
+                                .setMessage("即将退出当前用户")
                                 .setNegativeButton("取消", null)
                                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                                     @Override
