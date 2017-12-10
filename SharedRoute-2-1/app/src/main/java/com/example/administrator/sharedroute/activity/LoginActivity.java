@@ -715,6 +715,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String line = null;
                 while ((!(socket.isClosed()))&&(line = in.readLine()) != null) {
                     if (line.equals("offline")) {
+
+                        //不知为何，这里发送的广播会闪退
                         Intent intent = new Intent("com.example.administrator.sharedroute.activity.FORCE_OFFLINE");
                         //发送广播--标准广播
                         sendBroadcast(intent);
