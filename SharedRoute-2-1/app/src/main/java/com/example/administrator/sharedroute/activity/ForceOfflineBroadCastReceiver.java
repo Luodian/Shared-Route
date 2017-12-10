@@ -38,7 +38,7 @@ public class ForceOfflineBroadCastReceiver extends BroadcastReceiver {
                         };
                         thread.start();
                         Intent intent = new Intent(context, LoginActivity.class);
-                        intent.putExtra("from","homePage");
+                        intent.putExtra("from","forceOffline");
                         //在广播中启动活动，需要添加如下代码
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
