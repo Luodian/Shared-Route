@@ -93,10 +93,6 @@
                 <action android:name="com.example.administrator.sharedroute.activity.FORCE_OFFLINE"/>
             </intent-filter>
         </receiver>
-        <activity
-            android:name=".activity.NotiHistoryActivity"
-            android:label="@string/title_activity_noti_history"
-            android:theme="@style/AppTheme"></activity>
         <activity android:name=".activity.ContactUsActivity"></activity>
     </application>
 

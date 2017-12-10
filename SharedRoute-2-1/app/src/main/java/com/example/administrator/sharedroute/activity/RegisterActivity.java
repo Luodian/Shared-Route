@@ -103,27 +103,27 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
                     mVerifyPassword.requestFocus();
                 }else {
                     attemptRegister();
-                    if (isSuccess) {
-                        Toast.makeText(RegisterActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
-                        Thread thread = new Thread() {
-                            public void run(){
-                                try {
-                                    Thread.sleep(1500);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        };
-                        thread.start();
-                        Intent data = new Intent();
-                        data.putExtra("name", mName.getText().toString());
-                        data.putExtra("phone", mPhone.getText().toString());
-                        data.putExtra("stuNum", mStuNum.getText().toString());
-                        data.putExtra("inviteCode", mInviteCode.getText().toString());
-                        data.putExtra("password", mPassWord.getText().toString());
-                        setResult(resultCodeFromRegister, data);
-                        finish();
-                    }
+//                    if (isSuccess) {
+//                        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                        Thread thread = new Thread() {
+//                            public void run() {
+//                                try {
+//                                    Thread.sleep(1500);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        };
+//                        thread.start();
+//                        Intent data = new Intent();
+//                        data.putExtra("name", mName.getText().toString());
+//                        data.putExtra("phone", mPhone.getText().toString());
+//                        data.putExtra("stuNum", mStuNum.getText().toString());
+//                        data.putExtra("inviteCode", mInviteCode.getText().toString());
+//                        data.putExtra("password", mPassWord.getText().toString());
+//                        setResult(resultCodeFromRegister, data);
+//                        finish();
+//                    }
                 }
             }
         });
@@ -333,6 +333,25 @@ public class RegisterActivity extends AppCompatActivity implements LoaderManager
                 Toast.makeText(getApplicationContext(),"注册成功", Toast.LENGTH_SHORT).show();
                 isSuccess = true;
 //                finish();
+                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                Thread thread = new Thread() {
+                    public void run() {
+                        try {
+                            Thread.sleep(1500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                thread.start();
+                Intent data = new Intent();
+                data.putExtra("name", mName.getText().toString());
+                data.putExtra("phone", mPhone.getText().toString());
+                data.putExtra("stuNum", mStuNum.getText().toString());
+                data.putExtra("inviteCode", mInviteCode.getText().toString());
+                data.putExtra("password", mPassWord.getText().toString());
+                setResult(resultCodeFromRegister, data);
+                finish();
             }
             else
             {
