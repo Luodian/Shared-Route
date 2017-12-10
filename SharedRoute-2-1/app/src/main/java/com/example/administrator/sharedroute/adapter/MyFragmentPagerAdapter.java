@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.administrator.sharedroute.fragment.Fragment1;
-import com.example.administrator.sharedroute.fragment.Fragment2;
+import com.example.administrator.sharedroute.fragment.Fragment_campus_one;
+import com.example.administrator.sharedroute.fragment.Fragment_campus_two;
 
 /**
  * Created by 王烨臻 on 2017/9/25.
@@ -32,10 +32,10 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:{
-                return new Fragment1();
+                return new Fragment_campus_one();
             }
             case 1:{
-                return new Fragment2();
+                return new Fragment_campus_two();
             }
             default: return null;
         }

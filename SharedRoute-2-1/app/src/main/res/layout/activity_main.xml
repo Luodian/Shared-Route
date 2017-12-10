@@ -217,7 +217,7 @@
                                         android:layout_height="0dp"
                                         android:layout_weight="0.5"
                                         android:gravity="center"
-                                        android:text="发布历史" />
+                                        android:text="购物车" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -231,7 +231,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
                                         android:layout_weight="1"
-                                        app:srcCompat="@drawable/identity" />
+                                        app:srcCompat="@drawable/question_primary" />
 
                                     <TextView
                                         android:id="@+id/textView17"
@@ -275,7 +275,7 @@
 
                         <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
+                            android:layout_height="50dp"
                             android:background="@color/light_gray">
 
                             <TextView
@@ -316,7 +316,7 @@
 
                         <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
+                            android:layout_height="50dp"
                             android:background="@color/light_gray">
 
                             <TextView

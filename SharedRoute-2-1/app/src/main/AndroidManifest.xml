@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:allowBackup="true"
@@ -84,24 +84,20 @@
         <activity android:name=".activity.ConfirmBlurredActivity" />
         <activity android:name=".activity.MyFinishedActivity" />
         <activity android:name=".activity.MyRank" />
-        <activity
-            android:name=".activity.RankActivity"
-            android:label="@string/title_activity_rank2"
-            android:theme="@style/AppTheme" />
-
         <receiver
             android:name=".activity.ForceOfflineBroadCastReceiver"
+
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.example.administrator.sharedroute.activity.FORCE_OFFLINE" />
+                <action android:name="com.example.administrator.sharedroute.activity.FORCE_OFFLINE"/>
             </intent-filter>
         </receiver>
-
         <activity
             android:name=".activity.NotiHistoryActivity"
             android:label="@string/title_activity_noti_history"
             android:theme="@style/AppTheme"></activity>
+        <activity android:name=".activity.ContactUsActivity"></activity>
     </application>
 
 </manifest>

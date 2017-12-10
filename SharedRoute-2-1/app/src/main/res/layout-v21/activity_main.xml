@@ -217,7 +217,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="0.5"
                                 android:gravity="center"
-                                android:text="发布历史" />
+                                android:text="购物车" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -231,7 +231,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                app:srcCompat="@drawable/identity" />
+                                app:srcCompat="@drawable/question_primary" />
 
                             <TextView
                                 android:id="@+id/textView17"
@@ -272,10 +272,12 @@
                     android:layout_height="wrap_content"
                     >
                 </android.support.v7.widget.RecyclerView>
+
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:background="@color/light_gray">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -311,10 +313,12 @@
                     android:layout_height="wrap_content"
                     >
                 </android.support.v7.widget.RecyclerView>
+
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:background="@color/light_gray">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -332,9 +336,6 @@
             android:layout_gravity="bottom"
             android:background="?android:attr/windowBackground"
             app:menu="@menu/navigation" />
-
-
-
 
 
     </LinearLayout>

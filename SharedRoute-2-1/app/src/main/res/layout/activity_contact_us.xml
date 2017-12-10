@@ -29,41 +29,53 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/waitfutureText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="需要帮助？"
-                android:textAlignment="center"
-                android:textColor="@color/gray"
-                android:textSize="32sp" />
-
             <ImageView
                 android:id="@+id/cuteBot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/waitfutureText"
-                android:layout_centerInParent="true"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="40dp"
                 android:src="@drawable/share_icon_with_background" />
 
             <RelativeLayout
-                android:id="@+id/relativeLayout"
+                android:id="@+id/contact_us_rela"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/waitfutureText"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/waitfutureText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="需要帮助？"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/contact_us"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/waitfutureText"
+                    android:layout_marginTop="10dp"
+                    android:text="联系我们"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/luodian_qq"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
+                    android:layout_below="@id/contact_us"
                     android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
                     android:text="QQ : 1121058986(李博)"
                     android:textColor="@color/gray"
                     android:textSize="16sp" />

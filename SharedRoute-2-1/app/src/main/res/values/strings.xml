@@ -142,7 +142,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_rank2">RankActivity2</string>
     <string name="contact_us">联系我们</string>
-    <string name="title_activity_noti_history">NotiHistoryActivity</string>
+    <string name="title_activity_recharge">RechargeActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
