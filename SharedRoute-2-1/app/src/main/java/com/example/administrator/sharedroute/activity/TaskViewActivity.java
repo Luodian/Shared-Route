@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -67,10 +66,12 @@ public class TaskViewActivity extends AppCompatActivity implements ListView.OnIt
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            // Translucent status bar
-            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
-                    .LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // 透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // 透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            // 设置状态栏颜色
+            getWindow().setBackgroundDrawableResource(R.color.colorPrimary);
         }
         Intent intent = getIntent();
         lastActivity =  intent.getExtras().getString("lastActivity");

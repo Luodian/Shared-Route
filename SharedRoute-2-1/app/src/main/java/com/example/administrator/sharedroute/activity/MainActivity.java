@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     CheckFetcherUtil checkFetcherUtil = new CheckFetcherUtil(MainActivity.this);
                     if (checkFetcherUtil.isTheFetcherIlligal()) {
                         //将这个listElected传给下一个
-                        Intent intent = new Intent(MainActivity.this, ConfirmTaskActivity.class);
+                        Intent intent = new Intent(MainActivity.this, SearchNeedsActivity.class);
                         startActivity(intent);
                     } else {
                         new AlertDialog.Builder(MainActivity.this)
@@ -420,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 CheckFetcherUtil checkFetcherUtil = new CheckFetcherUtil(MainActivity.this);
                 if (checkFetcherUtil.isTheFetcherIlligal()) {
                     //将这个listElected传给下一个
-                    Intent intent = new Intent(MainActivity.this, ConfirmTaskActivity.class);
+                    Intent intent = new Intent(MainActivity.this, SearchNeedsActivity.class);
                     startActivity(intent);
                 } else {
                     new AlertDialog.Builder(MainActivity.this)

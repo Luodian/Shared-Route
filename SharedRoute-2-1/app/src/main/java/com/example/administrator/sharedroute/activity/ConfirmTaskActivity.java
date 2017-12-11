@@ -17,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -54,13 +53,13 @@ import me.wangyuwei.flipshare.FlipShareView;
 import me.wangyuwei.flipshare.ShareItem;
 
 public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissCallback {
+    private static final int INITIAL_DELAY_MILLIS = 100;
     private ListView listView;
     private ConfirmTaskAdapter adapter;
     private List<listItem> itemlists;//理论上这个列表应该由之前的页面传过来，这里先自己造几个数据。
     private Toolbar mToolbar;
     private AnimationAdapter mAnimAdapter;
     private Button mButton;
-    private static final int INITIAL_DELAY_MILLIS = 100;
     private CardView mCardView;
     private LinearLayout mInformation;
     private View mProgressView;
@@ -71,8 +70,8 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(null);
-        setContentView(R.layout.activity_confirm_task);
         if (!MainActivity.activityList.contains(ConfirmTaskActivity.this)) MainActivity.activityList.add(ConfirmTaskActivity.this);
+        setContentView(R.layout.activity_confirm_task);
         View decorView = getWindow().getDecorView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -80,12 +79,14 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            // Translucent status bar
-            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager
-                    .LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // 透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // 透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            // 设置状态栏颜色
+            getWindow().setBackgroundDrawableResource(R.color.colorPrimary);
         }
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("接单详情");
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -112,11 +113,11 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
 
 
     private void initView(){
-        name = (TextView) findViewById(R.id.textName);
-        phone = (TextView) findViewById(R.id.textPhoneNumber);
-        listView=(ListView)findViewById(R.id.listViewFirmOrders);
-        mInformation = (LinearLayout) findViewById(R.id.informationlayout);
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        name = findViewById(R.id.textName);
+        phone = findViewById(R.id.textPhoneNumber);
+        listView = findViewById(R.id.listViewFirmOrders);
+        mInformation = findViewById(R.id.informationlayout);
+        mToolbar = findViewById(R.id.toolbar);
         SharedPreferences sp = getSharedPreferences("now_account",Context.MODE_PRIVATE);
         String Name =sp.getString("now_name",null);
         name.setText(Name);
@@ -129,8 +130,8 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
         Bundle bundle =intent.getExtras();
         if (bundle!=null)itemlists = bundle.getParcelableArrayList("listItemList");
         else itemlists = new ArrayList<listItem>();
-        mCardView = (CardView) findViewById(R.id.cardView2);
-        mButton =(Button) findViewById(R.id.button);
+        mCardView = findViewById(R.id.cardView2);
+        mButton = findViewById(R.id.button);
         adapter = new ConfirmTaskAdapter(ConfirmTaskActivity.this);
         for (int i = 0; i < itemlists.size(); i++) {
             adapter.add(itemlists.get(i));
@@ -177,6 +178,18 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
                 new UserLoginTask(itemlists).execute();
             }
         });
+    }
+
+    @Override
+    public void onDismiss(@NonNull ViewGroup listView, @NonNull int[] reverseSortedPositions) {
+        for (int position : reverseSortedPositions) {
+            adapter.remove(position);
+        }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.back_to_main, menu);
+        return true;
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -279,17 +292,5 @@ public class ConfirmTaskActivity extends AppCompatActivity implements OnDismissC
             mAuthTask = null;
            // showProgress(false);
         }
-    }
-
-    @Override
-    public void onDismiss(@NonNull ViewGroup listView, @NonNull int[] reverseSortedPositions) {
-        for (int position : reverseSortedPositions) {
-            adapter.remove(position);
-        }
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.back_to_main,menu);
-        return true;
     }
 }

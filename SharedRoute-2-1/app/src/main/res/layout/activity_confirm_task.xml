@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.example.administrator.sharedroute.activity.ConfirmTaskActivity">
 
-    <include layout="@layout/back_layout" />
+    <include
+        layout="@layout/back_layout"
+        android:elevation="4dp" />
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -23,13 +22,13 @@
         android:id="@+id/informationlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cardView2"
             android:clickable="false"
             android:foreground="?android:attr/selectableItemBackground"
             card_view:cardCornerRadius="3dp"
@@ -44,17 +43,17 @@
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
                     android:text="请确认您的信息是否正确"
                     android:textColor="@color/red"
-                    android:textSize="15dp"
-                    android:layout_marginLeft="40dp"/>
+                    android:textSize="15dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="40dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:id="@+id/textView2"
@@ -109,9 +108,9 @@
         <Button
             android:id="@+id/button"
             android:layout_width="160dp"
-            android:layout_marginBottom="20dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/roundedcorner3"
             android:clickable="false"
             android:focusable="false"

@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 27
         versionCode Integer.parseInt(new Date().format('yyyyMMdd'))
-        versionName "1.8"
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
