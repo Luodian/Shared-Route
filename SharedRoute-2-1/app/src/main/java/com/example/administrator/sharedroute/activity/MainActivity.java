@@ -37,6 +37,7 @@ import com.example.administrator.sharedroute.R;
 import com.example.administrator.sharedroute.adapter.MainPageReleaseAdapter;
 import com.example.administrator.sharedroute.entity.listItem;
 import com.example.administrator.sharedroute.localdatabase.OrderDao;
+import com.example.administrator.sharedroute.utils.CheckFetcherUtil;
 import com.example.administrator.sharedroute.utils.DisplayUtil;
 import com.example.administrator.sharedroute.widget.BannerPager;
 import com.example.administrator.sharedroute.widget.BannerPager.BannerClickListener;
@@ -116,8 +117,18 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                     finish();
                     return true;
                 case R.id.navigation_notifications:
-                    JumpToActivity(SearchNeedsActivity.class);
-                    finish();
+                    CheckFetcherUtil checkFetcherUtil = new CheckFetcherUtil(MainActivity.this);
+                    if (checkFetcherUtil.isTheFetcherIlligal()) {
+                        //将这个listElected传给下一个
+                        Intent intent = new Intent(MainActivity.this, ConfirmTaskActivity.class);
+                        startActivity(intent);
+                    } else {
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                                .setTitle("温馨提示")
+                                .setMessage("运营期间，为了安全起见，暂不开放代取功能，目前由专人派送~")
+                                .setPositiveButton("确认", null).show();
+                    }
                     return true;
             }
             return false;
@@ -406,8 +417,18 @@ public class MainActivity extends AppCompatActivity implements BannerClickListen
                 break;
             }
             case R.id.imageView7:{
-                Intent intent1 = new Intent(MainActivity.this,SearchNeedsActivity.class);
-                startActivity(intent1);
+                CheckFetcherUtil checkFetcherUtil = new CheckFetcherUtil(MainActivity.this);
+                if (checkFetcherUtil.isTheFetcherIlligal()) {
+                    //将这个listElected传给下一个
+                    Intent intent = new Intent(MainActivity.this, ConfirmTaskActivity.class);
+                    startActivity(intent);
+                } else {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setIcon(R.drawable.share_icon_with_background)//这里是显示提示框的图片信息，我这里使用的默认androidApp的图标
+                            .setTitle("温馨提示")
+                            .setMessage("运营期间，为了安全起见，暂不开放代取功能，目前由专人派送~")
+                            .setPositiveButton("确认", null).show();
+                }
                 break;
             }
             case R.id.imageView8:{

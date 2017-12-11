@@ -37,7 +37,7 @@ public class BlurredActivity extends Activity {
 		testItems.add(new DialogMenuItem("取件时间："+info.FetchTime, R.mipmap.ic_get_time));
 		testItems.add(new DialogMenuItem("类型："+info.TaskKindID, R.mipmap.ic_type));
 		testItems.add(new DialogMenuItem("取货码："+info.PickID, R.mipmap.ic_code));
-		testItems.add(new DialogMenuItem("金额："+info.Money+" 元", R.mipmap.ic_money));
+		testItems.add(new DialogMenuItem("手机号：" + info.PublisherPhone, R.mipmap.ic_money));
 		if (info.status == 1)testItems.add(new DialogMenuItem("状态：未接单", R.mipmap.ic_status));
 		else if (info.status == 2)testItems.add(new DialogMenuItem("状态：已接单", R.mipmap.ic_status));
 		else if (info.status == 3)testItems.add(new DialogMenuItem("状态：已完成", R.mipmap.ic_status));
