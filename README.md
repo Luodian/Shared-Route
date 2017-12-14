@@ -77,7 +77,7 @@ Bug：
 本地学号、姓名、手机的使用方法：
 
 ```java
-``````SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
+​``````SharedPreferences sp = getSharedPreferences("now_account", Context.MODE_PRIVATE);
 String stuNum=sp.getString("now_stu_num",null);
 String name=sp.getString("now_name",null);
 String phone=sp.getString("now_phone",null);
@@ -149,13 +149,21 @@ String phone=sp.getString("now_phone",null);
 
 **12.9—发布前夜**
 
-- [ ] 在寻找需求页面提示Diag，只有指定的10名管理员才能够接单。——阿臻
-- [ ] 轮播图选择适合团队宣传的图片。
+- [x] 在寻找需求页面提示Diag，只有指定的10名管理员才能够接单。——阿臻
+- [x] 轮播图选择适合团队宣传的图片。
 - [x] notification 在本地缓存，加入发单排行，接单排行。——浩哥
 - [x] 发单排行，第一名显示卡片，第二名之后的用一鸣做的排行榜。——阿臻
 - [x] 取件时间在时序上应该小于派件时间。——浩哥
 - [x] 清理各个地方的null——博博
-- [ ] 余额不足时提示充值，跳转到充值提示页面，使用扫二维码付款的形式。——博博
-- [ ] 增加『联系我们』页面。——博博
+- [x] 余额不足时提示充值，跳转到充值提示页面，使用扫二维码付款的形式。——博博
+- [x] 增加『联系我们』页面。——博博
 
- 
+
+**12-14-发布之后的一些可改进之处**
+
+- [ ] 服务端功能太弱，逻辑不完善（诸如接单付款的功能没有实现），不能做到实时推送结果，下一步改进应该重服务端，客户端尽量多从服务器获取数据。
+- [ ] 用户名有些带\n的得处理掉。
+- [ ] 发单者和接单者的信息沟通不全面，比如主页详细信息里没有获取送件地址和送件时间。
+- [ ] 增加认证用户的功能，未认证只能发单不能接单，实现真正的共享模式。
+- [ ] 增加用户个人信息的修改，头像，姓名，送件地点等。
+- [ ] 修改接单历史和发单历史的界面。
